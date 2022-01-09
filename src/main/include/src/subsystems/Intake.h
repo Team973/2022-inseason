@@ -2,6 +2,8 @@
 
 #include "lib/bases/Subsystem.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 namespace frc973 {
 
 class Intake : public Subsystem {

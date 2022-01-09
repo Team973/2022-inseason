@@ -10,7 +10,9 @@
 
 namespace frc973 {
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  m_intake = new Intake();
+}
 
 void Robot::RobotPeriodic() {}
 

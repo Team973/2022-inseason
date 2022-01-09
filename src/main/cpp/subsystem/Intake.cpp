@@ -16,6 +16,7 @@ void Intake::Update() {
 }
 
 void Intake::DashboardUpdate() {
+    
 }
 
 } // namespace frc973
