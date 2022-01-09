@@ -9,6 +9,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+namespace frc973 {
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -23,8 +24,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  frc::SendableChooser<std::string> m_chooser;
-  const std::string kAutoNameDefault = "Default";
-  const std::string kAutoNameCustom = "My Auto";
-  std::string m_autoSelected;
+
 };
+
+} //namespace frc973
