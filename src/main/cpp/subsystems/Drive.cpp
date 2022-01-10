@@ -3,7 +3,7 @@
 namespace frc973{
 
 void Drive::Update() {
-    array<double, 4> outputs;
+
 
     switch (m_driveMode) {
         case DriveMode::arcade:
@@ -16,23 +16,116 @@ void Drive::Update() {
            
             break;
         default:
-            outputs = {0.0, 0.0};
+
     }
+}
 
-    m_leftOutput = std::clamp(outputs[Outputs::leftThrottle] + outputs[Outputs::leftTurn], m_minSpeed, m_maxSpeed);
-    m_rightOutput = std::clamp(outputs[Outputs::rightThrottle] + outputs[Outputs::rightTurn], m_minSpeed, m_maxSpeed);
+void Drive::DashboardUpdate() {
 
-    m_leftOutput *= MAX_TICKS_PER_100_MS;
-    m_rightOutput *= MAX_TICKS_PER_100_MS;
+}
 
-    CheckForIsNaN();
+double GetLeftPosition() {
 
-    SetVelocity(m_leftOutput, m_rightOutput);
-    SmartDashboard::PutNumber("Left Distance", GetLeftPosition());
-    SmartDashboard::PutNumber("Right Distance", GetRightPosition());
+}
+
+double GetRightPosition() {
+
+}
+
+double GetPos() {
+
+}
+
+void Zero() {
+
+}
+
+double GetLeftRate() {
+
+}
+
+double GetRightRate() {
+
+}
+
+double GetRate() {
+
+}
+
+double GetAngularRate() {
+
 }
 
 
+
+void Drive::SetPositionTarget(double linearPositionTarget, double anglePositionTarget) {
+    switch (m_driveMode) {
+        case DriveMode::arcade:
+            break;
+        case DriveMode::position:
+            break;
+        default:
+            break;
+    }
+}
+
+void SetDrivePositionInches(double inches) {
+
+}
+
+void SetPercentOutput(double leftOutput, double rightOutput) {
+
+}
+
+void SetVelocity(double leftOutput, double rightOutput) {
+
+}
+
+void Drive::EnableBrakeMode() {
+
+}
+
+void Drive::EnableCoastMode() {
+
+}
+
+void SetThrottleAndTurn(const double throttle, const double turn) {
+
+}
+
+void Drive::SetDriveMode(DriveMode mode) {
+    if (m_driveMode != mode) {
+        m_driveMode = mode;
+    }
+}
+
+bool OnTarget() {
+
+}
+
+void SetQuickTurn(bool state) {
+
+}
+
+void SetHighGear(bool state) {
+
+}
+
+bool LimelightOnTargetWithinTolerance(double tolerance) {
+
+}
+
+void Drive::CheckForIsNaN() {
+
+}
+
+void ClampSpeed(double minSpeed, double maxSpeed) {
+
+}
+
+bool IsLimelightDead() {
+
+}
 
 
 
