@@ -10,9 +10,11 @@
 
 namespace frc973 {
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+}
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+}
 
 } // namespace frc973
 

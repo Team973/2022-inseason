@@ -8,6 +8,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include "subsystems/Conveyor.h"
 
 namespace frc973 {
 class Robot : public frc::TimedRobot {
@@ -24,7 +25,6 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-
 };
 
 } //namespace frc973
