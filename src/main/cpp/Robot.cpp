@@ -10,9 +10,16 @@
 
 namespace frc973 {
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  m_shooterFlywheelMotorA = new TalonFX(FLYWHEEL_A_CAN_ID);
+  m_shooterFlywheelMotorB = new TalonFX(FLYWHEEL_B_CAN_ID);
+  m_shooterPrecharger = new TalonFX(PRECHARGER_CAN_ID);
 
-void Robot::RobotPeriodic() {}
+  m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB, m_shooterPrecharger);
+}
+
+void Robot::RobotPeriodic() {
+}
 
 } // namespace frc973
 
