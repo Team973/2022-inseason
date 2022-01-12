@@ -10,8 +10,12 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include "subsystems/Conveyor.h"
 
+#include <ctre/Phoenix.h>
+#include <ctre/Phoenix.h>
+
+using namespace frc;
 namespace frc973 {
-class Robot : public frc::TimedRobot {
+class Robot : public TimedRobot {
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
