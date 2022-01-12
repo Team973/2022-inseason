@@ -2,130 +2,106 @@
 
 namespace frc973{
 
+Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC, WPI_TalonFX *rightDriveTalonA,
+             WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC)
+        : m_leftDriveTalonA(leftDriveTalonA)
+        , m_leftDriveTalonB(leftDriveTalonB)
+        , m_leftDriveTalonC(leftDriveTalonC)
+        , m_rightDriveTalonA(rightDriveTalonA)
+        , m_rightDriveTalonB(rightDriveTalonB)
+        , m_rightDriveTalonC(rightDriveTalonC)
+        , m_throttle(0.0)
+        , m_turn(0.0)
+        , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05)) {
+    
+    //configure motor settings
+    m_leftDriveTalonA->ConfigFactoryDefault();
+    m_leftDriveTalonB->ConfigFactoryDefault();
+    m_leftDriveTalonC->ConfigFactoryDefault();
+
+    m_rightDriveTalonA->ConfigFactoryDefault();
+    m_rightDriveTalonB->ConfigFactoryDefault();
+    m_rightDriveTalonC->ConfigFactoryDefault();
+
+    m_leftDriveTalonA->SetNeutralMode(Coast);
+    m_leftDriveTalonB->SetNeutralMode(Coast);
+    m_leftDriveTalonC->SetNeutralMode(Coast);
+
+    m_rightDriveTalonA->SetNeutralMode(Coast);
+    m_rightDriveTalonB->SetNeutralMode(Coast);
+    m_rightDriveTalonC->SetNeutralMode(Coast);
+
+    m_leftDriveTalonA->SetInverted(TalonFXInvertType::Clockwise);
+    m_leftDriveTalonB->SetInverted(TalonFXInvertType::Clockwise);
+    m_leftDriveTalonC->SetInverted(TalonFXInvertType::Clockwise);
+
+    m_rightDriveTalonA->SetInverted(TalonFXInvertType::CounterClockwise);
+    m_rightDriveTalonB->SetInverted(TalonFXInvertType::CounterClockwise);
+    m_rightDriveTalonC->SetInverted(TalonFXInvertType::CounterClockwise);
+
+    m_leftDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
+    m_rightDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
+
+    m_leftDriveTalonA->ConfigClosedloopRamp(0.1);
+    m_rightDriveTalonA->ConfigClosedloopRamp(0.1);
+
+    m_leftDriveTalonA->ConfigNominalOutputForward(0, 30);
+    m_leftDriveTalonA->ConfigNominalOutputReverse(0, 30);
+    m_leftDriveTalonA->ConfigPeakOutputForward(1.0, 30);
+    m_leftDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
+
+    m_rightDriveTalonA->ConfigNominalOutputForward(0, 30);
+    m_rightDriveTalonA->ConfigNominalOutputReverse(0, 30);
+    m_rightDriveTalonA->ConfigPeakOutputForward(1.0, 30);
+    m_rightDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
+
+    m_leftDriveTalonA->Config_kP(0, 0.2, 30);
+    m_leftDriveTalonA->Config_kI(0, 0.0, 30);
+    m_leftDriveTalonA->Config_kD(0, 0.0, 30);
+    m_leftDriveTalonA->Config_kF(0, 0.0, 30);
+
+    m_rightDriveTalonA->Config_kP(0, 0.2, 30);
+    m_rightDriveTalonA->Config_kI(0, 0.0, 30);
+    m_rightDriveTalonA->Config_kD(0, 0.0, 30);
+    m_rightDriveTalonA->Config_kF(0, 0.0, 30);
+
+    m_leftDriveTalonB->Follow(*m_leftDriveTalonA);
+    m_leftDriveTalonC->Follow(*m_leftDriveTalonA);
+
+    m_rightDriveTalonB->Follow(*m_rightDriveTalonA);
+    m_rightDriveTalonC->Follow(*m_rightDriveTalonA);
+
+    m_leftDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
+    m_rightDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
+
+    m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+
+    m_rightDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+
+    m_leftDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+
+    m_rightDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+}
+
 void Drive::Update() {
 
 
-    switch (m_driveMode) {
-        case DriveMode::arcade:
 
-            break;
-        case DriveMode::position:
-           
-            break;
-        case DriveMode::cheesyDrive:
-           
-            break;
-        default:
-
-    }
 }
 
 void Drive::DashboardUpdate() {
 
 }
 
-double GetLeftPosition() {
-
-}
-
-double GetRightPosition() {
-
-}
-
-double GetPos() {
-
-}
-
-void Zero() {
-
-}
-
-double GetLeftRate() {
-
-}
-
-double GetRightRate() {
-
-}
-
-double GetRate() {
-
-}
-
-double GetAngularRate() {
-
-}
-
-
-
-void Drive::SetPositionTarget(double linearPositionTarget, double anglePositionTarget) {
-    switch (m_driveMode) {
-        case DriveMode::arcade:
-            break;
-        case DriveMode::position:
-            break;
-        default:
-            break;
-    }
-}
-
-void SetDrivePositionInches(double inches) {
-
-}
-
-void SetPercentOutput(double leftOutput, double rightOutput) {
-
-}
-
-void SetVelocity(double leftOutput, double rightOutput) {
-
-}
-
-void Drive::EnableBrakeMode() {
-
-}
-
-void Drive::EnableCoastMode() {
-
-}
-
-void SetThrottleAndTurn(const double throttle, const double turn) {
-
-}
-
-void Drive::SetDriveMode(DriveMode mode) {
-    if (m_driveMode != mode) {
-        m_driveMode = mode;
-    }
-}
-
-bool OnTarget() {
-
-}
-
-void SetQuickTurn(bool state) {
-
-}
-
-void SetHighGear(bool state) {
-
-}
-
-bool LimelightOnTargetWithinTolerance(double tolerance) {
-
-}
-
-void Drive::CheckForIsNaN() {
-
-}
-
-void ClampSpeed(double minSpeed, double maxSpeed) {
-
-}
-
-bool IsLimelightDead() {
-
-}
 
 
 
