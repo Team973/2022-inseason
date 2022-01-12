@@ -6,10 +6,10 @@ namespace frc973 {
 
 namespace Constants {
     
-    constexpr double PI = 3.141592653589793;                 /**< Pi.*/
-    constexpr double FEET_PER_METER = 3.280839895;           /**< ft/m.*/
-    constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER; /**< m/ft.*/
-    constexpr double GRAVITY_CONSTANT = 9.80665;             /**< Gravity constant meter/sq(sec).*/
+    constexpr double PI = 3.141592653589793;                      /**< Pi.*/
+    constexpr double FEET_PER_METER = 3.280839895;                /**< ft/m.*/
+    constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER;      /**< m/ft.*/
+    constexpr double GRAVITY_CONSTANT = 9.80665;                  /**< Gravity constant meter/sq(sec).*/
     constexpr double GRAVITY_CONSTANT_INCHES =
         GRAVITY_CONSTANT * FEET_PER_METER * 12.0;                 /**< Gravity constant in/sq(sec). */
     constexpr double USEC_PER_MSEC = 1000.0;                      /**< Microseconds/millisecond.*/
@@ -22,6 +22,13 @@ namespace Constants {
     constexpr double SEC_PER_MIN = 60.0;                          /**< Seconds/minute.*/
     constexpr double RAD_PER_DEG = 2 * PI / 360.0;                /**< Radians/degrees.*/
     constexpr double DEG_PER_RAD = 1.0 / RAD_PER_DEG;             /**< Degrees/Radians.*/
+
+    constexpr double TALON_FX_TICKS_PER_REV = 2048.0;             /**< Encoder ticks/revolution of TalonFX motor. */
+    constexpr double TALON_FX_VELOCITY_UNIT_MS = 100.0;           /**< Ticks/100ms. */
+
+    constexpr double TALON_FX_VELOCITY_RPM =
+        (MSEC_PER_SEC * SEC_PER_MIN) /
+        (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS);     /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
 
 } // namespace Constants
    
