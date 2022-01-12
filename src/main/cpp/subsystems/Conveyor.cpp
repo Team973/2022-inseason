@@ -2,12 +2,12 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor()
-        : m_towerState(TowerState::Off)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonFX *floorMotor, TalonFX *queuerMotor)
+        : m_towerMotor(towerMotor)
+        , m_floorMotor(floorMotor)
+        , m_queuerMotor(queuerMotor)
+        , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
-        , m_reindexingStartTime(0)
-        , m_lastB(false)
-        , m_hasStartedReindexing(false)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0) {
 }
@@ -23,23 +23,34 @@ void Conveyor::Update() {
 
     switch (m_towerState) {  
         case TowerState::Off:
+            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
+            m_queuerMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
         case TowerState::FeedIn:
+            m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+            m_queuerMotor->Set(ControlMode::PercentOutput, 1.0);
             break;
         case TowerState::FeedOut:
+            m_towerMotor->Set(ControlMode::PercentOutput, -1.0);
+            m_queuerMotor->Set(ControlMode::PercentOutput, -1.0);
             break;
         case TowerState::Manual:
+            m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
     switch (m_floorState) {  
         case FloorState::FeedIn:
+            m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
             break;
         case FloorState::FeedOut:
+            m_floorMotor->Set(ControlMode::PercentOutput, -1.0);
             break;
         case FloorState::Manual:
+            m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
         case FloorState::Off:
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 }
@@ -47,13 +58,12 @@ void Conveyor::Update() {
 void Conveyor::DashboardUpdate() {
 }
 
-void Conveyor::SetQueuerWheel(double speed) {
-}
-
 void Conveyor::SetTowerSpeed(double speed) {
+    m_towerMotor->Set(ControlMode::PercentOutput, speed);
 }
 
 void Conveyor::SetFloorSpeed(double speed) {
+    m_floorMotor->Set(ControlMode::PercentOutput, speed);
 }
 
 float Conveyor::getTowerState() {

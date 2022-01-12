@@ -8,10 +8,10 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include "subsystems/Conveyor.h"
+#include <ctre/Phoenix.h>
 
-#include <ctre/Phoenix.h>
-#include <ctre/Phoenix.h>
+#include "subsystems/Conveyor.h"
+#include "RobotInfo.h"
 
 using namespace frc;
 namespace frc973 {
@@ -29,6 +29,12 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+ TalonFX *m_conveyorFloorMotor;
+ TalonFX *m_conveyorTowerMotor;
+ TalonFX *m_conveyorQueuerMotor;
+
+ Conveyor *m_conveyor;
+
 };
 
 } //namespace frc973

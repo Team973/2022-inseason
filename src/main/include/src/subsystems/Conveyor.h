@@ -2,6 +2,7 @@
 
 #include "lib/bases/Subsystem.h"
 #include "lib/Util.h"
+#include <ctre/Phoenix.h>
 
 #include <frc/DigitalInput.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -18,7 +19,10 @@ public:
      * @param towerMotor the motor for the tower.
      * @param floorMotor the motor for the floor.
      */
-    Conveyor();
+    /*
+     Not certain what type of motor so we put fx's
+     */
+    Conveyor(TalonFX *towerMotor, TalonFX *floorMotor, TalonFX *queuerMotor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -51,12 +55,6 @@ public:
      * Updates the dashboard every robot cycle.
      */
     void DashboardUpdate() override;
-
-    /**
-     * Sets the speed of the queuer wheel.
-     * @param speed The percent speed to set to.
-     */
-    void SetQueuerWheel(double speed);
 
     /**
      * Sets the tower speed.
@@ -111,12 +109,9 @@ public:
     void SetManualFloorSpeed(double speed);
 
 private:
-    /**
-     * A state of the tower meant for
-     * exception cases where the balls might jam.
-     * Pulls the balls down the tower.
-     */
-    void Reindexing();
+    TalonFX *m_towerMotor;
+    TalonFX *m_floorMotor;
+    TalonFX *m_queuerMotor;
 
     TowerState m_towerState;
     FloorState m_floorState;
