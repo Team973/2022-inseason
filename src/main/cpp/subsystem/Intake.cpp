@@ -7,6 +7,7 @@ Intake::Intake()
 }
 
 void Intake::Deploy() {
+    m_intakeState = IntakeState::Deploy;
 }
 
 void Intake::Retract(){
