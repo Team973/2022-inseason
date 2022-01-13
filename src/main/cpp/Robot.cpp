@@ -11,7 +11,8 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
-  m_intake = new Intake();
+  m_intakeTalon = new TalonFX(INTAKE_FALCON);
+  m_intake = new Intake(m_intakeTalon);
 }
 
 void Robot::RobotPeriodic() {}

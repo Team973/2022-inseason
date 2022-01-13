@@ -29,6 +29,7 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+    TalonFX *m_intakeTalon;
     Intake *m_intake;
 };
 
