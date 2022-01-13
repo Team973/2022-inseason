@@ -94,7 +94,9 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
 
 void Drive::Update() {
 
-
+    ArcadeCalcOutput();
+    m_rightDriveTalonA->Set(ControlMode::Velocity, m_rightOutput * 20000);
+    m_leftDriveTalonA->Set(ControlMode::Velocity, m_leftOutput * 20000);
 
 }
 
@@ -102,7 +104,31 @@ void Drive::DashboardUpdate() {
 
 }
 
-
-
+void Drive::ArcadeCalcOutput() {
+    m_throttle = std::clamp(m_throttle, -1.0, 1.0);
+    m_turn = std::clamp(m_turn, -1.0, 1.0);
+    double maxInput = std::copysign(std::max(std::abs(m_throttle), std::abs(m_turn)), m_throttle);
+    if (m_throttle >= 0.0) {
+        if(m_turn >= 0.0) {
+            // Quadrant 1
+            m_leftOutput = maxInput;
+            m_rightOutput = m_throttle - m_turn;
+        } else {
+            // Quadrant 2
+            m_leftOutput = m_throttle + m_turn;
+            m_rightOutput = maxInput;
+        }
+    } else {
+        if(m_turn >= 0.0) {
+            // Quadrant 4
+            m_leftOutput = maxInput;
+            m_rightOutput =  m_throttle + m_turn;
+        } else {
+            // Quadrant 3
+            m_leftOutput =  m_throttle - m_turn;
+            m_rightOutput = maxInput;
+        }
+    }
+}
 
 } //namespace frc973 

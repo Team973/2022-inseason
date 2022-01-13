@@ -40,7 +40,15 @@ public:
      */
     void DashboardUpdate() override;
 
+    /**
+     * Set correct Left motor and Right motor outputs on drive
+     */
+    void Drive::ArcadeCalcOutput();
     
+    /**
+     * Called to update the current throttle and turn values of the joysticks
+     */
+    void SetThrottleTurn(double throttle, double turn);
 
 
 
@@ -59,6 +67,9 @@ private:
     WPI_TalonFX *m_rightDriveTalonC;
 
     DriveMode m_driveMode;
+
+    double m_leftOutput;
+    double m_rightOutput;
 
     double m_throttle;
     double m_turn;
