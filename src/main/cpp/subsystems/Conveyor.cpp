@@ -2,10 +2,9 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonFX *towerMotor, TalonFX *floorMotor, TalonFX *queuerMotor)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonFX *floorMotor)
         : m_towerMotor(towerMotor)
         , m_floorMotor(floorMotor)
-        , m_queuerMotor(queuerMotor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
@@ -24,15 +23,12 @@ void Conveyor::Update() {
     switch (m_towerState) {  
         case TowerState::Off:
             m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
-            m_queuerMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
         case TowerState::FeedIn:
             m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
-            m_queuerMotor->Set(ControlMode::PercentOutput, 1.0);
             break;
         case TowerState::FeedOut:
             m_towerMotor->Set(ControlMode::PercentOutput, -1.0);
-            m_queuerMotor->Set(ControlMode::PercentOutput, -1.0);
             break;
         case TowerState::Manual:
             m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);

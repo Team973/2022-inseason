@@ -47,6 +47,5 @@ constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive ta
  */
 constexpr int CONVEYOR_TOWER_FALCON = 0;   /**< Can ID for the first left drive talon. */
 constexpr int CONVEYOR_FLOOR_FALCON = 0;   /**< Can ID for the second left drive talon. */
-constexpr int CONVEYOR_QUEUER_FALCON = 0;   /**< Can ID for the third left drive talon. */
 
 } // namespace frc973

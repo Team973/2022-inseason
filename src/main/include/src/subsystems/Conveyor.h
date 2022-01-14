@@ -15,14 +15,13 @@ class Conveyor : public Subsystem {
 public:
     /**
      * Contructs the conveyor system.
-     * @param queuerMotor the motor for the queuer.
      * @param towerMotor the motor for the tower.
      * @param floorMotor the motor for the floor.
      */
     /*
      Not certain what type of motor so we put fx's
      */
-    Conveyor(TalonFX *towerMotor, TalonFX *floorMotor, TalonFX *queuerMotor);
+    Conveyor(TalonFX *towerMotor, TalonFX *floorMotor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -111,8 +110,6 @@ public:
 private:
     TalonFX *m_towerMotor;
     TalonFX *m_floorMotor;
-    TalonFX *m_queuerMotor;
-
     TowerState m_towerState;
     FloorState m_floorState;
 

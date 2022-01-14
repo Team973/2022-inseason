@@ -31,8 +31,6 @@ class Robot : public TimedRobot {
  private:
  TalonFX *m_conveyorFloorMotor;
  TalonFX *m_conveyorTowerMotor;
- TalonFX *m_conveyorQueuerMotor;
-
  Conveyor *m_conveyor;
 
 };
