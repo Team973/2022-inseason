@@ -2,6 +2,8 @@
 
 #include "lib/bases/Subsystem.h"
 #include "lib/Util.h"
+#include "lib/Constants.h"
+#include "src/RobotInfo.h"
 
 #include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
@@ -29,6 +31,11 @@ public:
      * Enables the shooter.
      */
     void EnableShooter();
+    
+    /**
+     * Enables the shooter with distance calculation.
+     */
+    void EnableShooterWithDist();
 
     /**
      * Disables the shooter.
@@ -69,9 +76,18 @@ public:
      */
     void DashboardUpdate() override;
 
+     /**
+     * Checks to see if the flywheel is at speed or not.
+     * @return true or false on if its at speed.
+     */
+    bool IsAtSpeed();
+
 private:
     TalonFX *m_flywheelA;
     TalonFX *m_flywheelB;
     TalonFX *m_precharger;
+
+    double m_flywheelRPMSetpoint;
+    double m_prechargerRPMSetpoint;
 };
 }

@@ -43,10 +43,18 @@ constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive t
 constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
 
 /**
- * Flywheel Subsystem.
+ * Shooter Subsystem.
  */
 constexpr int FLYWHEEL_A_CAN_ID = 0;  /**< Left flywheel TalonFX CAN ID. */
 constexpr int FLYWHEEL_B_CAN_ID = 0; /**< Right flywheel TalonFX CAN ID. */
 constexpr int PRECHARGER_CAN_ID = 0;  /**< Precharger TalonFX CAN ID. */
+constexpr double FLYWHEEL_MOTOR_PULLEY = 1.0; /**< To do: This number is a placeholder please change it later */
+constexpr double FLYWHEEL_DIRECT_PULLEY = 1.0; /**< To do: This number is a placeholder please change it later */
+static constexpr double FLYWHEEL_RPM_SETPOINT = 3400.0; /**< To do: This number is a placeholder please change it later */   
+static constexpr double PRECHARGER_RPM_SETPOINT = 3400.0; /**< To do: This number is a placeholder please change it later */
+constexpr double PRECHARGER_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM;
+constexpr double FLYWHEEL_GEAR_RATIO = FLYWHEEL_MOTOR_PULLEY / FLYWHEEL_DIRECT_PULLEY;
+constexpr double FLYWHEEL_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;
+
 
 } // namespace frc973
