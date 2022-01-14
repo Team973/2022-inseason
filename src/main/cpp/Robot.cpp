@@ -19,6 +19,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
+  m_shooter->Update();
 }
 
 } // namespace frc973

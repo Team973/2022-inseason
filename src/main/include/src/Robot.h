@@ -10,7 +10,8 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include <ctre/Phoenix.h>
-#include <ctre/Phoenix.h>
+#include "subsystems/Shooter.h"
+#include "RobotInfo.h"
 
 using namespace frc;
 namespace frc973 {
@@ -28,6 +29,12 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+
+ TalonFX *m_shooterFlywheelMotorA;
+ TalonFX *m_shooterFlywheelMotorB;
+ TalonFX *m_shooterPrecharger;
+
+ Shooter *m_shooter;
 
 };
 
