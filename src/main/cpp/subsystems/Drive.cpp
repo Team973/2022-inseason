@@ -131,4 +131,10 @@ void Drive::ArcadeCalcOutput() {
     }
 }
 
+void Drive::SetThrottleTurn(double throttle, double turn) {
+    m_throttle = throttle;
+    m_turn = turn;
+}
+
+
 } //namespace frc973 

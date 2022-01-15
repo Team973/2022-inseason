@@ -43,7 +43,7 @@ public:
     /**
      * Set correct Left motor and Right motor outputs on drive
      */
-    void Drive::ArcadeCalcOutput();
+    void ArcadeCalcOutput();
     
     /**
      * Called to update the current throttle and turn values of the joysticks

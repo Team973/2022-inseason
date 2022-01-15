@@ -8,11 +8,11 @@ namespace frc973 {
  * Constants
  */
 //Physical Dimensions - TODO: update
-constexpr double DRIVE_WIDTH = 0;           //Drive base width in inches.
-constexpr double DRIVE_PINION = 0;          //Teeth on drive pinion gear.
-constexpr double DRIVE_GEAR = 0;            //Teeth on the main drive gear.
-constexpr double DRIVE_WHEEL_DIAMETER = 0;  //Diameter of the drive train wheels in inches.
-constexpr double MAX_FT_PER_SECOND = 0;     //Max speed of the robot in feet per second.
+constexpr double DRIVE_WIDTH = 1;           //Drive base width in inches.
+constexpr double DRIVE_PINION = 1;          //Teeth on drive pinion gear.
+constexpr double DRIVE_GEAR = 1;            //Teeth on the main drive gear.
+constexpr double DRIVE_WHEEL_DIAMETER = 1;  //Diameter of the drive train wheels in inches.
+constexpr double MAX_FT_PER_SECOND = 1;     //Max speed of the robot in feet per second.
 
 //Movement
 constexpr double DRIVE_GEAR_RATIO = DRIVE_PINION / DRIVE_GEAR; /**< The gear ratio of the drive train. */

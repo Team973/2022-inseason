@@ -10,9 +10,27 @@
 
 namespace frc973 {
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  //Joystick
+  m_driverStick = new Joystick(0);
 
-void Robot::RobotPeriodic() {}
+  //Drive
+  m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
+  m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
+  m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_TALON_C);
+  m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_TALON_A);
+  m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_TALON_B);
+  m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_TALON_C);
+
+  m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, 
+                      m_rightDriveTalonA, m_rightDriveTalonB, m_rightDriveTalonC);
+}
+
+void Robot::RobotPeriodic() {
+  m_drive->DashboardUpdate();
+
+
+}
 
 } // namespace frc973
 
