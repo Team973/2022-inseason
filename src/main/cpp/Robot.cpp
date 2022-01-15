@@ -4,18 +4,17 @@
 
 #include "src/Robot.h"
 
-#include <fmt/core.h>
-
-#include <frc/smartdashboard/SmartDashboard.h>
-
 namespace frc973 {
 
 void Robot::RobotInit() {
   m_intakeTalon = new TalonFX(INTAKE_FALCON);
-  m_intake = new Intake(m_intakeTalon);
+  m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
+  m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  m_intake->Update();
+}
 
 } // namespace frc973
 

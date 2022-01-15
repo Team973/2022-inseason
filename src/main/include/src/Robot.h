@@ -8,10 +8,12 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <fmt/core.h>
+#include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <ctre/Phoenix.h>
 
 #include "subsystems/Intake.h"
-
-#include <ctre/Phoenix.h>
 
 using namespace frc;
 namespace frc973 {
@@ -30,6 +32,7 @@ class Robot : public TimedRobot {
 
  private:
     TalonFX *m_intakeTalon;
+    Solenoid *m_intakeSolenoid;
     Intake *m_intake;
 };
 

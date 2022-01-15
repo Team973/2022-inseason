@@ -2,7 +2,7 @@
 
 namespace frc973 {
     
-Intake::Intake(TalonFX *intakeTalon)
+Intake::Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid) 
     : m_intakeSpeed(0.0)
     , m_intakeState(IntakeState::Retract) 
     , m_intakeTalon(intakeTalon) {
@@ -32,16 +32,33 @@ void Intake::SetPercentOutput(double speed) {
 void Intake::Update() {
     switch (m_intakeState) {
         case IntakeState::Deploy:
-            //Deploys intake
+            m_intakeSolenoid->Set(true);
             break;
         case IntakeState::Retract:
-            //brings back intake
+            m_intakeSolenoid->Set(false);
+            break;
+        
+    }
+
+     switch (m_intakeMotorState) {
+        case IntakeMotorState::Off:
+            m_intakeSpeed = 0.0;
+            break;
+        case IntakeMotorState::FeedIn:
+            m_intakeSpeed = 0.8;
+            break;  
+        case IntakeMotorState::FeedOut:
+            m_intakeSpeed = -0.2;
+            break;
+        case IntakeMotorState::Manual:
+            //Controlled by Co-Driver, set in Teleop
             break;
     }
 
+
     m_intakeSpeed = std::clamp(m_intakeSpeed, -1.0, 1.0);
 
-  //  m_intakeTalon->(m_intakeSpeed);
+    m_intakeTalon->Set(ControlMode::PercentOutput, m_intakeSpeed);
 }
 
 void Intake::DashboardUpdate() {

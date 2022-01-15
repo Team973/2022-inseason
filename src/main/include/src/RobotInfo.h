@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/Constants.h"
+#include <frc/PneumaticsModuleType.h>
 
 namespace frc973 {
     
@@ -43,8 +44,15 @@ constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive t
 constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
 
 /**
+ * PCM
+ */
+constexpr int PCM_ID = 0; 
+ 
+
+/**
  * Intake Subsystem
  */
 constexpr int INTAKE_FALCON = 0; /**< Can ID for the intake talon. */
+constexpr int INTAKE_SOLENOID_ID = 0; /**< Can ID for the intake Solenoid. */
 
 } // namespace frc973

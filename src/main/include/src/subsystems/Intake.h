@@ -5,6 +5,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
+#include <frc/Solenoid.h>
 
 namespace frc973 {
 
@@ -14,12 +15,20 @@ public:
     /** 
      * Constructs the intake subsystem 
      */
-    Intake(TalonFX *intakeTalon);
+    Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid);
 
     enum class IntakeState {
         Deploy, /* Deploys the Intake */
         Retract /* Retracts the Intake */
     };
+
+    enum class IntakeMotorState {
+        Off, /* Intake wheels don't run */
+        FeedIn, /* Runs the intake wheels towards the conveyer */
+        FeedOut, /* Runs the intake wheels away from the conveyer */
+        Manual /* Driver controls the intake speed */
+    };
+
 
      /** 
      * Deploys the Intake
@@ -58,8 +67,11 @@ public:
   
 private: 
     double m_intakeSpeed;
+    
     IntakeState m_intakeState;
+    IntakeMotorState m_intakeMotorState;
     TalonFX *m_intakeTalon; 
+    frc::Solenoid *m_intakeSolenoid;
 };
   
 } // namespace frc973
