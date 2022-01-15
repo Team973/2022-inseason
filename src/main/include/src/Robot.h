@@ -10,7 +10,8 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include <ctre/Phoenix.h>
-#include <ctre/Phoenix.h>
+
+#include "src/subsystems/Gyro.h"
 
 using namespace frc;
 namespace frc973 {
@@ -28,7 +29,8 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-
+  TalonSRX* m_gyroTalon;
+  Gyro* m_gyro;
 };
 
 } //namespace frc973
