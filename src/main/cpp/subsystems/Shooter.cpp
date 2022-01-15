@@ -18,7 +18,8 @@ void Shooter::EnableShooter() {
 }
 
 void Shooter::EnableShooterWithDist() {
-    SetPrechargerVelocity(m_prechargerRPMSetpoint / PRECHARGER_VELOCITY_RPM);
+    /* I want a function to to be able to calcuate the rpm based on the distance from the goal.
+    To do that, it requires the lime light subsystem.*/
 }
 
 void Shooter::DisableShooter() {
