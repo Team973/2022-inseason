@@ -8,10 +8,13 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/Joystick.h>
+#include <frc/XboxController.h>
 
 #include <ctre/Phoenix.h>
 
 #include "src/subsystems/Gyro.h"
+#include "src/subsystems/Turret.h"
 
 using namespace frc;
 namespace frc973 {
@@ -29,8 +32,17 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+ //gyro
   TalonSRX* m_gyroTalon;
   Gyro* m_gyro;
+
+  //joysticks
+  Joystick *m_driverStick;
+  XboxController *m_operatorStick;
+
+  //turret
+  WPI_TalonFX *m_turretTalon;
+  Turret *m_turret;
 };
 
 } //namespace frc973

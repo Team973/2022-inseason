@@ -11,9 +11,19 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+  //Gyro Init
   m_gyroTalon = new TalonSRX(9);
   m_gyro = new Gyro(m_gyroTalon);
   m_gyro->Zero();
+
+  //Joystick Init
+  m_driverStick = new Joystick(1);
+  m_operatorStick = new XboxController(0);
+
+  //Turret Init
+  m_turretTalon = new WPI_TalonFX(13); 
+  m_turret = new Turret(m_turretTalon);
+
 }
 
 void Robot::RobotPeriodic() {
