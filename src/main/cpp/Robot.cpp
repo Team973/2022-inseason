@@ -11,8 +11,8 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
-  m_conveyorFloorMotor = new TalonFX(CONVEYOR_FLOOR_FALCON);
-  m_conveyorTowerMotor = new TalonFX(CONVEYOR_TOWER_FALCON);
+  m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_FALCON);
+  m_conveyorTowerMotor = new TalonSRX(CONVEYOR_TOWER_FALCON);
 
    m_conveyor = new Conveyor(m_conveyorFloorMotor, m_conveyorTowerMotor);
 }

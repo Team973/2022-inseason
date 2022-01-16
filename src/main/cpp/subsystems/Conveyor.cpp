@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonFX *towerMotor, TalonFX *floorMotor)
+Conveyor::Conveyor(TalonSRX *towerMotor, TalonSRX *floorMotor)
         : m_towerMotor(towerMotor)
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
