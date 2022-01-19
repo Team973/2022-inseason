@@ -95,8 +95,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
 void Drive::Update() {
 
     ArcadeCalcOutput();
-    m_rightDriveTalonA->Set(ControlMode::Velocity, m_rightOutput * 20000);
-    m_leftDriveTalonA->Set(ControlMode::Velocity, m_leftOutput * 20000);
+    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 20000) * abs(m_throttle));
+    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 20000) * abs(m_throttle));
 
 }
 

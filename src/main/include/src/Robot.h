@@ -11,6 +11,7 @@
 
 #include <ctre/Phoenix.h>
 #include <frc/Joystick.h>
+#include <frc/XboxController.h>
 #include "subsystems/Drive.h"
 #include "RobotInfo.h"
 #include "lib/Util.h"
@@ -42,6 +43,7 @@ class Robot : public TimedRobot {
     WPI_TalonFX *m_rightDriveTalonC;  
     Drive *m_drive; 
     Joystick *m_driverStick;
+    XboxController *m_operatorStick;
 };
 
 } //namespace frc973

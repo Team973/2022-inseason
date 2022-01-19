@@ -12,7 +12,8 @@ namespace frc973 {
 
 void Robot::RobotInit() {
   //Joystick
-  m_driverStick = new Joystick(0);
+  m_driverStick = new Joystick(1);
+  m_operatorStick = new XboxController(0);
 
   //Drive
   m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);

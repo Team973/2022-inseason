@@ -36,10 +36,10 @@ constexpr double DRIVE_TELEOP_LIMIT = 1.0;  /**< The max speed we want to run co
  * Drive Subsystem.
  */
 constexpr int LEFT_DRIVE_TALON_A = 0;   /**< Can ID for the first left drive talon. */
-constexpr int LEFT_DRIVE_TALON_B = 0;   /**< Can ID for the second left drive talon. */
-constexpr int LEFT_DRIVE_TALON_C = 0;   /**< Can ID for the third left drive talon. */
-constexpr int RIGHT_DRIVE_TALON_A = 0;  /**< Can ID for the first right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
+constexpr int LEFT_DRIVE_TALON_B = 1;   /**< Can ID for the second left drive talon. */
+constexpr int LEFT_DRIVE_TALON_C = 2;   /**< Can ID for the third left drive talon. */
+constexpr int RIGHT_DRIVE_TALON_A = 15;  /**< Can ID for the first right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_B = 14;  /**< Can ID for the second right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_C = 13;  /**< Can ID for the third right drive talon. */
 
 } // namespace frc973
