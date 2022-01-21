@@ -15,6 +15,7 @@
 
 #include "src/subsystems/Gyro.h"
 #include "src/subsystems/Turret.h"
+#include "lib/Util.h"
 
 using namespace frc;
 namespace frc973 {

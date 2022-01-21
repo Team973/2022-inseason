@@ -2,6 +2,9 @@
 
 #include "lib/bases/Subsystem.h"
 #include <ctre/Phoenix.h>
+#include <cmath>
+#include "lib/Constants.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 namespace frc973 {
 
@@ -10,9 +13,15 @@ public:
     Turret(WPI_TalonFX *turretMotor);
     
     /**
-     * @param turnPower input in the joystick's x direction for turn percent power and direction
+     * @param angle angle its going to turn to 
      */
-    void Turn(double turnPower);
+    void Turn(double angleInDegrees);
+
+    /**
+     * @param x x-value of operator stick
+     * @param y y-value of operator stick
+     */
+    double SetJoystickAngle(double x, double y);
 
     void Update() override;
 
@@ -23,6 +32,9 @@ private:
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
+
+    double m_currentAngleInRadians;
+    double m_tickPosition;
 
 };
 
