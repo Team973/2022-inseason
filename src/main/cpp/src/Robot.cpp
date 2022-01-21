@@ -29,6 +29,7 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   m_gyro->Update();
   m_gyro->DashboardUpdate();
+  m_turret->DashboardUpdate();
 }
 
 } // namespace frc973

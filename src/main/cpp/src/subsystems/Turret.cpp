@@ -11,7 +11,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
 
     m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
 
-    m_turretMotor->SetNeutralMode(NeutralMode::Brake);
+    m_turretMotor->SetNeutralMode(NeutralMode::Coast);
 
     m_turretMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
 
@@ -25,7 +25,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
     m_turretMotor->Config_kP(0, 0.13, 30);
     m_turretMotor->Config_kI(0, 0.0, 30);
     m_turretMotor->Config_kD(0, 0.0, 30);
-    m_turretMotor->Config_kF(0, 0.05, 30);
+    m_turretMotor->Config_kF(0, 0.0, 30);
 
     m_turretMotor->SetSelectedSensorPosition(0, 0, 0);
 
@@ -33,19 +33,27 @@ Turret::Turret(WPI_TalonFX *turretMotor)
     m_turretMotor->ConfigStatorCurrentLimit(m_statorLimit);
 }
 
-void Turret::Turn(double angleInDegrees) {
-    m_currentAngleInRadians = angleInDegrees; 
+void Turret::Turn(double angleInDegrees) { 
 
     // 2048 per rotation and gear ratio of 1:70
-    m_turretMotor->Set(ControlMode::Position, m_currentAngleInRadians / (2 * (Constants::PI)) * 2048 * 70);
-    m_tickPosition = m_currentAngleInRadians / (2 * (Constants::PI)) * 2048;
+    m_turretMotor->Set(ControlMode::Position, (angleInDegrees / 360)  * 2048 * 70);
+    m_tickPosition = (angleInDegrees / 360) * 2048 * 70;
 }
 
-double Turret::SetJoystickAngle(double x, double y){
-
-    m_currentAngleInRadians = atan2(x, y);
-
-    return m_currentAngleInRadians;
+double Turret::CalcJoystickAngleInDegrees(double x, double y){
+    double angleInDegrees; 
+    double distance;
+    
+    //deadband 
+    distance = sqrt(pow(x, 2.0) + pow(y, 2.0)); 
+    if (distance < 0.05){
+        return 0.0; 
+    }
+    
+    //converts radians to degrees
+    angleInDegrees = atan2(y, x) * 180 / Constants::PI; 
+    m_currentAngleInDegrees = angleInDegrees;
+    return angleInDegrees;
 }
 
 
@@ -53,8 +61,9 @@ double Turret::SetJoystickAngle(double x, double y){
 void Turret::Update() {}
 
 void Turret::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInRadians);
+    frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInDegrees);
     frc::SmartDashboard::PutNumber("ticksPosition", m_tickPosition);
+    frc::SmartDashboard::PutNumber("ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
 }
 
 
