@@ -2,14 +2,16 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonSRX *towerMotor, TalonSRX *floorMotor)
-        : m_towerMotor(towerMotor)
+Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floorMotor)
+        : m_towerMotorA(towerMotorA)
+        , m_towerMotorB(towerMotorB)
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0) {
-}
+        m_towerMotorB->Follow(*m_towerMotorA);
+        }
 
 void Conveyor::Update() {
     if (m_manualTowerSpeed != 0) {
@@ -22,16 +24,16 @@ void Conveyor::Update() {
 
     switch (m_towerState) {  
         case TowerState::Off:
-            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, 0.0);
             break;
         case TowerState::FeedIn:
-            m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, 1.0);
             break;
         case TowerState::FeedOut:
-            m_towerMotor->Set(ControlMode::PercentOutput, -1.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, -1.0);
             break;
         case TowerState::Manual:
-            m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
+            m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
@@ -55,14 +57,14 @@ void Conveyor::DashboardUpdate() {
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
-    m_towerMotor->Set(ControlMode::PercentOutput, speed);
+    m_towerMotorA->Set(ControlMode::PercentOutput, speed);
 }
 
 void Conveyor::SetFloorSpeed(double speed) {
     m_floorMotor->Set(ControlMode::PercentOutput, speed);
 }
 
-float Conveyor::getTowerState() {
+float Conveyor::GetTowerState() {
     float state = 0.0;
     switch (m_towerState) {   
         case TowerState::Off:
@@ -79,7 +81,7 @@ float Conveyor::getTowerState() {
             break;
     }
 }
-float Conveyor::getFloorState() {
+float Conveyor::GetFloorState() {
     float state = 0.0;
     switch (m_floorState) {  
         case FloorState::FeedIn:

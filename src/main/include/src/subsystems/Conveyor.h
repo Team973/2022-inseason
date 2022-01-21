@@ -15,10 +15,11 @@ class Conveyor : public Subsystem {
 public:
     /**
      * Contructs the conveyor system.
-     * @param towerMotor the motor for the tower.
+     * @param towerMotorA one of the two motors for the tower.
+     * @param towerMotorB one of the two motors for the tower.
      * @param floorMotor the motor for the floor.
      */
-    Conveyor(TalonSRX *towerMotor, TalonSRX *floorMotor);
+    Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floorMotor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -69,14 +70,14 @@ public:
      * either off, feed in, feed out, or manual.
      * @param state new tower state
      */
-    float getTowerState();
+    float GetTowerState();
 
     /**
      * Where the state of the tower is set to
      * either feed in, feed out, manual, or off.
      * @param state new tower state
      */
-    float getFloorState();
+    float GetFloorState();
 
     /**
      * Where the state of the tower is set to
@@ -105,7 +106,8 @@ public:
     void SetManualFloorSpeed(double speed);
 
 private:
-    TalonSRX *m_towerMotor;
+    TalonSRX *m_towerMotorA;
+    TalonSRX *m_towerMotorB;
     TalonSRX *m_floorMotor;
     TowerState m_towerState;
     FloorState m_floorState;
