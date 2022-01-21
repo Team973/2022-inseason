@@ -15,7 +15,7 @@ public:
     /**
      * @param angleInDegrees angle its going to turn to 
      */
-    void Turn(double angleInDegrees);
+    void Turn(double angleInDegrees, double gyroOffset);
 
     /**
      * @param x x-value of operator stick

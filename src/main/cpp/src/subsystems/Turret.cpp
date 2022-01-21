@@ -33,10 +33,10 @@ Turret::Turret(WPI_TalonFX *turretMotor)
     m_turretMotor->ConfigStatorCurrentLimit(m_statorLimit);
 }
 
-void Turret::Turn(double angleInDegrees) { 
+void Turret::Turn(double angleInDegrees, double gyroOffset) { 
 
     // 2048 per rotation and gear ratio of 1:70
-    m_turretMotor->Set(ControlMode::Position, (angleInDegrees / 360)  * 2048 * 70);
+    m_turretMotor->Set(ControlMode::Position, ((angleInDegrees + gyroOffset) / 360)  * 2048 * 70);
     m_tickPosition = (angleInDegrees / 360) * 2048 * 70;
 }
 
