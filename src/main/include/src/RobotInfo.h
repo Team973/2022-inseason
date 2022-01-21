@@ -8,11 +8,11 @@ namespace frc973 {
  * Constants
  */
 //Physical Dimensions - TODO: update
-constexpr double DRIVE_WIDTH = 0;           //Drive base width in inches.
-constexpr double DRIVE_PINION = 0;          //Teeth on drive pinion gear.
-constexpr double DRIVE_GEAR = 0;            //Teeth on the main drive gear.
-constexpr double DRIVE_WHEEL_DIAMETER = 0;  //Diameter of the drive train wheels in inches.
-constexpr double MAX_FT_PER_SECOND = 0;     //Max speed of the robot in feet per second.
+constexpr double DRIVE_WIDTH = 1;           //Drive base width in inches.
+constexpr double DRIVE_PINION = 1;          //Teeth on drive pinion gear.
+constexpr double DRIVE_GEAR = 1;            //Teeth on the main drive gear.
+constexpr double DRIVE_WHEEL_DIAMETER = 1;  //Diameter of the drive train wheels in inches.
+constexpr double MAX_FT_PER_SECOND = 1;     //Max speed of the robot in feet per second.
 
 //Movement
 constexpr double DRIVE_GEAR_RATIO = DRIVE_PINION / DRIVE_GEAR; /**< The gear ratio of the drive train. */
@@ -36,10 +36,10 @@ constexpr double DRIVE_TELEOP_LIMIT = 1.0;  /**< The max speed we want to run co
  * Drive Subsystem.
  */
 constexpr int LEFT_DRIVE_TALON_A = 0;   /**< Can ID for the first left drive talon. */
-constexpr int LEFT_DRIVE_TALON_B = 0;   /**< Can ID for the second left drive talon. */
-constexpr int LEFT_DRIVE_TALON_C = 0;   /**< Can ID for the third left drive talon. */
-constexpr int RIGHT_DRIVE_TALON_A = 0;  /**< Can ID for the first right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
+constexpr int LEFT_DRIVE_TALON_B = 1;   /**< Can ID for the second left drive talon. */
+constexpr int LEFT_DRIVE_TALON_C = 2;   /**< Can ID for the third left drive talon. */
+constexpr int RIGHT_DRIVE_TALON_A = 15;  /**< Can ID for the first right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_B = 14;  /**< Can ID for the second right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_C = 13;  /**< Can ID for the third right drive talon. */
 
 } // namespace frc973
