@@ -66,6 +66,12 @@ public:
      */
     void SetPrechargerRPM(double setpoint);
 
+     /**
+     * Checks to see if the flywheel is at speed or not.
+     * @return true or false on if its at speed.
+     */
+    bool IsAtSpeed();
+    
     /**
      * Update this subsystem example each cycle or TeleopPeriodic.
      */
@@ -76,11 +82,6 @@ public:
      */
     void DashboardUpdate() override;
 
-     /**
-     * Checks to see if the flywheel is at speed or not.
-     * @return true or false on if its at speed.
-     */
-    bool IsAtSpeed();
 
 private:
     TalonFX *m_flywheelA;

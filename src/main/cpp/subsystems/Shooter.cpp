@@ -43,6 +43,10 @@ void Shooter::SetPrechargerRPM(double setpoint) {
     m_prechargerRPMSetpoint = setpoint;
 }
 
+bool Shooter::IsAtSpeed() {
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 50);
+}
+
 void Shooter::Update() {
 }
 
@@ -58,7 +62,4 @@ void Shooter::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("Flywheel rpm",m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
 }
 
-bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 50);
-}
 }
