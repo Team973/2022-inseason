@@ -6,6 +6,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 #include <frc/Solenoid.h>
+#include <fmt/core.h>
 
 namespace frc973 {
 
