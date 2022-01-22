@@ -27,10 +27,10 @@ void Conveyor::Update() {
             m_towerMotorA->Set(ControlMode::PercentOutput, 0.0);
             break;
         case TowerState::FeedIn:
-            m_towerMotorA->Set(ControlMode::PercentOutput, 1.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, 0.7);
             break;
         case TowerState::FeedOut:
-            m_towerMotorA->Set(ControlMode::PercentOutput, -1.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, -0.7);
             break;
         case TowerState::Manual:
             m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
@@ -39,10 +39,10 @@ void Conveyor::Update() {
 
     switch (m_floorState) {  
         case FloorState::FeedIn:
-            m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
             break;
         case FloorState::FeedOut:
-            m_floorMotor->Set(ControlMode::PercentOutput, -1.0);
+            m_floorMotor->Set(ControlMode::PercentOutput, -0.7);
             break;
         case FloorState::Manual:
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
@@ -64,40 +64,11 @@ void Conveyor::SetFloorSpeed(double speed) {
     m_floorMotor->Set(ControlMode::PercentOutput, speed);
 }
 
-float Conveyor::GetTowerState() {
-    float state = 0.0;
-    switch (m_towerState) {   
-        case TowerState::Off:
-            state = 0.0;
-            break;
-        case TowerState::FeedIn:
-            state = 1.0;
-            break;
-        case TowerState::FeedOut:
-            state = 2.0;
-            break;
-        case TowerState::Manual:
-            state = 3.0;
-            break;
-    }
+Conveyor::TowerState Conveyor::GetTowerState() {
+    return m_towerState;
 }
-float Conveyor::GetFloorState() {
-    float state = 0.0;
-    switch (m_floorState) {  
-        case FloorState::FeedIn:
-            state += 0.0;
-            break;
-        case FloorState::FeedOut:
-            state += 0.1;
-            break;
-        case FloorState::Manual:
-            state += 0.2;
-            break;
-        case FloorState::Off:
-            state += 0.3;
-            break;
-    }
-    return state;
+Conveyor::FloorState Conveyor::GetFloorState() {
+    return m_floorState;
 }
 
 void Conveyor::SetTowerState(TowerState state) {

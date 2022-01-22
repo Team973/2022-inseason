@@ -68,16 +68,14 @@ public:
     /**
      * Where the state of the tower is set to
      * either off, feed in, feed out, or manual.
-     * @param state new tower state
      */
-    float GetTowerState();
+    Conveyor::TowerState GetTowerState();
 
     /**
      * Where the state of the tower is set to
      * either feed in, feed out, manual, or off.
-     * @param state new tower state
      */
-    float GetFloorState();
+    Conveyor::FloorState GetFloorState();
 
     /**
      * Where the state of the tower is set to
