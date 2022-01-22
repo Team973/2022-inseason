@@ -52,15 +52,14 @@ class Robot : public TimedRobot {
   WPI_TalonFX *m_turretTalon;
   Turret *m_turret;
     
-    WPI_TalonFX *m_leftDriveTalonA;
-    WPI_TalonFX *m_leftDriveTalonB;
-    WPI_TalonFX *m_leftDriveTalonC;
-    WPI_TalonFX *m_rightDriveTalonA;
-    WPI_TalonFX *m_rightDriveTalonB; 
-    WPI_TalonFX *m_rightDriveTalonC;  
-    Drive *m_drive; 
-    Joystick *m_driverStick;
-    XboxController *m_operatorStick;
+  //drive
+  WPI_TalonFX *m_leftDriveTalonA;
+  WPI_TalonFX *m_leftDriveTalonB;
+  WPI_TalonFX *m_leftDriveTalonC;
+  WPI_TalonFX *m_rightDriveTalonA;
+  WPI_TalonFX *m_rightDriveTalonB; 
+  WPI_TalonFX *m_rightDriveTalonC;  
+  Drive *m_drive; 
 };
 
 } //namespace frc973
