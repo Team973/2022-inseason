@@ -13,8 +13,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 
+#include "RobotInfo.h"
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
+
+#include "subsystems/Shooter.h"
 
 using namespace frc;
 namespace frc973 {
@@ -32,6 +35,10 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+  TalonFX *m_shooterFlywheelMotorA;
+  TalonFX *m_shooterFlywheelMotorB;
+  TalonFX *m_shooterPrecharger;
+  Shooter *m_shooter;
   TalonSRX* m_gyroTalon;
   Gyro* m_gyro;
   TalonFX *m_intakeTalon;

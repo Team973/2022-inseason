@@ -7,6 +7,10 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+  m_shooterFlywheelMotorA = new TalonFX(FLYWHEEL_A_CAN_ID);
+  m_shooterFlywheelMotorB = new TalonFX(FLYWHEEL_B_CAN_ID);
+  m_shooterPrecharger = new TalonFX(PRECHARGER_CAN_ID);
+  m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB, m_shooterPrecharger);
   m_gyroTalon = new TalonSRX(9);
   m_gyro = new Gyro(m_gyroTalon);
   m_gyro->Zero();
@@ -19,6 +23,7 @@ void Robot::RobotPeriodic() {
   m_gyro->Update();
   m_gyro->DashboardUpdate();
   m_intake->Update();
+  m_shooter->Update();
 }
   
 } // namespace frc973
