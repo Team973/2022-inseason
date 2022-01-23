@@ -5,14 +5,15 @@
 #pragma once
 
 #include <string>
+#include <fmt/core.h>
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include <fmt/core.h>
 #include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 
+#include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
 
 using namespace frc;
@@ -31,9 +32,11 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-    TalonFX *m_intakeTalon;
-    Solenoid *m_intakeSolenoid;
-    Intake *m_intake;
+  TalonSRX* m_gyroTalon;
+  Gyro* m_gyro;
+  TalonFX *m_intakeTalon;
+  Solenoid *m_intakeSolenoid;
+  Intake *m_intake;
 };
 
 } //namespace frc973

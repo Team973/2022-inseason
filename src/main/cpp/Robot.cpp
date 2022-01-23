@@ -7,15 +7,20 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+  m_gyroTalon = new TalonSRX(9);
+  m_gyro = new Gyro(m_gyroTalon);
+  m_gyro->Zero();
   m_intakeTalon = new TalonFX(INTAKE_FALCON);
   m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
   m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 }
 
 void Robot::RobotPeriodic() {
+  m_gyro->Update();
+  m_gyro->DashboardUpdate();
   m_intake->Update();
 }
-
+  
 } // namespace frc973
 
 #ifndef RUNNING_FRC_TESTS
