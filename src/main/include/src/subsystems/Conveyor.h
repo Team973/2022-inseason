@@ -37,10 +37,11 @@ public:
      */
     enum class FloorState
     {
+        Off,      /**< State for the floor being off. */
         FeedIn,  /**< Brings power cells to tower. */
         FeedOut, /**< Brings power cells to Intake. */
-        Manual,  /**< Manual control over the speed of the floor. */
-        Off      /**< State for the tower being off. */
+        Manual  /**< Manual control over the speed of the floor. */
+        
     };
 
     /**

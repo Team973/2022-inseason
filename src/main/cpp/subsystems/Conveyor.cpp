@@ -38,6 +38,9 @@ void Conveyor::Update() {
     }
 
     switch (m_floorState) {  
+        case FloorState::Off:
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+            break;
         case FloorState::FeedIn:
             m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
             break;
@@ -47,9 +50,7 @@ void Conveyor::Update() {
         case FloorState::Manual:
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
-        case FloorState::Off:
-            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
-            break;
+        
     }
 }
 
