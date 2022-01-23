@@ -10,9 +10,16 @@
 
 namespace frc973 {
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  m_gyroTalon = new TalonSRX(9);
+  m_gyro = new Gyro(m_gyroTalon);
+  m_gyro->Zero();
+}
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  m_gyro->Update();
+  m_gyro->DashboardUpdate();
+}
 
 } // namespace frc973
 
