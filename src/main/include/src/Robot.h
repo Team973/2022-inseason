@@ -8,6 +8,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <fmt/core.h>
 
 #include <ctre/Phoenix.h>
 #include "subsystems/Shooter.h"
