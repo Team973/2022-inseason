@@ -5,13 +5,16 @@
 #pragma once
 
 #include <string>
+#include <fmt/core.h>
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-
+#include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 
 #include "src/subsystems/Gyro.h"
+#include "subsystems/Intake.h"
 
 using namespace frc;
 namespace frc973 {
@@ -31,6 +34,9 @@ class Robot : public TimedRobot {
  private:
   TalonSRX* m_gyroTalon;
   Gyro* m_gyro;
+  TalonFX *m_intakeTalon;
+  Solenoid *m_intakeSolenoid;
+  Intake *m_intake;
 };
 
 } //namespace frc973
