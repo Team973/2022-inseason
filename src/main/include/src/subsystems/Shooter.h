@@ -21,12 +21,6 @@ public:
      */
     Shooter(TalonFX *flywheelA, TalonFX *flywheelB, TalonFX *precharger);
 
-    enum class ShooterStates{
-        Off,       //idle; not active
-        FarShot,   //shoots from far range
-        CloseShot, //shoots from close range
-    };
-
     /**
      * Enables the shooter.
      */

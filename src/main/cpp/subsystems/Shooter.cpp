@@ -9,6 +9,7 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB, TalonFX *precharger)
         , m_flywheelRPMSetpoint(FLYWHEEL_RPM_SETPOINT)
         , m_prechargerRPMSetpoint(PRECHARGER_RPM_SETPOINT)
 {
+    m_flywheelB->SetInverted(true);
     m_flywheelB->Follow(*m_flywheelA);
 }
 
