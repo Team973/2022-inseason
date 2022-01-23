@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/Constants.h"
+#include <frc/PneumaticsModuleType.h>
 
 namespace frc973 {
     
@@ -14,7 +15,7 @@ constexpr double DRIVE_GEAR = 1;            //Teeth on the main drive gear.
 constexpr double DRIVE_WHEEL_DIAMETER = 1;  //Diameter of the drive train wheels in inches.
 constexpr double MAX_FT_PER_SECOND = 1;     //Max speed of the robot in feet per second.
 
-//Movement
+// Movement
 constexpr double DRIVE_GEAR_RATIO = DRIVE_PINION / DRIVE_GEAR; /**< The gear ratio of the drive train. */
 constexpr double DRIVE_CIRCUMFERENCE =
     Constants::PI * DRIVE_WHEEL_DIAMETER; /**< Circumference of the drive wheels in inches. */
@@ -55,6 +56,15 @@ static constexpr double PRECHARGER_RPM_SETPOINT = 3400.0; /**< To do: This numbe
 constexpr double PRECHARGER_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM;
 constexpr double FLYWHEEL_GEAR_RATIO = FLYWHEEL_MOTOR_PULLEY / FLYWHEEL_DIRECT_PULLEY;
 constexpr double FLYWHEEL_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;
+  
+/**
+ * PCM
+ */
+constexpr int PCM_ID = 0; 
 
-
+/**
+ * Intake Subsystem
+ */
+constexpr int INTAKE_FALCON = 0; /**< Can ID for the intake talon. */
+constexpr int INTAKE_SOLENOID_ID = 0; /**< Can ID for the intake Solenoid. */
 } // namespace frc973
