@@ -5,13 +5,19 @@
 #pragma once
 
 #include <string>
+#include <fmt/core.h>
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 
-#include "subsystems/Conveyor.h"
 #include "RobotInfo.h"
+#include "src/subsystems/Gyro.h"
+#include "subsystems/Intake.h"
+#include "subsystems/Shooter.h"
+#include "subsystems/Conveyor.h"
 
 using namespace frc;
 namespace frc973 {
@@ -33,7 +39,15 @@ class Robot : public TimedRobot {
  TalonSRX *m_conveyorTowerMotorA;
  TalonSRX *m_conveyorTowerMotorB;
  Conveyor *m_conveyor;
-
+ TalonFX *m_shooterFlywheelMotorA;
+ TalonFX *m_shooterFlywheelMotorB;
+ TalonFX *m_shooterPrecharger;
+ Shooter *m_shooter;
+ TalonSRX* m_gyroTalon;
+ Gyro* m_gyro;
+ TalonFX *m_intakeTalon;
+ Solenoid *m_intakeSolenoid;
+ Intake *m_intake;
 };
 
 } //namespace frc973
