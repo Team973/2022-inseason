@@ -44,6 +44,13 @@ constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive t
 constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
 
 /**
+ * Conveyor Subsystem.
+ */
+constexpr int CONVEYOR_TOWER_A_TALON_SRX = 0;   /**< Can ID for the first tower talon. */
+constexpr int CONVEYOR_TOWER_B_TALON_SRX = 0; /**< Can ID for the second tower talon. */
+constexpr int CONVEYOR_FLOOR_TALON_SRX = 0;   /**< Can ID for the floor talon. */
+
+ /**
  * Shooter Subsystem.
  */
 constexpr int FLYWHEEL_A_CAN_ID = 0;  /**< Left flywheel TalonFX CAN ID. */

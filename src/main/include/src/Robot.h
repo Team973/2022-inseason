@@ -16,8 +16,8 @@
 #include "RobotInfo.h"
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
-
 #include "subsystems/Shooter.h"
+#include "subsystems/Conveyor.h"
 
 using namespace frc;
 namespace frc973 {
@@ -35,15 +35,19 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-  TalonFX *m_shooterFlywheelMotorA;
-  TalonFX *m_shooterFlywheelMotorB;
-  TalonFX *m_shooterPrecharger;
-  Shooter *m_shooter;
-  TalonSRX* m_gyroTalon;
-  Gyro* m_gyro;
-  TalonFX *m_intakeTalon;
-  Solenoid *m_intakeSolenoid;
-  Intake *m_intake;
+ TalonSRX *m_conveyorFloorMotor;
+ TalonSRX *m_conveyorTowerMotorA;
+ TalonSRX *m_conveyorTowerMotorB;
+ Conveyor *m_conveyor;
+ TalonFX *m_shooterFlywheelMotorA;
+ TalonFX *m_shooterFlywheelMotorB;
+ TalonFX *m_shooterPrecharger;
+ Shooter *m_shooter;
+ TalonSRX* m_gyroTalon;
+ Gyro* m_gyro;
+ TalonFX *m_intakeTalon;
+ Solenoid *m_intakeSolenoid;
+ Intake *m_intake;
 };
 
 } //namespace frc973
