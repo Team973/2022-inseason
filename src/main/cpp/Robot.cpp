@@ -19,6 +19,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
+  m_conveyor->Update();
 }
 
 } // namespace frc973
