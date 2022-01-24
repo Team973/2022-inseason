@@ -2,9 +2,10 @@
 
 namespace frc973 {
     Gyro::Gyro(TalonSRX* gyroTalon)
-        : m_gyro(PigeonIMU(gyroTalon)) {
-    m_wrappedAngle;
-    m_currentAngle;
+        : m_gyro(PigeonIMU(gyroTalon)) 
+        , m_wrappedAngle(0.0)
+        , m_currentAngle(0.0) {
+    
 }
 
     double Gyro::GetWrappedAngle() {

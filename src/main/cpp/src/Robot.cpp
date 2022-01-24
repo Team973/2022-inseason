@@ -17,11 +17,11 @@ void Robot::RobotInit() {
   m_gyro->Zero();
 
   //Joystick Init
-  m_driverStick = new Joystick(1);
-  m_operatorStick = new XboxController(0);
+  m_driverStick = new StickController(0);
+  m_operatorStick = new StickController(1);
 
   //Turret Init
-  m_turretTalon = new WPI_TalonFX(13); 
+  m_turretTalon = new WPI_TalonFX(8); 
   m_turret = new Turret(m_turretTalon);
 
   //Drive

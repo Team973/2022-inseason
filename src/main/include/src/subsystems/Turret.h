@@ -3,8 +3,9 @@
 #include "lib/bases/Subsystem.h"
 #include <ctre/Phoenix.h>
 #include <cmath>
-#include "lib/Constants.h"
+#include "lib/util/Constants.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "lib/helpers/PID.h"
 
 namespace frc973 {
 
@@ -23,6 +24,11 @@ public:
      */
     double CalcJoystickAngleInDegrees(double x, double y);
 
+    /**
+     * Calculates output to feed into a percent output loops
+     */
+    void CalcOutput(double lightlightTarget, double gyroFF = 0.0, double translateFF = 0.0);
+
     void Update() override;
 
     void DashboardUpdate() override;
@@ -35,6 +41,8 @@ private:
 
     double m_currentAngleInDegrees;
     double m_tickPosition;
+
+    PID m_limeLightPID;
 
 };
 
