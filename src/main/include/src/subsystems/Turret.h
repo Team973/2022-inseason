@@ -44,6 +44,8 @@ private:
 
     PID m_limeLightPID;
 
+    double m_limeLightToMotorPower;
+
 };
 
 } // namespace frc973

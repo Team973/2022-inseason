@@ -8,7 +8,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(m_operatorStick->GetRawAxis(4), -m_operatorStick->GetRawAxis(5)), m_gyro->GetWrappedAngle());
+    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), m_gyro->GetWrappedAngle());
 
     if(m_operatorStick->GetAButton()) {
         m_turret->Turn(90, 0);
@@ -20,8 +20,11 @@ void Robot::TeleopPeriodic() {
     SmartDashboard::PutNumber("left", m_driverStick->GetRawAxis(1));
     SmartDashboard::PutNumber("right", m_driverStick->GetRawAxis(2));
 
-    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.2), m_driverStick->GetRawAxisWithDeadband(2, false, 0.2));
+    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05), m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
     m_drive->Update();
+    SmartDashboard::PutNumber("Rightoutput", m_drive->GetRightOuput());
+    SmartDashboard::PutNumber("Leftoutput", m_drive->GetLeftOuput());
+
 }
 
 } // namespace frc973

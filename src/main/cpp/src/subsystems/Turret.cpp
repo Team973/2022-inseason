@@ -7,6 +7,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_limeLightPID(0.0, 0.0, 0.0, 0)
+        , m_limeLightToMotorPower(0.0)
         {
 
     m_turretMotor->ConfigFactoryDefault();
@@ -58,22 +59,25 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
 
     angleInDegrees = atan2(y, x) * 180 / Constants::PI; 
 
-    //math to set wrap around to over the intake (270 degrees native to robot)
-    if(angleInDegrees < -90) {
-        angleInDegrees += 360;
-    }
+    // //math to set wrap around to over the intake (270 degrees native to robot)
+    // if(angleInDegrees < -90) {
+    //     angleInDegrees += 360;
+    // }
 
     m_currentAngleInDegrees = angleInDegrees;
     return angleInDegrees;
 }
 
 void Turret::CalcOutput(double limeLightXOffset, double gyroFF, double translateFF) {
+
+    m_limeLightPID.SetTarget(0);
     double output = m_limeLightPID.CalcOutput(limeLightXOffset);
     output += gyroFF + translateFF;
 
+    m_limeLightToMotorPower = output;
+
     m_turretMotor->Set(ControlMode::PercentOutput, output);
 }
-
 
 void Turret::Update() {}
 

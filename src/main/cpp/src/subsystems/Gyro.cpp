@@ -22,6 +22,10 @@ namespace frc973 {
         return m_gyro.GetFusedHeading();
     }
 
+    double Gyro::GetAngularRate() {
+        return m_gyro.GetYaw();
+    }
+
     void Gyro::Update() {
         m_currentAngle = GetAngle();
         m_wrappedAngle = GetWrappedAngle();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "lib/bases/Subsystem.h"
 
 namespace frc973{
@@ -8,12 +9,12 @@ namespace frc973{
 /**
  * The drive subsystem mode.
  */
-enum class DriveMode
-{
-    arcade,               /**< The arcade drive mode. */
-    position,             /**< The position drive mode. */
-    cheesyDrive,          /**< The cheesy drive mode. */
-};
+// enum class DriveMode
+// {
+//     arcade,               /**< The arcade drive mode. */
+//     position,             /**< The position drive mode. */
+//     cheesyDrive,          /**< The cheesy drive mode. */
+// };
 
 class Drive : public Subsystem {
 public:
@@ -50,13 +51,19 @@ public:
      */
     void SetThrottleTurn(double throttle, double turn);
 
+    //test del later
+    double GetRightOuput();
+
+    //test del later
+    double GetLeftOuput();
+
 
 
 private:
     /**
      * Checks to see if the left and right output values are valid values. Defaults to zero if they're undefined.
      */
-    void CheckForIsNaN();
+    // void CheckForIsNaN();
 
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
@@ -66,7 +73,7 @@ private:
     WPI_TalonFX *m_rightDriveTalonB;
     WPI_TalonFX *m_rightDriveTalonC;
 
-    DriveMode m_driveMode;
+    // DriveMode m_driveMode;
 
     double m_leftOutput;
     double m_rightOutput;
@@ -74,8 +81,8 @@ private:
     double m_throttle;
     double m_turn;
 
-    SupplyCurrentLimitConfiguration m_currentLimit;
-    StatorCurrentLimitConfiguration m_statorLimit;
+    // SupplyCurrentLimitConfiguration m_currentLimit;
+    // StatorCurrentLimitConfiguration m_statorLimit;
 
 };
 
