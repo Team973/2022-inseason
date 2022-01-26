@@ -8,9 +8,11 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/XboxController.h>
 
 #include <ctre/Phoenix.h>
 
+#include "lib/sensors/Limelight.h"
 #include "src/subsystems/Gyro.h"
 
 using namespace frc;
@@ -31,6 +33,10 @@ class Robot : public TimedRobot {
  private:
   TalonSRX* m_gyroTalon;
   Gyro* m_gyro;
+
+  Limelight *m_limelight;
+
+  XboxController *m_operatorStick;
 };
 
 } //namespace frc973

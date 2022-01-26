@@ -2,7 +2,27 @@
 
 namespace frc973 {
 
-Limelight::Limelight(const char *name) {
+Limelight::Limelight(const char *name)
+    : m_limelightSensor(nt::NetworkTableInstance::GetDefault().GetTable(name))
+    , m_lightMode(LightMode::standard)
+    , m_pipelineMode(PipelineMode::driverCamera) {
+}
+
+void Limelight::SetLightMode(LightMode mode) {
+    switch (mode) {
+        case LightMode::standard:
+            m_limelightSensor->PutNumber("ledMode", 0);
+            break;
+        case LightMode::on:
+            m_limelightSensor->PutNumber("ledmode", 3);
+            break;
+        case LightMode::off:
+            m_limelightSensor->PutNumber("ledmode", 1);
+            break;
+        case LightMode::blink:
+            m_limelightSensor->PutNumber("ledmode", 2);
+            break;
+    }
 }
 
 void Limelight::SetPipelineMode(PipelineMode mode) {
@@ -30,6 +50,10 @@ void Limelight::SetPipelineMode(PipelineMode mode) {
 
 void Limelight::SetCameraDriver() {
     SetPipelineMode(PipelineMode::driverCamera);
+}
+
+void Limelight::SetVisionCamera() {
+    SetPipelineMode(PipelineMode::pipeline_1);
 }
 
 double Limelight::GetPipeline() {

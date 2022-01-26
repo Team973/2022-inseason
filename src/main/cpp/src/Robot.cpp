@@ -4,19 +4,20 @@
 
 #include "src/Robot.h"
 
-#include <fmt/core.h>
-
-#include <frc/smartdashboard/SmartDashboard.h>
-
 namespace frc973 {
 
 void Robot::RobotInit() {
   m_gyroTalon = new TalonSRX(9);
   m_gyro = new Gyro(m_gyroTalon);
   m_gyro->Zero();
+
+  m_limelight = new Limelight("limelight");
+
+  m_operatorStick = new XboxController(1);
 }
 
 void Robot::RobotPeriodic() {
+  SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
   m_gyro->Update();
   m_gyro->DashboardUpdate();
 }

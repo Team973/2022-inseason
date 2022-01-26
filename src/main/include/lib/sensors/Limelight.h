@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
 
 #include "lib/Constants.h"
 
@@ -18,6 +19,17 @@ public:
     Limelight(const char *name);
 
     /**
+     * Limelight LED Modes.
+     */
+    enum class LightMode
+    {
+        standard, /**< The light mode decided by the pipeline. */
+        on,       /**< The light mode that forces LEDs on. */
+        off,      /**< The light mode that forces LEDs off. */
+        blink     /**< The light mode that forces LEDs to blink. */
+    };
+
+    /**
      * Limelight Pipeline Modes.
      */
     enum class PipelineMode
@@ -30,7 +42,13 @@ public:
     };
 
     /**
+     * Set Limelight light mode.
+     */
+    void SetLightMode(LightMode mode);
+
+    /**
      * Sets the limelight sensor pipeline
+     * @param mode the pipeline that the limelight will be in
      */ 
     void SetPipelineMode(PipelineMode mode);
 
@@ -38,6 +56,8 @@ public:
      * Sets the pipeline to the one with driver camera (pipeline 0)
      */
     void SetCameraDriver();
+
+    void SetVisionCamera();
 
     /**
      * Gets the pipeline that is currently used
@@ -71,6 +91,7 @@ public:
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
 
+    LightMode m_lightMode;
     PipelineMode m_pipelineMode;
 
     static constexpr double TARGET_HEIGHT = 1; /**< Target's height in inches from ground TODO: UPDATE VALUE*/
