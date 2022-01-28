@@ -18,6 +18,7 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
   SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
+  SmartDashboard::PutNumber("x", m_limelight->GetXOffset());
   m_gyro->Update();
   m_gyro->DashboardUpdate();
 }
