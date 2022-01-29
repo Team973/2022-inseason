@@ -20,6 +20,9 @@ void Robot::RobotPeriodic() {
   SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
   SmartDashboard::PutNumber("x", m_limelight->GetXOffset());
   SmartDashboard::PutNumber("y", m_limelight->GetYOffset());
+  SmartDashboard::PutNumber("x_dist", m_limelight->GetHorizontalDist());
+  SmartDashboard::PutBoolean("valid???", m_limelight->isTargetValid());
+
   m_gyro->Update();
   m_gyro->DashboardUpdate();
 }

@@ -53,7 +53,7 @@ void Limelight::SetCameraDriver() {
 }
 
 void Limelight::SetVisionCamera() {
-    SetPipelineMode(PipelineMode::pipeline_1);
+    SetPipelineMode(PipelineMode::pipeline_2);
 }
 
 double Limelight::GetPipeline() {
@@ -72,8 +72,17 @@ double Limelight::GetTargetArea() {
     return m_limelightSensor->GetNumber("ta", 0.0);
 }
 
-void Limelight::GetHorizontalDist() {
-    // TODO: calculate horizontal distance from limelight to goal
+bool Limelight::isTargetValid() {
+    return m_limelightSensor->GetNumber("tv", 0.0);
+}
+
+double Limelight::GetHorizontalDist() {
+    double angle_calc =  CAMERA_ANGLE + GetYOffset(); 
+    double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
+
+    double x_calc = y_calc/(std::atan(angle_calc));
+
+    return x_calc;
 }
     
 } // namespace frc973

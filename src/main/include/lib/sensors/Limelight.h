@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-// #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
 
 #include "lib/Constants.h"
@@ -83,10 +82,16 @@ public:
      */ 
     double GetTargetArea();
 
+    /**
+     * Checks if limelight sees a target.
+     * @return if on target.
+     */
+    bool isTargetValid();
+
      /**
       * Gets the distance from the limelight to the target in the horizontal direction
       */
-    void GetHorizontalDist(); 
+    double GetHorizontalDist(); 
 
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
@@ -94,11 +99,10 @@ private:
     LightMode m_lightMode;
     PipelineMode m_pipelineMode;
 
-    static constexpr double TARGET_HEIGHT = 1; /**< Target's height in inches from ground TODO: UPDATE VALUE*/
-    static constexpr double CAMERA_HEIGHT = 1; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
-    static constexpr double CAMERA_ANGLE = 
-            1 * (Constants::PI / 180.0); /**< Camera Angle in degrees wrt ground TODO: UPDATE VALUE*/
+    static constexpr double TARGET_HEIGHT = 34; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
+    static constexpr double CAMERA_HEIGHT = 20; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
+    static constexpr double CAMERA_ANGLE = 60; /**< Camera Angle in degrees wrt ground TODO: UPDATE VALUE - current cf*/
             // ### for comp; ### for pbot
-    static constexpr double CAMERA_BUMPER_OFFSET = 1; /**< The offset in inches between the camera and the bumper edge TODO: UPDATE VALUE*/
-};  
+    static constexpr double CAMERA_BUMPER_OFFSET = 1; /**< The offset in inches between the camera and the bumper edge TODO: UPDATE VALUE - current cf*/
+}; 
 } // namespace frc973
