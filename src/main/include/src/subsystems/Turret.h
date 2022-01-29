@@ -7,6 +7,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "lib/helpers/PID.h"
 #include "lib/util/Constants.h"
+#include "src/RobotInfo.h"
 
 namespace frc973 {
 
@@ -38,6 +39,8 @@ public:
     /**
      * Computes the translational variables of rate of transitional angle 
      * change and rate of change in distance from target.
+     * @param driveVelocity drive velocity in ticks per 100ms
+     * @param distanceFromTarget distance from target in inches
      */
     void CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 

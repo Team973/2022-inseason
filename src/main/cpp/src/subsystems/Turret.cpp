@@ -68,7 +68,7 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
     return angleInDegrees;
 }
 
-void Turret::CalcOutput(double limeLightXOffset, double angularVelocity = 0) {
+void Turret::CalcOutput(double limeLightXOffset, double angularVelocity) {
 
     m_limeLightPID.SetTarget(0);
     double output = m_limeLightPID.CalcOutput(limeLightXOffset);
@@ -84,9 +84,11 @@ double Turret::GetTurretAngle() {
 }
 
 void Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget = 0.0) {
-    
-    //The position 100ms into the future calculated by cuurent drive velocity
-    double futurePosition;
+    //converted speed to inches per sec
+    double speedConverted = (driveVelocity * 10) * DRIVE_INCHES_PER_TICK;
+
+    //The position 100ms into the future calculated by current drive velocity converted into inches into the future
+    double futurePosition = speedConverted;
 
     double futureDistance;
     double futureAngle;
