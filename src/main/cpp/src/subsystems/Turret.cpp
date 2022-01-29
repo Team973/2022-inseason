@@ -6,7 +6,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
         : m_turretMotor(turretMotor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limeLightPID(0.0, 0.0, 0.0, 0)
+        , m_limeLightPID(0.02, 0.0, 0.0, 0)
         , m_limeLightToMotorPower(0.0)
         {
 
@@ -14,7 +14,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
 
     m_turretMotor->SetInverted(TalonFXInvertType::CounterClockwise);
 
-    m_turretMotor->SetNeutralMode(NeutralMode::Coast);
+    m_turretMotor->SetNeutralMode(NeutralMode::Brake);
 
     m_turretMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
 
@@ -75,6 +75,7 @@ void Turret::CalcOutput(double limeLightXOffset, double angularVelocity) {
     output += (angularVelocity * Constants::GYRO_CONSTANT) + (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limeLightToMotorPower = output;
+    SmartDashboard::PutNumber("AutoAimPower", output);
 
     m_turretMotor->Set(ControlMode::PercentOutput, output);
 }

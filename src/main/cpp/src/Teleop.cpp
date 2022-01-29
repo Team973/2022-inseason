@@ -21,7 +21,7 @@ void Robot::TeleopPeriodic() {
     m_drive->Update();
 
     m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), 0.0);
-    m_turret->CalcOutput(0.0, 0.0);
+    m_turret->CalcOutput(m_limelight->GetXOffset(), 0.0);
 
 
     if (m_operatorStick->GetYButton()) {
