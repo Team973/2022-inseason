@@ -4,44 +4,27 @@
 
 #include "src/Robot.h"
 
-#include <fmt/core.h>
-
-#include <frc/smartdashboard/SmartDashboard.h>
-
 namespace frc973 {
 
 void Robot::RobotInit() {
-  //Gyro Init
   m_gyroTalon = new TalonSRX(9);
   m_gyro = new Gyro(m_gyroTalon);
   m_gyro->Zero();
 
-  //Joystick Init
-  m_driverStick = new StickController(0);
-  m_operatorStick = new StickController(1);
+  m_limelight = new Limelight("limelight");
 
-  //Turret Init
-  m_turretTalon = new WPI_TalonFX(8); 
-  m_turret = new Turret(m_turretTalon);
-
-  //Drive
-  m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
-  m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
-  m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_TALON_C);
-  m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_TALON_A);
-  m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_TALON_B);
-  m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_TALON_C);
-
-  m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, 
-                      m_rightDriveTalonA, m_rightDriveTalonB, m_rightDriveTalonC);
-
+  m_operatorStick = new XboxController(1);
 }
 
 void Robot::RobotPeriodic() {
+  SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
+  SmartDashboard::PutNumber("x", m_limelight->GetXOffset());
+  SmartDashboard::PutNumber("y", m_limelight->GetYOffset());
+  SmartDashboard::PutNumber("x_dist", m_limelight->GetHorizontalDist());
+  SmartDashboard::PutBoolean("valid???", m_limelight->isTargetValid());
+
   m_gyro->Update();
   m_gyro->DashboardUpdate();
-  m_turret->DashboardUpdate();
-  m_drive->DashboardUpdate();
 }
 
 } // namespace frc973

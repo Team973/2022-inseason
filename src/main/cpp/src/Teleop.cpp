@@ -24,6 +24,12 @@ void Robot::TeleopPeriodic() {
     m_turret->CalcOutput(0.0, 0.0);
 
 
+    if (m_operatorStick->GetYButton()) {
+        m_limelight->SetVisionCamera();
+    } else {
+        m_limelight->SetCameraDriver();
+    }
+    
 }
 
 } // namespace frc973

@@ -13,11 +13,10 @@
 
 #include <ctre/Phoenix.h>
 
+#include "lib/sensors/Limelight.h"
 #include "src/subsystems/Gyro.h"
 #include "src/subsystems/Turret.h"
 #include "lib/util/Util.h"
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
 #include "subsystems/Drive.h"
 #include "RobotInfo.h"
 #include "lib/helpers/StickController.h"
@@ -61,6 +60,8 @@ class Robot : public TimedRobot {
   WPI_TalonFX *m_rightDriveTalonC;  
   Drive *m_drive; 
 
+  //limelight
+  Limelight *m_limelight;
 };
 
 } //namespace frc973
