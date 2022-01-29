@@ -68,15 +68,36 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
     return angleInDegrees;
 }
 
-void Turret::CalcOutput(double limeLightXOffset, double gyroFF, double translateFF) {
+void Turret::CalcOutput(double limeLightXOffset, double angularVelocity = 0) {
 
     m_limeLightPID.SetTarget(0);
     double output = m_limeLightPID.CalcOutput(limeLightXOffset);
-    output += gyroFF + translateFF;
+    output += (angularVelocity * Constants::GYRO_CONSTANT) + (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limeLightToMotorPower = output;
 
     m_turretMotor->Set(ControlMode::PercentOutput, output);
+}
+
+double Turret::GetTurretAngle() {
+    return m_currentAngleInDegrees;
+}
+
+void Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget = 0.0) {
+    
+    //The position 100ms into the future calculated by cuurent drive velocity
+    double futurePosition;
+
+    double futureDistance;
+    double futureAngle;
+
+    futureDistance = sqrt(pow(distanceFromTarget, 2.0) + pow(futurePosition, 2.0) - (2 * distanceFromTarget * futurePosition * (cos(m_currentAngleInDegrees * Constants::PI / 180))));
+
+    futureAngle = 180 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) / 2 * futureDistance * futurePosition))) * 180 / Constants::PI)   ;
+
+    //result is the rate of turning due to transitional change
+    m_translationalAngularRate = (futureAngle - m_currentAngleInDegrees) / Constants::TALON_FX_VELOCITY_UNIT_MS; 
+
 }
 
 void Turret::Update() {}

@@ -6,6 +6,7 @@
 #include "lib/util/Constants.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "lib/helpers/PID.h"
+#include "lib/util/Constants.h"
 
 namespace frc973 {
 
@@ -27,7 +28,18 @@ public:
     /**
      * Calculates output to feed into a percent output loops
      */
-    void CalcOutput(double lightlightTarget, double gyroFF = 0.0, double translateFF = 0.0);
+    void CalcOutput(double lightlightTarget, double angularVelocity = 0.0);
+
+    /**
+     * Returns current turret angle
+     */
+    double GetTurretAngle();
+
+    /**
+     * Computes the translational variables of rate of transitional angle 
+     * change and rate of change in distance from target.
+     */
+    void CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 
     void Update() override;
 
@@ -45,6 +57,7 @@ private:
     PID m_limeLightPID;
 
     double m_limeLightToMotorPower;
+    double m_translationalAngularRate;
 
 };
 

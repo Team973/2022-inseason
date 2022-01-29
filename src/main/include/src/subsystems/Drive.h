@@ -57,6 +57,11 @@ public:
     //test del later
     double GetLeftOuput();
 
+    /**
+     * Return the average of the left and right motor speeds
+     */
+    double GetVelocity();
+
 
 
 private:

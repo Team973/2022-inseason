@@ -145,6 +145,13 @@ double Drive::GetLeftOuput() {
     return m_leftOutput;
 }
 
+double Drive::GetVelocity() {
+    double speed;
+    speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
+
+    return speed;
+}
+
 
 
 

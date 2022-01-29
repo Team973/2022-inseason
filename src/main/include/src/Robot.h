@@ -60,6 +60,7 @@ class Robot : public TimedRobot {
   WPI_TalonFX *m_rightDriveTalonB; 
   WPI_TalonFX *m_rightDriveTalonC;  
   Drive *m_drive; 
+
 };
 
 } //namespace frc973
