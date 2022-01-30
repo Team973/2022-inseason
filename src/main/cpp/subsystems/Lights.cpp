@@ -17,7 +17,7 @@ namespace frc973 {
 }
 
 void Lights::Update() {
-    m_candle->Animate(m_twinkleOff);
+    m_candle->Animate(m_rainbow);
     //m_candle->SetLEDs(0,254,0,1,3);
 }
 
