@@ -59,8 +59,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonA->ConfigPeakOutputForward(1.0, 30);
     m_rightDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
 
-    m_leftDriveTalonA->Config_kP(0, 0.2, 30);
-    m_leftDriveTalonA->Config_kI(0, 0.0, 30);
+    m_leftDriveTalonA->Config_kP(0, 0.15, 30);
+    m_leftDriveTalonA->Config_kI(0, 0.15, 30);
     m_leftDriveTalonA->Config_kD(0, 0.0, 30);
     m_leftDriveTalonA->Config_kF(0, 0.0, 30);
 
@@ -78,27 +78,30 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_leftDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
     m_rightDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
 
-    // m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
-    // m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
-    // m_leftDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
 
-    // m_rightDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
-    // m_rightDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
-    // m_rightDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
 
-    // m_leftDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
-    // m_leftDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
-    // m_leftDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
 
-    // m_rightDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
-    // m_rightDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
-    // m_rightDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
 }
 
 void Drive::Update() {
     ArcadeCalcOutput();
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 20000) * std::abs(m_throttle));
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 20000) * std::abs(m_throttle));
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000) * std::abs(m_throttle));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000) * std::abs(m_throttle));
+
+    m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle + m_turn) * 0.5);
+    m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle - m_turn) * 0.5);
 }
 
 void Drive::DashboardUpdate() {

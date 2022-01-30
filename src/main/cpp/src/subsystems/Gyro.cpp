@@ -23,7 +23,10 @@ namespace frc973 {
     }
 
     double Gyro::GetAngularRate() {
-        return m_gyro.GetYaw();
+        double rates [3];
+        m_gyro.GetRawGyro(rates);
+
+        return rates[2];
     }
 
     void Gyro::Update() {

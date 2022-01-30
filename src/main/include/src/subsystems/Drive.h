@@ -86,8 +86,8 @@ private:
     double m_throttle;
     double m_turn;
 
-    // SupplyCurrentLimitConfiguration m_currentLimit;
-    // StatorCurrentLimitConfiguration m_statorLimit;
+    SupplyCurrentLimitConfiguration m_currentLimit;
+    StatorCurrentLimitConfiguration m_statorLimit;
 
 };
 

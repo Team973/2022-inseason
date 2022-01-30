@@ -33,8 +33,8 @@ namespace Constants {
         (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS);     /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
 
     //for limelight tracking
-    constexpr double GYRO_CONSTANT = 0;
-    constexpr double TRANSLATION_CONSTANT = 0;
+    constexpr double GYRO_CONSTANT = 0.0022;
+    constexpr double TRANSLATION_CONSTANT = 0.0;
 
 } // namespace Constants
    

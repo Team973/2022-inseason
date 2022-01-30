@@ -6,7 +6,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
         : m_turretMotor(turretMotor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limeLightPID(0.02, 0.0, 0.0, 0)
+        , m_limeLightPID(0.04, 0.0, 0.0, 0)
         , m_limeLightToMotorPower(0.0)
         {
 
@@ -69,13 +69,16 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
 }
 
 void Turret::CalcOutput(double limeLightXOffset, double angularVelocity) {
-
+    //double output;
     m_limeLightPID.SetTarget(0);
     double output = m_limeLightPID.CalcOutput(limeLightXOffset);
-    output += (angularVelocity * Constants::GYRO_CONSTANT) + (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+
+    output += (-angularVelocity * Constants::GYRO_CONSTANT); // + (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limeLightToMotorPower = output;
-    SmartDashboard::PutNumber("AutoAimPower", output);
+    SmartDashboard::PutNumber("Angular Velocity", angularVelocity);
+    SmartDashboard::PutNumber("output", output);
+
 
     m_turretMotor->Set(ControlMode::PercentOutput, output);
 }
