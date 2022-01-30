@@ -18,6 +18,9 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Conveyor.h"
+#include "subsystems/Lights.h"
+#include "ctre/phoenix/led/RainbowAnimation.h"
+
 
 using namespace frc;
 namespace frc973 {
@@ -48,6 +51,8 @@ class Robot : public TimedRobot {
  TalonFX *m_intakeTalon;
  Solenoid *m_intakeSolenoid;
  Intake *m_intake;
+ CANdle *m_CANdle;
+ Lights *m_lights;
 };
 
 } //namespace frc973

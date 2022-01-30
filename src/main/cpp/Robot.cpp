@@ -7,6 +7,8 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+  m_CANdle = new CANdle(candleID);
+  m_lights = new Lights(m_CANdle);
   m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
   m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_TALON_SRX);
   m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_TALON_SRX);
@@ -26,9 +28,10 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   m_gyro->Update();
   m_gyro->DashboardUpdate();
-  m_intake->Update();
-  m_shooter->Update();
-  m_conveyor->Update();
+  // m_intake->Update();
+  // m_shooter->Update();
+  // m_conveyor->Update();
+  m_lights->Update();
 }
   
 } // namespace frc973

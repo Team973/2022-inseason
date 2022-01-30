@@ -70,6 +70,11 @@ constexpr double FLYWHEEL_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM * FLYW
 constexpr int PCM_ID = 0; 
 
 /**
+ * Lights
+ */
+constexpr int candleID = 0; 
+
+/**
  * Intake Subsystem
  */
 constexpr int INTAKE_FALCON = 0; /**< Can ID for the intake talon. */
