@@ -72,6 +72,15 @@ double Limelight::GetTargetArea() {
     return m_limelightSensor->GetNumber("ta", 0.0);
 }
 
+double Limelight::GetTargetLatency() {
+    double min = 11;
+    return m_limelightSensor->GetNumber("tl", 0.0) + min;
+}
+
+// double Limelight::GetTargetAmount() {
+//     return m_limelightSensor->GetNumber("target", 0.0);
+// }
+
 bool Limelight::isTargetValid() {
     return m_limelightSensor->GetNumber("tv", 0.0);
 }

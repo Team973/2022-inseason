@@ -83,6 +83,18 @@ public:
     double GetTargetArea();
 
     /**
+     * Gets the delay of finding the target
+     * @return the target latency
+     */  
+    double GetTargetLatency();
+
+    // /**
+    //  * Gets the amount of targets (between 1 and 5)
+    //  * @return the amount of targets
+    //  */ 
+    // double GetTargetAmount();
+
+    /**
      * Checks if limelight sees a target.
      * @return if on target.
      */
