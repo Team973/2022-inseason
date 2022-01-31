@@ -5,7 +5,8 @@ namespace frc973 {
 Limelight::Limelight(const char *name)
     : m_limelightSensor(nt::NetworkTableInstance::GetDefault().GetTable(name))
     , m_lightMode(LightMode::standard)
-    , m_pipelineMode(PipelineMode::driverCamera) {
+    , m_pipelineMode(PipelineMode::driverCamera)
+    , m_previousLatency(0.0) {
 }
 
 void Limelight::SetLightMode(LightMode mode) {
@@ -85,6 +86,17 @@ bool Limelight::isTargetValid() {
     return m_limelightSensor->GetNumber("tv", 0.0);
 }
 
+bool Limelight::IsLimelightDead() {
+    if (GetTargetLatency() == m_previousLatency) {
+        m_previousLatency = GetTargetLatency();
+        return true;
+    }
+    else {
+        m_previousLatency = GetTargetLatency();
+        return false;
+    }
+}
+
 double Limelight::GetHorizontalDist() {
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
     double angle_calc = (CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180; 
@@ -94,6 +106,7 @@ double Limelight::GetHorizontalDist() {
     double x_calc = y_calc/(std::tan(angle_calc));
 
     return x_calc;
+    // return ((TARGET_HEIGHT - CAMERA_HEIGHT)/tan((CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180));
 }
     
 } // namespace frc973

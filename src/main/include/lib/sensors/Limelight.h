@@ -101,6 +101,12 @@ public:
      */
     bool isTargetValid();
 
+    /**
+     * Checks if the limelight is dead or not
+     * @return if the limelight is dead
+     */
+    bool IsLimelightDead(); 
+
      /**
       * Gets the distance from the limelight to the target in the horizontal direction
       */
@@ -111,6 +117,8 @@ private:
 
     LightMode m_lightMode;
     PipelineMode m_pipelineMode;
+
+    double m_previousLatency;
 
     static constexpr double TARGET_HEIGHT = 33.5; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
     static constexpr double CAMERA_HEIGHT = 30; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
