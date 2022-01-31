@@ -86,10 +86,12 @@ bool Limelight::isTargetValid() {
 }
 
 double Limelight::GetHorizontalDist() {
-    double angle_calc =  CAMERA_ANGLE + GetYOffset(); 
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
+    double angle_calc = (CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180; 
+    frc::SmartDashboard::PutNumber("y_calc", y_calc);
+    frc::SmartDashboard::PutNumber("angle_calc", CAMERA_ANGLE + GetYOffset());
 
-    double x_calc = y_calc/(std::atan(angle_calc));
+    double x_calc = y_calc/(std::tan(angle_calc));
 
     return x_calc;
 }
