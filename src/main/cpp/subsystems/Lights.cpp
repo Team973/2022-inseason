@@ -4,23 +4,54 @@
 namespace frc973 {
     Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
     : m_candle(CANdle) 
-    , m_rainbow{1.0, 1.0, 8}
-    , m_larson(0.0, 200.0, 217.0, 0.0, 0.01, 8.0, ctre::phoenix::led::LarsonAnimation::Center, 1)
-    , m_fire(1.0, 0.01, 8, 1.0, 1.0)
-    , m_rgbFade{1.0, 1.0, 8}
-    , m_singleFade{118, 0, 118, 0, 1.0, 8}
-    , m_flow{255, 20, 147, 0, 1.0, 8, ctre::phoenix::led::ColorFlowAnimation::Direction::Forward}
-    , m_strobe{219, 112, 147, 0, 1.0, 8}
-    , m_twinkle{217, 69, 0, 0, 1.0, 8, ctre::phoenix::led::TwinkleAnimation::TwinklePercent::Percent100}
-    , m_twinkleOff{217, 91, 0, 0, 0.2, 8, ctre::phoenix::led::TwinkleOffAnimation::TwinkleOffPercent::Percent100}
+    , m_lightsState(LightsState::Off)
     {
+        
 }
+    //m_candle->SetLEDs(0,0,0,0,8);
 
 void Lights::Update() {
-    m_candle->Animate(m_rainbow);
-    //m_candle->SetLEDs(0,254,0,1,3);
+    switch (m_lightsState) { 
+        case LightsState::Off:
+            break; 
+        case LightsState::Rainbow:
+            m_candle->Animate(m_rainbow);
+            break;
+        case LightsState::Larson:
+            m_candle->Animate(m_larson);
+            break;
+        case LightsState::RgbFade:
+            m_candle->Animate(m_rgbFade);
+            break;
+        case LightsState::SingleFade:
+            m_candle->Animate(m_singleFade);
+            break;
+        case LightsState::ColorFlow:
+            m_candle->Animate(m_flow);
+            break;
+        case LightsState::Strobe:
+            m_candle->Animate(m_strobe);
+            break;
+        case LightsState::Twinkle:
+            m_candle->Animate(m_twinkle);
+            break;
+        case LightsState::TwinkleOff:
+            m_candle->Animate(m_twinkleOff);   
+            break;
+        default:
+            break;
+
+    }
 }
 
 void Lights::DashboardUpdate() {
 }
-} //frc name
+
+Lights::LightsState Lights::GetLightsState() {
+    return m_lightsState;
+}
+
+void Lights::SetLightsState(LightsState state) {
+    m_lightsState = state;
+}
+}
