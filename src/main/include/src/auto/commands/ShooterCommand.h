@@ -39,9 +39,8 @@ public:
     void PostExecute() override;
 
 private:
-    bool m_endRun;
-
     Shooter *m_shooter;
     u_int32_t m_targetTime;
+    bool m_endRun;
 };
 }

@@ -3,7 +3,7 @@
 namespace frc973 {
 
 ShooterCommand::ShooterCommand(Shooter *shooter, u_int32_t targetTime)
-        : m_endRun(false), m_shooter(shooter), m_targetTime(targetTime) {
+        : m_shooter(shooter), m_targetTime(targetTime), m_endRun(false) {
 }
 
 void ShooterCommand::Init() {

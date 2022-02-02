@@ -3,7 +3,7 @@
 namespace frc973 {
 
 RunIntakeCommand::RunIntakeCommand(Intake *intake, double speed, uint32_t targetTime)
-        : m_intake(intake), m_targetTime(targetTime), m_speed(speed) {
+        : m_intake(intake), m_speed(speed), m_targetTime(targetTime) {
 }
 
 void RunIntakeCommand::Init() {
