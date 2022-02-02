@@ -101,12 +101,12 @@ double Limelight::GetHorizontalDist() {
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
     double angle_calc = (CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180; 
     frc::SmartDashboard::PutNumber("y_calc", y_calc);
+    frc::SmartDashboard::PutNumber("y_offset", GetYOffset());
     frc::SmartDashboard::PutNumber("angle_calc", CAMERA_ANGLE + GetYOffset());
 
     double x_calc = y_calc/(std::tan(angle_calc));
 
     return x_calc;
-    // return ((TARGET_HEIGHT - CAMERA_HEIGHT)/tan((CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180));
 }
     
 } // namespace frc973
