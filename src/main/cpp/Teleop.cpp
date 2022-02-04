@@ -4,7 +4,7 @@
 namespace frc973 {
     
 void Robot::TeleopInit() {
-
+    m_lights->SetLightsState(Lights::LightsState::Climb);
 }
 
 void Robot::TeleopPeriodic() {
