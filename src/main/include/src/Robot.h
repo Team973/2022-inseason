@@ -15,6 +15,7 @@
 
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Climb.h"
 
 using namespace frc;
 namespace frc973 {
@@ -32,11 +33,23 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
+  //Gyro
   TalonSRX* m_gyroTalon;
   Gyro* m_gyro;
+
+  //Intake
   TalonFX *m_intakeTalon;
   Solenoid *m_intakeSolenoid;
   Intake *m_intake;
+
+  // Climb
+  DigitalInput *m_bottomLeftSensor;
+  DigitalInput *m_bottomRightSensor;
+  DigitalInput *m_topLeftSensor;
+  DigitalInput *m_topRightSensor;
+  WPI_TalonFX *m_climbTalonA;
+  WPI_TalonFX *m_climbTalonB;
+  Climb *m_climb;
 };
 
 } //namespace frc973

@@ -13,12 +13,21 @@ void Robot::RobotInit() {
   m_intakeTalon = new TalonFX(INTAKE_FALCON);
   m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
   m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+  m_bottomLeftSensor = new DigitalInput(1);
+  m_bottomRightSensor = new DigitalInput(1);
+  m_topLeftSensor = new DigitalInput(1);
+  m_topRightSensor = new DigitalInput(1);
+  m_climbTalonA = new WPI_TalonFX(CLIMB_FALCON_A_ID);
+  m_climbTalonB = new WPI_TalonFX(CLIMB_FALCON_B_ID);
+  m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor,
+                        m_topLeftSensor, m_topRightSensor);
 }
 
 void Robot::RobotPeriodic() {
   m_gyro->Update();
   m_gyro->DashboardUpdate();
   m_intake->Update();
+  m_climb->Update();
 }
   
 } // namespace frc973
