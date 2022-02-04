@@ -59,8 +59,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonA->ConfigPeakOutputForward(1.0, 30);
     m_rightDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
 
-    m_leftDriveTalonA->Config_kP(0, 0.15, 30);
-    m_leftDriveTalonA->Config_kI(0, 0.15, 30);
+    m_leftDriveTalonA->Config_kP(0, 0.2, 30);
+    m_leftDriveTalonA->Config_kI(0, 0.0, 30);
     m_leftDriveTalonA->Config_kD(0, 0.0, 30);
     m_leftDriveTalonA->Config_kF(0, 0.0, 30);
 
@@ -97,11 +97,11 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
 
 void Drive::Update() {
     ArcadeCalcOutput();
-    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000) * std::abs(m_throttle));
-    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000) * std::abs(m_throttle));
+    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000) * std::abs(m_throttle));
+    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000) * std::abs(m_throttle));
 
-    m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle + m_turn) * 0.5);
-    m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle - m_turn) * 0.5);
+    // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle + m_turn) * 0.5);
+    // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle - m_turn) * 0.5);
 }
 
 void Drive::DashboardUpdate() {
@@ -154,8 +154,5 @@ double Drive::GetVelocity() {
 
     return speed;
 }
-
-
-
 
 } //namespace frc973 

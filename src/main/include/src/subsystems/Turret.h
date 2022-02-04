@@ -44,6 +44,11 @@ public:
      */
     void CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 
+    /**
+     * Set Turret to Brake
+     */
+    void SetNeutralMode(NeutralMode mode);
+
     void Update() override;
 
     void DashboardUpdate() override;

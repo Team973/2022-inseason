@@ -14,7 +14,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
 
     m_turretMotor->SetInverted(TalonFXInvertType::CounterClockwise);
 
-    m_turretMotor->SetNeutralMode(NeutralMode::Brake);
+    m_turretMotor->SetNeutralMode(NeutralMode::Coast);
 
     m_turretMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
 
@@ -51,7 +51,7 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
     
     //deadband 
     distance = sqrt(pow(x, 2.0) + pow(y, 2.0)); 
-    if (distance < 0.05){
+    if (distance < 0.5){
         return 0.0; 
     }
     
@@ -106,12 +106,23 @@ void Turret::CalcTransitionalCompensations(double driveVelocity, double distance
 
 }
 
+void Turret::SetNeutralMode(NeutralMode mode) {
+    m_turretMotor->SetNeutralMode(mode);
+}
+
+
+
 void Turret::Update() {}
 
 void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInDegrees);
     frc::SmartDashboard::PutNumber("ticksPosition", m_tickPosition);
     frc::SmartDashboard::PutNumber("ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
+    frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
+    frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
+
+
 
 }
 
