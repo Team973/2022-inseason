@@ -78,10 +78,6 @@ double Limelight::GetTargetLatency() {
     return m_limelightSensor->GetNumber("tl", 0.0) + min;
 }
 
-// double Limelight::GetTargetAmount() {
-//     return m_limelightSensor->GetNumber("target", 0.0);
-// }
-
 bool Limelight::isTargetValid() {
     return m_limelightSensor->GetNumber("tv", 0.0);
 }
@@ -100,9 +96,6 @@ bool Limelight::IsLimelightDead() {
 double Limelight::GetHorizontalDist() {
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
     double angle_calc = (CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180; 
-    frc::SmartDashboard::PutNumber("y_calc", y_calc);
-    frc::SmartDashboard::PutNumber("y_offset", GetYOffset());
-    frc::SmartDashboard::PutNumber("angle_calc", CAMERA_ANGLE + GetYOffset());
 
     double x_calc = y_calc/(std::tan(angle_calc));
 
