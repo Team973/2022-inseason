@@ -7,6 +7,7 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+  
   m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
   m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_TALON_SRX);
   m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_TALON_SRX);
@@ -21,6 +22,8 @@ void Robot::RobotInit() {
   m_intakeTalon = new TalonFX(INTAKE_FALCON);
   m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
   m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+  m_CANdle = new CANdle(CANDLE_ID);
+  m_lights = new Lights(m_CANdle);
 }
 
 void Robot::RobotPeriodic() {
@@ -29,6 +32,8 @@ void Robot::RobotPeriodic() {
   m_intake->Update();
   m_shooter->Update();
   m_conveyor->Update();
+  m_lights->Update();
+  m_lights->DashboardUpdate();
 }
   
 } // namespace frc973

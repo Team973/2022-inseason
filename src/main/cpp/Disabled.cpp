@@ -4,8 +4,10 @@
 
 namespace frc973 {
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+}
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+}
 
 } // namespace frc973

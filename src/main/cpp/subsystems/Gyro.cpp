@@ -3,8 +3,6 @@
 namespace frc973 {
     Gyro::Gyro(TalonSRX* gyroTalon)
         : m_gyro(PigeonIMU(gyroTalon)) {
-    m_wrappedAngle;
-    m_currentAngle;
 }
 
     double Gyro::GetWrappedAngle() {
