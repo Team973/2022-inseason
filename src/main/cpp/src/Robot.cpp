@@ -24,9 +24,17 @@ void Robot::RobotInit() {
   m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
   m_CANdle = new CANdle(CANDLE_ID);
   m_lights = new Lights(m_CANdle);
+  m_limelight = new Limelight("limelight");
+  m_operatorStick = new XboxController(1);
 }
 
 void Robot::RobotPeriodic() {
+  SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
+  SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
+  SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
+  SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
+  SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
+
   m_gyro->Update();
   m_gyro->DashboardUpdate();
   m_intake->Update();
