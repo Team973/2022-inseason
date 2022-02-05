@@ -11,6 +11,16 @@
 
 namespace frc973 {
 
+/**
+ * The set of intake states; deployed or retracted.
+ */
+enum class TurretState 
+{
+    Off, /**< Disables turret. */
+    Manual, /**< Manual turret control. */
+    AutoAim /**< Limelight targeting mode. */
+};
+
 class Turret : public Subsystem {
 public:
     Turret(WPI_TalonFX *turretMotor);
@@ -66,6 +76,8 @@ private:
 
     double m_limeLightToMotorPower;
     double m_translationalAngularRate;
+
+    TurretState m_turretState;
 
 };
 

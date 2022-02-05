@@ -8,6 +8,7 @@ Turret::Turret(WPI_TalonFX *turretMotor)
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_limeLightPID(0.04, 0.0, 0.0, 0)
         , m_limeLightToMotorPower(0.0)
+        , m_turretState(TurretState::Manual)
         {
 
     m_turretMotor->ConfigFactoryDefault();
@@ -112,7 +113,16 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 
 
 
-void Turret::Update() {}
+void Turret::Update() {
+    switch (m_turretState) {
+        case TurretState::Off:
+            break;
+        case TurretState::Manual:
+            break;
+        case TurretState::AutoAim:
+            break;
+    }
+}
 
 void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInDegrees);
