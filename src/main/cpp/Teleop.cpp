@@ -6,6 +6,7 @@ namespace frc973 {
     
 void Robot::TeleopInit() {}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+}
 
 } // namespace frc973

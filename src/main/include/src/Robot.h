@@ -13,9 +13,12 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <ctre/Phoenix.h>
 
+#include "RobotInfo.h"
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Climb.h"
+#include "subsystems/Shooter.h"
+#include "subsystems/Conveyor.h"
 
 using namespace frc;
 namespace frc973 {
@@ -50,6 +53,19 @@ class Robot : public TimedRobot {
   WPI_TalonFX *m_climbTalonA;
   WPI_TalonFX *m_climbTalonB;
   Climb *m_climb;
+
+  //Conveyor
+  TalonSRX *m_conveyorFloorMotor;
+  TalonSRX *m_conveyorTowerMotorA;
+  TalonSRX *m_conveyorTowerMotorB;
+  Conveyor *m_conveyor;
+
+  //Shooter
+  TalonFX *m_shooterFlywheelMotorA;
+  TalonFX *m_shooterFlywheelMotorB;
+  TalonFX *m_shooterPrecharger;
+  Shooter *m_shooter;
+
 };
 
 } //namespace frc973

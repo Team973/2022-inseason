@@ -69,10 +69,10 @@ public:
 private: 
     double m_intakeSpeed;
     
-    IntakeState m_intakeState;
-    IntakeMotorState m_intakeMotorState;
     TalonFX *m_intakeTalon; 
     frc::Solenoid *m_intakeSolenoid;
+    IntakeState m_intakeState;
+    IntakeMotorState m_intakeMotorState;
 };
   
 } // namespace frc973

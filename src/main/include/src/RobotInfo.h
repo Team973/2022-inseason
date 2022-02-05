@@ -15,7 +15,7 @@ constexpr double DRIVE_GEAR = 1;            //Teeth on the main drive gear.
 constexpr double DRIVE_WHEEL_DIAMETER = 1;  //Diameter of the drive train wheels in inches.
 constexpr double MAX_FT_PER_SECOND = 1;     //Max speed of the robot in feet per second.
 
-//Movement
+// Movement
 constexpr double DRIVE_GEAR_RATIO = DRIVE_PINION / DRIVE_GEAR; /**< The gear ratio of the drive train. */
 constexpr double DRIVE_CIRCUMFERENCE =
     Constants::PI * DRIVE_WHEEL_DIAMETER; /**< Circumference of the drive wheels in inches. */
@@ -37,12 +37,33 @@ constexpr double DRIVE_TELEOP_LIMIT = 1.0;  /**< The max speed we want to run co
  * Drive Subsystem.
  */
 constexpr int LEFT_DRIVE_TALON_A = 0;   /**< Can ID for the first left drive talon. */
-constexpr int LEFT_DRIVE_TALON_B = 0;   /**< Can ID for the second left drive talon. */
-constexpr int LEFT_DRIVE_TALON_C = 0;   /**< Can ID for the third left drive talon. */
-constexpr int RIGHT_DRIVE_TALON_A = 0;  /**< Can ID for the first right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_B = 0;  /**< Can ID for the second right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_C = 0;  /**< Can ID for the third right drive talon. */
+constexpr int LEFT_DRIVE_TALON_B = 1;   /**< Can ID for the second left drive talon. */
+constexpr int LEFT_DRIVE_TALON_C = 2;   /**< Can ID for the third left drive talon. */
+constexpr int RIGHT_DRIVE_TALON_A = 15;  /**< Can ID for the first right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_B = 14;  /**< Can ID for the second right drive talon. */
+constexpr int RIGHT_DRIVE_TALON_C = 13;  /**< Can ID for the third right drive talon. */
 
+/**
+ * Conveyor Subsystem.
+ */
+constexpr int CONVEYOR_TOWER_A_TALON_SRX = 0;   /**< Can ID for the first tower talon. */
+constexpr int CONVEYOR_TOWER_B_TALON_SRX = 0; /**< Can ID for the second tower talon. */
+constexpr int CONVEYOR_FLOOR_TALON_SRX = 0;   /**< Can ID for the floor talon. */
+
+ /**
+ * Shooter Subsystem.
+ */
+constexpr int FLYWHEEL_A_CAN_ID = 0;  /**< Left flywheel TalonFX CAN ID. */
+constexpr int FLYWHEEL_B_CAN_ID = 0; /**< Right flywheel TalonFX CAN ID. */
+constexpr int PRECHARGER_CAN_ID = 0;  /**< Precharger TalonFX CAN ID. */
+constexpr double FLYWHEEL_MOTOR_PULLEY = 1.0; /**< To do: This number is a placeholder please change it later */
+constexpr double FLYWHEEL_DIRECT_PULLEY = 1.0; /**< To do: This number is a placeholder please change it later */
+static constexpr double FLYWHEEL_RPM_SETPOINT = 3400.0; /**< To do: This number is a placeholder please change it later */   
+static constexpr double PRECHARGER_RPM_SETPOINT = 3400.0; /**< To do: This number is a placeholder please change it later */
+constexpr double PRECHARGER_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM;
+constexpr double FLYWHEEL_GEAR_RATIO = FLYWHEEL_MOTOR_PULLEY / FLYWHEEL_DIRECT_PULLEY;
+constexpr double FLYWHEEL_VELOCITY_RPM = Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;
+  
 /**
  * Climb Subsystem.
  */
@@ -58,13 +79,11 @@ constexpr double CLIMB_INCHES_PER_TICK = ((CLIMB_PINION / CLIMB_GEAR) * CLIMB_SP
 /**
  * PCM
  */
-constexpr int PCM_ID = 0; 
- 
+constexpr int PCM_ID = 20; 
 
 /**
  * Intake Subsystem
  */
-constexpr int INTAKE_FALCON = 0; /**< Can ID for the intake talon. */
+constexpr int INTAKE_FALCON = 1; /**< Can ID for the intake talon. */
 constexpr int INTAKE_SOLENOID_ID = 0; /**< Can ID for the intake Solenoid. */
-
 } // namespace frc973

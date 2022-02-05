@@ -4,8 +4,11 @@ namespace frc973 {
     
 Intake::Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid) 
     : m_intakeSpeed(0.0)
+    , m_intakeTalon(intakeTalon) 
+    , m_intakeSolenoid(intakeSolenoid)
     , m_intakeState(IntakeState::Retract) 
-    , m_intakeTalon(intakeTalon) {
+    , m_intakeMotorState(IntakeMotorState::Off)
+    {
 }
 
 void Intake::Deploy() {
