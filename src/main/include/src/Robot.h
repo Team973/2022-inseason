@@ -36,15 +36,6 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-  //Gyro
-  TalonSRX* m_gyroTalon;
-  Gyro* m_gyro;
-
-  //Intake
-  TalonFX *m_intakeTalon;
-  Solenoid *m_intakeSolenoid;
-  Intake *m_intake;
-
   // Climb
   DigitalInput *m_bottomLeftSensor;
   DigitalInput *m_bottomRightSensor;
@@ -59,6 +50,15 @@ class Robot : public TimedRobot {
   TalonSRX *m_conveyorTowerMotorA;
   TalonSRX *m_conveyorTowerMotorB;
   Conveyor *m_conveyor;
+
+  //Gyro
+  TalonSRX* m_gyroTalon;
+  Gyro* m_gyro;
+
+  //Intake
+  TalonFX *m_intakeTalon;
+  Solenoid *m_intakeSolenoid;
+  Intake *m_intake;
 
   //Shooter
   TalonFX *m_shooterFlywheelMotorA;

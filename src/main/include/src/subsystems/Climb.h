@@ -22,7 +22,7 @@ class Climb : public Subsystem{
      * @param bottomRightsensor the bottom right sensor
      * @param topLeftSensor the top left sensor
      * @param topRightSensor the top right sensor
-    **/
+     */
     Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor, DigitalInput *bottomRightSensor, 
             DigitalInput *topLeftSensor, DigitalInput *topRightSensor);
 
@@ -31,7 +31,7 @@ class Climb : public Subsystem{
      */
     enum class ClimbState
     {
-        Deploy, /**< Runs the climb automatically (deploys it). */
+        Deploy, /**< Runs the climb up automatically. */
         Manual, /**< Sets the climb motors to manual control. */
         Off     /**< Locks the climb and sets motors to 0. */
     };
@@ -51,6 +51,18 @@ class Climb : public Subsystem{
      * @param state The state to set to.
      */
     void SetClimbState(ClimbState state);
+
+    /**
+     * Sets the speed of the climb.
+     * @param speed The speed as a percent for the motors.
+     */ 
+    void SetClimbSpeed(double speed);
+
+    /**
+     * Sets the height for the target to reach when deployed
+     * @param target the target in inches
+     */ 
+    void SetClimbTarget(double target);
     
     /**
      * Gets the climbs current status.
@@ -59,25 +71,25 @@ class Climb : public Subsystem{
     bool GetClimbStatus();
 
     /**
-     * Gets the status of the top halls.
+     * Gets the status of the top sensors.
      * @return true if both are activated.
      */
     bool GetTopHalls();
 
     /**
-     * Gets the status of the bottom halls.
+     * Gets the status of the bottom sensors.
      * @return true if both are activated.
      */
     bool GetBottomHalls();
 
     /**
      * Updates this subsystem
-    **/
+     */
     void Update() override;
 
     /**
      * Updates the Dashboard 
-    **/
+     */
     void DashboardUpdate() override; 
 
     private:
@@ -95,6 +107,9 @@ class Climb : public Subsystem{
     ClimbState m_currentState;  
     bool m_inClimbState;
     double m_climbSpeed;
+    double m_climbTarget;
+
+    std::string m_climbState;
 };
 
 } // namespace frc973
