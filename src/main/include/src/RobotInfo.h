@@ -72,7 +72,7 @@ constexpr int PCM_ID = 0;
 /**
  * Lights
  */
-constexpr int candleID = 0; 
+constexpr int CANDLE_ID = 0; 
 
 /**
  * Intake Subsystem

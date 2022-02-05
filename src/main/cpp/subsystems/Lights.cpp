@@ -4,7 +4,7 @@
 #include "ctre/phoenix/led/RainbowAnimation.h"
 
 namespace frc973 {
-    Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
+Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
     : m_candle(CANdle)
     , m_lightsState(LightsState::Off)
     , m_rainbow{1.0, 1.0, 8}
