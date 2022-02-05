@@ -19,7 +19,7 @@ public:
     Lights(ctre::phoenix::led::CANdle *CANdle);
 
     /**
-     * Sets the tower state to either Off, Initialization, NotReadyToShoot, ReadyToShoot, Fault, or Climb.
+     * Sets the tower state to either Off, Initialization, NotReadyToShoot, ReadyToShoot, Fault, Climb, Left, Middle, or Right.
      */
     enum class LightsState
     {
@@ -29,8 +29,11 @@ public:
         ReadyToShoot,       /**< State for setting the lights to a special state for when the robot is ready to shoot. */
         Fault,              /**< State for setting the lights to a special state for when the robot has an error. */
         Climb,              /**< State for setting the lights to a special state for when the robot is climbing. */
-        Left,
+        Left,               /**< State for setting the top left light to green. */
+        Middle,             /**< State for setting the two top middle lights to green. */
+        Right,              /**< State for setting the top right light to green. */ 
     };
+
 
     /** 
      * Updates the intake subsystem 
@@ -55,6 +58,8 @@ public:
      */
     void SetLightsState(LightsState state);
 
+    void UpdateLightsStateMode();
+
 private: 
     ctre::phoenix::led::CANdle *m_candle;
 
@@ -63,7 +68,6 @@ private:
     ctre::phoenix::led::RainbowAnimation m_rainbow;
     ctre::phoenix::led::StrobeAnimation m_strobe;
 
-
-    
+    std::string m_currentLightsStateName;
 };
 } // namespace frc973

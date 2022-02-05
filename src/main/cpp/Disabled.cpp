@@ -5,9 +5,9 @@
 namespace frc973 {
 
 void Robot::DisabledInit() {
-    m_lights->SetLightsState(Lights::LightsState::Left);
 }
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+}
 
 } // namespace frc973
