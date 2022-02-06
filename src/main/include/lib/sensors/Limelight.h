@@ -56,6 +56,9 @@ public:
      */
     void SetCameraDriver();
 
+    /**
+     * Sets the pipeline to the one with limelight camera (pipeline 2)
+     */
     void SetVisionCamera();
 
     /**

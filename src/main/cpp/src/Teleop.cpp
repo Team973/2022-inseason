@@ -9,8 +9,6 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-
-
         m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), m_gyro->GetWrappedAngle());
 
         if(m_operatorStick->GetLeftBumper()) {
@@ -27,13 +25,8 @@ void Robot::TeleopPeriodic() {
         } else {
             m_limelight->SetCameraDriver();
         }
-    // }
 
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05), m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
     m_drive->Update();
-
-    // SmartDashboard::PutNumber("leftoutput", m_drive->GetLeftOuput());
-    // SmartDashboard::PutNumber("rightoutput", m_drive->GetRightOuput());
 }
-
 } // namespace frc973

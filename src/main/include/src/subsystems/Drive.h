@@ -6,16 +6,6 @@
 
 namespace frc973{
 
-/**
- * The drive subsystem mode.
- */
-// enum class DriveMode
-// {
-//     arcade,               /**< The arcade drive mode. */
-//     position,             /**< The position drive mode. */
-//     cheesyDrive,          /**< The cheesy drive mode. */
-// };
-
 class Drive : public Subsystem {
 public:
     /**
@@ -67,11 +57,6 @@ public:
 
 
 private:
-    /**
-     * Checks to see if the left and right output values are valid values. Defaults to zero if they're undefined.
-     */
-    // void CheckForIsNaN();
-
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
     WPI_TalonFX *m_leftDriveTalonC;
@@ -79,8 +64,6 @@ private:
     WPI_TalonFX *m_rightDriveTalonA;
     WPI_TalonFX *m_rightDriveTalonB;
     WPI_TalonFX *m_rightDriveTalonC;
-
-    // DriveMode m_driveMode;
 
     double m_leftOutput;
     double m_rightOutput;
@@ -90,7 +73,6 @@ private:
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
-
 };
 
 } //namespace frc973

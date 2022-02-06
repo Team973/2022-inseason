@@ -10,7 +10,6 @@ Turret::Turret(WPI_TalonFX *turretMotor)
         , m_limeLightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         {
-
     m_turretMotor->ConfigFactoryDefault();
 
     m_turretMotor->SetInverted(TalonFXInvertType::CounterClockwise);
@@ -60,11 +59,6 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
 
     angleInDegrees = atan2(y, x) * 180 / Constants::PI; 
 
-    // //math to set wrap around to over the intake (270 degrees native to robot)
-    // if(angleInDegrees < -90) {
-    //     angleInDegrees += 360;
-    // }
-
     return angleInDegrees;
 }
 
@@ -87,8 +81,6 @@ double Turret::GetTurretAngle() {
 }
 
 void Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget) {
-
-
     //converted speed to inches per sec
     double speedConverted = driveVelocity * DRIVE_INCHES_PER_TICK * 10.0;
 
@@ -120,7 +112,6 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 
 
 void Turret::Update() {
-
     m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / 70 / 2048 * 360;
 
     switch (m_turretState) {
@@ -140,10 +131,6 @@ void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
     frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
-
-
-
 }
-
 
 }//namespace frc973 

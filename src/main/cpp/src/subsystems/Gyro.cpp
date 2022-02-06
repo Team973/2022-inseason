@@ -5,7 +5,6 @@ namespace frc973 {
         : m_gyro(PigeonIMU(gyroTalon)) 
         , m_wrappedAngle(0.0)
         , m_currentAngle(0.0) {
-    
 }
 
     double Gyro::GetWrappedAngle() {
