@@ -43,6 +43,8 @@ void Robot::RobotPeriodic() {
   SmartDashboard::PutBoolean("valid???", m_limelight->isTargetValid());
 
   m_gyro->Update();
+  m_turret->Update();
+
   m_gyro->DashboardUpdate();
   m_turret->DashboardUpdate();
   m_drive->DashboardUpdate();

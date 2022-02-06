@@ -34,7 +34,7 @@ namespace Constants {
 
     //for limelight tracking
     constexpr double GYRO_CONSTANT = 0.0022;
-    constexpr double TRANSLATION_CONSTANT = 0.0;
+    constexpr double TRANSLATION_CONSTANT = 0.01;
 
 } // namespace Constants
    

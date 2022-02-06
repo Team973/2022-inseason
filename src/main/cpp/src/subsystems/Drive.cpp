@@ -97,8 +97,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
 
 void Drive::Update() {
     ArcadeCalcOutput();
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000) * std::abs(m_throttle));
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000) * std::abs(m_throttle));
+    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000 * 4) * std::abs(m_throttle));
+    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000 * 4) * std::abs(m_throttle));
 
     // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle + m_turn) * 0.5);
     // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_throttle - m_turn) * 0.5);
@@ -151,7 +151,6 @@ double Drive::GetLeftOuput() {
 double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
-
     return speed;
 }
 

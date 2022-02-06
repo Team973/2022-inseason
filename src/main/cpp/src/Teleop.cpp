@@ -11,21 +11,32 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
 
     //tells if turret should be in manual or auto
-    // if((-m_operatorStick->GetRawAxis(5) != 0) || (-m_operatorStick->GetRawAxis(4) != 0)) {
-        // m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), m_gyro->GetWrappedAngle());
-    // } else {
-        if(m_operatorStick->GetLeftBumper()) {
-            m_limelight->SetVisionCamera();
-        } else {
-            m_limelight->SetCameraDriver();
-        }
 
-        if(m_operatorStick->GetRightBumper()) {
-            m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate());
-        } else {
-            m_turret->CalcOutput(m_limelight->GetXOffset(), 0.0);
+        m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), m_gyro->GetWrappedAngle());
 
-        }
+        // if(m_operatorStick->GetLeftBumper()) {
+            // m_limelight->SetVisionCamera();
+
+            m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), 36.0);
+            // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), 36);
+
+
+            SmartDashboard::PutNumber("Velocity", m_drive->GetVelocity());
+
+            // m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate());
+            m_turret->CalcOutput(0, 0);
+
+
+            SmartDashboard::PutNumber("Distance", m_limelight->GetHorizontalDist());
+        // } else {
+        //     m_limelight->SetCameraDriver();
+        // }
+
+        // if(m_operatorStick->GetRightBumper()) {
+        // } else {
+        //     m_turret->CalcOutput(m_limelight->GetXOffset(), 0.0);
+
+        // }
     // }
 
     // if(m_operatorStick->GetAButton()) {
@@ -42,7 +53,6 @@ void Robot::TeleopPeriodic() {
     // m_drive->SetThrottleTurn(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.05), m_operatorStick->GetRawAxisWithDeadband(4, false, 0.05));
     // m_drive->Update();
 
-    //m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), 0.0);
     
 
 

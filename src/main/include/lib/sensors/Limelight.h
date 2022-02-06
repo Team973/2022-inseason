@@ -99,9 +99,9 @@ private:
     LightMode m_lightMode;
     PipelineMode m_pipelineMode;
 
-    static constexpr double TARGET_HEIGHT = 34; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
-    static constexpr double CAMERA_HEIGHT = 20; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
-    static constexpr double CAMERA_ANGLE = 60; /**< Camera Angle in degrees wrt ground TODO: UPDATE VALUE - current cf*/
+    static constexpr double TARGET_HEIGHT = 30.5; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
+    static constexpr double CAMERA_HEIGHT = 20.0; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
+    static constexpr double CAMERA_ANGLE = 33.0; /**< Camera Angle in degrees wrt ground TODO: UPDATE VALUE - current cf*/
             // ### for comp; ### for pbot
     static constexpr double CAMERA_BUMPER_OFFSET = 1; /**< The offset in inches between the camera and the bumper edge TODO: UPDATE VALUE - current cf*/
 }; 

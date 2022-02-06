@@ -65,19 +65,17 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
     //     angleInDegrees += 360;
     // }
 
-    m_currentAngleInDegrees = angleInDegrees;
     return angleInDegrees;
 }
 
 void Turret::CalcOutput(double limeLightXOffset, double angularVelocity) {
     //double output;
     m_limeLightPID.SetTarget(0);
-    double output = m_limeLightPID.CalcOutput(limeLightXOffset);
+    double output = 0; //m_limeLightPID.CalcOutput(limeLightXOffset);
 
-    output += (-angularVelocity * Constants::GYRO_CONSTANT); // + (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+    output = /*(-angularVelocity * Constants::GYRO_CONSTANT) + */(m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limeLightToMotorPower = output;
-    SmartDashboard::PutNumber("Angular Velocity", angularVelocity);
     SmartDashboard::PutNumber("output", output);
 
 
@@ -88,22 +86,30 @@ double Turret::GetTurretAngle() {
     return m_currentAngleInDegrees;
 }
 
-void Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget = 0.0) {
+void Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget) {
+
+
     //converted speed to inches per sec
-    double speedConverted = (driveVelocity * 10) * DRIVE_INCHES_PER_TICK;
+    double speedConverted = driveVelocity * DRIVE_INCHES_PER_TICK * 10.0;
 
     //The position 100ms into the future calculated by current drive velocity converted into inches into the future
-    double futurePosition = speedConverted;
+    double futurePosition = speedConverted / 10.0;
 
-    double futureDistance;
-    double futureAngle;
+    double futureDistance = 0.0;
+    double futureAngle = 0.0;
 
-    futureDistance = sqrt(pow(distanceFromTarget, 2.0) + pow(futurePosition, 2.0) - (2 * distanceFromTarget * futurePosition * (cos(m_currentAngleInDegrees * Constants::PI / 180))));
+    // futureDistance = sqrt(pow(36, 2) + pow(5, 2) - (2.0 * 36 * 5 * (cos(86.018 * Constants::PI / 180.0))));
+    futureDistance = sqrt(pow(distanceFromTarget, 2) + pow(futurePosition, 2) - (2.0 * distanceFromTarget * futurePosition * (cos(m_currentAngleInDegrees * Constants::PI / 180.0))));
 
-    futureAngle = 180 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) / 2 * futureDistance * futurePosition))) * 180 / Constants::PI)   ;
+    // futureAngle = 180.0 - ((acos(((pow(36, 2) + pow(5, 2) - pow(36, 2)) / (2.0 * 36 * 5)))) * 180 / Constants::PI);
+    futureAngle = 180.0 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) / (2.0 * futureDistance * futurePosition)))) * 180.0 / Constants::PI);
+    SmartDashboard::PutNumber("Future Angle", futureAngle);
 
     //result is the rate of turning due to transitional change
-    m_translationalAngularRate = (futureAngle - m_currentAngleInDegrees) / Constants::TALON_FX_VELOCITY_UNIT_MS; 
+    m_translationalAngularRate = (futureAngle - m_currentAngleInDegrees) / 0.1; 
+    SmartDashboard::PutNumber("transanglerate", m_translationalAngularRate);
+    SmartDashboard::PutNumber("Future Distance", futureDistance);
+    SmartDashboard::PutNumber("Future Position", futurePosition);
 
 }
 
@@ -114,6 +120,9 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 
 
 void Turret::Update() {
+
+    m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / 70 / 2048 * 360;
+
     switch (m_turretState) {
         case TurretState::Off:
             break;
