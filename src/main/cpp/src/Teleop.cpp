@@ -13,7 +13,7 @@ void Robot::TeleopPeriodic() {
     } else {
         m_limelight->SetCameraDriver();
     }
-    
+    m_drive->SetThrottleTurn(Util::deadband(-m_operatorStick->GetRawAxis(1), 0.05), Util::deadband(m_operatorStick->GetRawAxis(4), 0.05));
 }
 
 } // namespace frc973

@@ -26,6 +26,20 @@ void Robot::RobotInit() {
   m_lights = new Lights(m_CANdle);
   m_limelight = new Limelight("limelight");
   m_operatorStick = new XboxController(1);
+  //Joystick
+  m_driverStick = new Joystick(1);
+  m_operatorStick = new XboxController(0);
+
+  //Drive
+  m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
+  m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
+  m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_TALON_C);
+  m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_TALON_A);
+  m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_TALON_B);
+  m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_TALON_C);
+
+  m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, 
+                      m_rightDriveTalonA, m_rightDriveTalonB, m_rightDriveTalonC);
 }
 
 void Robot::RobotPeriodic() {
@@ -42,6 +56,7 @@ void Robot::RobotPeriodic() {
   m_conveyor->Update();
   m_lights->Update();
   m_lights->DashboardUpdate();
+  m_drive->Update();
 }
   
 } // namespace frc973

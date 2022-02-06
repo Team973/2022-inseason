@@ -12,17 +12,20 @@
 #include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
+#include <frc/Joystick.h>
 #include <ctre/Phoenix.h>
+#include "ctre/phoenix/led/RainbowAnimation.h"
 
+#include "lib/Util.h"
 #include "RobotInfo.h"
 
 #include "lib/sensors/Limelight.h"
+#include "subsystems/Drive.h"
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/Lights.h"
-#include "ctre/phoenix/led/RainbowAnimation.h"
 
 
 using namespace frc;
@@ -41,23 +44,31 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-  TalonSRX *m_conveyorFloorMotor;
-  TalonSRX *m_conveyorTowerMotorA;
-  TalonSRX *m_conveyorTowerMotorB;
-  Conveyor *m_conveyor;
-  TalonFX *m_shooterFlywheelMotorA;
-  TalonFX *m_shooterFlywheelMotorB;
-  TalonFX *m_shooterPrecharger;
-  Shooter *m_shooter;
-  TalonSRX* m_gyroTalon;
-  Gyro* m_gyro;
-  TalonFX *m_intakeTalon;
-  Solenoid *m_intakeSolenoid;
-  Intake *m_intake;
-  CANdle *m_CANdle;
-  Lights *m_lights;
-  Limelight *m_limelight;
-  XboxController *m_operatorStick;
+    TalonSRX *m_conveyorFloorMotor;
+    TalonSRX *m_conveyorTowerMotorA;
+    TalonSRX *m_conveyorTowerMotorB;
+    Conveyor *m_conveyor;
+    TalonFX *m_shooterFlywheelMotorA;
+    TalonFX *m_shooterFlywheelMotorB;
+    TalonFX *m_shooterPrecharger;
+    Shooter *m_shooter;
+    TalonSRX* m_gyroTalon;
+    Gyro* m_gyro;
+    TalonFX *m_intakeTalon;
+    Solenoid *m_intakeSolenoid;
+    Intake *m_intake;
+    CANdle *m_CANdle;
+    Lights *m_lights;
+    Limelight *m_limelight;
+    XboxController *m_operatorStick;
+    Joystick *m_driverStick;
+    WPI_TalonFX *m_leftDriveTalonA;
+    WPI_TalonFX *m_leftDriveTalonB;
+    WPI_TalonFX *m_leftDriveTalonC;
+    WPI_TalonFX *m_rightDriveTalonA;
+    WPI_TalonFX *m_rightDriveTalonB; 
+    WPI_TalonFX *m_rightDriveTalonC;  
+    Drive *m_drive; 
 };
 
 } //namespace frc973
