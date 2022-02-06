@@ -69,6 +69,18 @@ static constexpr double FLYWHEEL_RPM_SETPOINT = 3400.0; /**< To do: This number 
 
 
 /**
+ * Climb Subsystem.
+ */
+constexpr int CLIMB_FALCON_A_ID = 1;    /**< Can ID for a climb Falcon motor controller.*/
+constexpr int CLIMB_FALCON_B_ID = 1;    /**< Can ID for a climb Falcon motor controller.*/
+constexpr int CLIMB_SOLENOID_ID = 1;    /**< Can ID for the climb locking solenoids. */
+constexpr double CLIMB_PINION = 1.0;
+constexpr double CLIMB_GEAR = 1.0;
+constexpr double CLIMB_SPOOL_DIAMETER = 1.0;
+constexpr double CLIMB_SPOOL_CIRCUMFERENCE = CLIMB_SPOOL_DIAMETER * Constants::PI;
+constexpr double CLIMB_INCHES_PER_TICK = ((CLIMB_PINION / CLIMB_GEAR) * CLIMB_SPOOL_CIRCUMFERENCE) / 2048;
+
+/**
  * PCM
  */
 constexpr int PCM_ID = 20; 

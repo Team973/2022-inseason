@@ -23,6 +23,7 @@
 #include "subsystems/Drive.h"
 #include "src/subsystems/Gyro.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Climb.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Conveyor.h"
 #include "subsystems/Lights.h"
@@ -76,6 +77,13 @@ class Robot : public TimedRobot {
     Limelight *m_limelight;
 
     //Climb
+    DigitalInput *m_bottomLeftSensor;
+    DigitalInput *m_bottomRightSensor;
+    DigitalInput *m_topLeftSensor;
+    DigitalInput *m_topRightSensor;
+    WPI_TalonFX *m_climbTalonA;
+    WPI_TalonFX *m_climbTalonB;
+    Climb *m_climb;
     
     //Gyro
     TalonSRX* m_gyroTalon;
@@ -88,6 +96,7 @@ class Robot : public TimedRobot {
     //Joysticks
     XboxController *m_operatorStick;
     Joystick *m_driverStick;
+
 };
 
 } //namespace frc973

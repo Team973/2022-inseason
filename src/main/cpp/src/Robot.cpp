@@ -40,6 +40,14 @@ void Robot::RobotInit() {
   m_limelight = new Limelight("limelight");
   
   //Climb
+  m_bottomLeftSensor = new DigitalInput(1);
+  m_bottomRightSensor = new DigitalInput(1);
+  m_topLeftSensor = new DigitalInput(1);
+  m_topRightSensor = new DigitalInput(1);
+  m_climbTalonA = new WPI_TalonFX(CLIMB_FALCON_A_ID);
+  m_climbTalonB = new WPI_TalonFX(CLIMB_FALCON_B_ID);
+  m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor,
+                        m_topLeftSensor, m_topRightSensor);
 
   //Gyro
   m_gyroTalon = new TalonSRX(9);
