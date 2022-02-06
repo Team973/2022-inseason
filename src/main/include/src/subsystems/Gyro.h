@@ -12,6 +12,8 @@ namespace frc973 {
         double GetWrappedAngle();
         
         double GetAngle();
+        
+        double GetAngularRate();
 
         void Update() override; 
         
@@ -20,6 +22,7 @@ namespace frc973 {
         void SetAngle(double degrees);
 
         void Zero();
+        
 
     private:
         PigeonIMU m_gyro;

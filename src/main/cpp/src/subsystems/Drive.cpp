@@ -10,10 +10,13 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_rightDriveTalonA(rightDriveTalonA)
         , m_rightDriveTalonB(rightDriveTalonB)
         , m_rightDriveTalonC(rightDriveTalonC)
+        , m_leftOutput(0.0)
+        , m_rightOutput(0.0)
         , m_throttle(0.0)
         , m_turn(0.0)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05)) {
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05)) 
+        {
     
     //Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
@@ -113,6 +116,9 @@ void Drive::Update() {
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
 
+    // ArcadeCalcOutput();
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000 * 4) * std::abs(m_throttle));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000 * 4) * std::abs(m_throttle));
 }
 
 void Drive::DashboardUpdate() {
@@ -172,6 +178,20 @@ void Drive::CheesyCalcOutput() {
 void Drive::SetThrottleTurn(double throttle, double turn) {
     m_throttle = throttle;
     m_turn = turn;
+}
+
+double Drive::GetRightOuput() {
+    return m_rightOutput;
+}
+
+double Drive::GetLeftOuput() {
+    return m_leftOutput;
+}
+
+double Drive::GetVelocity() {
+    double speed;
+    speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
+    return speed;
 }
 
 } //namespace frc973 

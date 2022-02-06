@@ -30,6 +30,8 @@ void Robot::RobotInit() {
   m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
 
   //Turret
+  m_turretTalon = new WPI_TalonFX(8); 
+  m_turret = new Turret(m_turretTalon);
   
   //Shooter
   m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
@@ -58,12 +60,10 @@ void Robot::RobotInit() {
   m_CANdle = new CANdle(CANDLE_ID);
   m_lights = new Lights(m_CANdle);
   m_limelight = new Limelight("limelight");
-  m_operatorStick = new XboxController(1);
 
-  //Joystick
-  m_driverStick = new Joystick(1);
-  m_operatorStick = new XboxController(0);
-
+  //Joystick Init
+  m_driverStick = new StickController(0);
+  m_operatorStick = new StickController(1);
 }
 
 void Robot::RobotPeriodic() {
@@ -74,6 +74,8 @@ void Robot::RobotPeriodic() {
   SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
 
   m_gyro->Update();
+  m_turret->Update();
+
   m_gyro->DashboardUpdate();
   m_intake->Update();
   m_shooter->Update();
@@ -81,6 +83,8 @@ void Robot::RobotPeriodic() {
   m_lights->Update();
   m_lights->DashboardUpdate();
   m_drive->Update();
+  m_turret->DashboardUpdate();
+  m_drive->DashboardUpdate();
 }
   
 } // namespace frc973

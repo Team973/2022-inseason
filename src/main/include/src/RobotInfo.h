@@ -1,7 +1,7 @@
 #pragma once
 
-#include "lib/Constants.h"
 #include <frc/PneumaticsModuleType.h>
+#include "lib/util/Constants.h"
 
 namespace frc973 {
     
@@ -16,7 +16,7 @@ constexpr double DRIVE_WHEEL_DIAMETER = 4.0;  //Diameter of the drive train whee
 constexpr double MAX_FT_PER_SECOND = 14.2;     //Max speed of the robot in feet per second.
 
 //Movement
-constexpr double DRIVE_GEAR_RATIO = (12.0/72.0)*(34.0/36.0); /**< The gear ratio of the drive train. */
+constexpr double DRIVE_GEAR_RATIO = (12.0 / 72.0) * (34.0 / 36.0); /**< The gear ratio of the drive train. */
 constexpr double DRIVE_CIRCUMFERENCE =
     Constants::PI * DRIVE_WHEEL_DIAMETER; /**< Circumference of the drive wheels in inches. */
 constexpr double WHEEL_ROTATION_PER_ENCODER_TICK =
@@ -27,7 +27,7 @@ constexpr double DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK =
     (DRIVE_INCHES_PER_TICK / Constants::TALON_FX_VELOCITY_UNIT_MS) *
     Constants::MSEC_PER_SEC; /**< Inches per second per encoder tick. */
 
-constexpr double MAX_INCHES_PER_SECOND = MAX_FT_PER_SECOND * 12; /**< Max speed of the robot in feet per second. */
+constexpr double MAX_INCHES_PER_SECOND = MAX_FT_PER_SECOND * 12.0; /**< Max speed of the robot in feet per second. */
 constexpr double MAX_TICKS_PER_100_MS =
     MAX_INCHES_PER_SECOND /
     DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK; /**< Max robot speed in encoder ticks per 100 milliseconds. */

@@ -5,6 +5,7 @@
 namespace frc973 {
 
 void Robot::DisabledInit() {
+    m_turret->SetNeutralMode(NeutralMode::Coast);
 }
 
 void Robot::DisabledPeriodic() {

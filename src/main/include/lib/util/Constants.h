@@ -5,6 +5,8 @@
 namespace frc973 {
 
 namespace Constants {
+    constexpr uint32_t PID_SPEED_CTRL = 0x00000001; /**< Integrate the output of helpers/PID */
+
     
     constexpr double PI = 3.141592653589793;                      /**< Pi.*/
     constexpr double FEET_PER_METER = 3.280839895;                /**< ft/m.*/
@@ -29,6 +31,10 @@ namespace Constants {
     constexpr double TALON_FX_VELOCITY_RPM =
         (MSEC_PER_SEC * SEC_PER_MIN) /
         (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS);     /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
+
+    //for limelight tracking
+    constexpr double GYRO_CONSTANT = 0.0022;
+    constexpr double TRANSLATION_CONSTANT = 0.01;
 
 } // namespace Constants
    

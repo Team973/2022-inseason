@@ -5,7 +5,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include "frc/smartdashboard/SmartDashboard.h"
 
-#include "lib/Constants.h"
+#include "lib/util/Constants.h"
 
 namespace frc973 {
 /**
@@ -57,6 +57,9 @@ public:
      */
     void SetCameraDriver();
 
+    /**
+     * Sets the pipeline to the one with limelight camera (pipeline 2)
+     */
     void SetVisionCamera();
 
     /**
@@ -114,7 +117,7 @@ private:
 
     double m_previousLatency;
 
-    static constexpr double TARGET_HEIGHT = 31.0; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
+    static constexpr double TARGET_HEIGHT = 30.5; /**< Target's height in inches from ground TODO: UPDATE VALUE - current cf*/
     static constexpr double CAMERA_HEIGHT = 20.0; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
     static constexpr double CAMERA_ANGLE = 33.0; /**< Camera Angle in degrees wrt ground TODO: UPDATE VALUE - current cf*/
             // ### for comp; ### for pbot

@@ -2,7 +2,9 @@
 
 namespace frc973 {
     Gyro::Gyro(TalonSRX* gyroTalon)
-        : m_gyro(PigeonIMU(gyroTalon)) {
+        : m_gyro(PigeonIMU(gyroTalon)) 
+        , m_wrappedAngle(0.0)
+        , m_currentAngle(0.0) {
 }
 
     double Gyro::GetWrappedAngle() {
@@ -17,6 +19,13 @@ namespace frc973 {
 
     double Gyro::GetAngle() {
         return m_gyro.GetFusedHeading();
+    }
+
+    double Gyro::GetAngularRate() {
+        double rates [3];
+        m_gyro.GetRawGyro(rates);
+
+        return rates[2];
     }
 
     void Gyro::Update() {
