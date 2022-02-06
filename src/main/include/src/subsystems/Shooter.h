@@ -1,13 +1,12 @@
 #pragma once
 
+#include <ctre/Phoenix.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include "lib/bases/Subsystem.h"
 #include "lib/Util.h"
 #include "lib/Constants.h"
 #include "src/RobotInfo.h"
-
-#include <ctre/Phoenix.h>
-#include <frc/DigitalInput.h>
-#include <frc/smartdashboard/SmartDashboard.h>
 
 namespace frc973 {
 
@@ -17,55 +16,32 @@ public:
      * Constructs the shooter subsystem.
      * @param flywheelA The flywheel A falcon.
      * @param flywheelB The flywheel B falcon.
-     * @param precharger The precharger falcon.
      */
-    Shooter(TalonFX *flywheelA, TalonFX *flywheelB, TalonFX *precharger);
+    Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB);
 
-    /**
-     * Enables the shooter.
-     */
-    void EnableShooter();
+    enum class ShooterState {
+        Off,        /* Shooter motors do not run */
+        Fixed,      /* Shooter motors run CL Velocity on a fixed setpoint */
+        Tracking    /* Shooter motors run CL Velocity on a tracking setpoint */
+    };
     
-    /**
-     * Enables the shooter with distance calculation.
-     */
-    void EnableShooterWithDist();
-
-    /**
-     * Disables the shooter.
-     */
-    void DisableShooter();
-
     /**
      * Set the flywheel velocity.
      * @param setpoint The velocity setpoint to go to.
      */
-    void SetFlywheelVelocity(double setpoint);
-
-    /**
-     * Set the precharger velocity.
-     * @param setpoint The velocity setpoint to go to.
-     */
-    void SetPrechargerVelocity(double setpoint);
-
-    /**
-     * Set the flywheel rpm.
-     * @param setpoint The rpm setpoint to go to.
-     */
     void SetFlywheelRPM(double setpoint);
-
-    /**
-     * Set the precharger rpm.
-     * @param setpoint The rpm setpoint to go to.
-     */
-    void SetPrechargerRPM(double setpoint);
 
      /**
      * Checks to see if the flywheel is at speed or not.
      * @return true or false on if its at speed.
      */
     bool IsAtSpeed();
-    
+
+    /**
+     * Change state of Shooter
+     */
+    void SetShooterState(ShooterState state);  
+
     /**
      * Update this subsystem example each cycle or TeleopPeriodic.
      */
@@ -77,12 +53,18 @@ public:
     void DashboardUpdate() override;
 
 
+
+
 private:
-    TalonFX *m_flywheelA;
-    TalonFX *m_flywheelB;
-    TalonFX *m_precharger;
+    WPI_TalonFX *m_flywheelA;
+    WPI_TalonFX *m_flywheelB;
 
     double m_flywheelRPMSetpoint;
-    double m_prechargerRPMSetpoint;
-};
+
+    ShooterState m_shooterState;
+
+    SupplyCurrentLimitConfiguration m_currentLimit;
+    StatorCurrentLimitConfiguration m_statorLimit;
+    };
+
 }

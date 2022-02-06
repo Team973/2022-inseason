@@ -7,29 +7,6 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
-  
-  m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
-  m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_TALON_SRX);
-  m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_TALON_SRX);
-  m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
-  m_shooterFlywheelMotorA = new TalonFX(FLYWHEEL_A_CAN_ID);
-  m_shooterFlywheelMotorB = new TalonFX(FLYWHEEL_B_CAN_ID);
-  m_shooterPrecharger = new TalonFX(PRECHARGER_CAN_ID);
-  m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB, m_shooterPrecharger);
-  m_gyroTalon = new TalonSRX(9);
-  m_gyro = new Gyro(m_gyroTalon);
-  m_gyro->Zero();
-  m_intakeTalon = new TalonFX(INTAKE_FALCON);
-  m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
-  m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
-  m_CANdle = new CANdle(CANDLE_ID);
-  m_lights = new Lights(m_CANdle);
-  m_limelight = new Limelight("limelight");
-  m_operatorStick = new XboxController(1);
-  //Joystick
-  m_driverStick = new Joystick(1);
-  m_operatorStick = new XboxController(0);
-
   //Drive
   m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
   m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
@@ -40,6 +17,45 @@ void Robot::RobotInit() {
 
   m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, 
                       m_rightDriveTalonA, m_rightDriveTalonB, m_rightDriveTalonC);
+
+  //Intake
+  m_intakeTalon = new TalonFX(INTAKE_FALCON);
+  m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
+  m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+
+  //Conveyor
+  m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
+  m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_TALON_SRX);
+  m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_TALON_SRX);
+  m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
+
+  //Turret
+  
+  //Shooter
+  m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
+  m_shooterFlywheelMotorB = new WPI_TalonFX(FLYWHEEL_B_CAN_ID);
+  m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB);
+
+  //Limelight
+  m_limelight = new Limelight("limelight");
+  
+  //Climb
+
+  //Gyro
+  m_gyroTalon = new TalonSRX(9);
+  m_gyro = new Gyro(m_gyroTalon);
+  m_gyro->Zero();
+
+  //Lights
+  m_CANdle = new CANdle(CANDLE_ID);
+  m_lights = new Lights(m_CANdle);
+  m_limelight = new Limelight("limelight");
+  m_operatorStick = new XboxController(1);
+
+  //Joystick
+  m_driverStick = new Joystick(1);
+  m_operatorStick = new XboxController(0);
+
 }
 
 void Robot::RobotPeriodic() {

@@ -44,24 +44,7 @@ class Robot : public TimedRobot {
   void TestPeriodic() override;
 
  private:
-    TalonSRX *m_conveyorFloorMotor;
-    TalonSRX *m_conveyorTowerMotorA;
-    TalonSRX *m_conveyorTowerMotorB;
-    Conveyor *m_conveyor;
-    TalonFX *m_shooterFlywheelMotorA;
-    TalonFX *m_shooterFlywheelMotorB;
-    TalonFX *m_shooterPrecharger;
-    Shooter *m_shooter;
-    TalonSRX* m_gyroTalon;
-    Gyro* m_gyro;
-    TalonFX *m_intakeTalon;
-    Solenoid *m_intakeSolenoid;
-    Intake *m_intake;
-    CANdle *m_CANdle;
-    Lights *m_lights;
-    Limelight *m_limelight;
-    XboxController *m_operatorStick;
-    Joystick *m_driverStick;
+    //Drive
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
     WPI_TalonFX *m_leftDriveTalonC;
@@ -69,6 +52,42 @@ class Robot : public TimedRobot {
     WPI_TalonFX *m_rightDriveTalonB; 
     WPI_TalonFX *m_rightDriveTalonC;  
     Drive *m_drive; 
+    
+    //Intake
+    TalonFX *m_intakeTalon;
+    Solenoid *m_intakeSolenoid;
+    Intake *m_intake;
+
+    //Conveyor
+    TalonSRX *m_conveyorFloorMotor;
+    TalonSRX *m_conveyorTowerMotorA;
+    TalonSRX *m_conveyorTowerMotorB;
+    Conveyor *m_conveyor;
+
+    //Turret
+    
+    //Shooter
+    WPI_TalonFX *m_shooterFlywheelMotorA;
+    WPI_TalonFX *m_shooterFlywheelMotorB;
+    WPI_TalonFX *m_shooterPrecharger;
+    Shooter *m_shooter;
+
+    //Limelight
+    Limelight *m_limelight;
+
+    //Climb
+    
+    //Gyro
+    TalonSRX* m_gyroTalon;
+    Gyro* m_gyro;
+
+    //Lights
+    CANdle *m_CANdle;
+    Lights *m_lights;
+
+    //Joysticks
+    XboxController *m_operatorStick;
+    Joystick *m_driverStick;
 };
 
 } //namespace frc973
