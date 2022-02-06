@@ -71,9 +71,9 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y){
 void Turret::CalcOutput(double limeLightXOffset, double angularVelocity) {
     //double output;
     m_limeLightPID.SetTarget(0);
-    double output = 0; //m_limeLightPID.CalcOutput(limeLightXOffset);
+    double output = m_limeLightPID.CalcOutput(limeLightXOffset);
 
-    output = /*(-angularVelocity * Constants::GYRO_CONSTANT) + */(m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+    output += (-angularVelocity * Constants::GYRO_CONSTANT); //+ (m_translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limeLightToMotorPower = output;
     SmartDashboard::PutNumber("output", output);
