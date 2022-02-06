@@ -2,8 +2,8 @@
 
 namespace frc973{
 
-Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC, WPI_TalonFX *rightDriveTalonA,
-             WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC)
+Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC,
+             WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC)
         : m_leftDriveTalonA(leftDriveTalonA)
         , m_leftDriveTalonB(leftDriveTalonB)
         , m_leftDriveTalonC(leftDriveTalonC)
@@ -15,46 +15,72 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05)) {
     
-    //configure motor settings
+    //Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
     m_leftDriveTalonC->ConfigFactoryDefault();
-
     m_rightDriveTalonA->ConfigFactoryDefault();
     m_rightDriveTalonB->ConfigFactoryDefault();
     m_rightDriveTalonC->ConfigFactoryDefault();
 
+    //Neutral Mode
     m_leftDriveTalonA->SetNeutralMode(Coast);
     m_leftDriveTalonB->SetNeutralMode(Coast);
     m_leftDriveTalonC->SetNeutralMode(Coast);
-
     m_rightDriveTalonA->SetNeutralMode(Coast);
     m_rightDriveTalonB->SetNeutralMode(Coast);
     m_rightDriveTalonC->SetNeutralMode(Coast);
 
+    //Motor Directions
     m_leftDriveTalonA->SetInverted(TalonFXInvertType::Clockwise);
     m_leftDriveTalonB->SetInverted(TalonFXInvertType::Clockwise);
     m_leftDriveTalonC->SetInverted(TalonFXInvertType::Clockwise);
-
     m_rightDriveTalonA->SetInverted(TalonFXInvertType::CounterClockwise);
     m_rightDriveTalonB->SetInverted(TalonFXInvertType::CounterClockwise);
     m_rightDriveTalonC->SetInverted(TalonFXInvertType::CounterClockwise);
 
+    //Current Limits
+    m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_leftDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_leftDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+
+    m_rightDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
+    m_rightDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
+    m_rightDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
+
+    //Deadband
+    m_leftDriveTalonA->ConfigNeutralDeadband(0.01);
+    m_leftDriveTalonB->ConfigNeutralDeadband(0.01);
+    m_leftDriveTalonC->ConfigNeutralDeadband(0.01);
+
+    m_rightDriveTalonA->ConfigNeutralDeadband(0.01);
+    m_rightDriveTalonB->ConfigNeutralDeadband(0.01);
+    m_rightDriveTalonC->ConfigNeutralDeadband(0.01);
+
+    //Set motors to follow A
+    m_leftDriveTalonB->Follow(*m_leftDriveTalonA);
+    m_leftDriveTalonC->Follow(*m_leftDriveTalonA);
+
+    m_rightDriveTalonB->Follow(*m_rightDriveTalonA);
+    m_rightDriveTalonC->Follow(*m_rightDriveTalonA);
+
+    //Ramp Output
+    m_leftDriveTalonA->ConfigClosedloopRamp(0.0);
+    m_rightDriveTalonA->ConfigClosedloopRamp(0.0);
+
+    //Voltage Compensation
+    m_leftDriveTalonA->ConfigVoltageCompSaturation(12.0);
+    m_leftDriveTalonB->ConfigVoltageCompSaturation(12.0);
+
+    //Closed loop
     m_leftDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
     m_rightDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
-
-    m_leftDriveTalonA->ConfigClosedloopRamp(0.1);
-    m_rightDriveTalonA->ConfigClosedloopRamp(0.1);
-
-    m_leftDriveTalonA->ConfigNominalOutputForward(0, 30);
-    m_leftDriveTalonA->ConfigNominalOutputReverse(0, 30);
-    m_leftDriveTalonA->ConfigPeakOutputForward(1.0, 30);
-    m_leftDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
-
-    m_rightDriveTalonA->ConfigNominalOutputForward(0, 30);
-    m_rightDriveTalonA->ConfigNominalOutputReverse(0, 30);
-    m_rightDriveTalonA->ConfigPeakOutputForward(1.0, 30);
-    m_rightDriveTalonA->ConfigPeakOutputReverse(-1.0, 30);
 
     m_leftDriveTalonA->Config_kP(0, 0.2, 30);
     m_leftDriveTalonA->Config_kI(0, 0.0, 30);
@@ -66,41 +92,46 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonA->Config_kD(0, 0.0, 30);
     m_rightDriveTalonA->Config_kF(0, 0.0, 30);
 
-    m_leftDriveTalonB->Follow(*m_leftDriveTalonA);
-    m_leftDriveTalonC->Follow(*m_leftDriveTalonA);
-
-    m_rightDriveTalonB->Follow(*m_rightDriveTalonA);
-    m_rightDriveTalonC->Follow(*m_rightDriveTalonA);
-
-    m_leftDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
-    m_rightDriveTalonA->SetSelectedSensorPosition(0, 0, 0);
-
-    m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
-    m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
-    m_leftDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
-
-    m_rightDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
-    m_rightDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
-    m_rightDriveTalonC->ConfigSupplyCurrentLimit(m_currentLimit);
-
-    m_leftDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
-    m_leftDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
-    m_leftDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
-
-    m_rightDriveTalonA->ConfigStatorCurrentLimit(m_statorLimit);
-    m_rightDriveTalonB->ConfigStatorCurrentLimit(m_statorLimit);
-    m_rightDriveTalonC->ConfigStatorCurrentLimit(m_statorLimit);
 }
 
 void Drive::Update() {
 
-    ArcadeCalcOutput();
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 20000) * abs(m_throttle));
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 20000) * abs(m_throttle));
+    switch (m_driveMode)
+    {
+    case DriveMode::arcade:
+        ArcadeCalcOutput();
+        break;
+    case DriveMode::cheesyDrive:
+        CheesyCalcOutput();
+        break;
+    case DriveMode::position:
+        break;
+    default:
+        break;
+    }
+
+    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
+    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
 
 }
 
 void Drive::DashboardUpdate() {
+    frc::SmartDashboard::PutNumber("Drive throttle", m_throttle);
+    frc::SmartDashboard::PutNumber("Drive turn", m_turn);
+    frc::SmartDashboard::PutNumber("Drive leftOutput", m_leftOutput);
+    frc::SmartDashboard::PutNumber("Drive rightOutput", m_rightOutput);
+    frc::SmartDashboard::PutNumber("leftDrive Supply Current",(m_leftDriveTalonA->GetSupplyCurrent() +
+                                                            m_leftDriveTalonB->GetSupplyCurrent() +
+                                                            m_leftDriveTalonC->GetSupplyCurrent())/3.0);
+    frc::SmartDashboard::PutNumber("rightDrive Supply Current",(m_rightDriveTalonA->GetSupplyCurrent() +
+                                                            m_rightDriveTalonB->GetSupplyCurrent() +
+                                                            m_rightDriveTalonC->GetSupplyCurrent())/3.0);
+    frc::SmartDashboard::PutNumber("leftDrive Stator Current",(m_leftDriveTalonA->GetStatorCurrent() +
+                                                            m_leftDriveTalonB->GetStatorCurrent() +
+                                                            m_leftDriveTalonC->GetStatorCurrent())/3.0);
+    frc::SmartDashboard::PutNumber("rightDrive Stator Current",(m_rightDriveTalonA->GetStatorCurrent() +
+                                                            m_rightDriveTalonB->GetStatorCurrent() +
+                                                            m_rightDriveTalonC->GetStatorCurrent())/3.0);
 
 }
 
@@ -131,10 +162,16 @@ void Drive::ArcadeCalcOutput() {
     }
 }
 
+void Drive::CheesyCalcOutput() {
+    //TODO
+    m_leftOutput =0.0;
+    m_rightOutput = 0.0;
+
+}
+
 void Drive::SetThrottleTurn(double throttle, double turn) {
     m_throttle = throttle;
     m_turn = turn;
 }
-
 
 } //namespace frc973 
