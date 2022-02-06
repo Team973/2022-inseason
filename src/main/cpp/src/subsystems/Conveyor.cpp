@@ -10,8 +10,8 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0) {
-        m_towerMotorB->Follow(*m_towerMotorA);
-        }
+    m_towerMotorB->Follow(*m_towerMotorA);
+}
 
 void Conveyor::Update() {
     if (m_manualTowerSpeed != 0) {
@@ -22,7 +22,7 @@ void Conveyor::Update() {
         m_floorState = FloorState::Manual;
     }
 
-    switch (m_towerState) {  
+    switch (m_towerState) {
         case TowerState::Off:
             m_towerMotorA->Set(ControlMode::PercentOutput, 0.0);
             break;
@@ -37,7 +37,7 @@ void Conveyor::Update() {
             break;
     }
 
-    switch (m_floorState) {  
+    switch (m_floorState) {
         case FloorState::Off:
             m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
@@ -50,7 +50,6 @@ void Conveyor::Update() {
         case FloorState::Manual:
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
-        
     }
 }
 
@@ -87,4 +86,4 @@ void Conveyor::SetManualTowerSpeed(double speed) {
 void Conveyor::SetManualFloorSpeed(double speed) {
     m_manualFloorSpeed = speed;
 }
-}
+}  // namespace frc973

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "lib/bases/Subsystem.h"
-#include "lib/Util.h"
 #include <ctre/Phoenix.h>
-
 #include <frc/DigitalInput.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
+#include "lib/Util.h"
+#include "lib/bases/Subsystem.h"
 
 using namespace frc;
 
@@ -24,24 +24,22 @@ public:
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
      */
-    enum class TowerState
-    {
-        Off,        /**< State for the tower being off. */
-        FeedIn,   /**< State when the tower is moving the balls up */
+    enum class TowerState {
+        Off,     /**< State for the tower being off. */
+        FeedIn,  /**< State when the tower is moving the balls up */
         FeedOut, /**< State to empty the tower back into the floor. */
-        Manual      /**< State for manual control of the tower. */
+        Manual   /**< State for manual control of the tower. */
     };
 
     /**
      * Sets the floor state to either feed in, feed out, manual, or off.
      */
-    enum class FloorState
-    {
-        Off,      /**< State for the floor being off. */
+    enum class FloorState {
+        Off,     /**< State for the floor being off. */
         FeedIn,  /**< Brings power cells to tower. */
         FeedOut, /**< Brings power cells to Intake. */
-        Manual  /**< Manual control over the speed of the floor. */
-        
+        Manual   /**< Manual control over the speed of the floor. */
+
     };
 
     /**
@@ -118,4 +116,4 @@ private:
     double m_manualTowerSpeed;
     double m_manualFloorSpeed;
 };
-}
+}  // namespace frc973

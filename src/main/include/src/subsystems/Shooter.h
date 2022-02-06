@@ -3,9 +3,9 @@
 #include <ctre/Phoenix.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include "lib/bases/Subsystem.h"
-#include "lib/Util.h"
 #include "lib/Constants.h"
+#include "lib/Util.h"
+#include "lib/bases/Subsystem.h"
 #include "src/RobotInfo.h"
 
 namespace frc973 {
@@ -20,18 +20,18 @@ public:
     Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB);
 
     enum class ShooterState {
-        Off,        /* Shooter motors do not run */
-        Fixed,      /* Shooter motors run CL Velocity on a fixed setpoint */
-        Tracking    /* Shooter motors run CL Velocity on a tracking setpoint */
+        Off,     /* Shooter motors do not run */
+        Fixed,   /* Shooter motors run CL Velocity on a fixed setpoint */
+        Tracking /* Shooter motors run CL Velocity on a tracking setpoint */
     };
-    
+
     /**
      * Set the flywheel velocity.
      * @param setpoint The velocity setpoint to go to.
      */
     void SetFlywheelRPM(double setpoint);
 
-     /**
+    /**
      * Checks to see if the flywheel is at speed or not.
      * @return true or false on if its at speed.
      */
@@ -40,7 +40,7 @@ public:
     /**
      * Change state of Shooter
      */
-    void SetShooterState(ShooterState state);  
+    void SetShooterState(ShooterState state);
 
     /**
      * Update this subsystem example each cycle or TeleopPeriodic.
@@ -52,9 +52,6 @@ public:
      */
     void DashboardUpdate() override;
 
-
-
-
 private:
     WPI_TalonFX *m_flywheelA;
     WPI_TalonFX *m_flywheelB;
@@ -65,6 +62,6 @@ private:
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
-    };
+};
 
-}
+}  // namespace frc973

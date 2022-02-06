@@ -1,11 +1,13 @@
-#include "src/Robot.h"
-
 #include <iostream>
+
+#include "src/Robot.h"
 
 namespace frc973 {
 
-void Robot::AutonomousInit() {}
+void Robot::AutonomousInit() {
+}
 
-void Robot::AutonomousPeriodic() {}
+void Robot::AutonomousPeriodic() {
+}
 
-} // namespace frc973
+}  // namespace frc973

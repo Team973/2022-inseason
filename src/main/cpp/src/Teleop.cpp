@@ -1,9 +1,9 @@
-#include "src/Robot.h"
-
 #include <iostream>
 
+#include "src/Robot.h"
+
 namespace frc973 {
-    
+
 void Robot::TeleopInit() {
 }
 
@@ -13,7 +13,8 @@ void Robot::TeleopPeriodic() {
     } else {
         m_limelight->SetCameraDriver();
     }
-    m_drive->SetThrottleTurn(Util::deadband(-m_operatorStick->GetRawAxis(1), 0.05), Util::deadband(m_operatorStick->GetRawAxis(4), 0.05));
+    m_drive->SetThrottleTurn(Util::deadband(-m_operatorStick->GetRawAxis(1), 0.05),
+                             Util::deadband(m_operatorStick->GetRawAxis(4), 0.05));
 }
 
-} // namespace frc973
+}  // namespace frc973

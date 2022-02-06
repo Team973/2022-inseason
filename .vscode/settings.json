@@ -14,5 +14,7 @@
     "**/.factorypath": true,
     "**/*~": true
   },
-  "C_Cpp.default.configurationProvider": "vscode-wpilib"
+  "C_Cpp.default.configurationProvider": "vscode-wpilib",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file"
 }

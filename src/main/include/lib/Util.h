@@ -21,11 +21,10 @@ namespace Util {
 inline double deadband(double x, double threshold = 0.05) {
     if (std::fabs(x) > threshold) {
         return x;
-    }
-    else {
+    } else {
         return 0.0;
     }
 }
-    
-} // namespace Util
-} // namespace frc973
+
+}  // namespace Util
+}  // namespace frc973

@@ -1,11 +1,11 @@
 #include "src/Robot.h"
 
-#include <iostream>
-
 namespace frc973 {
 
-void Robot::TestInit() {}
+void Robot::TestInit() {
+}
 
-void Robot::TestPeriodic() {}
+void Robot::TestPeriodic() {
+}
 
-} // namespace frc973
+}  // namespace frc973

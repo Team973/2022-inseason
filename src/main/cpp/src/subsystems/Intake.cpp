@@ -1,21 +1,20 @@
-#include "src/subsystems/Intake.h" 
+#include "src/subsystems/Intake.h"
 
 namespace frc973 {
-    
-Intake::Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid) 
-    : m_intakeSpeed(0.0)
-    , m_intakeTalon(intakeTalon) 
-    , m_intakeSolenoid(intakeSolenoid)
-    , m_intakeState(IntakeState::Retract) 
-    , m_intakeMotorState(IntakeMotorState::Off)
-    {
+
+Intake::Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid)
+        : m_intakeSpeed(0.0)
+        , m_intakeTalon(intakeTalon)
+        , m_intakeSolenoid(intakeSolenoid)
+        , m_intakeState(IntakeState::Retract)
+        , m_intakeMotorState(IntakeMotorState::Off) {
 }
 
 void Intake::Deploy() {
     m_intakeState = IntakeState::Deploy;
 }
 
-void Intake::Retract(){
+void Intake::Retract() {
     m_intakeState = IntakeState::Retract;
 }
 
@@ -31,7 +30,6 @@ void Intake::SetPercentOutput(double speed) {
     m_intakeSpeed = speed;
 }
 
-
 void Intake::Update() {
     switch (m_intakeState) {
         case IntakeState::Deploy:
@@ -40,24 +38,22 @@ void Intake::Update() {
         case IntakeState::Retract:
             m_intakeSolenoid->Set(false);
             break;
-        
     }
 
-     switch (m_intakeMotorState) {
+    switch (m_intakeMotorState) {
         case IntakeMotorState::Off:
             m_intakeSpeed = 0.0;
             break;
         case IntakeMotorState::FeedIn:
             m_intakeSpeed = 0.8;
-            break;  
+            break;
         case IntakeMotorState::FeedOut:
             m_intakeSpeed = -0.2;
             break;
         case IntakeMotorState::Manual:
-            //Controlled by Co-Driver, set in Teleop
+            // Controlled by Co-Driver, set in Teleop
             break;
     }
-
 
     m_intakeSpeed = std::clamp(m_intakeSpeed, -1.0, 1.0);
 
@@ -65,8 +61,6 @@ void Intake::Update() {
 }
 
 void Intake::DashboardUpdate() {
-    
 }
 
-} // namespace frc973
-
+}  // namespace frc973
