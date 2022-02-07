@@ -7,7 +7,7 @@
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 
 #include "lib/bases/Subsystem.h"
-#include "lib/Util.h"
+#include "lib/util/Util.h"
 #include "src/RobotInfo.h"
 
 
@@ -26,6 +26,16 @@ public:
      * */
     Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC, 
           WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC);
+
+    /**
+    * The drive subsystem mode.
+    */
+    enum class DriveMode
+    {
+        arcade,               /**< The arcade drive mode. */
+        position,             /**< The position drive mode. */
+        cheesyDrive,          /**< The cheesy drive mode. */
+    };
 
     /**
      * Updates this subsystem.
@@ -63,10 +73,6 @@ public:
      */
     double GetVelocity();
 
-    
-
-
-
 private:
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
@@ -86,6 +92,6 @@ private:
     StatorCurrentLimitConfiguration m_statorLimit;
 
     bool m_isQuickTurn;
-
+    DriveMode m_driveMode;
 };
-
+}

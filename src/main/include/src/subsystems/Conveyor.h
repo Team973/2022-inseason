@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/bases/Subsystem.h"
-#include "lib/Util.h"
+#include "lib/util/Util.h"
 #include <ctre/Phoenix.h>
 
 #include <frc/DigitalInput.h>

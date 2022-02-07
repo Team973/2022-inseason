@@ -4,8 +4,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include "lib/bases/Subsystem.h"
-#include "lib/Util.h"
-#include "lib/Constants.h"
+#include "lib/util/Util.h"
+#include "lib/util/Constants.h"
 #include "src/RobotInfo.h"
 
 namespace frc973 {
