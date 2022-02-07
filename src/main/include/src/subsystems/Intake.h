@@ -1,20 +1,19 @@
 #pragma once
 
+#include <ctre/Phoenix.h>
+#include <fmt/core.h>
+#include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include "lib/bases/Subsystem.h"
 #include "src/RobotInfo.h"
-
-#include <frc/smartdashboard/SmartDashboard.h>
-#include <ctre/Phoenix.h>
-#include <frc/Solenoid.h>
-#include <fmt/core.h>
 
 namespace frc973 {
 
 class Intake : public Subsystem {
-
 public:
-    /** 
-     * Constructs the intake subsystem 
+    /**
+     * Constructs the intake subsystem
      */
     Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid);
 
@@ -24,55 +23,54 @@ public:
     };
 
     enum class IntakeMotorState {
-        Off, /* Intake wheels don't run */
-        FeedIn, /* Runs the intake wheels towards the conveyer */
+        Off,     /* Intake wheels don't run */
+        FeedIn,  /* Runs the intake wheels towards the conveyer */
         FeedOut, /* Runs the intake wheels away from the conveyer */
-        Manual /* Driver controls the intake speed */
+        Manual   /* Driver controls the intake speed */
     };
 
-
-     /** 
+    /**
      * Deploys the Intake
      */
     void Deploy();
 
-    /** 
+    /**
      * Retracts the Intake
      */
     void Retract();
 
-    /** 
-     * Gets current intake stake 
+    /**
+     * Gets current intake stake
      */
     Intake::IntakeState GetIntakeState();
-    
-   /** 
-     * Sets current intake stake 
+
+    /**
+     * Sets current intake stake
      */
     void SetIntakeState(IntakeState state);
 
-    /** 
+    /**
      * Changes the speed of the intake moves at
      */
     void SetPercentOutput(double speed);
 
-    /** 
-     * Updates the intake subsystem 
+    /**
+     * Updates the intake subsystem
      */
     void Update();
 
-    /** 
+    /**
      * Updates the intake subsystem in Smartdashboard
      */
     void DashboardUpdate();
-  
-private: 
+
+private:
     double m_intakeSpeed;
-    
-    TalonFX *m_intakeTalon; 
+
+    TalonFX *m_intakeTalon;
     frc::Solenoid *m_intakeSolenoid;
     IntakeState m_intakeState;
     IntakeMotorState m_intakeMotorState;
 };
-  
-} // namespace frc973
+
+}  // namespace frc973

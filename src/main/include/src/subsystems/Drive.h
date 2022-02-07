@@ -1,17 +1,16 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
-#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "lib/bases/Subsystem.h"
 #include "lib/util/Util.h"
 #include "src/RobotInfo.h"
 
-
-namespace frc973{
+namespace frc973 {
 
 class Drive : public Subsystem {
 public:
@@ -24,7 +23,7 @@ public:
      * @param rightDriveTalonB The second right drive TalonFX/Falcon.
      * @param rightDriveTalonC The third right drive TalonFX/Falcon.
      * */
-    Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC, 
+    Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC,
           WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC);
 
     /**
@@ -56,7 +55,7 @@ public:
      * Set correct Left motor and Right motor outputs on drive
      */
     void CheesyCalcOutput();
-    
+
     /**
      * Called to update the current throttle and turn values of the joysticks
      */
@@ -94,4 +93,4 @@ private:
     bool m_isQuickTurn;
     DriveMode m_driveMode;
 };
-}
+} //namespace frc973

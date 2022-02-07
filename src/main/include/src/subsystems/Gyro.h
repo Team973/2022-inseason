@@ -1,34 +1,33 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
-#include "lib/bases/Subsystem.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include "lib/bases/Subsystem.h"
+
 namespace frc973 {
-    class Gyro : public Subsystem {
-    public:
-        Gyro(TalonSRX *gyroTalon);  
+class Gyro : public Subsystem {
+public:
+    Gyro(TalonSRX *gyroTalon);
 
-        double GetWrappedAngle();
-        
-        double GetAngle();
-        
-        double GetAngularRate();
+    double GetWrappedAngle();
 
-        void Update() override; 
-        
-        void DashboardUpdate() override;
-        
-        void SetAngle(double degrees);
+    double GetAngle();
 
-        void Zero();
-        
+    double GetAngularRate();
 
-    private:
-        PigeonIMU m_gyro;
+    void SetAngle(double degrees);
 
-        double m_wrappedAngle;
-        double m_currentAngle;
+    void Zero();
 
-    };
-}
+    void Update() override;
+
+    void DashboardUpdate() override;
+
+private:
+    PigeonIMU m_gyro;
+
+    double m_wrappedAngle;
+    double m_currentAngle;
+};
+}  // namespace frc973

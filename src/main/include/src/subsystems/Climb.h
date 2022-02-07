@@ -1,19 +1,19 @@
 #pragma once
 
+#include <ctre/Phoenix.h>
+#include <frc/DigitalInput.h>
+#include <frc/Solenoid.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include "lib/bases/Subsystem.h"
 #include "src/RobotInfo.h"
 
-#include <ctre/Phoenix.h>
-#include <frc/Solenoid.h>
-#include <frc/DigitalInput.h>
-#include <frc/smartdashboard/SmartDashboard.h>
+using namespace frc;
 
-using namespace frc; 
+namespace frc973 {
 
-namespace frc973 { 
-
-class Climb : public Subsystem{
-    public:
+class Climb : public Subsystem {
+public:
     /**
      * Constructs the Climb subsystem
      * @param climbTalonA left climb TalonFX
@@ -23,14 +23,13 @@ class Climb : public Subsystem{
      * @param topLeftSensor the top left sensor
      * @param topRightSensor the top right sensor
      */
-    Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor, DigitalInput *bottomRightSensor, 
-            DigitalInput *topLeftSensor, DigitalInput *topRightSensor);
+    Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
+          DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor);
 
     /**
      * Sets the climb to run automatically, manually through joystick, or lock and stop moving.
      */
-    enum class ClimbState
-    {
+    enum class ClimbState {
         Deploy, /**< Runs the climb up automatically. */
         Manual, /**< Sets the climb motors to manual control. */
         Off     /**< Locks the climb and sets motors to 0. */
@@ -55,15 +54,15 @@ class Climb : public Subsystem{
     /**
      * Sets the speed of the climb.
      * @param speed The speed as a percent for the motors.
-     */ 
+     */
     void SetClimbSpeed(double speed);
 
     /**
      * Sets the height for the target to reach when deployed
      * @param target the target in inches
-     */ 
+     */
     void SetClimbTarget(double target);
-    
+
     /**
      * Gets the climbs current status.
      * @return True or false on if its enabled.
@@ -88,11 +87,11 @@ class Climb : public Subsystem{
     void Update() override;
 
     /**
-     * Updates the Dashboard 
+     * Updates the Dashboard
      */
-    void DashboardUpdate() override; 
+    void DashboardUpdate() override;
 
-    private:
+private:
     WPI_TalonFX *m_climbTalonA;
     WPI_TalonFX *m_climbTalonB;
 
@@ -104,7 +103,7 @@ class Climb : public Subsystem{
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
-    ClimbState m_currentState;  
+    ClimbState m_currentState;
     bool m_inClimbState;
     double m_climbSpeed;
     double m_climbTarget;
@@ -112,4 +111,4 @@ class Climb : public Subsystem{
     std::string m_climbState;
 };
 
-} // namespace frc973
+}  // namespace frc973
