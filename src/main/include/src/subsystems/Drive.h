@@ -8,6 +8,7 @@
 
 #include "lib/bases/Subsystem.h"
 #include "lib/util/Util.h"
+#include "lib/helpers/PID.h"
 #include "src/RobotInfo.h"
 
 namespace frc973 {
@@ -47,19 +48,44 @@ public:
     void DashboardUpdate() override;
 
     /**
-     * Set correct Left motor and Right motor outputs on drive
+     * Called to update the current throttle and turn values of the joysticks
+     */
+    void SetThrottleTurn(double throttle, double turn);
+
+    /**
+     * Set Left/Right motor outputs using Arcade Drive.
      */
     void ArcadeCalcOutput();
 
     /**
-     * Set correct Left motor and Right motor outputs on drive
+     * Set Left/Right motor outputs using Cheesy Drive.
      */
     void CheesyCalcOutput();
 
     /**
-     * Called to update the current throttle and turn values of the joysticks
+     * Set Left/Right motor outputs using Position Drive.
      */
-    void SetThrottleTurn(double throttle, double turn);
+    void PositionCalcOutput();
+
+    /**
+     * Sets current angle of drive
+     */
+    void SetAngle(double angle);
+    
+    /**
+     * Sets current position of drive
+     */
+    void SetPosition(double position);
+
+    /**
+     * Sets current pose of drive
+     */
+    void SetPose(Pose2d pose);
+
+    /**
+     * Sets quickturn true = turn in place
+     */
+    void SetQuickTurn(bool QT);
 
     //test del later
     double GetRightOuput();
@@ -87,10 +113,33 @@ private:
     double m_throttle;
     double m_turn;
 
+    double m_gyroAngle;
+    
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
     bool m_isQuickTurn;
     DriveMode m_driveMode;
+    
+    units::meter_t m_xPos;
+    units::meter_t m_yPos;
+    units::degree_t m_theta;
+    Translation2d m_translation2D;
+    Rotation2d m_rotation2D;
+    Pose2d m_drivePose;
+    units::meter_t m_driveWidth;
+    DifferentialDriveKinematics m_driveKinimatics;
+    ChassisSpeeds m_driveChassisSpeeds;
+    DifferentialDriveWheelSpeeds m_driveWheelSpeeds;
+    DifferentialDriveOdometry m_driveOdometry;
+
+    PID m_positionPID;
+    PID m_turnPID;
+
+    double m_targetPos;
+    double m_targetAngle;
+    double m_currentPos;
+    double m_currentAngle;
+    
 };
 } //namespace frc973
