@@ -43,6 +43,16 @@ public:
     void SetShooterState(ShooterState state);
 
     /**
+     * Enables the shooter
+     */
+    void EnableShooter();
+
+    /**
+     * Disables the shooter
+     */
+    void DisableShooter();
+
+    /**
      * Update this subsystem example each cycle or TeleopPeriodic.
      */
     void Update() override;

@@ -86,4 +86,11 @@ bool Shooter::IsAtSpeed() {
     return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 50);
 }
 
+void Shooter::EnableShooter() {
+    m_shooterState = ShooterState::Fixed;
+}
+
+void Shooter::DisableShooter() {
+    m_shooterState = ShooterState::Off;
+}
 }  // namespace frc973
