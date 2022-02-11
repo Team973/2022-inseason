@@ -8,12 +8,12 @@ namespace frc973 {
 
 void Robot::RobotInit() {
     // Drive
-    m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
-    m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
-    m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_TALON_C);
-    m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_TALON_A);
-    m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_TALON_B);
-    m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_TALON_C);
+    m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_FX_A_ID);
+    m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_FX_B_ID);
+    m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_FX_C_ID);
+    m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_FX_A_ID);
+    m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_FX_B_ID);
+    m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_FX_C_ID);
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);

@@ -197,7 +197,7 @@ void Drive::CheesyCalcOutput() {
             wheel = wheel / (denominator * denominator) * std::abs(throttle);
         }
         wheel *= kWheelGain;
-    ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(throttle),0.0_mps,units::radians_per_second_t(wheel)};
+    ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(throttle*MAX_METERS_PER_SECOND),0.0_mps,units::radians_per_second_t(wheel*MAX_RADIANS_PER_SECOND)};
     m_driveWheelSpeeds = m_driveKinimatics.ToWheelSpeeds(driveChassisSpeed);
     m_leftOutput = m_driveWheelSpeeds.left();
     m_rightOutput = m_driveWheelSpeeds.right();

@@ -12,10 +12,11 @@ namespace frc973 {
  */
 // Physical Dimensions - TODO: update
 constexpr double DRIVE_WIDTH = 23.75;         // Drive base width in inches.
-constexpr double DRIVE_PINION = 1;            // Teeth on drive pinion gear.
-constexpr double DRIVE_GEAR = 1;              // Teeth on the main drive gear.
 constexpr double DRIVE_WHEEL_DIAMETER = 4.0;  // Diameter of the drive train wheels in inches.
 constexpr double MAX_FT_PER_SECOND = 14.2;    // Max speed of the robot in feet per second.
+constexpr double MAX_METERS_PER_SECOND = MAX_FT_PER_SECOND/Constants::FEET_PER_METER;
+constexpr double MAX_DEGREES_PER_SECOND = 360;
+constexpr double MAX_RADIANS_PER_SECOND = MAX_DEGREES_PER_SECOND * Constants::PI/180;
 
 // Movement
 constexpr double DRIVE_GEAR_RATIO = (12.0 / 72.0) * (34.0 / 36.0); /**< The gear ratio of the drive train. */
@@ -38,12 +39,12 @@ constexpr double DRIVE_TELEOP_LIMIT = 1.0;  /**< The max speed we want to run co
 /**
  * Drive Subsystem.
  */
-constexpr int LEFT_DRIVE_TALON_A = 0;   /**< Can ID for the first left drive talon. */
-constexpr int LEFT_DRIVE_TALON_B = 1;   /**< Can ID for the second left drive talon. */
-constexpr int LEFT_DRIVE_TALON_C = 2;   /**< Can ID for the third left drive talon. */
-constexpr int RIGHT_DRIVE_TALON_A = 15; /**< Can ID for the first right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_B = 14; /**< Can ID for the second right drive talon. */
-constexpr int RIGHT_DRIVE_TALON_C = 13; /**< Can ID for the third right drive talon. */
+constexpr int LEFT_DRIVE_FX_A_ID = 0;   /**< Can ID for the first left drive talon. */
+constexpr int LEFT_DRIVE_FX_B_ID = 1;   /**< Can ID for the second left drive talon. */
+constexpr int LEFT_DRIVE_FX_C_ID = 2;   /**< Can ID for the third left drive talon. */
+constexpr int RIGHT_DRIVE_FX_A_ID = 15; /**< Can ID for the first right drive talon. */
+constexpr int RIGHT_DRIVE_FX_B_ID = 14; /**< Can ID for the second right drive talon. */
+constexpr int RIGHT_DRIVE_FX_C_ID = 13; /**< Can ID for the third right drive talon. */
 
 /**
  * Conveyor Subsystem.
