@@ -1,6 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <frc/util/Color.h>
+#include "rev/ColorSensorV3.h"
+
 
 namespace frc973 {
 
@@ -29,6 +32,17 @@ namespace Constants {
     constexpr double TALON_FX_VELOCITY_RPM =
         (MSEC_PER_SEC * SEC_PER_MIN) /
         (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS);     /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
+
+    /**
+     * color sensor target colors
+    */
+    static constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
+    static constexpr frc::Color kRedTarget = frc::Color(0.561, 0.232, 0.114);
+
+    /**
+     * Change the I2C port below to match the connection of your color sensor
+    */
+    static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
 
 } // namespace Constants
    
