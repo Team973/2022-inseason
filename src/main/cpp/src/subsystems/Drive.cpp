@@ -111,12 +111,12 @@ void Drive::Update() {
             break;
     }
 
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
 
-    // ArcadeCalcOutput();
-    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000 * 4) * std::abs(m_throttle));
-    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000 * 4) * std::abs(m_throttle));
+    ArcadeCalcOutput();
+    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000 * 4) * std::abs(m_throttle));
+    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * 2000 * 4) * std::abs(m_throttle));
 }
 
 void Drive::DashboardUpdate() {

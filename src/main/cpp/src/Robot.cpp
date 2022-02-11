@@ -20,7 +20,7 @@ void Robot::RobotInit() {
 
     // Intake
     m_intakeTalon = new TalonFX(INTAKE_FALCON);
-    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
+    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
     m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
     // Conveyor
@@ -30,6 +30,8 @@ void Robot::RobotInit() {
     m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
 
     // Turret
+    m_turretTalon = new WPI_TalonFX(8);
+    m_turret = new Turret(m_turretTalon);
 
     // Shooter
     m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
@@ -40,17 +42,17 @@ void Robot::RobotInit() {
     m_limelight = new Limelight("limelight");
 
     // Climb
-    m_bottomLeftSensor = new DigitalInput(1);
-    m_bottomRightSensor = new DigitalInput(1);
-    m_topLeftSensor = new DigitalInput(1);
-    m_topRightSensor = new DigitalInput(1);
+    m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
+    m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
+    m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
+    m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
     m_climbTalonA = new WPI_TalonFX(CLIMB_FALCON_A_ID);
     m_climbTalonB = new WPI_TalonFX(CLIMB_FALCON_B_ID);
     m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
                         m_topRightSensor);
 
     // Gyro
-    m_gyroTalon = new TalonSRX(9);
+    m_gyroTalon = new TalonSRX(GYRO_TALON);
     m_gyro = new Gyro(m_gyroTalon);
     m_gyro->Zero();
 
@@ -59,8 +61,8 @@ void Robot::RobotInit() {
     m_lights = new Lights(m_CANdle);
 
     // Joystick
-    m_driverStick = new StickController(1);
-    m_operatorStick = new StickController(0);
+    m_driverStick = new StickController(DRIVER_STICK);
+    m_operatorStick = new StickController(OPERATOR_STICK);
 }
 
 void Robot::RobotPeriodic() {

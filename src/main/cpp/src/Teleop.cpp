@@ -26,12 +26,6 @@ void Robot::TeleopPeriodic() {
         m_limelight->SetCameraDriver();
     }
 
-    if (m_operatorStick->GetYButton()) {
-        m_limelight->SetVisionCamera();
-    } else {
-        m_limelight->SetCameraDriver();
-    }
-
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05), 
                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 }
