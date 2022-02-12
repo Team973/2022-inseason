@@ -19,7 +19,7 @@ void Robot::RobotInit() {
                         m_rightDriveTalonC);
 
     // Intake
-    m_intakeTalon = new TalonFX(INTAKE_FALCON);
+    m_intakeTalon = new PWMTalonFX(INTAKE_FALCON);
     m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
     m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
@@ -64,7 +64,7 @@ void Robot::RobotInit() {
 
     // Joystick
     m_driverStick = new StickController(DRIVER_STICK);
-    m_operatorStick = new StickController(OPERATOR_STICK);
+     m_operatorStick = new StickController(OPERATOR_STICK);
 }
 
 void Robot::RobotPeriodic() {
@@ -77,6 +77,7 @@ void Robot::RobotPeriodic() {
     m_gyro->Update();
     // m_gyro->DashboardUpdate();
     m_intake->Update();
+    m_intake->DashboardUpdate();
     m_conveyor->Update();
     m_shooter->Update();
     m_turret->DashboardUpdate();

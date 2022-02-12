@@ -1,9 +1,11 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
+#include <frc/motorcontrol/PWMTalonFX.h>
 #include <fmt/core.h>
 #include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <string>
 
 #include "lib/bases/Subsystem.h"
 #include "src/RobotInfo.h"
@@ -15,7 +17,7 @@ public:
     /**
      * Constructs the intake subsystem
      */
-    Intake(TalonFX *intakeTalon, frc::Solenoid *intakeSolenoid);
+    Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid);
 
     enum class IntakeState {
         Deploy, /* Deploys the Intake */
@@ -50,6 +52,11 @@ public:
     void SetIntakeState(IntakeState state);
 
     /**
+     * Sets current intake stake
+     */
+    void SetIntakeMotorState(IntakeMotorState state);
+
+    /**
      * Changes the speed of the intake moves at
      */
     void SetPercentOutput(double speed);
@@ -67,10 +74,12 @@ public:
 private:
     double m_intakeSpeed;
 
-    TalonFX *m_intakeTalon;
+    frc::PWMTalonFX *m_intakeTalon;
     frc::Solenoid *m_intakeSolenoid;
     IntakeState m_intakeState;
     IntakeMotorState m_intakeMotorState;
+    
+    std::string m_intakeStatus;
 };
 
 }  // namespace frc973

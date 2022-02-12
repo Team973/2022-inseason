@@ -13,6 +13,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include <ctre/Phoenix.h>
+#include <frc/motorcontrol/PWMTalonFX.h>
 #include "ctre/phoenix/led/RainbowAnimation.h"
 
 #include <string>
@@ -57,7 +58,7 @@ private:
     Drive *m_drive;
 
     // Intake
-    TalonFX *m_intakeTalon;
+    PWMTalonFX *m_intakeTalon;
     Solenoid *m_intakeSolenoid;
     Intake *m_intake;
 
