@@ -13,7 +13,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         {
     m_turretMotor->ConfigFactoryDefault();
 
-    m_turretMotor->SetInverted(TalonFXInvertType::CounterClockwise);
+    m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
 
     m_turretMotor->SetNeutralMode(NeutralMode::Coast);
 
@@ -41,9 +41,9 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
 
 void Turret::Turn(double angleInDegrees, double gyroOffset) { 
 
-    // 2048 per rotation and gear ratio of 1:70
-    m_turretMotor->Set(ControlMode::Position, ((angleInDegrees - gyroOffset) / 360)  * 2048 * 70);
-    m_tickPosition = (angleInDegrees / 360) * 2048 * 70;
+    // 2048 per rotation and gear ratio of 1:TURRET_GEAR_RATIO
+    m_turretMotor->Set(ControlMode::Position, ((angleInDegrees - gyroOffset) / 360)  * 2048 * TURRET_GEAR_RATIO);
+    m_tickPosition = (angleInDegrees / 360) * 2048 * TURRET_GEAR_RATIO;
 }
 
 double Turret::CalcJoystickAngleInDegrees(double x, double y){
@@ -113,7 +113,7 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 
 
 void Turret::Update() {
-    m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / 70 / 2048 * 360;
+    m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / TURRET_GEAR_RATIO / 2048 * 360;
 
     switch (m_turretState) {
         case TurretState::Off:

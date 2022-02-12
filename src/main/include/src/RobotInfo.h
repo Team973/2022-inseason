@@ -51,6 +51,7 @@ constexpr int CONVEYOR_FLOOR_TALON_SRX = 10;   /**< Can ID for the floor talon. 
  */
 constexpr int TURRET_TALON = 8;
 constexpr int TURRET_SENSOR = 0;
+constexpr int TURRET_GEAR_RATIO = 64;
 
 /**
  * Shooter Subsystem.
