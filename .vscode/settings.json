@@ -16,5 +16,8 @@
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file"
+  "editor.formatOnSaveMode": "file",
+  "files.associations": {
+    "iostream": "cpp"
+  }
 }

@@ -18,10 +18,10 @@ void Robot::RobotInit() {
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
 
-    // Intake
-    m_intakeTalon = new TalonFX(INTAKE_FALCON);
-    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
-    m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+    // // Intake
+    // m_intakeTalon = new TalonFX(INTAKE_FALCON);
+    // m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
+    // m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
     // Conveyor
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
@@ -33,7 +33,7 @@ void Robot::RobotInit() {
     m_turretTalon = new WPI_TalonFX(TURRET_TALON);
     m_turretSensor = new DigitalInput(TURRET_SENSOR);
     m_turret = new Turret(m_turretTalon, m_turretSensor);
-    m_turret->SetNeutralMode(NeutralMode::Brake);
+    m_turret->SetNeutralMode(NeutralMode::Coast);
 
     // Shooter
     m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
@@ -76,9 +76,10 @@ void Robot::RobotPeriodic() {
 
     m_gyro->Update();
     // m_gyro->DashboardUpdate();
-    m_intake->Update();
+    // m_intake->Update();
     m_conveyor->Update();
     m_shooter->Update();
+    m_shooter->DashboardUpdate();
     m_turret->DashboardUpdate();
     m_climb->Update();
     m_climb->DashboardUpdate();
