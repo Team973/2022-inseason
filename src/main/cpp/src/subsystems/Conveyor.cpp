@@ -51,9 +51,16 @@ void Conveyor::Update() {
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
     }
+
 }
 
 void Conveyor::DashboardUpdate() {
+    frc::SmartDashboard::PutNumber("Conveyor Tower A", m_towerMotorA->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower B", m_towerMotorB->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Floor Motor", m_towerMotorA->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower A", m_towerMotorA->GetMotorOutputPercent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower B", m_towerMotorB->GetMotorOutputPercent());
+    frc::SmartDashboard::PutNumber("Conveyor Floor Motor", m_towerMotorA->GetMotorOutputPercent());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
