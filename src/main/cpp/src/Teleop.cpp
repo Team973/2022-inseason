@@ -31,8 +31,8 @@ void Robot::TeleopPeriodic() {
 //     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05), 
 //                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
-m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.05)* 1.0);
-m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(5, false, 0.05)* 1.0);
+m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.05)* - 0.5);
+m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.05)* 0.5);
 
     }
 

@@ -10,6 +10,7 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0) {
+    m_floorMotor->SetInverted(true);
     m_towerMotorB->Follow(*m_towerMotorA);
 }
 

@@ -73,8 +73,8 @@ void Robot::RobotPeriodic() {
     // SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
     // SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
     // SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
-    SmartDashboard::PutNumber("axis 1", m_operatorStick->GetRawAxis(1));
-    SmartDashboard::PutNumber("axis 5", m_operatorStick->GetRawAxis(5));
+    SmartDashboard::PutNumber("y axis", m_operatorStick->GetRawAxis(1));
+    SmartDashboard::PutNumber("x axis", m_operatorStick->GetRawAxis(0));
 
     // m_gyro->Update();
     // // m_gyro->DashboardUpdate();
