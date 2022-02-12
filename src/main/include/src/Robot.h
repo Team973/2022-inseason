@@ -69,6 +69,7 @@ private:
 
     // Turret
     WPI_TalonFX *m_turretTalon;
+    DigitalInput *m_turretSensor;
     Turret *m_turret;
 
     // Shooter

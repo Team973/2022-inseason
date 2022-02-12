@@ -2,7 +2,9 @@
 
 #include <ctre/Phoenix.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DigitalInput.h>
 #include <cmath>
+
 #include "lib/util/Constants.h"
 #include "lib/bases/Subsystem.h"
 #include "lib/helpers/PID.h"
@@ -23,7 +25,7 @@ enum class TurretState
 
 class Turret : public Subsystem {
 public:
-    Turret(WPI_TalonFX *turretMotor);
+    Turret(WPI_TalonFX *turretMotor, DigitalInput *talonSensor);
     
     /**
      * @param angleInDegrees angle its going to turn to 
@@ -67,6 +69,7 @@ public:
 
 private:
     WPI_TalonFX *m_turretMotor;
+    DigitalInput *m_turretSensor;
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;

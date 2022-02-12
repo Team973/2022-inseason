@@ -42,20 +42,21 @@ constexpr int RIGHT_DRIVE_TALON_C = 13; /**< Can ID for the third right drive ta
 /**
  * Conveyor Subsystem.
  */
-constexpr int CONVEYOR_TOWER_A_TALON_SRX = 21; /**< Can ID for the first tower talon. */
-constexpr int CONVEYOR_TOWER_B_TALON_SRX = 22; /**< Can ID for the second tower talon. */
-constexpr int CONVEYOR_FLOOR_TALON_SRX = 23;   /**< Can ID for the floor talon. */
+constexpr int CONVEYOR_TOWER_A_TALON_SRX = 11; /**< Can ID for the first tower talon. */
+constexpr int CONVEYOR_TOWER_B_TALON_SRX = 4; /**< Can ID for the second tower talon. */
+constexpr int CONVEYOR_FLOOR_TALON_SRX = 10;   /**< Can ID for the floor talon. */
 
 /**
  * Turret Subsystem.
  */
 constexpr int TURRET_TALON = 8;
+constexpr int TURRET_SENSOR = 0;
 
 /**
  * Shooter Subsystem.
  */
-constexpr int FLYWHEEL_A_CAN_ID = 24;           /**< Left flywheel TalonFX CAN ID. */
-constexpr int FLYWHEEL_B_CAN_ID = 25;           /**< Right flywheel TalonFX CAN ID. */
+constexpr int FLYWHEEL_A_CAN_ID = 6;           /**< Left flywheel TalonFX CAN ID. */
+constexpr int FLYWHEEL_B_CAN_ID = 9;           /**< Right flywheel TalonFX CAN ID. */
 constexpr double FLYWHEEL_MOTOR_PULLEY = 12.0;  /**< To do: This number is a placeholder please change it later */
 constexpr double FLYWHEEL_DIRECT_PULLEY = 18.0; /**< To do: This number is a placeholder please change it later */
 constexpr double FLYWHEEL_GEAR_RATIO = FLYWHEEL_MOTOR_PULLEY / FLYWHEEL_DIRECT_PULLEY;
@@ -66,13 +67,15 @@ static constexpr double FLYWHEEL_RPM_SETPOINT =
 /**
  * Climb Subsystem.
  */
-constexpr int CLIMB_FALCON_A_ID = 26;        /**< Can ID for a climb Falcon motor controller.*/
-constexpr int CLIMB_FALCON_B_ID = 27;        /**< Can ID for a climb Falcon motor controller.*/
+constexpr int CLIMB_FALCON_A_ID = 3;        /**< Can ID for a climb Falcon motor controller.*/
+constexpr int CLIMB_FALCON_B_ID = 12;        /**< Can ID for a climb Falcon motor controller.*/
 constexpr int CLIMB_SOLENOID_ID = 28;        /**< Can ID for the climb locking solenoids. */
-constexpr int CLIMB_BOTTOM_LEFT_SENSOR = 3;  /**< Can ID for the bottom left climb sensor */
-constexpr int CLIMB_BOTTOM_RIGHT_SENSOR = 4; /**< Can ID for the bottom right climb sensor */
-constexpr int CLIMB_TOP_LEFT_SENSOR = 6;     /**< Can ID for the top left climb sensor */
-constexpr int CLIMB_TOP_RIGHT_SENSOR = 7;    /**< Can ID for the top right climb sensor */
+
+constexpr int CLIMB_BOTTOM_LEFT_SENSOR = 4;  /**< Can ID for the bottom left climb sensor */
+constexpr int CLIMB_BOTTOM_RIGHT_SENSOR = 1; /**< Can ID for the bottom right climb sensor */
+constexpr int CLIMB_TOP_LEFT_SENSOR = 3;     /**< Can ID for the top left climb sensor */
+constexpr int CLIMB_TOP_RIGHT_SENSOR = 2;    /**< Can ID for the top right climb sensor */
+
 constexpr double CLIMB_PINION = 1.0;
 constexpr double CLIMB_GEAR = 1.0;
 constexpr double CLIMB_SPOOL_DIAMETER = 1.0;
@@ -92,12 +95,12 @@ constexpr int GYRO_TALON = 9;
 /**
  * Lights
  */
-constexpr int CANDLE_ID = 5;
+constexpr int CANDLE_ID = 1;
 
 /**
  * Intake Subsystem
  */
-constexpr int INTAKE_FALCON = 29;     /**< Can ID for the intake talon. */
+constexpr int INTAKE_FALCON = 0;     /**< PWM ID for the intake talon. */
 constexpr int INTAKE_SOLENOID_ID = 9; /**< Can ID for the intake Solenoid. */
 
 /**

@@ -81,8 +81,12 @@ bool Climb::GetBottomHalls() {
 
 void Climb::DashboardUpdate() {
     SmartDashboard::PutString("Climb State", m_climbState);
-    SmartDashboard::PutString("Sensor Statuses", "top sensors " + std::to_string(GetTopHalls()) + "; bottom sensors " +
-                                                     std::to_string(GetBottomHalls()));
+    // SmartDashboard::PutString("Sensor Statuses", "top sensors " + std::to_string(GetTopHalls()) + "; bottom sensors " +
+    //                                                  std::to_string(GetBottomHalls()));
+    SmartDashboard::PutBoolean("top left sensor", m_topLeftSensor->Get());
+    SmartDashboard::PutBoolean("top right sensor", m_topRightSensor->Get());
+    SmartDashboard::PutBoolean("bottom left sensor", m_bottomLeftSensor->Get());
+    SmartDashboard::PutBoolean("bottom right sensor", m_bottomRightSensor->Get());
 }
 
 void Climb::Update() {

@@ -30,8 +30,10 @@ void Robot::RobotInit() {
     m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
 
     // Turret
-    m_turretTalon = new WPI_TalonFX(8);
-    m_turret = new Turret(m_turretTalon);
+    m_turretTalon = new WPI_TalonFX(TURRET_TALON);
+    m_turretSensor = new DigitalInput(TURRET_SENSOR);
+    m_turret = new Turret(m_turretTalon, m_turretSensor);
+    m_turret->SetNeutralMode(NeutralMode::Brake);
 
     // Shooter
     m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
@@ -66,19 +68,22 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
-    SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
-    SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
-    SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
-    SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
+    // SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
+    // SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
+    // SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
+    // SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
+    // SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
 
     m_gyro->Update();
-    m_gyro->DashboardUpdate();
+    // m_gyro->DashboardUpdate();
     m_intake->Update();
-    m_shooter->Update();
     m_conveyor->Update();
+    m_shooter->Update();
+    m_turret->DashboardUpdate();
+    m_climb->Update();
+    m_climb->DashboardUpdate();
     m_lights->Update();
-    m_lights->DashboardUpdate();
+    // m_lights->DashboardUpdate();
     m_drive->Update();
 }
 

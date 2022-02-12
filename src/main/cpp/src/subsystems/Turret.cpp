@@ -2,8 +2,9 @@
 
 namespace frc973 {
 
-Turret::Turret(WPI_TalonFX *turretMotor) 
+Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor) 
         : m_turretMotor(turretMotor)
+        , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_limeLightPID(0.04, 0.0, 0.0, 0)
@@ -131,6 +132,10 @@ void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
     frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
+
+    SmartDashboard::PutBoolean("turret digital input", m_turretSensor->Get());
+    SmartDashboard::PutBoolean("turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
+    SmartDashboard::PutBoolean("turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 }
 
 }//namespace frc973 
