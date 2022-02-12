@@ -92,7 +92,7 @@ constexpr int PCM_ID = 20;
 /**
  * Gyro
  */
-constexpr int GYRO_TALON = 9;
+constexpr int GYRO_TALON = 4;
 
 /**
  * Lights

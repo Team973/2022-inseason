@@ -56,10 +56,10 @@ private:
     WPI_TalonFX *m_rightDriveTalonC;
     Drive *m_drive;
 
-    // // Intake
-    // TalonFX *m_intakeTalon;
-    // Solenoid *m_intakeSolenoid;
-    // Intake *m_intake;
+    // Intake
+    TalonFX *m_intakeTalon;
+    Solenoid *m_intakeSolenoid;
+    Intake *m_intake;
 
     // Conveyor
     TalonSRX *m_conveyorFloorMotor;

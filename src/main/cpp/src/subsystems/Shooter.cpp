@@ -5,10 +5,10 @@ namespace frc973 {
 Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
         : m_flywheelA(flywheelA)
         , m_flywheelB(flywheelB)
-        // , m_flywheelRPMSetpoint(FLYWHEEL_RPM_SETPOINT)
-        , m_flywheelRPMSetpoint(0.0)
+        , m_flywheelRPMSetpoint(FLYWHEEL_RPM_SETPOINT)
         , m_flywheelSpeed(0.0)
         , m_shooterState(ShooterState::Off)
+        , m_shooterStatus("off")
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05)) {
     // Factory Defualt
@@ -47,10 +47,10 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelA->ConfigVoltageCompSaturation(12.0);
 
     // Velocity PID Parameters
-    m_flywheelA->Config_kP(0, 0.00, 30);
+    m_flywheelA->Config_kP(0, 0.08, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
-    m_flywheelA->Config_kF(0, 0.00, 30);
+    m_flywheelA->Config_kF(0, 0.091, 30);
 }
 
 void Shooter::Update() {
@@ -59,20 +59,23 @@ void Shooter::Update() {
     switch (m_shooterState) {
         case ShooterState::Off:
             m_flywheelA->Set(ControlMode::PercentOutput, 0.0);
+            m_shooterStatus = "off";
             break;
         case ShooterState::Fixed:
-            // m_flywheelA->Set(ControlMode::Velocity, FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
-            m_flywheelA->Set(ControlMode::PercentOutput, 0.0);
+            m_flywheelA->Set(ControlMode::Velocity, FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
+            m_shooterStatus = "fixed";
             break;
         case ShooterState::Tracking:
-            // m_flywheelA->Set(ControlMode::Velocity, m_flywheelRPMSetpoint / FLYWHEEL_VELOCITY_RPM);
-            m_flywheelA->Set(ControlMode::PercentOutput, 0.0);
+            m_flywheelA->Set(ControlMode::Velocity, m_flywheelRPMSetpoint / FLYWHEEL_VELOCITY_RPM);
+            m_shooterStatus = "tracking";
             break;
         case ShooterState::Manual:
             m_flywheelA->Set(ControlMode::PercentOutput, m_flywheelSpeed);
+            m_shooterStatus = "manual";
             break;
         default:
             m_flywheelA->Set(ControlMode::PercentOutput, 0.0);
+            m_shooterStatus = "default";
             break;
     }
 }
@@ -80,6 +83,9 @@ void Shooter::Update() {
 void Shooter::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("Flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
     SmartDashboard::PutNumber("flywheel speed", m_flywheelSpeed);
+    SmartDashboard::PutString("flywheel state", m_shooterStatus);
+    SmartDashboard::PutNumber("stator current", m_flywheelA->GetStatorCurrent());
+    SmartDashboard::PutNumber("supply current", m_flywheelA->GetSupplyCurrent());
     // frc::SmartDashboard::PutNumber("FlywheelA temp",m_flywheelA->GetTemperature());
     // frc::SmartDashboard::PutNumber("FlywheelB temp",m_flywheelB->GetTemperature());
 }

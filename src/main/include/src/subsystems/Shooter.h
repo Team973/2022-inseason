@@ -77,6 +77,7 @@ private:
     double m_flywheelSpeed;
 
     ShooterState m_shooterState;
+    std::string m_shooterStatus;
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
