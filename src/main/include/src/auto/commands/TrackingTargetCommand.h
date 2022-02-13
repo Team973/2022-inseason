@@ -8,23 +8,23 @@
 namespace frc973 {
 
 /**
- * The CenterTurretCommand command.
+ * The TrackingTargetCommand command.
  */
-class CenterTurretCommand : public Command {
+class TrackingTargetCommand : public Command {
 public:
     /**
-     * Constructs CenterTurretCommand.
+     * Constructs TrackingTargetCommand.
      * @param limeLight The lime light subsystem.
      */
-    CenterTurretCommand(Limelight *limeLight, Turret *turret, Gyro *gyro, uint32_t targetTime);
+    TrackingTargetCommand(Limelight *limeLight, Turret *turret, Gyro *gyro, uint32_t targetTime);
 
     /**
-     * Executes when CenterTurretCommand starts.
+     * Executes when TrackingTargetCommand starts.
      */
     void Init() override;
 
     /**
-     * Runs CenterTurretCommand.
+     * Runs TrackingTargetCommand.
      */
     void Run() override;
 
@@ -35,7 +35,7 @@ public:
     bool IsCompleted() override;
 
     /**
-     * Executes when CenterTurretCommand concludes.
+     * Executes when TrackingTargetCommand concludes.
      */
     void PostExecute() override;
 
