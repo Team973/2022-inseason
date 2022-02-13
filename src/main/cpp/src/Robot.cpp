@@ -68,26 +68,26 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    // SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
-    // SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
-    // SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
-    // SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
-    // SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
+    SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
+    SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
+    SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
+    SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
+    SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
     SmartDashboard::PutNumber("y axis", m_operatorStick->GetRawAxis(1));
     SmartDashboard::PutNumber("x axis", m_operatorStick->GetRawAxis(0));
 
-    // m_gyro->Update();
-    // // m_gyro->DashboardUpdate();
-    // m_intake->Update();
+    m_gyro->Update();
+    // m_gyro->DashboardUpdate();
+    m_intake->Update();
     m_conveyor->Update();
     m_conveyor->DashboardUpdate();
-    // m_shooter->Update();
-    // m_turret->DashboardUpdate();
-    // m_climb->Update();
-    // m_climb->DashboardUpdate();
-    // m_lights->Update();
-    // // m_lights->DashboardUpdate();
-    // m_drive->Update();
+    m_shooter->Update();
+    m_turret->DashboardUpdate();
+    m_climb->Update();
+    m_climb->DashboardUpdate();
+    m_lights->Update();
+    // m_lights->DashboardUpdate();
+    m_drive->Update();
 }
 
 }  // namespace frc973
