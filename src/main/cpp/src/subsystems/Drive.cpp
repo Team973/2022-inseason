@@ -155,10 +155,6 @@ void Drive::DashboardUpdate() {
         (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2.0);
 }
 
-bool Drive::IsQuickTurn(bool quickTurn){
-    m_isQuickTurn = quickTurn;
-}
-
 void Drive::ArcadeCalcOutput() {
     m_throttle = std::clamp(m_throttle, -1.0, 1.0);
     m_turn = std::clamp(m_turn, -1.0, 1.0);
