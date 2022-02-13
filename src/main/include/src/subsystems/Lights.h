@@ -23,8 +23,7 @@ public:
     enum class LightsState {
         Off,             /**< State for turning the off the lights. */
         Initialization,  /**< State for setting the lights to a special state for when the robot is initializing. */
-        NotReadyToShoot, /**< State for setting the lights to a special state for when the robot is not ready to shoot.
-                          */
+        NotReadyToShoot, /**< State for setting the lights to a special state for when the robot is not ready to shoot.*/
         ReadyToShoot,    /**< State for setting the lights to a special state for when the robot is ready to shoot. */
         Fault,           /**< State for setting the lights to a special state for when the robot has an error. */
         Climb,           /**< State for setting the lights to a special state for when the robot is climbing. */
@@ -56,6 +55,10 @@ public:
      */
     void SetLightsState(LightsState state);
 
+    void ClearOffFlag();
+
+    bool GetOffFlag();
+
     void UpdateLightsStateMode();
 
 private:
@@ -67,5 +70,6 @@ private:
     ctre::phoenix::led::StrobeAnimation m_strobe;
 
     std::string m_currentLightsStateName;
+    bool m_offFlag;
 };
 }  // namespace frc973
