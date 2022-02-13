@@ -7,6 +7,9 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+    //Pneumatics
+    m_ph = new frc::PneumaticHub{PH_CAN_ID};
+
     // Drive
     m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_TALON_A);
     m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_TALON_B);
@@ -68,6 +71,8 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
+    m_ph->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
+
     // SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
     // SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
     // SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());

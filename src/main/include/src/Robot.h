@@ -16,6 +16,8 @@
 #include <frc/motorcontrol/PWMTalonFX.h>
 #include "ctre/phoenix/led/RainbowAnimation.h"
 
+#include <frc/PneumaticHub.h>
+
 #include <string>
 
 #include "RobotInfo.h"
@@ -48,6 +50,9 @@ public:
     void TestPeriodic() override;
 
 private:
+    //Pneumatics
+    frc::PneumaticHub *m_ph;
+
     // Drive
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;

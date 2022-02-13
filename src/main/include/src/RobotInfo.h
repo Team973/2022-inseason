@@ -110,4 +110,9 @@ constexpr int INTAKE_SOLENOID_ID = 15; /**< Can ID for the intake Solenoid. */
 constexpr int DRIVER_STICK = 0;
 constexpr int OPERATOR_STICK = 1;
 
+/**
+ * Pneumatics
+ */
+constexpr int PH_CAN_ID = 1;
+
 }  // namespace frc973

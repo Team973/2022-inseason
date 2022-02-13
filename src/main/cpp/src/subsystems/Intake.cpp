@@ -63,7 +63,7 @@ void Intake::Update() {
             break;
     }
 
-    m_intakeSpeed = std::clamp(m_intakeSpeed, -0.2, 0.2);
+    m_intakeSpeed = std::clamp(m_intakeSpeed, -0.6, 0.6);
 
     m_intakeTalon->Set(m_intakeSpeed);
 }
