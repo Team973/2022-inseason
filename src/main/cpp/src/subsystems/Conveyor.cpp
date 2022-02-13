@@ -10,6 +10,14 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0) {
+
+    m_towerMotorA->ConfigFactoryDefault();
+    m_towerMotorB->ConfigFactoryDefault();
+
+    m_towerMotorA->SetNeutralMode(Coast);
+    m_towerMotorB->SetNeutralMode(Coast);
+
+    m_floorMotor->SetInverted(true);
     m_towerMotorB->Follow(*m_towerMotorA);
 }
 
@@ -51,9 +59,16 @@ void Conveyor::Update() {
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
     }
+
 }
 
 void Conveyor::DashboardUpdate() {
+    frc::SmartDashboard::PutNumber("Conveyor Tower A Current", m_towerMotorA->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower B Current", m_towerMotorB->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Floor Motor Current", m_towerMotorA->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower A Percent", m_towerMotorA->GetMotorOutputPercent());
+    frc::SmartDashboard::PutNumber("Conveyor Tower B Percent", m_towerMotorB->GetMotorOutputPercent());
+    frc::SmartDashboard::PutNumber("Conveyor Floor Motor Percent", m_towerMotorA->GetMotorOutputPercent());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
@@ -86,4 +101,5 @@ void Conveyor::SetManualTowerSpeed(double speed) {
 void Conveyor::SetManualFloorSpeed(double speed) {
     m_manualFloorSpeed = speed;
 }
+
 }  // namespace frc973

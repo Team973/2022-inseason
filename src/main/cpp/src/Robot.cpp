@@ -78,6 +78,7 @@ void Robot::RobotPeriodic() {
     m_intake->Update();
     m_intake->DashboardUpdate();
     m_conveyor->Update();
+    m_conveyor->DashboardUpdate();
     m_shooter->Update();
     m_shooter->DashboardUpdate();
     m_turret->DashboardUpdate();

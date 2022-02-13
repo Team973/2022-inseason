@@ -5,6 +5,9 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
+    m_turret->SetNeutralMode(NeutralMode::Brake);
+    m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
+    m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
 }
 
 void Robot::TeleopPeriodic() {
@@ -23,20 +26,12 @@ void Robot::TeleopPeriodic() {
 
     if (m_operatorStick->GetLeftBumper()) {
         m_limelight->SetVisionCamera();
-
-        // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), 36.0);
-
-        // SmartDashboard::PutNumber("Velocity", m_drive->GetVelocity());
-
-        m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate());
-        // m_turret->CalcOutput(0, 0);
-
-        // SmartDashboard::PutNumber("Distance", m_limelight->GetHorizontalDist());
+    }
 
     // intake
     m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
-    
-    if(m_operatorStick->GetLeftTriggerAxis() >= 0.8) {
+
+    if (m_operatorStick->GetLeftTriggerAxis() >= 0.8) {
         m_intake->Deploy();
     } else {
         m_intake->Retract();
@@ -45,8 +40,15 @@ void Robot::TeleopPeriodic() {
     // drive
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
+
+    m_intake->SetPercentOutput(
+        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
+
+    // conveyor
+    m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+                                    -1.0);  // left stick y-axis for co-driver
+    m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+                                    1.0);  // left stick x-axis for co-driver
 }
-    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12)); // left stick x-axis for co-driver
-} 
 
 }  // namespace frc973
