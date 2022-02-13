@@ -41,7 +41,7 @@ public:
     /**
      * Calculates output to feed into a percent output loops
      */
-    void CalcOutput(double lightlightTarget, double angularVelocity = 0.0);
+    void CalcOutput(double limelightTarget, double angularVelocity = 0.0);
 
     /**
      * Returns current turret angle
@@ -87,9 +87,9 @@ private:
     double m_currentAngleInDegrees;
     double m_tickPosition;
 
-    PID m_limeLightPID;
+    PID m_limelightPID;
 
-    double m_limeLightToMotorPower;
+    double m_limelightToMotorPower;
     double m_translationalAngularRate;
 
     TurretState m_turretState;
