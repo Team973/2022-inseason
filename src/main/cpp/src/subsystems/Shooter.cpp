@@ -5,7 +5,7 @@ namespace frc973 {
 Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
         : m_flywheelA(flywheelA)
         , m_flywheelB(flywheelB)
-        , m_flywheelRPMSetpoint(FLYWHEEL_RPM_SETPOINT)
+        , m_flywheelRPMSetpoint(TARMAC_FLYWHEEL_RPM_SETPOINT)
         , m_flywheelSpeed(0.0)
         , m_shooterState(ShooterState::Off)
         , m_shooterStatus("off")
@@ -62,7 +62,7 @@ void Shooter::Update() {
             m_shooterStatus = "off";
             break;
         case ShooterState::Fixed:
-            m_flywheelA->Set(ControlMode::Velocity, FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
+            m_flywheelA->Set(ControlMode::Velocity, TARMAC_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
             m_shooterStatus = "fixed";
             break;
         case ShooterState::Tracking:

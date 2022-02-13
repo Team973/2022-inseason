@@ -28,13 +28,12 @@ public:
           WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC);
 
     /**
-    * The drive subsystem mode.
-    */
-    enum class DriveMode
-    {
-        arcade,               /**< The arcade drive mode. */
-        position,             /**< The position drive mode. */
-        cheesyDrive,          /**< The cheesy drive mode. */
+     * The drive subsystem mode.
+     */
+    enum class DriveMode {
+        arcade,   /**< The arcade drive mode. */
+        position, /**< The position drive mode. */
+        cheesy,   /**< The cheesy drive mode. */
     };
 
     /**
@@ -71,7 +70,7 @@ public:
      * Sets current angle of drive
      */
     void SetAngle(double angle);
-    
+
     /**
      * Sets current position of drive
      */
@@ -87,10 +86,10 @@ public:
      */
     void SetQuickTurn(bool QT);
 
-    //test del later
+    // test del later
     double GetRightOuput();
 
-    //test del later
+    // test del later
     double GetLeftOuput();
 
     /**
@@ -114,13 +113,13 @@ private:
     double m_turn;
 
     double m_gyroAngle;
-    
+
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
     bool m_isQuickTurn;
     DriveMode m_driveMode;
-    
+
     units::meter_t m_xPos;
     units::meter_t m_yPos;
     units::degree_t m_theta;
@@ -140,6 +139,5 @@ private:
     double m_targetAngle;
     double m_currentPos;
     double m_currentAngle;
-    
 };
-} //namespace frc973
+}  // namespace frc973

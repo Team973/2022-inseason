@@ -5,34 +5,32 @@
 #pragma once
 
 #include <fmt/core.h>
+#include <string>
+
 #include <frc/Joystick.h>
+#include <frc/motorcontrol/PWMTalonFX.h>
+#include <frc/PneumaticHub.h>
 #include <frc/Solenoid.h>
 #include <frc/TimedRobot.h>
-#include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/XboxController.h>
 
 #include <ctre/Phoenix.h>
-#include <frc/motorcontrol/PWMTalonFX.h>
-#include "ctre/phoenix/led/RainbowAnimation.h"
-
-#include <frc/PneumaticHub.h>
-
-#include <string>
 
 #include "RobotInfo.h"
 #include "lib/sensors/Limelight.h"
-#include "src/subsystems/Drive.h"
-#include "src/subsystems/Gyro.h"
-#include "src/subsystems/Intake.h"
-#include "src/subsystems/Climb.h"
-#include "src/subsystems/Shooter.h"
-#include "src/subsystems/Conveyor.h"
-#include "src/subsystems/Lights.h"
-#include "src/subsystems/Turret.h"
-
 #include "lib/util/Util.h"
 #include "lib/helpers/StickController.h"
+
+#include "src/subsystems/Drive.h"
+#include "src/subsystems/Intake.h"
+#include "src/subsystems/Conveyor.h"
+#include "src/subsystems/Turret.h"
+#include "src/subsystems/Shooter.h"
+#include "src/subsystems/Climb.h"
+#include "src/subsystems/Gyro.h"
+#include "src/subsystems/Lights.h"
 
 using namespace frc;
 namespace frc973 {
@@ -50,10 +48,10 @@ public:
     void TestPeriodic() override;
 
 private:
-    //Pneumatics
-    frc::PneumaticHub *m_ph;
 
-    // Drive
+    /**
+     * Drive
+     */
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
     WPI_TalonFX *m_leftDriveTalonC;
@@ -62,51 +60,74 @@ private:
     WPI_TalonFX *m_rightDriveTalonC;
     Drive *m_drive;
 
-    // Intake
+    /**
+     * Intake
+     */
     PWMTalonFX *m_intakeTalon;
     Solenoid *m_intakeSolenoid;
     Intake *m_intake;
 
-    // Conveyor
+    /**
+     * Conveyor
+     */ 
     TalonSRX *m_conveyorFloorMotor;
     TalonSRX *m_conveyorTowerMotorA;
     TalonSRX *m_conveyorTowerMotorB;
     Conveyor *m_conveyor;
 
-    // Turret
+    /**
+     * Turret
+     */
     WPI_TalonFX *m_turretTalon;
     DigitalInput *m_turretSensor;
     Turret *m_turret;
 
-    // Shooter
+    /**
+     * Shooter
+     */
     WPI_TalonFX *m_shooterFlywheelMotorA;
     WPI_TalonFX *m_shooterFlywheelMotorB;
-    WPI_TalonFX *m_shooterPrecharger;
     Shooter *m_shooter;
 
-    // Limelight
-    Limelight *m_limelight;
-
-    // Climb
+    /**
+     * Climb
+     */
+    WPI_TalonFX *m_climbTalonA;
+    WPI_TalonFX *m_climbTalonB;
     DigitalInput *m_bottomLeftSensor;
     DigitalInput *m_bottomRightSensor;
     DigitalInput *m_topLeftSensor;
     DigitalInput *m_topRightSensor;
-    WPI_TalonFX *m_climbTalonA;
-    WPI_TalonFX *m_climbTalonB;
     Climb *m_climb;
 
-    // Gyro
+    /**
+     * Gyro
+     */
     TalonSRX *m_gyroTalon;
     Gyro *m_gyro;
 
-    // Lights
+    /**
+     * Limelight
+     */
+    Limelight *m_limelight;
+
+    /**
+     * Lights
+     */
     CANdle *m_CANdle;
     Lights *m_lights;
 
-    // Joysticks
+    /**
+     * Pneumatics
+     */
+    frc::PneumaticHub *m_pneumaticsHub;
+
+    /**
+     * Joysticks
+     */
     StickController *m_operatorStick;
     StickController *m_driverStick;
+    StickController *m_testStick;
 };
 
 }  // namespace frc973
