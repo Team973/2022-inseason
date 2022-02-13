@@ -20,8 +20,8 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelB->SetInverted(TalonFXInvertType::CounterClockwise);
 
     // Neutral Mode
-    m_flywheelA->SetNeutralMode(NeutralMode::Brake);
-    m_flywheelB->SetNeutralMode(NeutralMode::Brake);
+    m_flywheelA->SetNeutralMode(NeutralMode::Coast);
+    m_flywheelB->SetNeutralMode(NeutralMode::Coast);
 
     // Current limits
     m_flywheelA->ConfigSupplyCurrentLimit(m_currentLimit);
@@ -47,7 +47,7 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelA->ConfigVoltageCompSaturation(12.0);
 
     // Velocity PID Parameters
-    m_flywheelA->Config_kP(0, 0.08, 30);
+    m_flywheelA->Config_kP(0, 0.06, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
     m_flywheelA->Config_kF(0, 0.091, 30);
