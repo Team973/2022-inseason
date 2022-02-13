@@ -18,6 +18,5 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "files.associations": {
-    "iostream": "cpp"
   }
 }

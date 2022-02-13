@@ -87,7 +87,7 @@ constexpr double CLIMB_INCHES_PER_TICK = ((CLIMB_PINION / CLIMB_GEAR) * CLIMB_SP
 /**
  * PCM
  */
-constexpr int PCM_ID = 20;
+constexpr int PCM_ID = 1;
 
 /**
  * Gyro
@@ -103,12 +103,17 @@ constexpr int CANDLE_ID = 1;
  * Intake Subsystem
  */
 constexpr int INTAKE_FALCON = 0;     /**< PWM ID for the intake talon. */
-constexpr int INTAKE_SOLENOID_ID = 9; /**< Can ID for the intake Solenoid. */
+constexpr int INTAKE_SOLENOID_ID = 15; /**< Can ID for the intake Solenoid. */
 
 /**
  * Controller Sticks
  */
 constexpr int DRIVER_STICK = 0;
 constexpr int OPERATOR_STICK = 1;
+
+/**
+ * Pneumatics
+ */
+constexpr int PH_CAN_ID = 1;
 
 }  // namespace frc973

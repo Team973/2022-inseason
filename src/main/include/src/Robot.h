@@ -13,7 +13,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include <ctre/Phoenix.h>
+#include <frc/motorcontrol/PWMTalonFX.h>
 #include "ctre/phoenix/led/RainbowAnimation.h"
+
+#include <frc/PneumaticHub.h>
 
 #include <string>
 
@@ -47,6 +50,9 @@ public:
     void TestPeriodic() override;
 
 private:
+    //Pneumatics
+    frc::PneumaticHub *m_ph;
+
     // Drive
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
@@ -57,7 +63,7 @@ private:
     Drive *m_drive;
 
     // Intake
-    TalonFX *m_intakeTalon;
+    PWMTalonFX *m_intakeTalon;
     Solenoid *m_intakeSolenoid;
     Intake *m_intake;
 

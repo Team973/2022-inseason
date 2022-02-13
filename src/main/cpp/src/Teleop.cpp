@@ -32,13 +32,21 @@ void Robot::TeleopPeriodic() {
         // m_turret->CalcOutput(0, 0);
 
         // SmartDashboard::PutNumber("Distance", m_limelight->GetHorizontalDist());
+
+    // intake
+    m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
+    
+    if(m_operatorStick->GetLeftTriggerAxis() >= 0.8) {
+        m_intake->Deploy();
     } else {
-        m_limelight->SetCameraDriver();
+        m_intake->Retract();
     }
 
     // drive
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 }
+    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12)); // left stick x-axis for co-driver
+} 
 
 }  // namespace frc973

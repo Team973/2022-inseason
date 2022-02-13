@@ -7,6 +7,9 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+    //Pneumatics
+    m_ph = new frc::PneumaticHub{PH_CAN_ID};
+
     // Drive
     m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_FX_A_ID);
     m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_FX_B_ID);
@@ -19,7 +22,7 @@ void Robot::RobotInit() {
                         m_rightDriveTalonC);
 
     // Intake
-    m_intakeTalon = new TalonFX(INTAKE_FALCON);
+    m_intakeTalon = new PWMTalonFX(INTAKE_FALCON);
     m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
     m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
@@ -64,19 +67,16 @@ void Robot::RobotInit() {
 
     // Joystick
     m_driverStick = new StickController(DRIVER_STICK);
-    m_operatorStick = new StickController(OPERATOR_STICK);
+     m_operatorStick = new StickController(OPERATOR_STICK);
 }
 
 void Robot::RobotPeriodic() {
-    // SmartDashboard::PutNumber("pipeline", m_limelight->GetPipeline());
-    // SmartDashboard::PutNumber("x offset", m_limelight->GetXOffset());
-    // SmartDashboard::PutNumber("y offset", m_limelight->GetYOffset());
-    // SmartDashboard::PutNumber("horizontal dist to target", m_limelight->GetHorizontalDist());
-    // SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
+    m_ph->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
 
     m_gyro->Update();
     m_gyro->DashboardUpdate();
     m_intake->Update();
+    m_intake->DashboardUpdate();
     m_conveyor->Update();
     m_shooter->Update();
     m_shooter->DashboardUpdate();
