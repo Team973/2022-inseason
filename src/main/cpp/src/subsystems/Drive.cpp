@@ -176,12 +176,12 @@ void Drive::ArcadeCalcOutput() {
     } else {
         if (m_turn >= 0.0) {
             // Quadrant 4
-            m_leftOutput = maxInput;
-            m_rightOutput = m_throttle + m_turn;
+            m_rightOutput = maxInput;
+            m_leftOutput = m_throttle + m_turn;
         } else {
             // Quadrant 3
-            m_leftOutput = m_throttle - m_turn;
-            m_rightOutput = maxInput;
+            m_rightOutput = m_throttle - m_turn;
+            m_leftOutput = maxInput;
         }
     }
 }

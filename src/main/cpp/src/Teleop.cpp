@@ -12,20 +12,38 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
     // shooter
-    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
+    if (m_operatorStick->GetRawButton(Stick::RightTrigger)) {
         m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
     }
 
-    // turret
-    m_turret->Turn(
-        m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-        m_gyro->GetWrappedAngle());
+    // shoot btn
+    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
+        m_shooter->SetFlywheelRPM(2800);
+        m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
+        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
+        m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
+    } else {
+        m_shooter->SetShooterState(Shooter::ShooterState::Off);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+    }
 
+    // turret
+    // m_turret->Turn(
+    //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+    //     m_gyro->GetWrappedAngle());
+
+
+// limelight
     if (m_operatorStick->GetLeftBumper()) {
         m_limelight->SetVisionCamera();
+    } else {
+        m_limelight->SetCameraDriver();
     }
 
     // intake
@@ -37,12 +55,12 @@ void Robot::TeleopPeriodic() {
         m_intake->Retract();
     }
 
+    m_intake->SetPercentOutput(
+        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
+
     // drive
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
-
-    m_intake->SetPercentOutput(
-        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
