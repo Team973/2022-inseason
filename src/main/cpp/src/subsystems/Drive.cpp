@@ -54,7 +54,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonA->SetInverted(TalonFXInvertType::CounterClockwise);
     m_rightDriveTalonB->SetInverted(TalonFXInvertType::CounterClockwise);
     m_rightDriveTalonC->SetInverted(TalonFXInvertType::CounterClockwise);
- 
+
     // Current Limits
     m_leftDriveTalonA->ConfigSupplyCurrentLimit(m_currentLimit);
     m_leftDriveTalonB->ConfigSupplyCurrentLimit(m_currentLimit);
@@ -124,8 +124,10 @@ void Drive::Update() {
             break;
     }
 
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
+    m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 
     // ArcadeCalcOutput();
     // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * 2000 * 4) * std::abs(m_throttle));

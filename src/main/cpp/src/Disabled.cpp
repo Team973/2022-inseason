@@ -6,6 +6,8 @@ namespace frc973 {
 
 void Robot::DisabledInit() {
     m_turret->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_lights->SetLightsState(Lights::LightsState::Off);
 }
 

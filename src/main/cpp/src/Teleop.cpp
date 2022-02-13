@@ -6,31 +6,33 @@ namespace frc973 {
 
 void Robot::TeleopInit() {
     m_turret->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
 }
 
 void Robot::TeleopPeriodic() {
-    // shooter
-    if (m_operatorStick->GetRawButton(Stick::RightTrigger)) {
-        m_shooter->SetFlywheelRPM(2800);
-        m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
-    } else {
-        m_shooter->SetShooterState(Shooter::ShooterState::Off);
-    }
-
     // shoot btn
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(2800);
-        m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
+        // m_shooter->SetFlywheelRPM(2800);
+        // m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     } else {
-        m_shooter->SetShooterState(Shooter::ShooterState::Off);
+        // m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+    }
+
+    // shooter
+    if (m_operatorStick->RightTriggerAxis()) {
+        m_shooter->SetFlywheelRPM(2500);
+        m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
+    } else {
+        m_shooter->SetShooterState(Shooter::ShooterState::Off);
     }
 
     // turret
@@ -64,7 +66,7 @@ void Robot::TeleopPeriodic() {
 
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                    -1.0);  // left stick y-axis for co-driver
+                                    1.0);  // left stick y-axis for co-driver
     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
                                     1.0);  // left stick x-axis for co-driver
 }

@@ -18,6 +18,9 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
     m_towerMotorB->SetNeutralMode(Coast);
 
     m_floorMotor->SetInverted(true);
+    m_towerMotorA->SetInverted(true);
+    m_towerMotorB->SetInverted(true);
+
     m_towerMotorB->Follow(*m_towerMotorA);
 }
 
