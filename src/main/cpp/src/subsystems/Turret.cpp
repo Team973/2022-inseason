@@ -110,6 +110,14 @@ void Turret::SetNeutralMode(NeutralMode mode) {
     m_turretMotor->SetNeutralMode(mode);
 }
 
+void Turret::SetTurretAngle(double angle){
+    m_turretMotor->SetSelectedSensorPosition( angle / 360 * 2048 * TURRET_GEAR_RATIO);
+}
+
+void Turret::SetHomeOffset(){
+    Turret::SetTurretAngle(Constants::TURRET_HOME_OFFSET);
+}
+
 
 
 void Turret::Update() {

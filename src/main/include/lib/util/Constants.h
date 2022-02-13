@@ -37,6 +37,9 @@ constexpr double TALON_FX_VELOCITY_RPM =
 constexpr double GYRO_CONSTANT = 0.0022;
 constexpr double TRANSLATION_CONSTANT = 0.01;
 
+// turret home angle
+constexpr double TURRET_HOME_OFFSET = 1.0;
+
 }  // namespace Constants
 
 }  // namespace frc973

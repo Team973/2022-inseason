@@ -61,6 +61,16 @@ public:
      */
     void SetNeutralMode(NeutralMode mode);
 
+    /**
+     * Sets the current angle of the turret
+     */
+    void SetTurretAngle(double angle);
+
+    /**
+     * Sets turret angle to home angle
+     */
+    void SetHomeOffset();
+
     
 
     void Update() override;
