@@ -19,9 +19,9 @@ void Robot::RobotInit() {
                         m_rightDriveTalonC);
 
     // Intake
-    // m_intakeTalon = new TalonFX(INTAKE_FALCON);
-    // m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
-    // m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+    m_intakeTalon = new TalonFX(INTAKE_FALCON);
+    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
+    m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
     // Conveyor
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_TALON_SRX);
@@ -76,7 +76,7 @@ void Robot::RobotPeriodic() {
 
     m_gyro->Update();
     // m_gyro->DashboardUpdate();
-    // m_intake->Update();
+    m_intake->Update();
     m_conveyor->Update();
     m_shooter->Update();
     m_turret->DashboardUpdate();
