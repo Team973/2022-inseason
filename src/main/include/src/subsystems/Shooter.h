@@ -20,9 +20,10 @@ public:
     Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB);
 
     enum class ShooterState {
-        Off,     /* Shooter motors do not run */
-        Fixed,   /* Shooter motors run CL Velocity on a fixed setpoint */
-        Tracking /* Shooter motors run CL Velocity on a tracking setpoint */
+        Off,      /* Shooter motors do not run */
+        Fixed,    /* Shooter motors run CL Velocity on a fixed setpoint */
+        Tracking, /* Shooter motors run CL Velocity on a tracking setpoint */
+        Manual    /* Shooter motors run manually */
     };
 
     /**
@@ -30,6 +31,12 @@ public:
      * @param setpoint The velocity setpoint to go to.
      */
     void SetFlywheelRPM(double setpoint);
+
+    /**
+     * Set the flywheel speed.
+     * @param setpoint The percent output for the flywheel.
+     */
+    void SetFlywheelSpeed(double speed);
 
     /**
      * Checks to see if the flywheel is at speed or not.
@@ -67,8 +74,10 @@ private:
     WPI_TalonFX *m_flywheelB;
 
     double m_flywheelRPMSetpoint;
+    double m_flywheelSpeed;
 
     ShooterState m_shooterState;
+    std::string m_shooterStatus;
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;

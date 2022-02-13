@@ -33,7 +33,7 @@ void Robot::RobotInit() {
     m_turretTalon = new WPI_TalonFX(TURRET_TALON);
     m_turretSensor = new DigitalInput(TURRET_SENSOR);
     m_turret = new Turret(m_turretTalon, m_turretSensor);
-    m_turret->SetNeutralMode(NeutralMode::Brake);
+    m_turret->SetNeutralMode(NeutralMode::Coast);
 
     // Shooter
     m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_A_CAN_ID);
@@ -75,15 +75,16 @@ void Robot::RobotPeriodic() {
     // SmartDashboard::PutBoolean("valid target?", m_limelight->isTargetValid());
 
     m_gyro->Update();
-    // m_gyro->DashboardUpdate();
+    m_gyro->DashboardUpdate();
     m_intake->Update();
     m_conveyor->Update();
     m_shooter->Update();
+    m_shooter->DashboardUpdate();
     m_turret->DashboardUpdate();
     m_climb->Update();
     m_climb->DashboardUpdate();
     m_lights->Update();
-    // m_lights->DashboardUpdate();
+    m_lights->DashboardUpdate();
     m_drive->Update();
     m_drive->DashboardUpdate();
 }
