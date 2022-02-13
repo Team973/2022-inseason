@@ -46,6 +46,8 @@ public:
      */
     void DashboardUpdate() override;
 
+    bool IsQuickTurn(bool quickTurn);
+
     /**
      * Called to update the current throttle and turn values of the joysticks
      */
