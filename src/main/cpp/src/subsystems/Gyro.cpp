@@ -31,8 +31,8 @@ void Gyro::Update() {
 }
 
 void Gyro::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("Angle", m_currentAngle);
-    frc::SmartDashboard::PutNumber("WrappedAngle", m_wrappedAngle);
+    frc::SmartDashboard::PutNumber("GY Angle", m_currentAngle);
+    frc::SmartDashboard::PutNumber("GY WrappedAngle", m_wrappedAngle);
 }
 
 void Gyro::SetAngle(double degrees) {

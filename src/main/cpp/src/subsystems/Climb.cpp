@@ -85,7 +85,13 @@ void Climb::DashboardUpdate() {
     SmartDashboard::PutBoolean("CL Bottom left sensor", m_bottomLeftSensor->Get());
     SmartDashboard::PutBoolean("CL Bottom right sensor", m_bottomRightSensor->Get());
     SmartDashboard::PutString("CL State", m_climbState);
-}
+    SmartDashboard::PutNumber("CL Motor Supply Currents", 
+                                (m_climbTalonA->GetSupplyCurrent() + m_climbTalonB->GetSupplyCurrent()) /
+                                        2.0);
+    SmartDashboard::PutNumber("CL Motor Stator Currents",
+                                (m_climbTalonA->GetStatorCurrent() + m_climbTalonB->GetStatorCurrent()) /
+                                        2.0);
+    }
 
 void Climb::Update() {
     double climbMotorOutput = 0.0;
