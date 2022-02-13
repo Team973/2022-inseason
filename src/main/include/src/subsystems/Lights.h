@@ -64,12 +64,12 @@ public:
 private:
     ctre::phoenix::led::CANdle *m_candle;
 
-    LightsState m_lightsState;
+    LightsState m_lightsCurrentState;
+    LightsState m_lightsNextState;
 
     ctre::phoenix::led::RainbowAnimation m_rainbow;
     ctre::phoenix::led::StrobeAnimation m_strobe;
 
     std::string m_currentLightsStateName;
-    bool m_offFlag;
 };
 }  // namespace frc973
