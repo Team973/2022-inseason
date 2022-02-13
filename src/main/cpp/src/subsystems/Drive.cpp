@@ -155,6 +155,7 @@ void Drive::DashboardUpdate() {
                                    (m_rightDriveTalonA->GetStatorCurrent() + m_rightDriveTalonB->GetStatorCurrent() +
                                     m_rightDriveTalonC->GetStatorCurrent()) /
                                        3.0);
+    frc::SmartDashboard::PutNumber("drive speed", m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity());
 }
 
 void Drive::ArcadeCalcOutput() {

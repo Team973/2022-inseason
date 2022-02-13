@@ -8,7 +8,7 @@ namespace frc973 {
 // Physical Dimensions - TODO: update
 constexpr double DRIVE_WIDTH = 23.75;         // Drive base width in inches.
 constexpr double DRIVE_WHEEL_DIAMETER = 4.0;  // Diameter of the drive train wheels in inches.
-constexpr double MAX_FT_PER_SECOND = 14.2;    // Max speed of the robot in feet per second.
+constexpr double MAX_FT_PER_SECOND = 14.2;    // Max speed of the robot in feet per second. 36000 ticks/100ms
 constexpr double MAX_METERS_PER_SECOND = MAX_FT_PER_SECOND/Constants::FEET_PER_METER;
 constexpr double MAX_DEGREES_PER_SECOND = 360;
 constexpr double MAX_RADIANS_PER_SECOND = MAX_DEGREES_PER_SECOND * Constants::PI/180;
