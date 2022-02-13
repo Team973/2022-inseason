@@ -92,7 +92,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
 
     // Voltage Compensation
     m_leftDriveTalonA->ConfigVoltageCompSaturation(12.0);
-    m_leftDriveTalonB->ConfigVoltageCompSaturation(12.0);
+    m_rightDriveTalonA->ConfigVoltageCompSaturation(12.0);
 
     // Closed loop
     m_leftDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);

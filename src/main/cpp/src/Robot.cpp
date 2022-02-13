@@ -85,6 +85,7 @@ void Robot::RobotPeriodic() {
     m_lights->Update();
     // m_lights->DashboardUpdate();
     m_drive->Update();
+    m_drive->DashboardUpdate();
 }
 
 }  // namespace frc973
