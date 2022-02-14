@@ -134,16 +134,15 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInDegrees);
-    frc::SmartDashboard::PutNumber("ticksPosition", m_tickPosition);
-    frc::SmartDashboard::PutNumber("ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
-    frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
-    frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
+    frc::SmartDashboard::PutNumber("T CurrAngle", m_currentAngleInDegrees);
+    frc::SmartDashboard::PutNumber("T ticksPosition", m_tickPosition);
+    frc::SmartDashboard::PutNumber("T ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
+    frc::SmartDashboard::PutNumber("T turretStatorCurrent", m_turretMotor->GetStatorCurrent());
+    frc::SmartDashboard::PutNumber("T turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
 
-    SmartDashboard::PutBoolean("turret digital input", m_turretSensor->Get());
-    SmartDashboard::PutBoolean("turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
-    SmartDashboard::PutBoolean("turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
+    SmartDashboard::PutBoolean("T turret digital input", m_turretSensor->Get());
+    SmartDashboard::PutBoolean("T turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
+    SmartDashboard::PutBoolean("T turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 }
 
 }//namespace frc973 

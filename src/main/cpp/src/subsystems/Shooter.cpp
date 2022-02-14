@@ -81,13 +81,13 @@ void Shooter::Update() {
 }
 
 void Shooter::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("Flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
-    SmartDashboard::PutNumber("flywheel speed", m_flywheelSpeed);
-    SmartDashboard::PutString("flywheel state", m_shooterStatus);
-    SmartDashboard::PutNumber("stator current", m_flywheelA->GetStatorCurrent());
-    SmartDashboard::PutNumber("supply current", m_flywheelA->GetSupplyCurrent());
-    // frc::SmartDashboard::PutNumber("FlywheelA temp",m_flywheelA->GetTemperature());
-    // frc::SmartDashboard::PutNumber("FlywheelB temp",m_flywheelB->GetTemperature());
+    frc::SmartDashboard::PutNumber("S Flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
+    SmartDashboard::PutNumber("S flywheel speed", m_flywheelSpeed);
+    SmartDashboard::PutString("S flywheel state", m_shooterStatus);
+    SmartDashboard::PutNumber("S stator current", m_flywheelA->GetStatorCurrent());
+    SmartDashboard::PutNumber("S supply current", m_flywheelA->GetSupplyCurrent());
+    frc::SmartDashboard::PutNumber("S FlywheelA temp",m_flywheelA->GetTemperature());
+    frc::SmartDashboard::PutNumber("S FlywheelB temp",m_flywheelB->GetTemperature());
 }
 
 void Shooter::SetShooterState(ShooterState state) {

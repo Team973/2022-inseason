@@ -31,8 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.0, 0.0, 0.0)
         , m_turnPID(0.0, 0.0, 0.0) {
-    
-    // Factory Default
+        // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
     m_leftDriveTalonC->ConfigFactoryDefault();
@@ -130,8 +129,8 @@ void Drive::Update() {
 }
 
 void Drive::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("D throttle", m_throttle);
     frc::SmartDashboard::PutNumber("D turn", m_turn);
+    frc::SmartDashboard::PutNumber("D throttle", m_throttle);
     frc::SmartDashboard::PutNumber("D leftOutput", m_leftOutput);
     frc::SmartDashboard::PutNumber("D rightOutput", m_rightOutput);
     frc::SmartDashboard::PutNumber("D left supply current",
