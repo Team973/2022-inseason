@@ -176,6 +176,9 @@ void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
     frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
+    frc::SmartDashboard::PutNumber("Left Sensor", m_leftSideTurnSensor);
+    frc::SmartDashboard::PutNumber("Right Sensor", m_rightSideTurnSensor);
+
 
     SmartDashboard::PutBoolean("turret digital input", m_turretSensor->Get());
     //right side limit switch

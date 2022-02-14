@@ -28,7 +28,9 @@ void Robot::DisabledPeriodic() {
         break;
     case 3:
         m_lights->SetLightsState(Lights::LightsState::Initialization);
-        m_turretTalon->SetNeutralMode(NeutralMode::Brake);
+        if(!m_turretSensor->Get()) {
+            m_turretTalon->SetNeutralMode(NeutralMode::Brake);
+        }
         break;
     default:
         m_lights->SetLightsState(Lights::LightsState::Off);
