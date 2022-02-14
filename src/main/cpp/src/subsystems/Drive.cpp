@@ -31,7 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.0, 0.0, 0.0)
         , m_turnPID(0.0, 0.0, 0.0) {
-        // Factory Default
+    // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
     m_leftDriveTalonC->ConfigFactoryDefault();
@@ -98,15 +98,15 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_leftDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
     m_rightDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
 
-    m_leftDriveTalonA->Config_kP(0, 0.2, 30);
+    m_leftDriveTalonA->Config_kP(0, 0.25, 30);
     m_leftDriveTalonA->Config_kI(0, 0.0, 30);
     m_leftDriveTalonA->Config_kD(0, 0.0, 30);
-    m_leftDriveTalonA->Config_kF(0, 0.0, 30);
+    m_leftDriveTalonA->Config_kF(0, 0.033, 30);
 
-    m_rightDriveTalonA->Config_kP(0, 0.2, 30);
+    m_rightDriveTalonA->Config_kP(0, 0.25, 30);
     m_rightDriveTalonA->Config_kI(0, 0.0, 30);
     m_rightDriveTalonA->Config_kD(0, 0.0, 30);
-    m_rightDriveTalonA->Config_kF(0, 0.0, 30);
+    m_rightDriveTalonA->Config_kF(0, 0.033, 30);
 }
 
 void Drive::Update() {
@@ -124,8 +124,11 @@ void Drive::Update() {
             break;
     }
 
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+
+    m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
+    m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 }
 
 void Drive::DashboardUpdate() {
@@ -157,6 +160,7 @@ void Drive::DashboardUpdate() {
 void Drive::ArcadeCalcOutput() {
     m_throttle = std::clamp(m_throttle, -1.0, 1.0);
     m_turn = std::clamp(m_turn, -1.0, 1.0);
+    m_turn *= 1.2;
     if (!m_isQuickTurn) {
         m_turn *= std::abs(m_throttle);
     }
@@ -245,7 +249,7 @@ double Drive::GetLeftOuput() {
     return m_leftOutput;
 }
 
-void Drive::ZeroDriveMotors(){
+void Drive::ZeroDriveMotors() {
     m_leftDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
     m_rightDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
 }
