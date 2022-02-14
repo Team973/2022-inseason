@@ -36,9 +36,9 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    // m_turret->Turn(
-    //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-    //     m_gyro->GetWrappedAngle());
+    m_turret->Turn(
+        m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+        m_gyro->GetWrappedAngle());
 
 
 // limelight

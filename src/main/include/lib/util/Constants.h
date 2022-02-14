@@ -38,7 +38,8 @@ constexpr double GYRO_CONSTANT = 0.0022;
 constexpr double TRANSLATION_CONSTANT = 0.01;
 
 // turret home angle
-constexpr double TURRET_HOME_OFFSET = 1.0;
+constexpr double TURRET_HOME_OFFSET = -1.0;
+constexpr double TURRET_SOFT_OFFSET = 5.0;
 
 }  // namespace Constants
 

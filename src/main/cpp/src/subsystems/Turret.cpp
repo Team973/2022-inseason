@@ -6,7 +6,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         : m_turretMotor(turretMotor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 20, 40, 0.05))
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 40, 80, 0.05))
         , m_limeLightPID(0.04, 0.0, 0.0, 0)
         , m_limeLightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
@@ -30,7 +30,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
     m_turretMotor->ConfigPeakOutputForward(1.0, 30);
     m_turretMotor->ConfigPeakOutputReverse(-1.0, 30);
 
-    m_turretMotor->Config_kP(0, 0.13, 30);
+    m_turretMotor->Config_kP(0, 0.0975, 30);
     m_turretMotor->Config_kI(0, 0.0, 30);
     m_turretMotor->Config_kD(0, 0.0, 30);
     m_turretMotor->Config_kF(0, 0.0, 30);
@@ -46,7 +46,20 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
 void Turret::Turn(double angleInDegrees, double gyroOffset) { 
 
     // 2048 per rotation and gear ratio of 1:TURRET_GEAR_RATIO
-    m_turretMotor->Set(ControlMode::Position, ((angleInDegrees - gyroOffset) / 360)  * 2048 * TURRET_GEAR_RATIO);
+    switch(PassedSuperSoft()) {
+    case 0:
+        m_turretMotor->Set(ControlMode::Position, ((angleInDegrees - gyroOffset) / 360)  * 2048 * TURRET_GEAR_RATIO);
+        break;
+    case 1:
+        m_turretMotor->Set(ControlMode::Position, m_rightSideTurnSensor - 728);
+        break;
+    case 2:
+        m_turretMotor->Set(ControlMode::Position, m_leftSideTurnSensor + 728);
+        break;
+    
+    default:
+        break;
+    }
     m_tickPosition = (angleInDegrees / 360) * 2048 * TURRET_GEAR_RATIO;
 }
 
@@ -142,7 +155,7 @@ int Turret::SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTrip
                 if(m_checkStatus == 2) {
 
                     m_checkStatus = 3;
-                    m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+                    m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition() - (Constants::TURRET_SOFT_OFFSET / 360 * 2048 * TURRET_GEAR_RATIO);
                     return m_checkStatus;
                 } else {
                     return m_checkStatus;
@@ -151,7 +164,7 @@ int Turret::SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTrip
 
             if(m_checkStatus == 1) {
                 m_checkStatus = 2;
-                m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+                m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition() + (Constants::TURRET_SOFT_OFFSET / 360 * 2048 * TURRET_GEAR_RATIO);
                 return m_checkStatus;
             } else {
                 return m_checkStatus;
@@ -168,6 +181,16 @@ int Turret::SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTrip
     }
     
     return m_checkStatus;
+}
+
+int Turret::PassedSuperSoft() {
+    if(m_turretMotor->GetSelectedSensorPosition() > m_rightSideTurnSensor) {
+        return 1;
+    } else if(m_turretMotor->GetSelectedSensorPosition() < m_leftSideTurnSensor) {
+        return 2;
+    } else {
+        return 0;
+    }
 }
 
 void Turret::Update() {

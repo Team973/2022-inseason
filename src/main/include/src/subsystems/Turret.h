@@ -81,6 +81,11 @@ public:
      */
     int SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTripped);
 
+    /**
+     * If the turret has passed the extra-soft-limits, 0 for none passed, 1 for too far left, 2 for too far right
+     */
+    int PassedSuperSoft();
+
     void Update() override;
 
     void DashboardUpdate() override;
