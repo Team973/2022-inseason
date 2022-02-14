@@ -246,6 +246,11 @@ double Drive::GetLeftOuput() {
     return m_leftOutput;
 }
 
+void Drive::ZeroDriveMotors(){
+    m_leftDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
+    m_rightDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
+}
+
 double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;

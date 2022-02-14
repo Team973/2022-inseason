@@ -23,6 +23,7 @@
 #include "lib/util/Util.h"
 #include "lib/helpers/StickController.h"
 
+#include "src/subsystems/AutoManager.h"
 #include "src/subsystems/Drive.h"
 #include "src/subsystems/Intake.h"
 #include "src/subsystems/Conveyor.h"
@@ -48,6 +49,10 @@ public:
     void TestPeriodic() override;
 
 private:
+    /**
+     * Automanager
+     */
+    AutoManager *m_autoManager;
 
     /**
      * Drive
