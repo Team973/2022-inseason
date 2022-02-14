@@ -10,6 +10,10 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_limeLightPID(0.04, 0.0, 0.0, 0)
         , m_limeLightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
+        , m_checkStatus(0)
+        , m_leftSensorChecked(false)
+        , m_rightSensorChecked(false)
+        , m_centerSensorChecked(false)
         {
     m_turretMotor->ConfigFactoryDefault();
 
@@ -111,14 +115,46 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 }
 
 void Turret::SetTurretAngle(double angle){
-    m_turretMotor->SetSelectedSensorPosition( angle / 360 * 2048 * TURRET_GEAR_RATIO);
+    m_turretMotor->SetSelectedSensorPosition(angle / 360 * 2048 * TURRET_GEAR_RATIO);
 }
 
 void Turret::SetHomeOffset(){
     Turret::SetTurretAngle(Constants::TURRET_HOME_OFFSET);
 }
 
+void Turret::CheckedSensorsToFalse() {
+    m_leftSensorChecked = false;
+    m_rightSensorChecked = false;
+    m_centerSensorChecked = false;
+    m_checkStatus = 0;
+}
 
+int Turret::SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTripped) {
+
+    if(centerTripped == true) {
+        m_checkStatus = 1;
+
+        if(leftTripped == true) {
+            m_checkStatus = 2;
+
+            if(rightTripped == true) {
+                if(m_checkStatus == 3) {
+                    return m_checkStatus;
+                }
+            
+                m_checkStatus = 3;
+                m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+                return m_checkStatus;
+            }
+            m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+            return m_checkStatus;
+        }
+        SetHomeOffset();
+        return m_checkStatus;
+    }
+    
+    return m_checkStatus;
+}
 
 void Turret::Update() {
     m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / TURRET_GEAR_RATIO / 2048 * 360;
@@ -142,7 +178,9 @@ void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
 
     SmartDashboard::PutBoolean("turret digital input", m_turretSensor->Get());
+    //right side limit switch
     SmartDashboard::PutBoolean("turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
+    //left side limit switch
     SmartDashboard::PutBoolean("turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 }
 

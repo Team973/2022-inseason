@@ -71,7 +71,15 @@ public:
      */
     void SetHomeOffset();
 
-    
+    /**
+     * Turret sensor checks to false every disabled init
+     */
+    void CheckedSensorsToFalse();
+
+    /**
+     * Turret sensor calibration for disabled periodic
+     */
+    int SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTripped);
 
     void Update() override;
 
@@ -93,6 +101,17 @@ private:
     double m_translationalAngularRate;
 
     TurretState m_turretState;
+
+    double m_leftSideTurnSensor;
+    double m_rightSideTurnSensor;
+
+    /**
+     * 0 means look for center, 1 means checking left, 2 means checking right, 3 means everything checked.
+     */
+    int m_checkStatus;
+    bool m_leftSensorChecked;
+    bool m_rightSensorChecked;
+    bool m_centerSensorChecked;
 
 };
 
