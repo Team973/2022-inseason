@@ -97,6 +97,11 @@ public:
      */
     double GetVelocity();
 
+    /** 
+     * Zero drive motor sensors
+     */
+    void ZeroDriveMotors();
+
 private:
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
