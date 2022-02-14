@@ -15,6 +15,11 @@ void Robot::DisabledInit() {
 
 void Robot::DisabledPeriodic() {
     // turret calibration + light to signal the side needed
+    SmartDashboard::PutBoolean("Left Switch", m_turretTalon->IsRevLimitSwitchClosed());
+    SmartDashboard::PutBoolean("Right Switch", m_turretTalon->IsFwdLimitSwitchClosed());
+    SmartDashboard::PutBoolean("Middle Switch", !m_turretSensor->Get());
+
+
     switch (m_turret->SensorCalibrate(m_turretTalon->IsRevLimitSwitchClosed(),
              m_turretTalon->IsFwdLimitSwitchClosed(), !m_turretSensor->Get())) {
     case 0:

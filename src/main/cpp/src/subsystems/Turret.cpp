@@ -130,27 +130,41 @@ void Turret::CheckedSensorsToFalse() {
 }
 
 int Turret::SensorCalibrate(bool leftTripped, bool rightTripped, bool centerTripped) {
+    if((centerTripped == true) || (m_centerSensorChecked == true)) {
+        m_centerSensorChecked = true;
 
-    if(centerTripped == true) {
-        m_checkStatus = 1;
+        if((leftTripped == true) || (m_leftSensorChecked == true)) {
+            m_leftSensorChecked = true;
+            
+            if((rightTripped == true) || (m_rightSensorChecked == true)) {
+                m_rightSensorChecked = true;
 
-        if(leftTripped == true) {
-            m_checkStatus = 2;
+                if(m_checkStatus == 2) {
 
-            if(rightTripped == true) {
-                if(m_checkStatus == 3) {
+                    m_checkStatus = 3;
+                    m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+                    return m_checkStatus;
+                } else {
                     return m_checkStatus;
                 }
-            
-                m_checkStatus = 3;
-                m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+            }
+
+            if(m_checkStatus == 1) {
+                m_checkStatus = 2;
+                m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+                return m_checkStatus;
+            } else {
                 return m_checkStatus;
             }
-            m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition();
+        }
+
+        if(m_checkStatus == 0) {
+            m_checkStatus = 1;
+            SetHomeOffset();
+            return m_checkStatus;
+        } else {
             return m_checkStatus;
         }
-        SetHomeOffset();
-        return m_checkStatus;
     }
     
     return m_checkStatus;
@@ -185,6 +199,8 @@ void Turret::DashboardUpdate() {
     SmartDashboard::PutBoolean("turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
     //left side limit switch
     SmartDashboard::PutBoolean("turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
+
+    SmartDashboard::PutNumber("checkstatus", m_checkStatus);
 }
 
 }//namespace frc973 
