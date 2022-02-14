@@ -31,8 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.0, 0.0, 0.0)
         , m_turnPID(0.0, 0.0, 0.0) {
-    
-    // Factory Default
+        // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
     m_leftDriveTalonC->ConfigFactoryDefault();
@@ -130,23 +129,23 @@ void Drive::Update() {
 }
 
 void Drive::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("DR turn", m_turn);
-    frc::SmartDashboard::PutNumber("DR throttle", m_throttle);
-    frc::SmartDashboard::PutNumber("DR leftOutput", m_leftOutput);
-    frc::SmartDashboard::PutNumber("DR rightOutput", m_rightOutput);
-    frc::SmartDashboard::PutNumber("DR left supply current",
+    frc::SmartDashboard::PutNumber("D turn", m_turn);
+    frc::SmartDashboard::PutNumber("D throttle", m_throttle);
+    frc::SmartDashboard::PutNumber("D leftOutput", m_leftOutput);
+    frc::SmartDashboard::PutNumber("D rightOutput", m_rightOutput);
+    frc::SmartDashboard::PutNumber("D left supply current",
                                    (m_leftDriveTalonA->GetSupplyCurrent() + m_leftDriveTalonB->GetSupplyCurrent() +
                                     m_leftDriveTalonC->GetSupplyCurrent()) /
                                        3.0);
-    frc::SmartDashboard::PutNumber("DR Right supply current",
+    frc::SmartDashboard::PutNumber("D Right supply current",
                                    (m_rightDriveTalonA->GetSupplyCurrent() + m_rightDriveTalonB->GetSupplyCurrent() +
                                     m_rightDriveTalonC->GetSupplyCurrent()) /
                                        3.0);
-    frc::SmartDashboard::PutNumber("DR left stator current",
+    frc::SmartDashboard::PutNumber("D left stator current",
                                    (m_leftDriveTalonA->GetStatorCurrent() + m_leftDriveTalonB->GetStatorCurrent() +
                                     m_leftDriveTalonC->GetStatorCurrent()) /
                                        3.0);
-    frc::SmartDashboard::PutNumber("DR right stator current",
+    frc::SmartDashboard::PutNumber("D right stator current",
                                    (m_rightDriveTalonA->GetStatorCurrent() + m_rightDriveTalonB->GetStatorCurrent() +
                                     m_rightDriveTalonC->GetStatorCurrent()) /
                                        3.0);
