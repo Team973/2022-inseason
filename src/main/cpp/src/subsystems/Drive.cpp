@@ -30,8 +30,12 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.0, 0.0, 0.0)
-        , m_turnPID(0.0, 0.0, 0.0) {
-    
+        , m_turnPID(0.0, 0.0, 0.0)
+        , m_targetPos(0.0)
+        , m_targetAngle(0.0)
+        , m_currentPos(0.0)
+        , m_currentAngle(0.0)
+        , m_onTarget({false, false}) {
     // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
@@ -250,6 +254,22 @@ double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
     return speed;
+}
+
+void Drive::Zero() {
+    m_currentAngle = 0.0;
+    m_currentPos = 0.0;
+}
+
+std::array<bool, 2> &Drive::OnTarget(const double dist, const double distRate, const double angle,
+                                     const double angleRate) {
+    if (std::fabs(m_targetAngle - m_currentAngle) < angle && std::fabs(m_angularRate) < angleRate) {
+        m_onTarget[Target::angle] = true;
+    }
+    if (std::fabs(m_targetPos - m_currentPos) < dist && std::fabs(m_rate) < distRate) {
+        m_onTarget[Target::angle] = true;
+    }
+    return m_onTarget;
 }
 
 }  // namespace frc973

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <ctre/Phoenix.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
@@ -34,6 +35,14 @@ public:
         arcade,   /**< The arcade drive mode. */
         position, /**< The position drive mode. */
         cheesy,   /**< The cheesy drive mode. */
+    };
+
+    /**
+     * Enum used for position drive
+     */
+    enum Target {
+        angle = 0,
+        dist = 1,
     };
 
     /**
@@ -97,6 +106,17 @@ public:
      */
     double GetVelocity();
 
+    /**
+     * Zeros the drive positions
+     */
+    void Zero();
+
+    /**
+     * Checks if the drive in on target
+     * @param dist the distance
+     */
+    std::array<bool, 2> &OnTarget(const double dist, const double distRate, const double angle, const double angleRate);
+
 private:
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
@@ -139,5 +159,10 @@ private:
     double m_targetAngle;
     double m_currentPos;
     double m_currentAngle;
+
+    double m_angularRate;
+    double m_rate;
+
+    std::array<bool, 2> m_onTarget;
 };
 }  // namespace frc973
