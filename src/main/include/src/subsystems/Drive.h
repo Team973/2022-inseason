@@ -107,15 +107,33 @@ public:
     double GetVelocity();
 
     /**
-     * Zeros the drive positions
+     * Zeros the current drive positions
      */
     void Zero();
 
     /**
-     * Checks if the drive in on target
-     * @param dist the distance
+     * Sets the target position
+     * @param dist target distance
+     * @param angle target angle
      */
-    std::array<bool, 2> &OnTarget(const double dist, const double distRate, const double angle, const double angleRate);
+    void SetPositionTarget(double dist, double angle);
+
+    /**
+     * Checks if the drive is on target
+     * @return true if the drive is on target
+     */
+    std::array<bool, 2> &PositionOnTarget();
+
+    /**
+     * Checks if the drive in on target
+     * @param dist the target distance tolerance
+     * @param distRate the velocity tolerance
+     * @param angle the target angle tolerance
+     * @param angleRate the anglular rate tolerance
+     * @return if the drive is on target within tolerance
+     */
+    std::array<bool, 2> &PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
+                                                       const double angleRate);
 
 private:
     WPI_TalonFX *m_leftDriveTalonA;
@@ -159,6 +177,9 @@ private:
     double m_targetAngle;
     double m_currentPos;
     double m_currentAngle;
+
+    double m_leftPosZero;
+    double m_rightPosZero;
 
     double m_angularRate;
     double m_rate;

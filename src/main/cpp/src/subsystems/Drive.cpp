@@ -35,6 +35,10 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_targetAngle(0.0)
         , m_currentPos(0.0)
         , m_currentAngle(0.0)
+        , m_leftPosZero(0.0)
+        , m_rightPosZero(0.0)
+        , m_angularRate(0.0)
+        , m_rate(0.0)
         , m_onTarget({false, false}) {
     // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
@@ -214,8 +218,9 @@ void Drive::CheesyCalcOutput() {
 void Drive::PositionCalcOutput() {
     m_positionPID.SetTarget(m_targetPos);
     m_positionPID.SetTarget(m_targetAngle);
-    m_currentPos =
-        (m_leftDriveTalonA->GetSelectedSensorPosition() + m_rightDriveTalonA->GetSelectedSensorPosition()) / 2.0;
+    m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() - m_leftPosZero) +
+                    (m_rightDriveTalonA->GetSelectedSensorPosition() - m_rightPosZero)) /
+                   2.0;
     if (abs((m_currentAngle - m_targetAngle)) > 1.0) {
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     } else {
@@ -257,18 +262,29 @@ double Drive::GetVelocity() {
 }
 
 void Drive::Zero() {
-    m_currentAngle = 0.0;
-    m_currentPos = 0.0;
+    m_leftPosZero = m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
+    m_rightPosZero = m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
 }
 
-std::array<bool, 2> &Drive::OnTarget(const double dist, const double distRate, const double angle,
-                                     const double angleRate) {
+void Drive::SetPositionTarget(double dist, double angle) {
+    m_targetPos = dist;
+    m_targetAngle = angle;
+}
+
+std::array<bool, 2> &Drive::PositionOnTarget() {
+    return PositionOnTargetWithTolerance(DIST_TOLERANCE, DIST_RATE_TOLERANCE, ANGLE_TOLERANCE, ANGLE_RATE_TOLERANCE);
+}
+
+std::array<bool, 2> &Drive::PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
+                                                          const double angleRate) {
     if (std::fabs(m_targetAngle - m_currentAngle) < angle && std::fabs(m_angularRate) < angleRate) {
         m_onTarget[Target::angle] = true;
     }
+
     if (std::fabs(m_targetPos - m_currentPos) < dist && std::fabs(m_rate) < distRate) {
         m_onTarget[Target::angle] = true;
     }
+
     return m_onTarget;
 }
 

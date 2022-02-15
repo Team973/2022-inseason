@@ -8,7 +8,7 @@ namespace frc973 {
 using namespace Util;
 
 class PositionDriveCommand : public Command {
-public:  
+public:
     /**
      * Constructs PositionDriveCommand.
      * @param drive The drive subsystem.
@@ -36,9 +36,9 @@ public:
      * Executes when PositionDriveCommand concludes.
      */
     void PostExecute() override;
-    
+
 private:
     Drive *m_drive;
     uint32_t m_targetTime;
 };
-} // namespace frc973
+}  // namespace frc973
