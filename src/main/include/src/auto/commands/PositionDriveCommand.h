@@ -13,7 +13,7 @@ public:
      * Constructs PositionDriveCommand.
      * @param drive The drive subsystem.
      */
-    PositionDriveCommand(Drive *drive, uint32_t targetTime);
+    PositionDriveCommand(Drive *drive, double minSpeed, double maxSpeed, uint32_t targetTime);
 
     /**
      * Executes when PositionDriveCommand starts.
@@ -39,6 +39,12 @@ public:
 
 private:
     Drive *m_drive;
+
+    double m_minSpeed;
+    double m_maxSpeed;
+
     uint32_t m_targetTime;
+
+    bool m_endRun;
 };
 }  // namespace frc973

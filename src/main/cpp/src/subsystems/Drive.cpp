@@ -14,6 +14,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_rightOutput(0.0)
         , m_throttle(0.0)
         , m_turn(0.0)
+        , m_minSpeed(-1.0)
+        , m_maxSpeed(1.0)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_isQuickTurn(false)
@@ -164,8 +166,8 @@ void Drive::DashboardUpdate() {
 }
 
 void Drive::ArcadeCalcOutput() {
-    m_throttle = std::clamp(m_throttle, -1.0, 1.0);
-    m_turn = std::clamp(m_turn, -1.0, 1.0);
+    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
+    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
     if (!m_isQuickTurn) {
         m_turn *= std::abs(m_throttle);
     }
@@ -230,6 +232,10 @@ void Drive::PositionCalcOutput() {
     ArcadeCalcOutput();
 }
 
+void Drive::SetDriveMode(DriveMode mode) {
+    m_driveMode = mode;
+}
+
 void Drive::SetThrottleTurn(double throttle, double turn) {
     m_throttle = throttle;
     m_turn = turn;
@@ -259,6 +265,11 @@ double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
     return speed;
+}
+
+void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
+    m_minSpeed = minSpeed;
+    m_maxSpeed = maxSpeed;
 }
 
 void Drive::Zero() {

@@ -1,28 +1,30 @@
 #include "src/auto/commands/PositionDriveCommand.h"
 
 namespace frc973 {
-PositionDriveCommand::PositionDriveCommand(Drive *drive, uint32_t targetTime)
-        : m_drive(drive), m_targetTime(targetTime) {
+PositionDriveCommand::PositionDriveCommand(Drive *drive, double minSpeed, double maxSpeed, uint32_t targetTime)
+        : m_drive(drive), m_minSpeed(minSpeed), m_maxSpeed(maxSpeed), m_targetTime(targetTime), m_endRun(false) {
 }
 
 void PositionDriveCommand::Init() {
     m_drive->Zero();
-    // set drivemode to position
-    // set position target
-    // clamp speed
-    // set target time
+    m_drive->SetDriveMode(Drive::DriveMode::position);
+    m_drive->SetPositionTarget(1.0, 1.0);
+    m_drive->ClampSpeed(m_minSpeed, m_maxSpeed);
+    SetTargetMSec(m_targetTime);
 }
 
 void PositionDriveCommand::Run() {
-    // check if on target /w tolerance
+    std::array<bool, 2> &endRun = m_drive->PositionOnTarget();
+
+    m_endRun = endRun[Drive::Target::dist] && endRun[Drive::Target::angle];
 }
 
 bool PositionDriveCommand::IsCompleted() {
-    // return on target /w tolerance (m_endRun)
+    return m_endRun;
 }
 
 void PositionDriveCommand::PostExecute() {
-    // clamp speed to teleop drive limit
+    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT)
 }
 
 }  // namespace frc973

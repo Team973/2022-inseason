@@ -76,6 +76,12 @@ public:
     void PositionCalcOutput();
 
     /**
+     * Set the drive mode
+     * @param mode the drive mode
+     */ 
+    void SetDriveMode(DriveMode mode);
+
+    /**
      * Sets current angle of drive
      */
     void SetAngle(double angle);
@@ -105,6 +111,13 @@ public:
      * Return the average of the left and right motor speeds
      */
     double GetVelocity();
+
+    /**
+     * Clamps the speed of the motors
+     * @param minSpeed the minimum speed
+     * @param maxSpeed the maximum speed
+     */
+    void ClampSpeed(double minSpeed, double maxSpeed);
 
     /**
      * Zeros the current drive positions
@@ -149,6 +162,9 @@ private:
 
     double m_throttle;
     double m_turn;
+
+    double m_minSpeed;
+    double m_maxSpeed;
 
     double m_gyroAngle;
 
