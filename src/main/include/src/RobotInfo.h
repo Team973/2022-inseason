@@ -14,22 +14,22 @@ constexpr int RIGHT_DRIVE_FX_B_ID = 14; /**< CAN ID for the second right drive f
 constexpr int RIGHT_DRIVE_FX_C_ID = 13; /**< CAN ID for the third right drive falcon. */
 // Physical Dimensions
 constexpr double DRIVE_GEAR_RATIO = (12.0 / 72.0) * (34.0 / 36.0); /** The gear ratio of the drive train. */
-constexpr double DRIVE_WIDTH = 23.75;                              /** Drive base width in inches. */
+constexpr double DRIVE_WIDTH = 23.75 * 0.0254;                     /** Drive base width in meters. */
 constexpr double DRIVE_WHEEL_DIAMETER = 4.0;                       /** Diameter of the drive train wheels in inches. */
 // Movement
 constexpr double DRIVE_INCHES_PER_TICK = (Constants::PI * DRIVE_WHEEL_DIAMETER) * DRIVE_GEAR_RATIO /
                                          Constants::TALON_FX_TICKS_PER_REV; /** Inches per encoder tick. */
 constexpr double DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK =
     (DRIVE_INCHES_PER_TICK / Constants::TALON_FX_VELOCITY_UNIT_MS) *
-    Constants::MSEC_PER_SEC;               /** Inches per second per encoder tick. */
-constexpr double MAX_FT_PER_SECOND = 14.4; /** Max speed of the robot in feet per second. 18,000 ticks/100ms. */
+    Constants::MSEC_PER_SEC;                 /** Inches per second per encoder tick. */
+constexpr double MAX_FT_PER_SECOND = 16.225; /** Max speed of the robot in feet per second. 20,158 ticks/100ms. */
 constexpr double MAX_INCHES_PER_SECOND = MAX_FT_PER_SECOND * 12.0; /** Max speed of the robot in feet per second. */
 constexpr double MAX_METERS_PER_SECOND =
     MAX_FT_PER_SECOND / Constants::FEET_PER_METER; /** Max speed of the robot in meters per second. */
 constexpr double MAX_TICKS_PER_100_MS =
     MAX_INCHES_PER_SECOND /
     DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK;    /** Max robot speed in encoder ticks per 100 milliseconds. */
-constexpr double MAX_DEGREES_PER_SECOND = 360; /** Max robot angular speed in degrees per second. */
+constexpr double MAX_DEGREES_PER_SECOND = 600; /** Max robot angular speed in degrees per second. */
 constexpr double MAX_RADIANS_PER_SECOND =
     MAX_DEGREES_PER_SECOND * Constants::PI / 180; /** Max robot angular speed in radians per second. */
 constexpr double DRIVE_TELEOP_LIMIT = 1.0;        /** The max speed we want to run constantly in teleop. */
