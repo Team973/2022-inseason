@@ -8,7 +8,6 @@ namespace Constants {
 
 constexpr uint32_t PID_SPEED_CTRL = 0x00000001; /**< Integrate the output of helpers/PID */
 
-
 constexpr double PI = 3.141592653589793;                 /**< Pi.*/
 constexpr double FEET_PER_METER = 3.280839895;           /**< ft/m.*/
 constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER; /**< m/ft.*/

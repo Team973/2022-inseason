@@ -36,9 +36,20 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    m_turret->Turn(
-        m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-        m_gyro->GetWrappedAngle());
+    // m_turret->Turn(
+    //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+    //     m_gyro->GetWrappedAngle());
+    if(m_operatorStick->GetRightBumper()) {
+        m_limelight->SetVisionCamera();
+
+        if(m_limelight->isTargetValid()){
+            m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        } else {
+            m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
+        }
+    } else {
+        m_limelight->SetCameraDriver();
+    }
 
 
 // limelight

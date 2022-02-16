@@ -18,10 +18,9 @@ void Robot::DisabledPeriodic() {
     SmartDashboard::PutBoolean("Left Switch", m_turretTalon->IsRevLimitSwitchClosed());
     SmartDashboard::PutBoolean("Right Switch", m_turretTalon->IsFwdLimitSwitchClosed());
     SmartDashboard::PutBoolean("Middle Switch", !m_turretSensor->Get());
-
-
-    switch (m_turret->SensorCalibrate(m_turretTalon->IsRevLimitSwitchClosed(),
-             m_turretTalon->IsFwdLimitSwitchClosed(), !m_turretSensor->Get())) {
+    
+    // turret calibration + CANdle switching
+    switch (m_turret->SensorCalibrate()) {
     case 0:
         m_lights->SetLightsState(Lights::LightsState::Middle);
         break;
@@ -32,10 +31,10 @@ void Robot::DisabledPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Right);
         break;
     case 3:
+        m_lights->SetLightsState(Lights::LightsState::Middle);
+        break;
+    case 4:
         m_lights->SetLightsState(Lights::LightsState::Initialization);
-        if(!m_turretSensor->Get()) {
-            m_turretTalon->SetNeutralMode(NeutralMode::Brake);
-        }
         break;
     default:
         m_lights->SetLightsState(Lights::LightsState::Off);
