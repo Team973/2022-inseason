@@ -41,6 +41,5 @@ public:
 private:
     Shooter *m_shooter;
     u_int32_t m_targetTime;
-    bool m_endRun;
 };
 }
