@@ -36,11 +36,11 @@ namespace frc973 {
 enum AutoName
 {
     DoNothing, /**< Does nothing.*/
-    P2_2Ball, /**< Does nothing.*/
-    P3_2Ball, /**< Does nothing.*/
-    P5_2Ball, /**< Does nothing.*/
-    P2_3Ball, /**< Does nothing.*/
-    P5_4Ball, /**< Does nothing.*/
+    P2_2Ball, /**< Position 2, 2 Ball*/
+    P3_2Ball, /**< Position 3, 2 Ball*/
+    P5_2Ball, /**< Position 5, 2 Ball*/
+    P2_3Ball, /**< Position 2, 3 Ball*/
+    P5_4Ball, /**< Position 5, 4 Ball*/
 };
 
 /**
