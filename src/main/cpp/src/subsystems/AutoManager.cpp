@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro)
+AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive)
         : m_currentAuto(DoNothing)
         , m_intake(intake)
         , m_shooter(shooter)
@@ -16,7 +16,14 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
 
 /*< Position 2, 2 Ball >*/
 , m_p2_2Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500)
+    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
+        new DeployIntakeCommand(m_intake),
+        new RunIntakeCommand(m_intake, 1.0, 1000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new TrackingTargetCommand(m_limelight, m_turret, m_gyro, -15.7),
+    }),
 }))
 
 /*< Position 3, 2 Ball >*/

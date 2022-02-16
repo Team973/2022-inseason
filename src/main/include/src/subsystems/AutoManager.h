@@ -12,7 +12,10 @@
 #include "src/subsystems/Gyro.h"
 #include "src/subsystems/Intake.h"
 #include "src/subsystems/Shooter.h"
-
+#include "src/subsystems/Drive.h"
+#include "src/subsystems/Turret.h"
+#include "lib/sensors/Limelight.h"
+ 
 #include "src/auto/commands/ConcurrentCommand.h"
 #include "src/auto/commands/ConveyorFloorCommand.h"
 #include "src/auto/commands/ConveyorTowerCommand.h"
@@ -58,8 +61,9 @@ public:
      * @param shooter The shooter subsystem.
      * @param conveyor The conveyor subsystem.
      * @param gyro The conveyor subsystem.
+     * @param drive The drive subsystem.
      */
-    AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro);
+    AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive);
 
     /**
      * Updates AutoManager.
@@ -92,10 +96,13 @@ private:
     static constexpr uint32_t FLOOR_RUN_TIME = 0;  // the zero is a placeholder 
 
     AutoName m_currentAuto;
+    Limelight *m_limelight;
+    Turret *m_turret;
     Intake *m_intake;
     Shooter *m_shooter;
     Conveyor *m_conveyor;
     Gyro *m_gyro;
+    Drive *m_drive;
 
     std::string m_autoName;
 
