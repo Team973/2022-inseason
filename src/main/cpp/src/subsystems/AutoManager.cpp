@@ -14,9 +14,24 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
 /*< DoNothing >*/
 , m_doNothing(AutoMode({}))
 
+/*< Position 2, 2 Ball >*/
+, m_p2_2Ball(AutoMode({}))
+
+/*< Position 3, 2 Ball >*/
+, m_p3_2Ball(AutoMode({}))
+
+/*< Position 5, 2 Ball >*/
+, m_p5_2Ball(AutoMode({}))
+
+/*< Position 2, 3 Ball >*/
+, m_p2_3Ball(AutoMode({}))
+
+/*< Position 5, 4 Ball >*/
+, m_p5_4Ball(AutoMode({}))
+
         // clang-format on
         , m_currentMode(m_doNothing)
-        , m_autoIndex(0) {
+        , m_autoIndex(1) {
 }
 
 void AutoManager::Update() {
@@ -32,6 +47,21 @@ void AutoManager::DashboardUpdate() {
         case DoNothing:
             m_autoName = "Do Nothing";
             break;
+        case P2_2Ball:
+            m_autoName = "Position 2, 2 Ball";
+            break;
+        case P3_2Ball:
+            m_autoName = "Position 3, 2 Ball";
+            break;
+        case P5_2Ball:
+            m_autoName = "Position 5, 2 Ball";
+            break;
+        case P2_3Ball:
+            m_autoName = "Position 2, 3 Ball";
+            break;
+        case P5_4Ball:
+            m_autoName = "Position 5, 4 Ball";
+            break;
     }
 
     frc::SmartDashboard::PutString(
@@ -43,6 +73,21 @@ void AutoManager::UpdateAutoMode() {
     switch (m_currentAuto) {
         case DoNothing:
             m_currentMode = m_doNothing;
+            break;
+        case P2_2Ball:
+            m_currentMode = m_p2_2Ball;
+            break;
+        case P3_2Ball:
+            m_currentMode = m_p3_2Ball;
+            break;
+        case P5_2Ball:
+            m_currentMode = m_p5_2Ball;
+            break;
+        case P2_3Ball:
+            m_currentMode = m_p2_3Ball;
+            break;
+        case P5_4Ball:
+            m_currentMode = m_p5_4Ball;
             break;
     }
 }
@@ -56,10 +101,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 8;    // amount of autos we have -1
+        m_autoIndex = 7;    // amount of autos we have +1
     }
 
-    if (m_autoIndex == 9) { //amount of autos we have -1 +1
+    if (m_autoIndex == 8) { //amount of autos we have +2
         m_autoIndex = 0;
     }
 

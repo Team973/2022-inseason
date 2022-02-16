@@ -36,6 +36,11 @@ namespace frc973 {
 enum AutoName
 {
     DoNothing, /**< Does nothing.*/
+    P2_2Ball, /**< Does nothing.*/
+    P3_2Ball, /**< Does nothing.*/
+    P5_2Ball, /**< Does nothing.*/
+    P2_3Ball, /**< Does nothing.*/
+    P5_4Ball, /**< Does nothing.*/
 };
 
 /**
@@ -93,6 +98,11 @@ private:
     std::string m_autoName;
 
     AutoMode m_doNothing;
+    AutoMode m_p2_2Ball;
+    AutoMode m_p3_2Ball;
+    AutoMode m_p5_2Ball;
+    AutoMode m_p2_3Ball;
+    AutoMode m_p5_4Ball;
     AutoMode m_currentMode;
 
     double m_autoIndex;
