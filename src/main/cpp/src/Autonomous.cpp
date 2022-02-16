@@ -17,7 +17,7 @@ namespace frc973 {
  */
 void Robot::AutonomousInit() {
     m_gyro->Zero();
-    m_drive->ZeroDriveMotors();
+    m_drive->Zero();
 }
 
 void Robot::AutonomousPeriodic() {

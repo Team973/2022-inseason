@@ -6,7 +6,8 @@
 
 namespace frc973 {
 Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
-        : m_candle(CANdle), m_lightsCurrentState(LightsState::Off), m_rainbow{1.0, 1.0, 8}, m_strobe{0, 255, 0, 0, 0.2, 8} {
+        : m_candle(CANdle), m_lightsCurrentState(LightsState::Off), m_rainbow{1.0, 1.0, 8}, m_strobe{0, 255, 0,
+                                                                                                     0, 0.2, 8} {
     m_candle->ConfigFactoryDefault();
 }
 
@@ -53,7 +54,7 @@ void Lights::SetLightsState(LightsState state) {
     if (m_lightsCurrentState != state) {
         m_lightsNextState = state;
         m_lightsCurrentState = LightsState::Off;
-    } 
+    }
 }
 
 void Lights::DashboardUpdate() {
@@ -87,7 +88,7 @@ void Lights::DashboardUpdate() {
             break;
     }
 
-    frc::SmartDashboard::PutString("State: ", m_currentLightsStateName);
+    frc::SmartDashboard::PutString("L State: ", m_currentLightsStateName);
 }
 
 }  // namespace frc973

@@ -106,7 +106,7 @@ void Robot::RobotPeriodic() {
     m_conveyor->Update();
     // m_turret->Update();
     m_shooter->Update();
-    m_climb->Update();
+    //m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
 

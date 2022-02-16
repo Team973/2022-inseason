@@ -29,10 +29,17 @@ void Robot::TeleopPeriodic() {
 
     // shooter
     if (m_operatorStick->RightTriggerAxis()) {
+        if (m_shooter->IsAtSpeed()) {
+            m_lights->SetLightsState(Lights::LightsState::ReadyToShoot);
+        } else {
+            m_lights->SetLightsState(Lights::LightsState::Off);
+        }
+
         m_shooter->SetFlywheelRPM(2500);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
+        m_lights->SetLightsState(Lights::LightsState::Off);
     }
 
     // turret
@@ -40,8 +47,7 @@ void Robot::TeleopPeriodic() {
     //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
     //     m_gyro->GetWrappedAngle());
 
-
-// limelight
+    // limelight
     if (m_operatorStick->GetLeftBumper()) {
         m_limelight->SetVisionCamera();
     } else {
@@ -61,6 +67,12 @@ void Robot::TeleopPeriodic() {
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
     // drive
+    if (m_driverStick->GetLeftBumper()) {
+        m_drive->SetQuickTurn(true);
+    } else {
+        m_drive->SetQuickTurn(false);
+    }
+    
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
