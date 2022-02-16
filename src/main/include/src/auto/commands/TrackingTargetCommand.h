@@ -44,6 +44,6 @@ private:
     Turret *m_turret;
     Gyro *m_gyro;
     uint32_t m_targetTime;
-    bool m_hasElapsed;
+    bool m_endRun;
 };
 }
