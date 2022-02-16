@@ -293,7 +293,7 @@ std::array<bool, 2> &Drive::PositionOnTargetWithTolerance(const double dist, con
     }
 
     if (std::fabs(m_targetPos - m_currentPos) < dist && std::fabs(m_rate) < distRate) {
-        m_onTarget[Target::angle] = true;
+        m_onTarget[Target::dist] = true;
     }
 
     return m_onTarget;
