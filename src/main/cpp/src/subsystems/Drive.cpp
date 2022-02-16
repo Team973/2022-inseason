@@ -14,6 +14,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_rightOutput(0.0)
         , m_throttle(0.0)
         , m_turn(0.0)
+        , m_minSpeed(-1.0)
+        , m_maxSpeed(1.0)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_isQuickTurn(false)
@@ -30,7 +32,16 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.0, 0.0, 0.0)
-        , m_turnPID(0.0, 0.0, 0.0) {
+        , m_turnPID(0.0, 0.0, 0.0)
+        , m_targetPos(0.0)
+        , m_targetAngle(0.0)
+        , m_currentPos(0.0)
+        , m_currentAngle(0.0)
+        , m_leftPosZero(0.0)
+        , m_rightPosZero(0.0)
+        , m_angularRate(0.0)
+        , m_rate(0.0)
+        , m_onTarget({false, false}) {
     // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
@@ -158,9 +169,9 @@ void Drive::DashboardUpdate() {
 }
 
 void Drive::ArcadeCalcOutput() {
-    m_throttle = std::clamp(m_throttle, -1.0, 1.0);
-    m_turn = std::clamp(m_turn, -1.0, 1.0);
-     if (!m_isQuickTurn) {
+    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
+    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
+    if (!m_isQuickTurn) {
         m_turn *= std::abs(m_throttle);
     }
     double maxInput = std::copysign(std::max(std::abs(m_throttle), std::abs(m_turn)), m_throttle);
@@ -211,8 +222,9 @@ void Drive::CheesyCalcOutput() {
 void Drive::PositionCalcOutput() {
     m_positionPID.SetTarget(m_targetPos);
     m_positionPID.SetTarget(m_targetAngle);
-    m_currentPos =
-        (m_leftDriveTalonA->GetSelectedSensorPosition() + m_rightDriveTalonA->GetSelectedSensorPosition()) / 2.0;
+    m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() - m_leftPosZero) +
+                    (m_rightDriveTalonA->GetSelectedSensorPosition() - m_rightPosZero)) /
+                   2.0;
     if (abs((m_currentAngle - m_targetAngle)) > 1.0) {
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     } else {
@@ -220,6 +232,10 @@ void Drive::PositionCalcOutput() {
     }
     SetQuickTurn(true);
     ArcadeCalcOutput();
+}
+
+void Drive::SetDriveMode(DriveMode mode) {
+    m_driveMode = mode;
 }
 
 void Drive::SetThrottleTurn(double throttle, double turn) {
@@ -247,15 +263,42 @@ double Drive::GetLeftOuput() {
     return m_leftOutput;
 }
 
-void Drive::ZeroDriveMotors() {
-    m_leftDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
-    m_rightDriveTalonA->SetSelectedSensorPosition(0.0, 0, 30);
-}
-
 double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
     return speed;
+}
+
+void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
+    m_minSpeed = minSpeed;
+    m_maxSpeed = maxSpeed;
+}
+
+void Drive::Zero() {
+    m_leftPosZero = m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
+    m_rightPosZero = m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
+}
+
+void Drive::SetPositionTarget(double dist, double angle) {
+    m_targetPos = dist;
+    m_targetAngle = angle;
+}
+
+std::array<bool, 2> &Drive::PositionOnTarget() {
+    return PositionOnTargetWithTolerance(DIST_TOLERANCE, DIST_RATE_TOLERANCE, ANGLE_TOLERANCE, ANGLE_RATE_TOLERANCE);
+}
+
+std::array<bool, 2> &Drive::PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
+                                                          const double angleRate) {
+    if (std::fabs(m_targetAngle - m_currentAngle) < angle && std::fabs(m_angularRate) < angleRate) {
+        m_onTarget[Target::angle] = true;
+    }
+
+    if (std::fabs(m_targetPos - m_currentPos) < dist && std::fabs(m_rate) < distRate) {
+        m_onTarget[Target::dist] = true;
+    }
+
+    return m_onTarget;
 }
 
 }  // namespace frc973
