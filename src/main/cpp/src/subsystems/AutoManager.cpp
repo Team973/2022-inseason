@@ -15,19 +15,29 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
 , m_doNothing(AutoMode({}))
 
 /*< Position 2, 2 Ball >*/
-, m_p2_2Ball(AutoMode({}))
+, m_p2_2Ball(AutoMode({
+    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500)
+}))
 
 /*< Position 3, 2 Ball >*/
-, m_p3_2Ball(AutoMode({}))
+, m_p3_2Ball(AutoMode({
+    new SetGyroAngleCommand(m_gyro, P3_ANGLE, 500)
+}))
 
 /*< Position 5, 2 Ball >*/
-, m_p5_2Ball(AutoMode({}))
+, m_p5_2Ball(AutoMode({
+    new SetGyroAngleCommand(m_gyro, P5_ANGLE, 500)
+}))
 
 /*< Position 2, 3 Ball >*/
-, m_p2_3Ball(AutoMode({}))
+, m_p2_3Ball(AutoMode({
+    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500)
+}))
 
 /*< Position 5, 4 Ball >*/
-, m_p5_4Ball(AutoMode({}))
+, m_p5_4Ball(AutoMode({
+    new SetGyroAngleCommand(m_gyro, P5_ANGLE, 500)
+}))
 
         // clang-format on
         , m_currentMode(m_doNothing)

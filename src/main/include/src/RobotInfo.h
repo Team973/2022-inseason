@@ -86,7 +86,13 @@ constexpr double CLIMB_INCHES_PER_TICK =
 /**
  * Gyro
  */
-constexpr int GYRO_SRX_ID = 4; /**< CAN ID for the SRX that the gyro is plugged in to. */
+constexpr int GYRO_SRX_ID = 4;      /**< CAN ID for the SRX that the gyro is plugged in to. */
+constexpr double P1_ANGLE = -156.0;      /**< The angle to set when robot is in position 1. */
+constexpr double P2_ANGLE = -178.5; /**< The angle to set when robot is in position 2. */
+constexpr double P3_ANGLE = 114.0;    /**< The angle to set when robot is in position 3. */
+constexpr double P4_ANGLE = 114.0;      /**< The angle to set when robot is in position 4. */
+constexpr double P5_ANGLE = 46.5;   /**< The angle to set when robot is in position 5. */
+constexpr double P6_ANGLE = 24.0;      /**< The angle to set when robot is in position 6. */
 
 /**
  * Lights

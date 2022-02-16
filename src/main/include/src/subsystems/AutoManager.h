@@ -14,14 +14,16 @@
 #include "src/subsystems/Shooter.h"
 
 #include "src/auto/commands/ConcurrentCommand.h"
-#include "src/auto/commands/ShooterCommand.h"
 #include "src/auto/commands/ConveyorFloorCommand.h"
 #include "src/auto/commands/ConveyorTowerCommand.h"
 #include "src/auto/commands/DeployIntakeCommand.h"
+#include "src/auto/commands/PositionDriveCommand.h"
 #include "src/auto/commands/RetractIntakeCommand.h"
 #include "src/auto/commands/RunIntakeCommand.h"
 #include "src/auto/commands/SequentialCommand.h"
+#include "src/auto/commands/SetGyroAngleCommand.h"
 #include "src/auto/commands/ShooterCommand.h"
+#include "src/auto/commands/TrackingTargetCommand.h"
 #include "src/auto/commands/WaitCommand.h"
 #include "src/auto/commands/WaitForFlywheelCommand.h"
 
