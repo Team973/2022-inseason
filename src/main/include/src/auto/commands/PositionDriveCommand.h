@@ -13,7 +13,7 @@ public:
      * Constructs PositionDriveCommand.
      * @param drive The drive subsystem.
      */
-    PositionDriveCommand(Drive *drive, double targetDist, double targetAngle, double minSpeed, double maxSpeed, uint32_t targetTime);
+    PositionDriveCommand(Drive *drive, double targetDist, double targetAngle, double speed, uint32_t targetTime);
 
     /**
      * Executes when PositionDriveCommand starts.
@@ -42,8 +42,7 @@ private:
 
     double m_targetDist;
     double m_targetAngle;
-    double m_minSpeed;
-    double m_maxSpeed;
+    double m_speed;
 
     uint32_t m_targetTime;
 
