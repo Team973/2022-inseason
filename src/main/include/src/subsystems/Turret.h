@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <ctre/Phoenix.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -16,9 +16,8 @@ namespace frc973 {
 /**
  * The set of intake states; deployed or retracted.
  */
-enum class TurretState 
-{
-    Off, /**< Disables turret. */
+enum class TurretState {
+    Off,    /**< Disables turret. */
     Manual, /**< Manual turret control. */
     AutoAim /**< Limelight targeting mode. */
 };
@@ -26,9 +25,9 @@ enum class TurretState
 class Turret : public Subsystem {
 public:
     Turret(WPI_TalonFX *turretMotor, DigitalInput *talonSensor);
-    
+
     /**
-     * @param angleInDegrees angle its going to turn to 
+     * @param angleInDegrees angle its going to turn to
      */
     void Turn(double angleInDegrees, double gyroOffset);
 
@@ -41,7 +40,7 @@ public:
     /**
      * Calculates output to feed into a percent output loops
      */
-    void CalcOutput(double limelightTarget, double angularVelocity = 0.0);
+    void CalcOutput(double lightlightTarget, double angularVelocity, double translationalAngularRate);
 
     /**
      * Returns current turret angle
@@ -49,12 +48,12 @@ public:
     double GetTurretAngle();
 
     /**
-     * Computes the translational variables of rate of transitional angle 
+     * Computes the translational variables of rate of transitional angle
      * change and rate of change in distance from target.
      * @param driveVelocity drive velocity in ticks per 100ms
      * @param distanceFromTarget distance from target in inches
      */
-    void CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
+    double CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 
     /**
      * Set Turret to Brake
@@ -71,7 +70,21 @@ public:
      */
     void SetHomeOffset();
 
-    
+    /**
+     * Turret sensor checks to false every disabled init
+     */
+    void CheckedSensorsToFalse();
+
+    /**
+     * If the turret has passed the extra-soft-limits, 0 for none passed, 1 for too far left, 2 for too far right
+     * Sensor calibration
+     */
+    int SensorCalibrate();
+
+    /**
+     * Check if passed the super soft stop, 0 is for normal, 1 means passed the right limit, 2 for passed left limit
+     */
+    int PassedSuperSoft();
 
     void Update() override;
 
@@ -94,6 +107,12 @@ private:
 
     TurretState m_turretState;
 
+    int m_checkStatus;
+    double m_leftSensorChecked;
+    double m_rightSensorChecked;
+    double m_centerSensorChecked;
+    double m_leftSideTurnSensor;
+    double m_rightSideTurnSensor;
 };
 
-} // namespace frc973
+}  // namespace frc973

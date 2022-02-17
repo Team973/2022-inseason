@@ -8,7 +8,6 @@ namespace Constants {
 
 constexpr uint32_t PID_SPEED_CTRL = 0x00000001; /**< Integrate the output of helpers/PID */
 
-
 constexpr double PI = 3.141592653589793;                 /**< Pi.*/
 constexpr double FEET_PER_METER = 3.280839895;           /**< ft/m.*/
 constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER; /**< m/ft.*/
@@ -38,7 +37,8 @@ constexpr double GYRO_CONSTANT = 0.0022;
 constexpr double TRANSLATION_CONSTANT = 0.01;
 
 // turret home angle
-constexpr double TURRET_HOME_OFFSET = 1.0;
+constexpr double TURRET_HOME_OFFSET = -1.0;
+constexpr double TURRET_SOFT_OFFSET = 5.0;
 
 }  // namespace Constants
 
