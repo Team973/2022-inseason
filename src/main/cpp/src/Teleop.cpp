@@ -15,13 +15,10 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     // shoot btn
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
-        // m_shooter->SetFlywheelRPM(2800);
-        // m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     } else {
-        // m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
@@ -35,7 +32,7 @@ void Robot::TeleopPeriodic() {
             m_lights->SetLightsState(Lights::LightsState::Off);
         }
 
-        m_shooter->SetFlywheelRPM(2500);
+        m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);

@@ -19,7 +19,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_isQuickTurn(false)
-        , m_driveMode(DriveMode::cheesy)
+        , m_driveMode(DriveMode::arcade)
         , m_xPos(0.0)
         , m_yPos(0.0)
         , m_theta(0.0)

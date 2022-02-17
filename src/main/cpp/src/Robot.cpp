@@ -121,6 +121,14 @@ void Robot::RobotPeriodic() {
 
     m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+
+    // limelight
+    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
+    frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
+    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
 }  // namespace frc973
