@@ -33,6 +33,8 @@
 #include "src/subsystems/Gyro.h"
 #include "src/subsystems/Lights.h"
 
+#include "SubsystemManager.h"
+
 using namespace frc;
 namespace frc973 {
 class Robot : public TimedRobot {
