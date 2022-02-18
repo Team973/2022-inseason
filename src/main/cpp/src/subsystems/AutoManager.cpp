@@ -27,6 +27,14 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
         new SetTurretAngleCommand(m_turret, -15.7, 2000),
         new SetFlywheelRPMCommand(m_shooter, 1000.0, 2000),
     }),
+    new ConcurrentCommand({
+        new DeployIntakeCommand(m_intake),
+        new RunIntakeCommand(m_intake, 1.0, 13000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 13000),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 13000),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 13000),
+        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 13000),
+    }),
 }))
 
 /*< Position 3, 2 Ball >*/

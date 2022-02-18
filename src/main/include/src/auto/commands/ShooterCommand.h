@@ -15,7 +15,7 @@ public:
      * @param shooter The shooter subsystem.
      * @param targetTime The time to wait in milliseconds.
      */
-    ShooterCommand(Shooter *shooter, u_int32_t targetTime);
+    ShooterCommand(Shooter *shooter, Shooter::ShooterState shooterState, u_int32_t targetTime);
 
     /**
      * Executes when ShooterCommand starts.
@@ -40,6 +40,7 @@ public:
 
 private:
     Shooter *m_shooter;
+    Shooter::ShooterState m_shooterState;
     u_int32_t m_targetTime;
 };
 }
