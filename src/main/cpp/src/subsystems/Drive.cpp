@@ -241,6 +241,8 @@ void Drive::SetDriveMode(DriveMode mode) {
 void Drive::SetThrottleTurn(double throttle, double turn) {
     m_throttle = throttle;
     m_turn = turn;
+    SmartDashboard::PutNumber("Throttle", m_throttle);
+    SmartDashboard::PutNumber("Turn", m_turn);
 }
 
 void Drive::SetAngle(double angle) {

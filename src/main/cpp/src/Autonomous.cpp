@@ -16,7 +16,7 @@ namespace frc973 {
  * make sure to add them to the chooser code above as well.
  */
 void Robot::AutonomousInit() {
-    m_gyro->Zero();
+    // m_gyro->Zero();
     m_drive->Zero();
 }
 
@@ -25,11 +25,11 @@ void Robot::AutonomousPeriodic() {
     /* End pre periodic */
 
     /* Post periodic, drive should update here last */
-    m_autoManager->Update();
-    m_conveyor->Update();
-    m_intake->Update();
-    m_shooter->Update();
-    m_lights->Update();
+    // m_autoManager->Update();
+    // m_conveyor->Update();
+    // m_intake->Update();
+    // m_shooter->Update();
+    // m_lights->Update();
     m_drive->Update();
     /* End post periodic*/
 }

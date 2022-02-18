@@ -49,10 +49,10 @@ public:
     void TestPeriodic() override;
 
 private:
-    /**
-     * Automanager
-     */
-    AutoManager *m_autoManager;
+    // /**
+    //  * Automanager
+    //  */
+    // AutoManager *m_autoManager;
 
     /**
      * Drive
@@ -65,67 +65,67 @@ private:
     WPI_TalonFX *m_rightDriveTalonC;
     Drive *m_drive;
 
-    /**
-     * Intake
-     */
-    PWMTalonFX *m_intakeTalon;
-    Solenoid *m_intakeSolenoid;
-    Intake *m_intake;
+    // /**
+    //  * Intake
+    //  */
+    // PWMTalonFX *m_intakeTalon;
+    // Solenoid *m_intakeSolenoid;
+    // Intake *m_intake;
 
-    /**
-     * Conveyor
-     */ 
-    TalonSRX *m_conveyorFloorMotor;
-    TalonSRX *m_conveyorTowerMotorA;
-    TalonSRX *m_conveyorTowerMotorB;
-    Conveyor *m_conveyor;
+    // /**
+    //  * Conveyor
+    //  */ 
+    // TalonSRX *m_conveyorFloorMotor;
+    // TalonSRX *m_conveyorTowerMotorA;
+    // TalonSRX *m_conveyorTowerMotorB;
+    // Conveyor *m_conveyor;
 
-    /**
-     * Turret
-     */
-    WPI_TalonFX *m_turretTalon;
-    DigitalInput *m_turretSensor;
-    Turret *m_turret;
+    // /**
+    //  * Turret
+    //  */
+    // WPI_TalonFX *m_turretTalon;
+    // DigitalInput *m_turretSensor;
+    // Turret *m_turret;
 
-    /**
-     * Shooter
-     */
-    WPI_TalonFX *m_shooterFlywheelMotorA;
-    WPI_TalonFX *m_shooterFlywheelMotorB;
-    Shooter *m_shooter;
+    // /**
+    //  * Shooter
+    //  */
+    // WPI_TalonFX *m_shooterFlywheelMotorA;
+    // WPI_TalonFX *m_shooterFlywheelMotorB;
+    // Shooter *m_shooter;
 
-    /**
-     * Climb
-     */
-    WPI_TalonFX *m_climbTalonA;
-    WPI_TalonFX *m_climbTalonB;
-    DigitalInput *m_bottomLeftSensor;
-    DigitalInput *m_bottomRightSensor;
-    DigitalInput *m_topLeftSensor;
-    DigitalInput *m_topRightSensor;
-    Climb *m_climb;
+    // /**
+    //  * Climb
+    //  */
+    // WPI_TalonFX *m_climbTalonA;
+    // WPI_TalonFX *m_climbTalonB;
+    // DigitalInput *m_bottomLeftSensor;
+    // DigitalInput *m_bottomRightSensor;
+    // DigitalInput *m_topLeftSensor;
+    // DigitalInput *m_topRightSensor;
+    // Climb *m_climb;
 
-    /**
-     * Gyro
-     */
-    TalonSRX *m_gyroTalon;
-    Gyro *m_gyro;
+    // /**
+    //  * Gyro
+    //  */
+    // TalonSRX *m_gyroTalon;
+    // Gyro *m_gyro;
 
-    /**
-     * Limelight
-     */
-    Limelight *m_limelight;
+    // /**
+    //  * Limelight
+    //  */
+    // Limelight *m_limelight;
 
-    /**
-     * Lights
-     */
-    CANdle *m_CANdle;
-    Lights *m_lights;
+    // /**
+    //  * Lights
+    //  */
+    // CANdle *m_CANdle;
+    // Lights *m_lights;
 
-    /**
-     * Pneumatics
-     */
-    frc::PneumaticHub *m_pneumaticsHub;
+    // /**
+    //  * Pneumatics
+    //  */
+    // frc::PneumaticHub *m_pneumaticsHub;
 
     /**
      * Joysticks

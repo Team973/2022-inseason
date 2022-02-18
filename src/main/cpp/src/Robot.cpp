@@ -20,77 +20,77 @@ void Robot::RobotInit() {
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
 
-    /**
-     * Intake
-     */
-    m_intakeTalon = new PWMTalonFX(INTAKE_FX_PWM_ID);
-    m_intakeSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
+    // /**
+    //  * Intake
+    //  */
+    // m_intakeTalon = new PWMTalonFX(INTAKE_FX_PWM_ID);
+    // m_intakeSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
 
-    m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+    // m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
 
-    /**
-     * Conveyor
-     */
-    m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
-    m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_SRX_ID);
-    m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_SRX_ID);
+    // /**
+    //  * Conveyor
+    //  */
+    // m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
+    // m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_SRX_ID);
+    // m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_SRX_ID);
 
-    m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
+    // m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
 
-    /**
-     * Turret
-     */
-    m_turretTalon = new WPI_TalonFX(TURRET_FX_ID);
-    m_turretSensor = new DigitalInput(TURRET_HOME_SENSOR);
+    // /**
+    //  * Turret
+    //  */
+    // m_turretTalon = new WPI_TalonFX(TURRET_FX_ID);
+    // m_turretSensor = new DigitalInput(TURRET_HOME_SENSOR);
 
-    m_turret = new Turret(m_turretTalon, m_turretSensor);
-    m_turret->SetNeutralMode(NeutralMode::Coast);
+    // m_turret = new Turret(m_turretTalon, m_turretSensor);
+    // m_turret->SetNeutralMode(NeutralMode::Coast);
 
-    /**
-     * Shooter
-     */
-    m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_FX_A_ID);
-    m_shooterFlywheelMotorB = new WPI_TalonFX(FLYWHEEL_FX_B_ID);
+    // /**
+    //  * Shooter
+    //  */
+    // m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_FX_A_ID);
+    // m_shooterFlywheelMotorB = new WPI_TalonFX(FLYWHEEL_FX_B_ID);
 
-    m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB);
+    // m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB);
 
-    /**
-     * Climb
-     */
-    m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
-    m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
-    m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
-    m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
-    m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
-    m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
+    // /**
+    //  * Climb
+    //  */
+    // m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
+    // m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
+    // m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
+    // m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
+    // m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
+    // m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
 
-    m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
-                        m_topRightSensor);
+    // m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
+    //                     m_topRightSensor);
 
-    /**
-     * Gyro
-     */
-    m_gyroTalon = new TalonSRX(GYRO_SRX_ID);
+    // /**
+    //  * Gyro
+    //  */
+    // m_gyroTalon = new TalonSRX(GYRO_SRX_ID);
 
-    m_gyro = new Gyro(m_gyroTalon);
-    m_gyro->Zero();
+    // m_gyro = new Gyro(m_gyroTalon);
+    // m_gyro->Zero();
 
-    /**
-     * Limelight
-     */
-    m_limelight = new Limelight("limelight");
+    // /**
+    //  * Limelight
+    //  */
+    // m_limelight = new Limelight("limelight");
 
-    /**
-     * Lights
-     */
-    m_CANdle = new CANdle(CANDLE_ID);
+    // /**
+    //  * Lights
+    //  */
+    // m_CANdle = new CANdle(CANDLE_ID);
 
-    m_lights = new Lights(m_CANdle);
+    // m_lights = new Lights(m_CANdle);
 
-    /**
-     * Pneumatics
-     */
-    m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
+    // /**
+    //  * Pneumatics
+    //  */
+    // m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
 
     /**
      * Joysticks
@@ -102,33 +102,33 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
     m_drive->Update();
-    m_intake->Update();
-    m_conveyor->Update();
+    // m_intake->Update();
+    // m_conveyor->Update();
     // m_turret->Update();
-    m_shooter->Update();
+    // m_shooter->Update();
     //m_climb->Update();
-    m_gyro->Update();
-    m_lights->Update();
+    // m_gyro->Update();
+    // m_lights->Update();
 
     m_drive->DashboardUpdate();
-    m_intake->DashboardUpdate();
-    m_conveyor->DashboardUpdate();
-    m_turret->DashboardUpdate();
-    m_shooter->DashboardUpdate();
-    m_climb->DashboardUpdate();
-    m_gyro->DashboardUpdate();
-    m_lights->DashboardUpdate();
+    // m_intake->DashboardUpdate();
+    // m_conveyor->DashboardUpdate();
+    // m_turret->DashboardUpdate();
+    // m_shooter->DashboardUpdate();
+    // m_climb->DashboardUpdate();
+    // m_gyro->DashboardUpdate();
+    // m_lights->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
-    frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+    // m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
+    // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
-    // limelight
-    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
-    frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
-    frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
-    frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
-    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
-    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    // // limelight
+    // frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    // frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
+    // frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
+    // frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
 }  // namespace frc973
