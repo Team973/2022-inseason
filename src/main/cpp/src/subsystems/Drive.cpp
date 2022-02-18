@@ -41,7 +41,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_rightPosZero(0.0)
         , m_angularRate(0.0)
         , m_rate(0.0)
-        , m_onTarget({false, false}) {
+        , m_onTarget({false, false})
+        , m_turnAssist(0.0) {
     // Factory Default
     m_leftDriveTalonA->ConfigFactoryDefault();
     m_leftDriveTalonB->ConfigFactoryDefault();
@@ -131,15 +132,17 @@ void Drive::Update() {
         case DriveMode::position:
             PositionCalcOutput();
             break;
+        case DriveMode::turnAssist:
+            SetQuickTurn(true);
+            m_turn = (1.0-m_turnAssistWeight)*m_turn + m_turnAssistWeight*(m_turnAssist);
+            ArcadeCalcOutput();
+            break;
         default:
             break;
     }
 
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
-
-    // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
-    // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 }
 
 void Drive::DashboardUpdate() {
@@ -204,7 +207,7 @@ void Drive::CheesyCalcOutput() {
     double kWheelGain = 1.0;
     double kWheelNonlinearity = 0.5;
     double denominator = sin(Constants::PI / 2.0 * kWheelNonlinearity);
-    
+
     // Apply a sin function that's scaled to make it feel better.
     if (!m_isQuickTurn) {
         wheel = sin(Constants::PI / 2.0 * kWheelNonlinearity * wheel);
@@ -215,8 +218,8 @@ void Drive::CheesyCalcOutput() {
     ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(throttle * MAX_METERS_PER_SECOND), 0.0_mps,
                                     units::radians_per_second_t(wheel * MAX_RADIANS_PER_SECOND)};
     m_driveWheelSpeeds = m_driveKinimatics.ToWheelSpeeds(driveChassisSpeed);
-    m_leftOutput = m_driveWheelSpeeds.left()/MAX_METERS_PER_SECOND; 
-    m_rightOutput = m_driveWheelSpeeds.right()/MAX_METERS_PER_SECOND;
+    m_leftOutput = m_driveWheelSpeeds.left() / MAX_METERS_PER_SECOND;
+    m_rightOutput = m_driveWheelSpeeds.right() / MAX_METERS_PER_SECOND;
 }
 
 void Drive::PositionCalcOutput() {
@@ -299,6 +302,11 @@ std::array<bool, 2> &Drive::PositionOnTargetWithTolerance(const double dist, con
     }
 
     return m_onTarget;
+}
+
+void Drive::SetTurnAssist(double turnAssist, double weight) {
+    m_turnAssist = turnAssist;
+    m_turnAssistWeight = weight;
 }
 
 }  // namespace frc973

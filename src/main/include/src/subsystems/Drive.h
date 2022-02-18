@@ -32,9 +32,10 @@ public:
      * The drive subsystem mode.
      */
     enum class DriveMode {
-        arcade,   /**< The arcade drive mode. */
-        position, /**< The position drive mode. */
-        cheesy,   /**< The cheesy drive mode. */
+        arcade,    /**< The arcade drive mode. */
+        position,  /**< The position drive mode. */
+        cheesy,    /**< The cheesy drive mode. */
+        turnAssist /**< The turnAssist drive mode. */
     };
 
     /**
@@ -78,7 +79,7 @@ public:
     /**
      * Set the drive mode
      * @param mode the drive mode
-     */ 
+     */
     void SetDriveMode(DriveMode mode);
 
     /**
@@ -97,7 +98,8 @@ public:
     void SetPose(Pose2d pose);
 
     /**
-     * Sets quickturn true = turn in place
+     * Sets quickturn
+     * @param QT true = turn in place
      */
     void SetQuickTurn(bool QT);
 
@@ -147,6 +149,13 @@ public:
      */
     std::array<bool, 2> &PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
                                                        const double angleRate);
+
+    /**
+     * Sets turn assist parameters
+     * @param turnAssist Input turn signal
+     * @param weight weight of turn signal with regular turn 0.0:1.0
+     */
+    void SetTurnAssist(double turnAssist, double weight);
 
 private:
     WPI_TalonFX *m_leftDriveTalonA;
@@ -201,5 +210,8 @@ private:
     double m_rate;
 
     std::array<bool, 2> m_onTarget;
+
+    double m_turnAssist;
+    double m_turnAssistWeight;
 };
 }  // namespace frc973
