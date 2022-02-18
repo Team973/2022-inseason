@@ -134,6 +134,12 @@ void Turret::SetHomeOffset() {
     Turret::SetTurretAngle(Constants::TURRET_HOME_OFFSET);
 }
 
+void Turret::CheckedSensorsToFalse() {
+    m_leftSensorChecked = false;
+    m_rightSensorChecked = false;
+    m_centerSensorChecked = false;
+}
+
 int Turret::SensorCalibrate() {
     // looks for center sensor first
     if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
