@@ -13,6 +13,27 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
         , m_autoName("Do Nothing")
         // clang-format off
 
+/*< Test >*/
+, m_test(AutoMode({
+    new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
+    // new WaitCommand(5000),
+    // new ConcurrentCommand({
+    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+    //     new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
+    // }),
+    // new SequentialCommand({
+    //     new DeployIntakeCommand(m_intake),
+    //     new RetractIntakeCommand(m_intake),
+    // }),
+    // new RunIntakeCommand(m_intake, 0.2, 2000),
+    // new SetFlywheelRPMCommand(m_shooter, 2000.0, 2000),
+    // new WaitForFlywheelCommand(m_shooter),
+    // new SetGyroAngleCommand(m_gyro, 30.0, 2000),
+    // new SetTurretAngleCommand(m_turret, 30.0, 2000),
+    // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 2000),
+    // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
+}))
+
 /*< DoNothing >*/
 , m_doNothing(AutoMode({}))
 
@@ -143,6 +164,9 @@ void AutoManager::Update() {
 
 void AutoManager::DashboardUpdate() {
     switch (m_currentAuto) {
+        case Test:
+            m_autoName = "Test";
+            break;
         case DoNothing:
             m_autoName = "Do Nothing";
             break;
@@ -170,6 +194,9 @@ void AutoManager::DashboardUpdate() {
 
 void AutoManager::UpdateAutoMode() {
     switch (m_currentAuto) {
+        case Test:
+            m_currentMode = m_test;
+            break;
         case DoNothing:
             m_currentMode = m_doNothing;
             break;
@@ -200,10 +227,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 7;    // amount of autos we have +1
+        m_autoIndex = 8;    // amount of autos we have +1
     }
 
-    if (m_autoIndex == 8) { //amount of autos we have +2
+    if (m_autoIndex == 9) { //amount of autos we have +2
         m_autoIndex = 0;
     }
 

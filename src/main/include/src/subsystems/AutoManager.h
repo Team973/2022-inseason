@@ -42,6 +42,7 @@ namespace frc973 {
 
 enum AutoName
 {
+    Test, /**< Test auto with every command in it*/
     DoNothing, /**< Does nothing.*/
     P2_2Ball, /**< Position 2, 2 Ball*/
     P3_2Ball, /**< Position 3, 2 Ball*/
@@ -109,6 +110,7 @@ private:
 
     std::string m_autoName;
 
+    AutoMode m_test;
     AutoMode m_doNothing;
     AutoMode m_p2_2Ball;
     AutoMode m_p3_2Ball;
