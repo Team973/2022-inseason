@@ -25,6 +25,7 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new SetTurretAngleCommand(m_turret, -15.7, 2000),
+        new SetFlywheelRPMCommand(m_shooter, 1000.0, 2000),
     }),
 }))
 

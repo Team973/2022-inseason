@@ -26,6 +26,7 @@
 #include "src/auto/commands/SequentialCommand.h"
 #include "src/auto/commands/SetGyroAngleCommand.h"
 #include "src/auto/commands/SetTurretAngleCommand.h"
+#include "src/auto/commands/SetFlywheelRPMCommand.h"
 #include "src/auto/commands/ShooterCommand.h"
 #include "src/auto/commands/TrackingTargetCommand.h"
 #include "src/auto/commands/WaitCommand.h"
