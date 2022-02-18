@@ -2,12 +2,14 @@
 
 namespace frc973 {
 
-AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive)
+AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive, Turret *turret)
         : m_currentAuto(DoNothing)
         , m_intake(intake)
         , m_shooter(shooter)
         , m_conveyor(conveyor)
         , m_gyro(gyro)
+        , m_drive(drive)
+        , m_turret(turret)
         , m_autoName("Do Nothing")
         // clang-format off
 
@@ -20,9 +22,9 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
         new DeployIntakeCommand(m_intake),
-        new RunIntakeCommand(m_intake, 1.0, 1000),
+        new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        new TrackingTargetCommand(m_limelight, m_turret, m_gyro, -15.7),
+        new SetTurretAngleCommand(m_turret, -15.7, 2000),
     }),
 }))
 

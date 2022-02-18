@@ -25,6 +25,7 @@
 #include "src/auto/commands/RunIntakeCommand.h"
 #include "src/auto/commands/SequentialCommand.h"
 #include "src/auto/commands/SetGyroAngleCommand.h"
+#include "src/auto/commands/SetTurretAngleCommand.h"
 #include "src/auto/commands/ShooterCommand.h"
 #include "src/auto/commands/TrackingTargetCommand.h"
 #include "src/auto/commands/WaitCommand.h"
@@ -62,8 +63,9 @@ public:
      * @param conveyor The conveyor subsystem.
      * @param gyro The conveyor subsystem.
      * @param drive The drive subsystem.
+     * @param turret The turret subsystem.
      */
-    AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive);
+    AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive, Turret *turret);
 
     /**
      * Updates AutoManager.
