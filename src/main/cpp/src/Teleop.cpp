@@ -15,13 +15,10 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     // shoot btn
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
-        // m_shooter->SetFlywheelRPM(2800);
-        // m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     } else {
-        // m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
@@ -35,7 +32,7 @@ void Robot::TeleopPeriodic() {
             m_lights->SetLightsState(Lights::LightsState::Off);
         }
 
-        m_shooter->SetFlywheelRPM(2500);
+        m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -47,12 +44,24 @@ void Robot::TeleopPeriodic() {
     //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
     //     m_gyro->GetWrappedAngle());
 
+    // if(m_operatorStick->GetRightBumper()) {
+    //     m_limelight->SetVisionCamera();
+
+    //     if(m_limelight->isTargetValid()){
+    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    //     } else {
+    //         m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
+    //     }
+    // } else {
+    //     m_limelight->SetCameraDriver();
+    // }
+
     // limelight
-    if (m_operatorStick->GetLeftBumper()) {
-        m_limelight->SetVisionCamera();
-    } else {
-        m_limelight->SetCameraDriver();
-    }
+    // if (m_operatorStick->GetLeftBumper()) {
+    //     m_limelight->SetVisionCamera();
+    // } else {
+    //     m_limelight->SetCameraDriver();
+    // }
 
     // intake
     m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
