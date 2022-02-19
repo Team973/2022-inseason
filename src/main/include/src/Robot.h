@@ -92,13 +92,13 @@ private:
     /**
      * Climb
      */
-    WPI_TalonFX *m_climbTalonA;
-    WPI_TalonFX *m_climbTalonB;
-    DigitalInput *m_bottomLeftSensor;
-    DigitalInput *m_bottomRightSensor;
-    DigitalInput *m_topLeftSensor;
-    DigitalInput *m_topRightSensor;
-    Climb *m_climb;
+    // WPI_TalonFX *m_climbTalonA;
+    // WPI_TalonFX *m_climbTalonB;
+    // DigitalInput *m_bottomLeftSensor;
+    // DigitalInput *m_bottomRightSensor;
+    // DigitalInput *m_topLeftSensor;
+    // DigitalInput *m_topRightSensor;
+    // Climb *m_climb;
 
     /**
      * Gyro

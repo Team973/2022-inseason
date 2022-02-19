@@ -6,9 +6,9 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         : m_turretMotor(turretMotor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 40, 80, 0.05))
-        , m_limeLightPID(0.04, 0.0, 0.0, 0)
-        , m_limeLightToMotorPower(0.0)
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
+        , m_limelightPID(0.04, 0.0, 0.0, 0)
+        , m_limelightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         , m_checkStatus(0)
         , m_leftSensorChecked(false)
@@ -41,7 +41,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
     m_turretMotor->ConfigSupplyCurrentLimit(m_currentLimit);
     m_turretMotor->ConfigStatorCurrentLimit(m_statorLimit);
 
-    m_limeLightPID.SetTarget(0.0);
+    m_limelightPID.SetTarget(0.0);
 }
 
 void Turret::Turn(double angleInDegrees, double gyroOffset) {
@@ -81,15 +81,15 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y) {
     return angleInDegrees;
 }
 
-void Turret::CalcOutput(double limeLightXOffset, double angularVelocity, double translationalAngularRate) {
+void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double translationalAngularRate) {
     // double output;
-    m_limeLightPID.SetTarget(0);
-    double output = m_limeLightPID.CalcOutput(limeLightXOffset);
+    m_limelightPID.SetTarget(0);
+    double output = m_limelightPID.CalcOutput(limelightXOffset);
 
     output +=
         (-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
-    m_limeLightToMotorPower = output;
+    m_limelightToMotorPower = output;
 
     m_turretMotor->Set(ControlMode::PercentOutput, output);
 }
@@ -138,6 +138,7 @@ void Turret::CheckedSensorsToFalse() {
     m_leftSensorChecked = false;
     m_rightSensorChecked = false;
     m_centerSensorChecked = false;
+    m_checkStatus = 0;
 }
 
 int Turret::SensorCalibrate() {

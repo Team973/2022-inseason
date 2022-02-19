@@ -57,15 +57,15 @@ void Robot::RobotInit() {
     /**
      * Climb
      */
-    m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
-    m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
-    m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
-    m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
-    m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
-    m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
+    // m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
+    // m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
+    // m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
+    // m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
+    // m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
+    // m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
 
-    m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
-                        m_topRightSensor);
+    // m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
+    //                     m_topRightSensor);
 
     /**
      * Gyro
@@ -106,16 +106,16 @@ void Robot::RobotPeriodic() {
     m_conveyor->Update();
     m_turret->Update();
     m_shooter->Update();
-    m_climb->Update();
+    // m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
 
     m_drive->DashboardUpdate();
-    m_intake->DashboardUpdate();
-    m_conveyor->DashboardUpdate();
+    // m_intake->DashboardUpdate();
+    // m_conveyor->DashboardUpdate();
     m_turret->DashboardUpdate();
-    m_shooter->DashboardUpdate();
-    m_climb->DashboardUpdate();
+    // m_shooter->DashboardUpdate();
+    // m_climb->DashboardUpdate();
     m_gyro->DashboardUpdate();
     m_lights->DashboardUpdate();
 

@@ -28,6 +28,7 @@ public:
 
     /**
      * @param angleInDegrees angle its going to turn to
+     * @param gyroOffset compensation for the robot turning to keep the turret heading in place
      */
     void Turn(double angleInDegrees, double gyroOffset);
 
@@ -39,8 +40,11 @@ public:
 
     /**
      * Calculates output to feed into a percent output loops
+     * @param limelightTarget xoffset of the target
+     * @param angularVelocity how fast the robot is turning compensation
+     * @param translationalAngularRate how fast the robot is moving compensation
      */
-    void CalcOutput(double lightlightTarget, double angularVelocity, double translationalAngularRate);
+    void CalcOutput(double limelightTarget, double angularVelocity, double translationalAngularRate);
 
     /**
      * Returns current turret angle
@@ -57,11 +61,13 @@ public:
 
     /**
      * Set Turret to Brake
+     * @param mode the neutral mode as brake or coast
      */
     void SetNeutralMode(NeutralMode mode);
 
     /**
      * Sets the current angle of the turret
+     * @param angle the desired angle to set the turret too
      */
     void SetTurretAngle(double angle);
 
@@ -100,9 +106,9 @@ private:
     double m_currentAngleInDegrees;
     double m_tickPosition;
 
-    PID m_limeLightPID;
+    PID m_limelightPID;
 
-    double m_limeLightToMotorPower;
+    double m_limelightToMotorPower;
 
     TurretState m_turretState;
 
