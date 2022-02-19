@@ -86,8 +86,29 @@ public:
      */
     int PassedSuperSoft();
 
+    /**
+     * Checks the left sensor
+     */
+    bool GetLeftSensor();
+
+    /**
+     * Checks the right sensor
+     */
+    bool GetRightSensor();
+
+    /**
+     * Checks the middle sensor
+     */
+    bool GetMiddleSensor();   
+
+    /** 
+     * Updates the turret subsystem
+     */ 
     void Update() override;
 
+    /**
+     * Updates the dashboard
+     */ 
     void DashboardUpdate() override;
 
 private:

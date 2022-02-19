@@ -26,11 +26,26 @@ public:
      * @param gyro gyro subsystem
      * @param lights light subsystem
      */
-    SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter, Climb *climb,
-                     Gyro *gyro, Lights *lights);
+    SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
+                     Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights);
 
     /**
-     * Updates the subsystem manager 
+     * Finds the current position on the field
+     */
+    double CalcPose();
+
+    /**
+     * uses the current dist from target to figure out how fast the flywheel should go
+     */
+    double CalcFlywheelRPM();
+
+    /**
+     * Checks if the flywheel is up to speed to see if the robot is ready to shoot
+     */
+    bool ReadyToShoot();
+
+    /**
+     * Updates the subsystem manager
      */
     void Update();
 
@@ -40,6 +55,7 @@ private:
     Conveyor *m_conveyor;
     Turret *m_turret;
     Shooter *m_shooter;
+    Limelight *m_limelight;
     Climb *m_climb;
     Gyro *m_gyro;
     Lights *m_lights;
