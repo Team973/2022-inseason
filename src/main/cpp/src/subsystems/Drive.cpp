@@ -98,8 +98,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonC->Follow(*m_rightDriveTalonA);
 
     // Ramp Output
-    m_leftDriveTalonA->ConfigClosedloopRamp(0.0);
-    m_rightDriveTalonA->ConfigClosedloopRamp(0.0);
+    m_leftDriveTalonA->ConfigClosedloopRamp(0.1);
+    m_rightDriveTalonA->ConfigClosedloopRamp(0.1);
 
     // Voltage Compensation
     m_leftDriveTalonA->ConfigVoltageCompSaturation(12.0);
