@@ -114,6 +114,7 @@ void Robot::RobotPeriodic() {
     //m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
+    // m_autoManager->Update();
 
     m_drive->DashboardUpdate();
     m_intake->DashboardUpdate();

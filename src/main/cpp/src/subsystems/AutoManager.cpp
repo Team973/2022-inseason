@@ -17,23 +17,11 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Test >*/
 , m_test(AutoMode({
-    new SetGyroAngleCommand(m_gyro, 100.0, 500),
+    // new SetGyroAngleCommand(m_gyro, 100.0, 500), // n
     // new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
-    // new WaitCommand(5000),
-    // new ConcurrentCommand({
-    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-    //     new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
-    // }),
-    // new SequentialCommand({
-    //     new DeployIntakeCommand(m_intake),
-    //     new RetractIntakeCommand(m_intake),
-    // }),
 
-    // new RunIntakeCommand(m_intake, 0.2, 2000),
     // new SetFlywheelRPMCommand(m_shooter, 2000.0, 2000),
     // new WaitForFlywheelCommand(m_shooter),
-    // new SetGyroAngleCommand(m_gyro, 30.0, 2000),
-    // new SetTurretAngleCommand(m_turret, 30.0, 2000),
     // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 2000),
     // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
 }))
