@@ -117,7 +117,7 @@ private:
 
     static constexpr double TARGET_HEIGHT =
         96.0; /**< Target's height in inches from ground*/
-    static constexpr double CAMERA_HEIGHT = 34.0; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
+    static constexpr double CAMERA_HEIGHT = 34.8; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
     static constexpr double CAMERA_ANGLE =
         35.0; /**< Camera Angle in degrees wrt ground*/
               // ### for comp; ### for pbot
