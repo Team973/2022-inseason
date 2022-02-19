@@ -166,6 +166,9 @@ void Drive::DashboardUpdate() {
     frc::SmartDashboard::PutNumber(
         "D velocity",
         (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2.0);
+
+    frc::SmartDashboard::PutNumber("D left pos", m_leftDriveTalonA->GetSelectedSensorPosition());
+    frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
 }
 
 void Drive::ArcadeCalcOutput() {
