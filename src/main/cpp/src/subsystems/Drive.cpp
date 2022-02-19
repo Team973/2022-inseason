@@ -31,7 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveChassisSpeeds()
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
-        , m_positionPID(0.0, 0.0, 0.0)
+        , m_positionPID(0.0046, 0.0, 0.0)
         , m_turnPID(0.0, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)

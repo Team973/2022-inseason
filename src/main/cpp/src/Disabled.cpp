@@ -40,5 +40,16 @@ void Robot::DisabledPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Off);
         break;
     }
+
+    if(m_operatorStick->GetRawButtonPressed(Stick::BtnX)) {
+        m_autoManager->IndexAutoMode(true);
+    }
+
+    if(m_operatorStick->GetRawButtonPressed(Stick::BtnB)) {
+        m_autoManager->IndexAutoMode(false);
+    }
+
+
+
 }
 }  // namespace frc973

@@ -52,7 +52,7 @@ constexpr int CONVEYOR_TOWER_B_SRX_ID = 4;  /**< CAN ID for the second tower tal
  */
 constexpr int TURRET_FX_ID = 8;            /**< CAN ID for the turret falcon. */
 constexpr int TURRET_HOME_SENSOR = 0;      /** DIO channel for homing hall sensor. */
-constexpr double TURRET_GEAR_RATIO = 64.0; /** The gear ratio of the turret. */
+constexpr double TURRET_GEAR_RATIO = ((7.0 / 1.0) * (128.0 / 10.0)); /** The gear ratio of the turret. */
 constexpr double TURRET_TICKS_PER_DEGREE = 1.0 / 360.0 * 2048.0 * TURRET_GEAR_RATIO; /** Ticks per degree of the turret */
 
 /**
@@ -87,7 +87,13 @@ constexpr double CLIMB_INCHES_PER_TICK =
 /**
  * Gyro
  */
-/**< same as climb tower B */
+/**< CAN id same as climb tower B */
+constexpr double P1_ANGLE = -156.0;      /**< The angle to set when robot is in position 1. */
+constexpr double P2_ANGLE = -178.5; /**< The angle to set when robot is in position 2. */
+constexpr double P3_ANGLE = 114.0;    /**< The angle to set when robot is in position 3. */
+constexpr double P4_ANGLE = 114.0;      /**< The angle to set when robot is in position 4. */
+constexpr double P5_ANGLE = 46.5;   /**< The angle to set when robot is in position 5. */
+constexpr double P6_ANGLE = 24.0;      /**< The angle to set when robot is in position 6. */
 
 /**
  * Lights

@@ -11,6 +11,7 @@ void RunIntakeCommand::Init() {
 }
 
 void RunIntakeCommand::Run() {
+    m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
     m_intake->SetPercentOutput(m_speed);
 }
 
@@ -20,5 +21,6 @@ bool RunIntakeCommand::IsCompleted() {
 
 void RunIntakeCommand::PostExecute() {
     m_intake->SetPercentOutput(0.0);
+    m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
 }
 }
