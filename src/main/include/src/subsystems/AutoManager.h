@@ -15,7 +15,7 @@
 #include "src/subsystems/Drive.h"
 #include "src/subsystems/Turret.h"
 #include "lib/sensors/Limelight.h"
- 
+
 #include "src/auto/commands/ConcurrentCommand.h"
 #include "src/auto/commands/ConveyorFloorCommand.h"
 #include "src/auto/commands/ConveyorTowerCommand.h"
@@ -32,23 +32,19 @@
 #include "src/auto/commands/WaitCommand.h"
 #include "src/auto/commands/WaitForFlywheelCommand.h"
 
-
-
 namespace frc973 {
 
 /**
  * Define the names of the Autos.
  */
-
-enum AutoName
-{
-    Test, /**< Test auto with every command in it*/
+enum AutoName {
+    Test,      /**< Test auto with every command in it*/
     DoNothing, /**< Does nothing.*/
-    P2_2Ball, /**< Position 2, 2 Ball*/
-    P3_2Ball, /**< Position 3, 2 Ball*/
-    P5_2Ball, /**< Position 5, 2 Ball*/
-    P2_3Ball, /**< Position 2, 3 Ball*/
-    P5_4Ball, /**< Position 5, 4 Ball*/
+    P2_2Ball,  /**< Position 2, 2 Ball*/
+    P3_2Ball,  /**< Position 3, 2 Ball*/
+    P5_2Ball,  /**< Position 5, 2 Ball*/
+    P2_3Ball,  /**< Position 2, 3 Ball*/
+    P5_4Ball,  /**< Position 5, 4 Ball*/
 };
 
 /**
@@ -56,18 +52,18 @@ enum AutoName
  */
 class AutoManager : public Subsystem {
 public:
-    AutoManager();
-
     /**
      * Constructs an AutoManager.
-     * @param intake The intake subsystem.
-     * @param shooter The shooter subsystem.
-     * @param conveyor The conveyor subsystem.
-     * @param gyro The conveyor subsystem.
      * @param drive The drive subsystem.
+     * @param intake The intake subsystem.
+     * @param conveyor The conveyor subsystem.
      * @param turret The turret subsystem.
+     * @param shooter The shooter subsystem.
+     * @param limelight The limelight.
+     * @param gyro The gyro.
      */
-    AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive, Turret *turret);
+    AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
+                Limelight *limelight, Gyro *gyro);
 
     /**
      * Updates AutoManager.
@@ -94,19 +90,19 @@ private:
     /**
      * Time in milliseconds each auto command goes for.
      */
-    static constexpr uint32_t TOWER_RUN_TIME = 0;  // the zero is a placeholder 
-    static constexpr uint32_t SHOOTER_RUN_TIME = 0;  // the zero is a placeholder 
-    static constexpr uint32_t DRIVE_RUN_TIME = 0;  // the zero is a placeholder 
-    static constexpr uint32_t FLOOR_RUN_TIME = 0;  // the zero is a placeholder 
+    static constexpr uint32_t TOWER_RUN_TIME = 0;    // the zero is a placeholder
+    static constexpr uint32_t SHOOTER_RUN_TIME = 0;  // the zero is a placeholder
+    static constexpr uint32_t DRIVE_RUN_TIME = 0;    // the zero is a placeholder
+    static constexpr uint32_t FLOOR_RUN_TIME = 0;    // the zero is a placeholder
 
     AutoName m_currentAuto;
-    Limelight *m_limelight;
-    Turret *m_turret;
-    Intake *m_intake;
-    Shooter *m_shooter;
-    Conveyor *m_conveyor;
-    Gyro *m_gyro;
     Drive *m_drive;
+    Intake *m_intake;
+    Conveyor *m_conveyor;
+    Turret *m_turret;
+    Shooter *m_shooter;
+    Limelight *m_limelight;
+    Gyro *m_gyro;
 
     std::string m_autoName;
 
@@ -121,4 +117,4 @@ private:
 
     double m_autoIndex;
 };
-}
+}  // namespace frc973

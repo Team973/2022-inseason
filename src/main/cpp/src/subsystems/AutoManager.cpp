@@ -2,20 +2,22 @@
 
 namespace frc973 {
 
-AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, Gyro *gyro, Drive *drive, Turret *turret)
-        : m_currentAuto(DoNothing)
-        , m_intake(intake)
-        , m_shooter(shooter)
-        , m_conveyor(conveyor)
-        , m_gyro(gyro)
+AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
+                         Limelight *limelight, Gyro *gyro)
+        : m_currentAuto(Test)
         , m_drive(drive)
+        , m_intake(intake)
+        , m_conveyor(conveyor)
         , m_turret(turret)
-        , m_autoName("Do Nothing")
+        , m_shooter(shooter)
+        , m_limelight(limelight)
+        , m_gyro(gyro)
+        , m_autoName("test")
         // clang-format off
 
 /*< Test >*/
 , m_test(AutoMode({
-    new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
+    // new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
     // new WaitCommand(5000),
     // new ConcurrentCommand({
     //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
@@ -25,7 +27,8 @@ AutoManager::AutoManager(Intake *intake, Shooter *shooter, Conveyor *conveyor, G
     //     new DeployIntakeCommand(m_intake),
     //     new RetractIntakeCommand(m_intake),
     // }),
-    // new RunIntakeCommand(m_intake, 0.2, 2000),
+
+    new RunIntakeCommand(m_intake, 0.2, 2000),
     // new SetFlywheelRPMCommand(m_shooter, 2000.0, 2000),
     // new WaitForFlywheelCommand(m_shooter),
     // new SetGyroAngleCommand(m_gyro, 30.0, 2000),
@@ -221,20 +224,19 @@ void AutoManager::UpdateAutoMode() {
 void AutoManager::IndexAutoMode(bool next) {
     if (next) {
         m_autoIndex += 1;
-    }
-    else {
+    } else {
         m_autoIndex -= 1;
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 8;    // amount of autos we have +1
+        m_autoIndex = 8;  // amount of autos we have +1
     }
 
-    if (m_autoIndex == 9) { //amount of autos we have +2
+    if (m_autoIndex == 9) {  // amount of autos we have +2
         m_autoIndex = 0;
     }
 
     m_currentAuto = AutoName(m_autoIndex);
     UpdateAutoMode();
 }
-}
+}  // namespace frc973
