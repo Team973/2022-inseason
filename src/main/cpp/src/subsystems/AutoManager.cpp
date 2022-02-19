@@ -17,6 +17,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Test >*/
 , m_test(AutoMode({
+    new SetGyroAngleCommand(m_gyro, 100.0, 500),
     // new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
     // new WaitCommand(5000),
     // new ConcurrentCommand({
@@ -28,7 +29,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     //     new RetractIntakeCommand(m_intake),
     // }),
 
-    new RunIntakeCommand(m_intake, 0.2, 2000),
+    // new RunIntakeCommand(m_intake, 0.2, 2000),
     // new SetFlywheelRPMCommand(m_shooter, 2000.0, 2000),
     // new WaitForFlywheelCommand(m_shooter),
     // new SetGyroAngleCommand(m_gyro, 30.0, 2000),
