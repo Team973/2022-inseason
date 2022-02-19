@@ -13,7 +13,7 @@ constexpr int RIGHT_DRIVE_FX_A_ID = 15; /**< CAN ID for the first right drive fa
 constexpr int RIGHT_DRIVE_FX_B_ID = 14; /**< CAN ID for the second right drive falcon. */
 constexpr int RIGHT_DRIVE_FX_C_ID = 13; /**< CAN ID for the third right drive falcon. */
 // Physical Dimensions
-constexpr double DRIVE_GEAR_RATIO = (12.0 / 72.0) * (34.0 / 36.0); /** The gear ratio of the drive train. */
+constexpr double DRIVE_GEAR_RATIO = (11.0 / 72.0) * (34.0 / 36.0); /** The gear ratio of the drive train. */
 constexpr double DRIVE_WIDTH = 23.75 * 0.0254;                     /** Drive base width in meters. */
 constexpr double DRIVE_WHEEL_DIAMETER = 4.0;                       /** Diameter of the drive train wheels in inches. */
 // Movement
