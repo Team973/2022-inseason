@@ -1,8 +1,8 @@
 #include "src/SubsystemManager.h"
 
 namespace frc973 {
-SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter, Limelight *limelight,
-                                   Climb *climb, Gyro *gyro, Lights *lights)
+SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
+                                   Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights)
         : m_drive(drive)
         , m_intake(intake)
         , m_conveyor(conveyor)
@@ -15,7 +15,20 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
 }
 
 double SubsystemManager::CalcPose() {
-    double x_dist = m_limelight->GetHorizontalDist();
+    double dist = m_limelight->GetHorizontalDist();
+    double tfAngle = std::fmod(m_gyro->GetWrappedAngle() + m_turret->GetTurretAngle() + 180.0, 360.0);
+    if (tfAngle < 0.0) {
+        tfAngle += 360.0;
+    }
+    tfAngle -= 180.0;
+    double fieldAngle = std::fmod(tfAngle + 180.0 + 180.0, 360.0);
+    if (fieldAngle < 0.0) {
+        fieldAngle += 360.0;
+    }
+    fieldAngle -= 180.0;
+    double x = dist = std::cos(Constants::RAD_PER_DEG * fieldAngle);
+    double y = dist = std::sin(Constants::RAD_PER_DEG * fieldAngle);
+    Pose2d pose{x,y,m_gyro->GetWrappedAngle()}
 }
 
 double SubsystemManager::CalcFlywheelRPM() {
