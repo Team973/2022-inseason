@@ -153,8 +153,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 }))
 
         // clang-format on
-        , m_currentMode(m_doNothing)
-        , m_autoIndex(1) {
+        , m_currentMode(m_test)
+        , m_autoIndex(0) {
 }
 
 void AutoManager::Update() {
@@ -229,10 +229,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 8;  // amount of autos we have +1
+        m_autoIndex = 6;  // amount of autos we have +1
     }
 
-    if (m_autoIndex == 9) {  // amount of autos we have +2
+    if (m_autoIndex == 7) {  // amount of autos we have +2
         m_autoIndex = 0;
     }
 
