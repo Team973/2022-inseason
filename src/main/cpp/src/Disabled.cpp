@@ -5,6 +5,7 @@
 namespace frc973 {
 
 void Robot::DisabledInit() {
+    m_drive->SetNeutralMode(NeutralMode::Coast);
     m_turret->SetNeutralMode(NeutralMode::Coast);
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);

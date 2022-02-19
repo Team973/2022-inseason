@@ -120,9 +120,20 @@ public:
     void ClampSpeed(double minSpeed, double maxSpeed);
 
     /**
+     * Zeros the drive motors
+     */ 
+    void Zero();
+
+    /**
      * Zeros the current drive positions
      */
-    void Zero();
+    void ZeroPosition();
+
+    /**
+     * Set Drive to chosen mode (coast or break)
+     * @param mode the chosen mode
+     */
+    void SetNeutralMode(NeutralMode mode);
 
     /**
      * Sets the target position

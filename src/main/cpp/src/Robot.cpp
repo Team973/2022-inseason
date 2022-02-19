@@ -19,6 +19,7 @@ void Robot::RobotInit() {
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
+    m_drive->Zero();
 
     /**
      * Intake

@@ -56,7 +56,8 @@ public:
     double CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 
     /**
-     * Set Turret to Brake
+     * Set Turret to chosen mode (coast or break)
+     * @param mode the chosen mode
      */
     void SetNeutralMode(NeutralMode mode);
 

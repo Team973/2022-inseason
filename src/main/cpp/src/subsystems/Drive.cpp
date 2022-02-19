@@ -169,6 +169,9 @@ void Drive::DashboardUpdate() {
 
     frc::SmartDashboard::PutNumber("D left pos", m_leftDriveTalonA->GetSelectedSensorPosition());
     frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
+
+    SmartDashboard::PutNumber("D target pose", m_targetPos);
+    SmartDashboard::PutNumber("D curr pose", m_currentPos);
 }
 
 void Drive::ArcadeCalcOutput() {
@@ -207,7 +210,7 @@ void Drive::CheesyCalcOutput() {
     double kWheelGain = 1.0;
     double kWheelNonlinearity = 0.5;
     double denominator = sin(Constants::PI / 2.0 * kWheelNonlinearity);
-    
+
     // Apply a sin function that's scaled to make it feel better.
     if (!m_isQuickTurn) {
         wheel = sin(Constants::PI / 2.0 * kWheelNonlinearity * wheel);
@@ -218,8 +221,8 @@ void Drive::CheesyCalcOutput() {
     ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(throttle * MAX_METERS_PER_SECOND), 0.0_mps,
                                     units::radians_per_second_t(wheel * MAX_RADIANS_PER_SECOND)};
     m_driveWheelSpeeds = m_driveKinimatics.ToWheelSpeeds(driveChassisSpeed);
-    m_leftOutput = m_driveWheelSpeeds.left()/MAX_METERS_PER_SECOND; 
-    m_rightOutput = m_driveWheelSpeeds.right()/MAX_METERS_PER_SECOND;
+    m_leftOutput = m_driveWheelSpeeds.left() / MAX_METERS_PER_SECOND;
+    m_rightOutput = m_driveWheelSpeeds.right() / MAX_METERS_PER_SECOND;
 }
 
 void Drive::PositionCalcOutput() {
@@ -278,8 +281,20 @@ void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
 }
 
 void Drive::Zero() {
+    m_currentPos = 0.0;
+    m_currentAngle = 0.0;
+    m_leftDriveTalonA->SetSelectedSensorPosition(0.0);
+    m_rightDriveTalonA->SetSelectedSensorPosition(0.0);
+}
+
+void Drive::ZeroPosition() {
     m_leftPosZero = m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
     m_rightPosZero = m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
+}
+
+void Drive::SetNeutralMode(NeutralMode mode) {
+    m_leftDriveTalonA->SetNeutralMode(mode);
+    m_rightDriveTalonA->SetNeutralMode(mode);
 }
 
 void Drive::SetPositionTarget(double dist, double angle) {

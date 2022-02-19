@@ -5,6 +5,10 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
+    // default drive mode
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
+    m_drive->Zero();
+
     m_turret->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
@@ -40,10 +44,19 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    m_turret->Turn(
-        m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-        // m_gyro->GetWrappedAngle()
-        0);
+    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_testStick->GetRawAxis(5), -m_testStick->GetRawAxis(4)),
+                   // m_gyro->GetWrappedAngle()
+                   0);
+
+    // if (m_operatorStick->GetRawButton(Stick::BtnX)) {
+    //     m_turret->SetTurretAngle(90);
+    // }
+    // if(m_operatorStick->GetRawButton(Stick::BtnB)) {
+    //     m_turret->SetTurretAngle(-90);
+    // }
+    // if(m_operatorStick->GetRawButton(Stick::BtnY)) {
+    //     m_turret->SetTurretAngle(0);
+    // }
 
     // if(m_operatorStick->GetRightBumper()) {
     //     m_limelight->SetVisionCamera();

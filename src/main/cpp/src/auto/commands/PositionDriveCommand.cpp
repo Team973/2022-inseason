@@ -1,7 +1,8 @@
 #include "src/auto/commands/PositionDriveCommand.h"
 
 namespace frc973 {
-PositionDriveCommand::PositionDriveCommand(Drive *drive, double targetDist, double targetAngle, double speed, uint32_t targetTime)
+PositionDriveCommand::PositionDriveCommand(Drive *drive, double targetDist, double targetAngle, double speed,
+                                           uint32_t targetTime)
         : m_drive(drive)
         , m_targetDist(targetDist)
         , m_targetAngle(targetAngle)
@@ -13,12 +14,13 @@ PositionDriveCommand::PositionDriveCommand(Drive *drive, double targetDist, doub
 void PositionDriveCommand::Init() {
     m_drive->Zero();
     m_drive->SetDriveMode(Drive::DriveMode::position);
-    m_drive->SetPositionTarget(m_targetDist, m_targetAngle);
     m_drive->ClampSpeed(-m_speed, m_speed);
+    m_drive->SetPositionTarget(m_targetDist, m_targetAngle);
     SetTargetMSec(m_targetTime);
 }
 
 void PositionDriveCommand::Run() {
+    m_drive->ClampSpeed(-m_speed, m_speed);
     std::array<bool, 2> &endRun = m_drive->PositionOnTarget();
 
     m_endRun = endRun[Drive::Target::dist] && endRun[Drive::Target::angle];
