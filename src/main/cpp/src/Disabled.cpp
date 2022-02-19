@@ -10,7 +10,7 @@ void Robot::DisabledInit() {
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_lights->SetLightsState(Lights::LightsState::Off);
 
-    // m_turret->CheckedSensorsToFalse();
+    m_turret->CheckedSensorsToFalse();
 }
 
 void Robot::DisabledPeriodic() {

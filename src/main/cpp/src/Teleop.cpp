@@ -42,7 +42,8 @@ void Robot::TeleopPeriodic() {
     // turret
     m_turret->Turn(
         m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-        m_gyro->GetWrappedAngle());
+        // m_gyro->GetWrappedAngle()
+        0);
 
     // if(m_operatorStick->GetRightBumper()) {
     //     m_limelight->SetVisionCamera();
@@ -76,14 +77,15 @@ void Robot::TeleopPeriodic() {
     m_intake->SetPercentOutput(
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
-     //drive
-     if (m_driverStick->GetLeftBumper()) {
-         m_drive->SetQuickTurn(true);
-     } else {
-         m_drive->SetQuickTurn(false); }
+    // drive
+    if (m_driverStick->GetLeftBumper()) {
+        m_drive->SetQuickTurn(true);
+    } else {
+        m_drive->SetQuickTurn(false);
+    }
 
-     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
-                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
+    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
+                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
