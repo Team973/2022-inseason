@@ -87,7 +87,7 @@ constexpr double CLIMB_INCHES_PER_TICK =
 /**
  * Gyro
  */
-constexpr int GYRO_SRX_ID = 4; /**< CAN ID for the SRX that the gyro is plugged in to. */
+/**< same as climb tower B */
 
 /**
  * Lights

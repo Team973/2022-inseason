@@ -70,9 +70,7 @@ void Robot::RobotInit() {
     /**
      * Gyro
      */
-    m_gyroTalon = new TalonSRX(GYRO_SRX_ID);
-
-    m_gyro = new Gyro(m_gyroTalon);
+    m_gyro = new Gyro(m_conveyorTowerMotorB);
     m_gyro->Zero();
 
     /**
@@ -104,9 +102,9 @@ void Robot::RobotPeriodic() {
     m_drive->Update();
     m_intake->Update();
     m_conveyor->Update();
-    // m_turret->Update();
+    m_turret->Update();
     m_shooter->Update();
-    //m_climb->Update();
+    // m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
 

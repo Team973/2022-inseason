@@ -10,8 +10,8 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0)
-        , m_currentTowerState("Undefined")
-        , m_currentFloorState("Undefined") {
+        , m_currentTowerState("Off")
+        , m_currentFloorState("Off") {
 
     m_towerMotorA->ConfigFactoryDefault();
     m_towerMotorB->ConfigFactoryDefault();
@@ -42,7 +42,7 @@ void Conveyor::Update() {
             break;
         case TowerState::FeedIn:
             m_currentTowerState = "FeedIn";
-            m_towerMotorA->Set(ControlMode::PercentOutput, 0.7);
+            m_towerMotorA->Set(ControlMode::PercentOutput, 1.0);
             break;
         case TowerState::FeedOut:
             m_currentTowerState = "FeedOut";
@@ -51,6 +51,7 @@ void Conveyor::Update() {
         case TowerState::Manual:
             m_currentTowerState = "Manual";
             m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
+            // m_towerMotorB->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
@@ -61,7 +62,7 @@ void Conveyor::Update() {
             break;
         case FloorState::FeedIn:
             m_currentFloorState = "FeedIn";
-            m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
+            m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
             break;
         case FloorState::FeedOut:
             m_currentFloorState = "FeedOut";
