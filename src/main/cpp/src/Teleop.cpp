@@ -48,7 +48,8 @@ void Robot::TeleopPeriodic() {
     //     m_limelight->SetVisionCamera();
 
     //     if(m_limelight->isTargetValid()){
-    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
+    //         m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
     //     } else {
     //         m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
     //     }
@@ -75,21 +76,25 @@ void Robot::TeleopPeriodic() {
     m_intake->SetPercentOutput(
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
-    // drive
-    if (m_driverStick->GetLeftBumper()) {
-        m_drive->SetQuickTurn(true);
-    } else {
-        m_drive->SetQuickTurn(false);
-    }
-    
-    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
-                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
+     //drive
+     if (m_driverStick->GetLeftBumper()) {
+         m_drive->SetQuickTurn(true);
+     } else {
+         m_drive->SetQuickTurn(false); }
+
+     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
+                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
                                     1.0);  // left stick y-axis for co-driver
     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
                                     1.0);  // left stick x-axis for co-driver
+
+    // gyro
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
 }
 
 }  // namespace frc973
