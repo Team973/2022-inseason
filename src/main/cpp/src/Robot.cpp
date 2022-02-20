@@ -106,6 +106,7 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
     m_drive->Update();
+    m_drive->SetAngle(-m_gyro->GetWrappedAngle());
     m_intake->Update();
     m_conveyor->Update();
     m_turret->Update();

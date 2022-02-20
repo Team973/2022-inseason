@@ -97,7 +97,6 @@ void Robot::TeleopPeriodic() {
     } else {
         m_drive->SetQuickTurn(false);
     }
-
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
