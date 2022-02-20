@@ -76,6 +76,11 @@ public:
     void PositionCalcOutput();
 
     /**
+     * Set Left/Right motor outputs using Kinematics of drive.
+     */
+    void KinematicCalcOutput();
+
+    /**
      * Set the drive mode
      * @param mode the drive mode
      */ 
