@@ -8,6 +8,7 @@ void Robot::TeleopInit() {
     // default drive mode
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
     m_drive->Zero();
+    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 
     m_turret->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
@@ -36,7 +37,7 @@ void Robot::TeleopPeriodic() {
             m_lights->SetLightsState(Lights::LightsState::Off);
         }
 
-        m_shooter->SetFlywheelRPM(2800);
+        m_shooter->SetFlywheelRPM(3600);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -44,7 +45,7 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_testStick->GetRawAxis(5), -m_testStick->GetRawAxis(4)),
+    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
                    // m_gyro->GetWrappedAngle()
                    0);
 

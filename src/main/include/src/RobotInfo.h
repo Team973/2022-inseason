@@ -113,10 +113,10 @@ constexpr int OPERATOR_STICK = 1; /** Operator stick usb slot. */
 constexpr int TEST_STICK = 2;     /** Test stick usb slot. */
 
 /**
- * Tolerances In in/sec - TODO: update, currently 2020 values
+ * Tolerances In in - TODO: update
  */
-static constexpr double DIST_TOLERANCE = 10.0;
-static constexpr double DIST_RATE_TOLERANCE = 20.0;
+static constexpr double DIST_TOLERANCE = 2.0;
+static constexpr double DIST_RATE_TOLERANCE = 10.0;
 static constexpr double ANGLE_TOLERANCE = 8.0;
 static constexpr double ANGLE_RATE_TOLERANCE = 20.0;
 

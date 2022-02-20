@@ -31,7 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveChassisSpeeds()
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
-        , m_positionPID(0.0046, 0.0, 0.0)
+        , m_positionPID(0.003, 0.0, 0.0)
         , m_turnPID(0.0, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
@@ -135,11 +135,11 @@ void Drive::Update() {
             break;
     }
 
-    m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
-    m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    // m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
+    // m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
 
-    // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
-    // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
+    m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
+    m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 }
 
 void Drive::DashboardUpdate() {
@@ -227,14 +227,15 @@ void Drive::CheesyCalcOutput() {
 
 void Drive::PositionCalcOutput() {
     m_positionPID.SetTarget(m_targetPos);
-    m_positionPID.SetTarget(m_targetAngle);
+    m_turnPID.SetTarget(m_targetAngle);
     m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() - m_leftPosZero) +
                     (m_rightDriveTalonA->GetSelectedSensorPosition() - m_rightPosZero)) /
                    2.0;
     if (abs((m_currentAngle - m_targetAngle)) > 1.0) {
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     } else {
-        SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), m_turnPID.CalcOutput(m_currentAngle));
+        // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), m_turnPID.CalcOutput(m_currentAngle));
+        SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
     }
     SetQuickTurn(true);
     ArcadeCalcOutput();

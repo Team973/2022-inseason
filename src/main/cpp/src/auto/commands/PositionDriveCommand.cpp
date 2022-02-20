@@ -32,6 +32,7 @@ bool PositionDriveCommand::IsCompleted() {
 
 void PositionDriveCommand::PostExecute() {
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
 }
 
 }  // namespace frc973
