@@ -55,7 +55,7 @@ constexpr int TURRET_HOME_SENSOR = 0;                                /** DIO cha
 constexpr double TURRET_GEAR_RATIO = ((7.0 / 1.0) * (128.0 / 10.0)); /** The gear ratio of the turret. */
 constexpr double TURRET_TICKS_PER_DEGREE =
     1.0 / 360.0 * 2048.0 * TURRET_GEAR_RATIO; /** Ticks per degree of the turret*/
-
+constexpr double TURRET_SENSOR_SOFT = 115 * TURRET_TICKS_PER_DEGREE;
 /**
  * Shooter Subsystem.
  */

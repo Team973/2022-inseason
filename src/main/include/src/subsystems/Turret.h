@@ -92,6 +92,24 @@ public:
      */
     int PassedSuperSoft();
 
+    /**
+     * checks if the joysticks are trying to be moved, true if moved, false if radial distance is zero
+     * @param x x-value of operator stick
+     * @param y y-value of operator stick
+     */
+    bool StickMoved(double x, double y);
+
+    /**
+     * updates values the turret needs to know from other subsystems
+     * @param gyroAngle current wrapped gyro angle
+     */
+    void UpdateValues(double gyroAngle);
+    
+    /**
+     * if the turret is in the middle of wrapping around the hardstop, true if wrapping, false if not
+     */
+    bool GetWrappedState();
+
     void Update() override;
 
     void DashboardUpdate() override;
@@ -102,6 +120,9 @@ private:
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
+
+    //update values
+    double m_gyroAngle;
 
     double m_currentAngleInDegrees;
     double m_tickPosition;
@@ -118,6 +139,11 @@ private:
     double m_centerSensorChecked;
     double m_leftSideTurnSensor;
     double m_rightSideTurnSensor;
+
+    bool m_wrappingToLeftSensor;
+    bool m_wrappingToRightSensor;
+    bool m_wrappingInProgress;
+    double m_gyroSnapshotWrapping;
 };
 
 }  // namespace frc973
