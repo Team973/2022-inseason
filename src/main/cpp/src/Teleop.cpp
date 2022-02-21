@@ -5,6 +5,10 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
+    m_drive->Zero();
+    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
+
     m_turret->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
@@ -50,22 +54,25 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    // m_turret->Turn(
-    //     m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-    //     m_gyro->GetWrappedAngle());
+    if (m_operatorStick->GetRightBumper()) {
+        m_limelight->SetVisionCamera();
 
-    // if(m_operatorStick->GetRightBumper()) {
-    //     m_limelight->SetVisionCamera();
-
-    //     if(m_limelight->isTargetValid()){
-    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
-    //         m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
-    //     } else {
-    //         m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
-    //     }
-    // } else {
-    //     m_limelight->SetCameraDriver();
-    // }
+        // if(m_limelight->isTargetValid()){
+        m_turret->CalcOutput(
+            m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
+            m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        // } else {
+        //     m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
+        // }
+    } else {
+        m_limelight->SetCameraDriver();
+    }
+    if (!m_operatorStick->GetRightBumper()) {
+        m_turret->Turn(
+            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+            // m_gyro->GetWrappedAngle()
+            0);
+    }
 
     // intake
     m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
@@ -79,11 +86,17 @@ void Robot::TeleopPeriodic() {
     m_intake->SetPercentOutput(
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
+
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
                                     1.0);  // left stick y-axis for co-driver
     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
                                     1.0);  // left stick x-axis for co-driver
+
+    // gyro
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
 }
 
 }  // namespace frc973

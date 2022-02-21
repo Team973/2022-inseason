@@ -19,6 +19,7 @@ void Robot::RobotInit() {
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
+    m_drive->Zero();
 
     /**
      * Intake
@@ -70,9 +71,7 @@ void Robot::RobotInit() {
     /**
      * Gyro
      */
-    m_gyroTalon = new TalonSRX(GYRO_SRX_ID);
-
-    m_gyro = new Gyro(m_gyroTalon);
+    m_gyro = new Gyro(m_conveyorTowerMotorB);
     m_gyro->Zero();
 
     /**
@@ -104,10 +103,16 @@ void Robot::RobotInit() {
     m_driverStick = new StickController(DRIVER_STICK);
     m_operatorStick = new StickController(OPERATOR_STICK);
     m_testStick = new StickController(TEST_STICK);
+
+    /**
+     * Automanager
+     */
+    m_autoManager = new AutoManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_gyro);
 }
 
 void Robot::RobotPeriodic() {
     m_drive->Update();
+    m_drive->SetAngle(m_gyro->GetWrappedAngle());
     m_intake->Update();
     m_conveyor->Update();
     m_turret->Update();
@@ -116,6 +121,7 @@ void Robot::RobotPeriodic() {
     m_gyro->Update();
     m_lights->Update();
     m_subsystemManager->Update();
+    // m_autoManager->Update();
 
     m_drive->DashboardUpdate();
     m_intake->DashboardUpdate();
@@ -125,6 +131,7 @@ void Robot::RobotPeriodic() {
     m_climb->DashboardUpdate();
     m_gyro->DashboardUpdate();
     m_lights->DashboardUpdate();
+    m_autoManager->DashboardUpdate();
 
     m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());

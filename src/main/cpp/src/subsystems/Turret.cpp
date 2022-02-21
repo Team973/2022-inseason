@@ -6,16 +6,16 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         : m_turretMotor(turretMotor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 40, 80, 0.05))
-        , m_limelightPID(0.04, 0.0, 0.0, 0)
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
+        , m_limelightPID(0.08, 0.0, 0.0, 0)
         , m_limelightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         , m_checkStatus(0)
         , m_leftSensorChecked(false)
         , m_rightSensorChecked(false)
         , m_centerSensorChecked(false)
-        , m_leftSideTurnSensor(0.0)
-        , m_rightSideTurnSensor(0.0) {
+        , m_leftSideTurnSensor(-TURRET_SOFT_SENSOR)
+        , m_rightSideTurnSensor(TURRET_SOFT_SENSOR) {
     m_turretMotor->ConfigFactoryDefault();
 
     m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
@@ -86,8 +86,8 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     m_limelightPID.SetTarget(0);
     double output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output +=
-        (-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+    // output +=
+        // (-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limelightToMotorPower = output;
 
@@ -134,50 +134,21 @@ void Turret::SetHomeOffset() {
     Turret::SetTurretAngle(Constants::TURRET_HOME_OFFSET);
 }
 
+void Turret::CheckedSensorsToFalse() {
+    m_leftSensorChecked = false;
+    m_rightSensorChecked = false;
+    m_centerSensorChecked = false;
+    m_checkStatus = 0;
+}
+
 int Turret::SensorCalibrate() {
     // looks for center sensor first
     if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
         m_centerSensorChecked = true;
 
-        // looks for the left sensor second
-        if (m_turretMotor->IsRevLimitSwitchClosed() || (m_leftSensorChecked == true)) {
-            m_leftSensorChecked = true;
-
-            // looks for the right sensor third
-            if (m_turretMotor->IsFwdLimitSwitchClosed() || (m_rightSensorChecked == true)) {
-                m_rightSensorChecked = true;
-
-                // sets the right sensor only if it is the first time seeing it,
-                if (m_checkStatus == 2) {
-                    m_checkStatus = 3;
-                    m_rightSideTurnSensor = m_turretMotor->GetSelectedSensorPosition() -
-                                            (Constants::TURRET_SOFT_OFFSET * TURRET_TICKS_PER_DEGREE);
-                    return m_checkStatus;
-                }
-
-                // looks for the center sensor again for the 4th check, and locks the brake once it finds it and sethome
-                if (!m_turretSensor->Get() && m_checkStatus == 3) {
-                    m_checkStatus = 4;
-
-                    SetNeutralMode(NeutralMode::Brake);
-                    return m_checkStatus;
-                }
-                return m_checkStatus;
-            }
-
-            // left sensor is found, makes sure to set the sensor only if it is the first time seeing it
-            if (m_checkStatus == 1) {
-                m_checkStatus = 2;
-                m_leftSideTurnSensor = m_turretMotor->GetSelectedSensorPosition() +
-                                       (Constants::TURRET_SOFT_OFFSET * TURRET_TICKS_PER_DEGREE);
-                return m_checkStatus;
-            } else {
-                return m_checkStatus;
-            }
-        }
-
         // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
         if (m_checkStatus == 0) {
+            m_turretMotor->SetNeutralMode(NeutralMode::Brake);
             m_checkStatus = 1;
             SetHomeOffset();
             return m_checkStatus;
@@ -230,10 +201,6 @@ void Turret::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("T ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
     frc::SmartDashboard::PutNumber("T turretStatorCurrent", m_turretMotor->GetStatorCurrent());
     frc::SmartDashboard::PutNumber("T turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
-
-    SmartDashboard::PutBoolean("T turret digital input", m_turretSensor->Get());
-    SmartDashboard::PutBoolean("T turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
-    SmartDashboard::PutBoolean("T turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 
     SmartDashboard::PutBoolean("T digital input", m_turretSensor->Get());
     // right side limit switch

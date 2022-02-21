@@ -8,22 +8,23 @@ namespace frc973 {
 /**
  * The example command. Functionally equivalent to WaitCommand.
  */
-class ShooterCommand : public Command {
+class SetFlywheelRPMCommand : public Command {
 public:
     /**
-     * Constructs ShooterCommand.
+     * Constructs SetFlywheelRPMCommand.
      * @param shooter The shooter subsystem.
+     * @param setpoint The rpm to set the shooter to.
      * @param targetTime The time to wait in milliseconds.
      */
-    ShooterCommand(Shooter *shooter, Shooter::ShooterState shooterState, u_int32_t targetTime);
+    SetFlywheelRPMCommand(Shooter *shooter, double setpoint, u_int32_t targetTime);
 
     /**
-     * Executes when ShooterCommand starts.
+     * Executes when SetFlywheelRPMCommand starts.
      */
     void Init() override;
 
     /**
-     * Runs ShooterCommand.
+     * Runs SetFlywheelRPMCommand.
      */
     void Run() override;
 
@@ -34,13 +35,13 @@ public:
     bool IsCompleted() override;
 
     /**
-     * Executes when ShooterCommand concludes.
+     * Executes when SetFlywheelRPMCommand concludes.
      */
     void PostExecute() override;
 
 private:
     Shooter *m_shooter;
-    Shooter::ShooterState m_shooterState;
+    double m_setpoint;
     u_int32_t m_targetTime;
 };
 }

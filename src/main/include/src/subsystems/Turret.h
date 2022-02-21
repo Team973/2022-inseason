@@ -56,7 +56,8 @@ public:
     double CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget);
 
     /**
-     * Set Turret to Brake
+     * Set Turret to chosen mode (coast or break)
+     * @param mode the chosen mode
      */
     void SetNeutralMode(NeutralMode mode);
 
@@ -76,7 +77,7 @@ public:
     void CheckedSensorsToFalse();
 
     /**
-     * If the turret has passed the extra-soft-limits, 0 for none passed, 1 for too far left, 2 for too far right
+     * If the turret has seen center sensor to zero during disabled
      * Sensor calibration
      */
     int SensorCalibrate();

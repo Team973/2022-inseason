@@ -31,7 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveChassisSpeeds()
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
-        , m_positionPID(0.0, 0.0, 0.0)
+        , m_positionPID(0.04, 0.0, 0.0)  // 0.04, 0.0, 0.0
         , m_turnPID(0.0, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
@@ -166,6 +166,17 @@ void Drive::DashboardUpdate() {
     frc::SmartDashboard::PutNumber(
         "D velocity",
         (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2.0);
+
+    frc::SmartDashboard::PutNumber("D left pos", m_leftDriveTalonA->GetSelectedSensorPosition());
+    frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
+
+    SmartDashboard::PutNumber("D target pos", m_targetPos);
+    SmartDashboard::PutNumber("D curr pos", m_currentPos);
+ 
+    SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
+    SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
+
+    // SmartDashboard::PutString("D mode", std::to_string);
 }
 
 void Drive::ArcadeCalcOutput() {
@@ -199,39 +210,45 @@ void Drive::ArcadeCalcOutput() {
 }
 
 void Drive::CheesyCalcOutput() {
-    double throttle = Util::deadband(m_throttle, 0.04);
-    double wheel = Util::deadband(-m_turn, 0.04);
+    m_throttle = Util::deadband(m_throttle, 0.04);
+    m_turn = Util::deadband(-m_turn, 0.04);
     double kWheelGain = 1.0;
     double kWheelNonlinearity = 0.5;
     double denominator = sin(Constants::PI / 2.0 * kWheelNonlinearity);
-    
+
     // Apply a sin function that's scaled to make it feel better.
     if (!m_isQuickTurn) {
-        wheel = sin(Constants::PI / 2.0 * kWheelNonlinearity * wheel);
-        wheel = sin(Constants::PI / 2.0 * kWheelNonlinearity * wheel);
-        wheel = wheel / (denominator * denominator) * std::abs(throttle);
+        m_turn = sin(Constants::PI / 2.0 * kWheelNonlinearity * m_turn);
+        m_turn = sin(Constants::PI / 2.0 * kWheelNonlinearity * m_turn);
+        m_turn = m_turn / (denominator * denominator) * std::abs(m_throttle);
     }
-    wheel *= kWheelGain;
-    ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(throttle * MAX_METERS_PER_SECOND), 0.0_mps,
-                                    units::radians_per_second_t(wheel * MAX_RADIANS_PER_SECOND)};
-    m_driveWheelSpeeds = m_driveKinimatics.ToWheelSpeeds(driveChassisSpeed);
-    m_leftOutput = m_driveWheelSpeeds.left()/MAX_METERS_PER_SECOND; 
-    m_rightOutput = m_driveWheelSpeeds.right()/MAX_METERS_PER_SECOND;
+    m_turn *= kWheelGain;
+    KinematicCalcOutput();
 }
 
 void Drive::PositionCalcOutput() {
     m_positionPID.SetTarget(m_targetPos);
-    m_positionPID.SetTarget(m_targetAngle);
-    m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() - m_leftPosZero) +
-                    (m_rightDriveTalonA->GetSelectedSensorPosition() - m_rightPosZero)) /
+    m_turnPID.SetTarget(m_targetAngle);
+    m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK) +
+                    (m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK)) /
                    2.0;
-    if (abs((m_currentAngle - m_targetAngle)) > 1.0) {
-        SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
-    } else {
-        SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), m_turnPID.CalcOutput(m_currentAngle));
-    }
-    SetQuickTurn(true);
-    ArcadeCalcOutput();
+    m_onTarget = PositionOnTarget();
+    // if (m_onTarget[Target::angle]) {
+    //     SetThrottleTurn(0.0, -m_turnPID.CalcOutput(m_currentAngle));
+    // } else {
+    //     // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), -m_turnPID.CalcOutput(m_currentAngle));
+    //     SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    // }
+    SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    KinematicCalcOutput();
+}
+
+void Drive::KinematicCalcOutput() {
+    ChassisSpeeds driveChassisSpeed{units::meters_per_second_t(m_throttle * MAX_METERS_PER_SECOND), 0.0_mps,
+                                    units::radians_per_second_t(m_turn * MAX_RADIANS_PER_SECOND)};
+    m_driveWheelSpeeds = m_driveKinimatics.ToWheelSpeeds(driveChassisSpeed);
+    m_leftOutput = m_driveWheelSpeeds.left() / MAX_METERS_PER_SECOND;
+    m_rightOutput = m_driveWheelSpeeds.right() / MAX_METERS_PER_SECOND;
 }
 
 void Drive::SetDriveMode(DriveMode mode) {
@@ -275,8 +292,20 @@ void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
 }
 
 void Drive::Zero() {
+    m_currentPos = 0.0;
+    m_currentAngle = 0.0;
+    m_leftDriveTalonA->SetSelectedSensorPosition(0.0);
+    m_rightDriveTalonA->SetSelectedSensorPosition(0.0);
+}
+
+void Drive::ZeroPosition() {
     m_leftPosZero = m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
     m_rightPosZero = m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK;
+}
+
+void Drive::SetNeutralMode(NeutralMode mode) {
+    m_leftDriveTalonA->SetNeutralMode(mode);
+    m_rightDriveTalonA->SetNeutralMode(mode);
 }
 
 void Drive::SetPositionTarget(double dist, double angle) {
