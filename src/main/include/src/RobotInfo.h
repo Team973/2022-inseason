@@ -55,6 +55,7 @@ constexpr int TURRET_HOME_SENSOR = 0;                                /** DIO cha
 constexpr double TURRET_GEAR_RATIO = ((7.0 / 1.0) * (128.0 / 10.0)); /** The gear ratio of the turret. */
 constexpr double TURRET_TICKS_PER_DEGREE =
     1.0 / 360.0 * 2048.0 * TURRET_GEAR_RATIO; /** Ticks per degree of the turret */
+constexpr double TURRET_SOFT_SENSOR = 115.0 * TURRET_TICKS_PER_DEGREE;
 
 /**
  * Shooter Subsystem.
@@ -116,7 +117,7 @@ constexpr int TEST_STICK = 2;     /** Test stick usb slot. */
 /**
  * Tolerances In in - TODO: update
  */
-static constexpr double DIST_TOLERANCE = 0.5;
+static constexpr double DIST_TOLERANCE = 2.0;
 static constexpr double DIST_RATE_TOLERANCE = 10.0;
 static constexpr double ANGLE_TOLERANCE = 8.0;
 static constexpr double ANGLE_RATE_TOLERANCE = 20.0;

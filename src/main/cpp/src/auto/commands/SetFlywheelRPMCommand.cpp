@@ -20,6 +20,5 @@ bool SetFlywheelRPMCommand::IsCompleted() {
 }
 
 void SetFlywheelRPMCommand::PostExecute() {
-    m_shooter->SetShooterState(Shooter::ShooterState::Off);
 }
 }  // namespace frc973

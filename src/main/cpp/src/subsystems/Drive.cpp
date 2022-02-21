@@ -31,8 +31,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveChassisSpeeds()
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
-        , m_positionPID(0.0, 0.0, 0.0)  // 0.04, 0.0, 0.0
-        , m_turnPID(0.02, 0.0, 0.0)
+        , m_positionPID(0.04, 0.0, 0.0)  // 0.04, 0.0, 0.0
+        , m_turnPID(0.0, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
         , m_currentPos(0.0)
@@ -170,9 +170,13 @@ void Drive::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("D left pos", m_leftDriveTalonA->GetSelectedSensorPosition());
     frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
 
-    SmartDashboard::PutNumber("D target pose", m_targetPos);
-    SmartDashboard::PutNumber("D curr pose", m_currentPos);
-    SmartDashboard::PutNumber("D Angle", m_currentAngle);
+    SmartDashboard::PutNumber("D target pos", m_targetPos);
+    SmartDashboard::PutNumber("D curr pos", m_currentPos);
+ 
+    SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
+    SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
+
+    // SmartDashboard::PutString("D mode", std::to_string);
 }
 
 void Drive::ArcadeCalcOutput() {
@@ -229,12 +233,13 @@ void Drive::PositionCalcOutput() {
                     (m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK)) /
                    2.0;
     m_onTarget = PositionOnTarget();
-    if (m_onTarget[Target::angle]) {
-        SetThrottleTurn(0.0, -m_turnPID.CalcOutput(m_currentAngle));
-    } else {
-        // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), -m_turnPID.CalcOutput(m_currentAngle));
-        SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
-    }
+    // if (m_onTarget[Target::angle]) {
+    //     SetThrottleTurn(0.0, -m_turnPID.CalcOutput(m_currentAngle));
+    // } else {
+    //     // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), -m_turnPID.CalcOutput(m_currentAngle));
+    //     SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    // }
+    SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
     KinematicCalcOutput();
 }
 

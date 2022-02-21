@@ -77,7 +77,7 @@ public:
     void CheckedSensorsToFalse();
 
     /**
-     * If the turret has passed the extra-soft-limits, 0 for none passed, 1 for too far left, 2 for too far right
+     * If the turret has seen center sensor to zero during disabled
      * Sensor calibration
      */
     int SensorCalibrate();

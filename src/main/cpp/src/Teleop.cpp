@@ -5,7 +5,6 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
-    // default drive mode
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
     m_drive->Zero();
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
@@ -45,32 +44,25 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    m_turret->Turn(m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-                   // m_gyro->GetWrappedAngle()
-                   0);
+    if (m_operatorStick->GetRightBumper()) {
+        m_limelight->SetVisionCamera();
 
-    // if (m_operatorStick->GetRawButton(Stick::BtnX)) {
-    //     m_turret->SetTurretAngle(90);
-    // }
-    // if(m_operatorStick->GetRawButton(Stick::BtnB)) {
-    //     m_turret->SetTurretAngle(-90);
-    // }
-    // if(m_operatorStick->GetRawButton(Stick::BtnY)) {
-    //     m_turret->SetTurretAngle(0);
-    // }
-
-    // if(m_operatorStick->GetRightBumper()) {
-    //     m_limelight->SetVisionCamera();
-
-    //     if(m_limelight->isTargetValid()){
-    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
-    //         m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
-    //     } else {
-    //         m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
-    //     }
-    // } else {
-    //     m_limelight->SetCameraDriver();
-    // }
+        // if(m_limelight->isTargetValid()){
+        m_turret->CalcOutput(
+            m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
+            m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        // } else {
+        //     m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
+        // }
+    } else {
+        m_limelight->SetCameraDriver();
+    }
+    if (!m_operatorStick->GetRightBumper()) {
+        m_turret->Turn(
+            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+            // m_gyro->GetWrappedAngle()
+            0);
+    }
 
     // limelight
     // if (m_operatorStick->GetLeftBumper()) {

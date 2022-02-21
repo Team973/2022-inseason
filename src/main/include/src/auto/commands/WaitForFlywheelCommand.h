@@ -15,7 +15,7 @@ public:
      * Constructs the WaitForFlywheelCommand.
      * @param shooter The shooter subsystem.
      */
-    WaitForFlywheelCommand(Shooter *shooter);
+    WaitForFlywheelCommand(Shooter *shooter, u_int32_t targetTime);
 
     /**
      * Executes when WaitForFlywheelCommand starts.
@@ -40,6 +40,7 @@ public:
 
 private:
     Shooter *m_shooter;
+    uint32_t m_targetTime;
 };
 
 }  // namespace frc973

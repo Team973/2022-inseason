@@ -26,15 +26,6 @@ void Robot::DisabledPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Middle);
         break;
     case 1:
-        m_lights->SetLightsState(Lights::LightsState::Left);
-        break;
-    case 2:
-        m_lights->SetLightsState(Lights::LightsState::Right);
-        break;
-    case 3:
-        m_lights->SetLightsState(Lights::LightsState::Middle);
-        break;
-    case 4:
         m_lights->SetLightsState(Lights::LightsState::Initialization);
         break;
     default:
