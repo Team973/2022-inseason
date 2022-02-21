@@ -130,6 +130,11 @@ private:
     frc::PneumaticHub *m_pneumaticsHub;
 
     /**
+     * Subsystem Manager
+     */
+    SubsystemManager *m_subsystemManager; 
+
+    /**
      * Joysticks
      */
     StickController *m_operatorStick;

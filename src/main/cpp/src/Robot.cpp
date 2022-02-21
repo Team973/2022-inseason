@@ -93,6 +93,12 @@ void Robot::RobotInit() {
     m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
 
     /**
+     * Subsystem Manager
+     */
+    m_subsystemManager = new SubsystemManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_climb,
+                                              m_gyro, m_lights);
+
+    /**
      * Joysticks
      */
     m_driverStick = new StickController(DRIVER_STICK);
@@ -104,11 +110,12 @@ void Robot::RobotPeriodic() {
     m_drive->Update();
     m_intake->Update();
     m_conveyor->Update();
-    // m_turret->Update();
+    m_turret->Update();
     m_shooter->Update();
-    //m_climb->Update();
+    // m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
+    m_subsystemManager->Update();
 
     m_drive->DashboardUpdate();
     m_intake->DashboardUpdate();

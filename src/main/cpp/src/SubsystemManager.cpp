@@ -16,28 +16,34 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
 
 double SubsystemManager::CalcPose() {
     double dist = m_limelight->GetHorizontalDist();
+
     double tfAngle = std::fmod(m_gyro->GetWrappedAngle() + m_turret->GetTurretAngle() + 180.0, 360.0);
     if (tfAngle < 0.0) {
         tfAngle += 360.0;
     }
     tfAngle -= 180.0;
+
     double fieldAngle = std::fmod(tfAngle + 180.0 + 180.0, 360.0);
     if (fieldAngle < 0.0) {
         fieldAngle += 360.0;
     }
     fieldAngle -= 180.0;
-    double x = dist = std::cos(Constants::RAD_PER_DEG * fieldAngle);
-    double y = dist = std::sin(Constants::RAD_PER_DEG * fieldAngle);
-    Pose2d pose{x,y,m_gyro->GetWrappedAngle()}
+
+    double x = dist * std::cos(Constants::RAD_PER_DEG * fieldAngle);
+    double y = dist * std::sin(Constants::RAD_PER_DEG * fieldAngle);
+
+    // Pose2d pose{x, y, m_gyro->GetWrappedAngle()};
+    return 0.0;  // todo: update
 }
 
 double SubsystemManager::CalcFlywheelRPM() {
-    double x_dist = m_limelight->GetHorizontalDist();
+    double dist = m_limelight->GetHorizontalDist();
+    return dist;  // todo: update
 }
 
 bool SubsystemManager::ReadyToShoot() {
     if (m_shooter->IsAtSpeed()) {
-        if (m_conveyor->GetFloorVelocity() > 0.0 && m_conveyor->GetTowerVelocity() > 0.0) {
+        if (m_limelight->GetXOffset() == 0.0) {
             return true;
         }
     }
@@ -48,7 +54,6 @@ void SubsystemManager::Update() {
     /**
      * Turret calibration and CANdle switching
      */
-    // waiting for leo to create proper functions
     SmartDashboard::PutBoolean("Left Switch", m_turret->GetLeftSensor());
     SmartDashboard::PutBoolean("Right Switch", m_turret->GetRightSensor());
     SmartDashboard::PutBoolean("Middle Switch", m_turret->GetMiddleSensor());
@@ -57,21 +62,21 @@ void SubsystemManager::Update() {
         case 0:
             m_lights->SetLightsState(Lights::LightsState::Middle);
             break;
-        case 1:
-            m_lights->SetLightsState(Lights::LightsState::Left);
-            break;
-        case 2:
-            m_lights->SetLightsState(Lights::LightsState::Right);
-            break;
-        case 3:
-            m_lights->SetLightsState(Lights::LightsState::Middle);
-            break;
         case 4:
             m_lights->SetLightsState(Lights::LightsState::Initialization);
             break;
         default:
             m_lights->SetLightsState(Lights::LightsState::Off);
             break;
+    }
+
+    /**
+     * Ready to shoot lights
+     */
+    if (ReadyToShoot()) {
+        m_lights->SetLightsState(Lights::LightsState::ReadyToShoot);
+    } else {
+        m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
     }
 }
 
