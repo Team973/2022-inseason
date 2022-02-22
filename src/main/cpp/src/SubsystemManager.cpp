@@ -14,6 +14,24 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
         , m_lights(lights) {
 }
 
+void SubsystemManager::TurretCalibration() {
+    SmartDashboard::PutBoolean("Left Switch", m_turret->GetLeftSensor());
+    SmartDashboard::PutBoolean("Right Switch", m_turret->GetRightSensor());
+    SmartDashboard::PutBoolean("Middle Switch", m_turret->GetMiddleSensor());
+
+    switch (m_turret->SensorCalibrate()) {
+        case 0:
+            m_lights->SetLightsState(Lights::LightsState::Middle);
+            break;
+        case 1:
+            m_lights->SetLightsState(Lights::LightsState::Initialization);
+            break;
+        default:
+            m_lights->SetLightsState(Lights::LightsState::Off);
+            break;
+    }
+}
+
 double SubsystemManager::CalcPose() {
     double dist = m_limelight->GetHorizontalDist();
 
@@ -52,22 +70,14 @@ bool SubsystemManager::ReadyToShoot() {
 
 void SubsystemManager::Update() {
     /**
-     * Turret calibration and CANdle switching
+     * Turret calculations
      */
-    SmartDashboard::PutBoolean("Left Switch", m_turret->GetLeftSensor());
-    SmartDashboard::PutBoolean("Right Switch", m_turret->GetRightSensor());
-    SmartDashboard::PutBoolean("Middle Switch", m_turret->GetMiddleSensor());
-
-    switch (m_turret->SensorCalibrate()) {
-        case 0:
-            m_lights->SetLightsState(Lights::LightsState::Middle);
-            break;
-        case 4:
-            m_lights->SetLightsState(Lights::LightsState::Initialization);
-            break;
-        default:
-            m_lights->SetLightsState(Lights::LightsState::Off);
-            break;
+    if (m_limelight->isTargetValid()) {
+        m_turret->CalcOutput(
+            m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+            // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    } else {
+        // will make turret not do anything -> leo
     }
 
     /**

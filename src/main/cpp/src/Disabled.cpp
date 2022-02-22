@@ -15,6 +15,10 @@ void Robot::DisabledInit() {
 }
 
 void Robot::DisabledPeriodic() {
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->TurretCalibration();
+
     if (m_operatorStick->GetRawButtonPressed(Stick::BtnX)) {
         m_autoManager->IndexAutoMode(true);
     }

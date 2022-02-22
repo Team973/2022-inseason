@@ -31,6 +31,11 @@ public:
                      Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights);
 
     /**
+     * Sets 0 for the turret and sets the CANdle
+     */ 
+    void TurretCalibration();
+
+    /**
      * Finds the current position on the field
      */
     double CalcPose();
