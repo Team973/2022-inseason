@@ -230,7 +230,7 @@ void Drive::CheesyCalcOutput() {
 
 void Drive::PositionCalcOutput() {
     m_positionPID.SetTarget(m_targetPos);
-    m_turnPID.SetTarget(m_targetAngle);
+    m_turnPID.SetTarget(-m_targetAngle);
     m_currentPos = ((m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK) +
                     (m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK)) /
                    2.0;
@@ -240,7 +240,6 @@ void Drive::PositionCalcOutput() {
     } else {
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     }
-    // SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     KinematicCalcOutput();
 }
 

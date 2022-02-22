@@ -24,7 +24,6 @@
 #include "src/auto/commands/RetractIntakeCommand.h"
 #include "src/auto/commands/RunIntakeCommand.h"
 #include "src/auto/commands/SequentialCommand.h"
-#include "src/auto/commands/SetGyroAngleCommand.h"
 #include "src/auto/commands/SetTurretAngleCommand.h"
 #include "src/auto/commands/SetFlywheelRPMCommand.h"
 #include "src/auto/commands/ShooterCommand.h"
