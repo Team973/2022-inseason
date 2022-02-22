@@ -15,10 +15,6 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
 }
 
 void SubsystemManager::TurretCalibration() {
-    SmartDashboard::PutBoolean("Left Switch", m_turret->GetLeftSensor());
-    SmartDashboard::PutBoolean("Right Switch", m_turret->GetRightSensor());
-    SmartDashboard::PutBoolean("Middle Switch", m_turret->GetMiddleSensor());
-
     switch (m_turret->SensorCalibrate()) {
         case 0:
             m_lights->SetLightsState(Lights::LightsState::Middle);
