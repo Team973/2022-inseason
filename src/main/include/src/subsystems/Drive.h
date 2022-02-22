@@ -164,6 +164,12 @@ public:
     std::array<bool, 2> &PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
                                                        const double angleRate);
 
+    /**
+     * Updates values from subsystem manager
+     * @param gyroAngularRate
+     */
+    void UpdateValues(double gyrpAngularRate);
+
 private:
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;

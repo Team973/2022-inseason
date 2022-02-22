@@ -22,15 +22,19 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
     /* Pre periodic */
+
     /* End pre periodic */
 
     /* Post periodic, drive should update here last */
     m_autoManager->Update();
-    m_conveyor->Update();
-    m_intake->Update();
-    m_shooter->Update();
-    m_lights->Update();
     m_drive->Update();
+    m_intake->Update();
+    m_conveyor->Update();
+    m_turret->Update();
+    m_shooter->Update();
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->Update();
     /* End post periodic*/
 }
 } // namespace frc973

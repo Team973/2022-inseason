@@ -41,7 +41,7 @@ void Gyro::SetAngle(double degrees) {
 }
 
 void Gyro::Zero() {
-    m_gyro.SetFusedHeading(0, 0);
+    m_gyro.SetFusedHeading(0.0, 0);
 }
 
 }  // namespace frc973

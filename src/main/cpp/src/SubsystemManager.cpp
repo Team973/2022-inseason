@@ -84,6 +84,11 @@ void SubsystemManager::Update() {
     } else {
         m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
     }
+
+    /**
+     * Update Drive's values of other subsystems
+     */
+    m_drive->UpdateValues(m_gyro->GetAngularRate());
 }
 
 }  // namespace frc973
