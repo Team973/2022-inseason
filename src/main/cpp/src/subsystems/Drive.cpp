@@ -238,8 +238,6 @@ void Drive::PositionCalcOutput() {
     if (m_onTarget[Target::angle]) {
         SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
     } else {
-        // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), m_turnPID.CalcOutput(m_currentAngle));
-        // SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     }
     // SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
