@@ -12,11 +12,11 @@ PositionDriveCommand::PositionDriveCommand(Drive *drive, double targetDist, doub
 }
 
 void PositionDriveCommand::Init() {
-    m_drive->Zero();
+    SetTargetMSec(m_targetTime);
     m_drive->SetDriveMode(Drive::DriveMode::position);
     m_drive->ClampSpeed(-m_speed, m_speed);
+    m_drive->Zero();
     m_drive->SetPositionTarget(m_targetDist, m_targetAngle);
-    SetTargetMSec(m_targetTime);
 }
 
 void PositionDriveCommand::Run() {
@@ -32,6 +32,7 @@ bool PositionDriveCommand::IsCompleted() {
 
 void PositionDriveCommand::PostExecute() {
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
     m_drive->SetThrottleTurn(0.0, 0.0);
 }
 

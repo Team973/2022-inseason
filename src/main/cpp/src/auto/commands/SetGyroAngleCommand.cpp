@@ -7,10 +7,11 @@ SetGyroAngleCommand::SetGyroAngleCommand(Gyro *gyro, double setAngle, u_int32_t 
 }
 
 void SetGyroAngleCommand::Init() {
-    m_gyro->SetAngle(m_setAngle);
+    SetTargetMSec(m_targetTime);
 }
 
 void SetGyroAngleCommand::Run() {
+    m_gyro->SetAngle(m_setAngle);
 }
 
 bool SetGyroAngleCommand::IsCompleted() {

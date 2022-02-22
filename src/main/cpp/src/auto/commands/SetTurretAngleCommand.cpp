@@ -7,6 +7,7 @@ SetTurretAngleCommand::SetTurretAngleCommand(Turret *turret, double setAngle, u_
 }
 
 void SetTurretAngleCommand::Init() {
+    SetTargetMSec(m_targetTime);
     m_turret->Turn(m_setAngle, 0.0);
 }
 
