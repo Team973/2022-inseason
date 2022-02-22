@@ -167,8 +167,9 @@ public:
     /**
      * Updates values from subsystem manager
      * @param gyroAngularRate
+     * @param gyroAngle
      */
-    void UpdateValues(double gyrpAngularRate);
+    void UpdateValues(double gyrpAngularRate, double gyroAngle);
 
 private:
     WPI_TalonFX *m_leftDriveTalonA;
@@ -223,5 +224,7 @@ private:
     double m_rate;
 
     std::array<bool, 2> m_onTarget;
+
+    double m_currangle;
 };
 }  // namespace frc973

@@ -176,6 +176,8 @@ void Drive::DashboardUpdate() {
     SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
     SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
 
+    SmartDashboard::PutNumber("D Current Angle", m_currentAngle);
+
     // SmartDashboard::PutString("D mode", std::to_string);
 }
 
@@ -240,7 +242,7 @@ void Drive::PositionCalcOutput() {
     // SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
     // }
-    SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     KinematicCalcOutput();
 }
 
@@ -331,8 +333,9 @@ std::array<bool, 2> &Drive::PositionOnTargetWithTolerance(const double dist, con
     return m_onTarget;
 }
 
-void Drive::UpdateValues(double gyroAngularRate) {
+void Drive::UpdateValues(double gyroAngularRate, double gyroAngle) {
     m_angularRate = gyroAngularRate;
+    m_currentAngle = gyroAngle;
 }
 
 }  // namespace frc973

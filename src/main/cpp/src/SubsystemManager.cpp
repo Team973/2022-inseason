@@ -88,7 +88,7 @@ void SubsystemManager::Update() {
     /**
      * Update Drive's values of other subsystems
      */
-    m_drive->UpdateValues(m_gyro->GetAngularRate());
+    m_drive->UpdateValues(m_gyro->GetAngularRate(), m_gyro->GetAngle());
 }
 
 }  // namespace frc973
