@@ -37,9 +37,9 @@ void Robot::TeleopPeriodic() {
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     } else {
-        // m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        // m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        // m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
     }
 
     // drive
