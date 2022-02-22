@@ -15,33 +15,16 @@ void Robot::DisabledInit() {
 }
 
 void Robot::DisabledPeriodic() {
-    // turret calibration + light to signal the side needed
-    SmartDashboard::PutBoolean("Left Switch", m_turretTalon->IsRevLimitSwitchClosed());
-    SmartDashboard::PutBoolean("Right Switch", m_turretTalon->IsFwdLimitSwitchClosed());
-    SmartDashboard::PutBoolean("Middle Switch", !m_turretSensor->Get());
-    
-    // turret calibration + CANdle switching
-    switch (m_turret->SensorCalibrate()) {
-    case 0:
-        m_lights->SetLightsState(Lights::LightsState::Middle);
-        break;
-    case 1:
-        m_lights->SetLightsState(Lights::LightsState::Initialization);
-        break;
-    default:
-        m_lights->SetLightsState(Lights::LightsState::Off);
-        break;
-    }
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->TurretCalibration();
 
-    if(m_operatorStick->GetRawButtonPressed(Stick::BtnX)) {
+    if (m_operatorStick->GetRawButtonPressed(Stick::BtnX)) {
         m_autoManager->IndexAutoMode(true);
     }
 
-    if(m_operatorStick->GetRawButtonPressed(Stick::BtnB)) {
+    if (m_operatorStick->GetRawButtonPressed(Stick::BtnB)) {
         m_autoManager->IndexAutoMode(false);
     }
-
-
-
 }
 }  // namespace frc973

@@ -170,6 +170,18 @@ int Turret::PassedSuperSoft() {
     }
 }
 
+bool Turret::GetRightSensor() {
+    return m_turretMotor->IsRevLimitSwitchClosed();
+}
+
+bool Turret::GetLeftSensor() {
+    return m_turretMotor->IsFwdLimitSwitchClosed();
+}
+
+bool Turret::GetMiddleSensor() {
+    return !m_turretSensor->Get();
+}
+
 void Turret::Update() {
     m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE;
 

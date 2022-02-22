@@ -103,6 +103,14 @@ Conveyor::FloorState Conveyor::GetFloorState() {
     return m_floorState;
 }
 
+double Conveyor::GetFloorVelocity() {
+    return m_floorMotor->GetSelectedSensorVelocity();
+}
+
+double Conveyor::GetTowerVelocity() {
+    return m_towerMotorA->GetSelectedSensorVelocity();
+}
+
 void Conveyor::SetTowerState(TowerState state) {
     m_towerState = state;
 }
