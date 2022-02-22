@@ -110,6 +110,16 @@ public:
      */
     bool GetWrappedState();
 
+    /**
+     * Wrap to left sensor
+     */
+    void WrapToLeft();
+
+    /**
+     * Wrap to right sensor
+     */
+    void WrapToRight();
+
     void Update() override;
 
     void DashboardUpdate() override;

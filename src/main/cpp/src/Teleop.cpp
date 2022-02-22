@@ -38,33 +38,56 @@ void Robot::TeleopPeriodic() {
     // turret
     m_turret->UpdateValues(m_gyro->GetAngle());
 
-    if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
-        m_limelight->SetCameraDriver();
-        m_turret->Turn(
-            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-            //m_gyro->GetWrappedAngle()
-            0.0);
-    } else {
-        if (m_operatorStick->GetLeftBumper()) {
-            if (m_turret->GetWrappedState()) {
-                m_limelight->SetCameraDriver();
-            } else {
-                m_limelight->SetVisionCamera();
-            }
-
-            // if(m_limelight->isTargetValid()){
-                // m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
-            m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
-            // } else {
-            //     m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
-            // }
+    if (m_operatorStick->GetRightBumper() && m_limelight->isTargetValid()) {
+        m_limelight->SetVisionCamera();
+        if (m_turret->GetWrappedState()) {
+            m_limelight->SetLightMode(Limelight::LightMode::off);
         } else {
-            m_limelight->SetCameraDriver();
+            m_limelight->SetLightMode(Limelight::LightMode::on);
         }
-        
+
+        m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+    } else {
+        if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
+            m_limelight->SetCameraDriver();
+            m_turret->Turn(
+                m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+                0.0);
+        } else {
+            m_turret->Turn(
+                m_turret->CalcJoystickAngleInDegrees(1, 0), 0.0);
+        }
     }
 
-// limelight
+    //_____________________________________________
+
+    // if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
+    //     m_limelight->SetCameraDriver();
+    //     m_turret->Turn(
+    //         m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
+    //         0.0);
+    // } else {
+    //     if (m_operatorStick->GetLeftBumper()) {
+    //         m_limelight->SetVisionCamera();
+    //         if (m_turret->GetWrappedState()) {
+    //             m_limelight->SetLightMode(Limelight::LightMode::off);
+    //         } else {
+    //             m_limelight->SetLightMode(Limelight::LightMode::on);
+    //         }
+
+    //         // if(m_limelight->isTargetValid()){
+    //         // m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
+    //         // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+    //         // } else {
+    //         //     m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
+    //         // }
+    //     } else {
+    //         m_limelight->SetCameraDriver();
+    //     }
+    // }
+
+    // limelight
     // if (m_operatorStick->GetLeftBumper()) {
     //     m_limelight->SetVisionCamera();
     // } else {

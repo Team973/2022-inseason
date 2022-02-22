@@ -110,17 +110,17 @@ void Robot::RobotPeriodic() {
     m_gyro->Update();
     m_lights->Update();
 
-    m_drive->DashboardUpdate();
+    // m_drive->DashboardUpdate();
     // m_intake->DashboardUpdate();
     // m_conveyor->DashboardUpdate();
     m_turret->DashboardUpdate();
     // m_shooter->DashboardUpdate();
     // m_climb->DashboardUpdate();
-    m_gyro->DashboardUpdate();
-    m_lights->DashboardUpdate();
+    // m_gyro->DashboardUpdate();
+    // m_lights->DashboardUpdate();
 
     m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
-    frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+    // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 }
 
 }  // namespace frc973
