@@ -17,7 +17,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Test >*/
 , m_test(AutoMode({
-        new PositionDriveCommand(m_drive, 0.0, 90.0, 0.5, 2000), //-40.91 , 5.323
+        new PositionDriveCommand(m_drive, 0.0, 5.0, 0.5, 2000), //-40.91 , 5.323
     // new ConcurrentCommand({
     //     new DeployIntakeCommand(m_intake),
     //     new RunIntakeCommand(m_intake, 1.0, 2000),
