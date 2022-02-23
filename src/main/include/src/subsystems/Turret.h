@@ -19,7 +19,7 @@ namespace frc973 {
 enum class TurretState {
     Off,    /**< Disables turret. */
     Manual, /**< Manual turret control. */
-    AutoAim /**< Limelight targeting mode. */
+    Tracking /**< Limelight targeting mode. */
 };
 
 class Turret : public Subsystem {
@@ -27,16 +27,30 @@ public:
     Turret(WPI_TalonFX *turretMotor, DigitalInput *talonSensor);
 
     /**
-     * @param angleInDegrees angle its going to turn to
-     * @param gyroOffset compensation for the robot turning to keep the turret heading in place
+     * Sets turret state
      */
-    void Turn(double angleInDegrees, double gyroOffset);
+    void SetTurretState(TurretState state);
+
+    /**
+     * Sets the manual turn amount
+     */
+    void SetTurnValue(double angle); 
+
+    /**
+     * @param angleInDegrees angle its going to turn to
+     */
+    void Turn(double angleInDegrees);
 
     /**
      * @param x x-value of operator stick
      * @param y y-value of operator stick
      */
     double CalcJoystickAngleInDegrees(double x, double y);
+
+    /**
+     * Sets Tracking values
+     */
+    void SetTrackingValues(double xOffset, double angularRate, double translationalValue);
 
     /**
      * Calculates output to feed into a percent output loops
@@ -160,9 +174,6 @@ private:
 
     PID m_limelightPID;
 
-    double m_limelightToMotorPower;
-    double m_translationalAngularRate;
-
     TurretState m_turretState;
 
     int m_checkStatus;
@@ -176,6 +187,14 @@ private:
     bool m_wrappingToRightSensor;
     bool m_wrappingInProgress;
     double m_gyroSnapshotWrapping;
+
+    //turn value
+    double m_angleInDegrees;
+
+    //tracking values
+    double m_limelightXOffset;
+    double m_angularRate;
+    double m_translationalValue;
 };
 
 }  // namespace frc973

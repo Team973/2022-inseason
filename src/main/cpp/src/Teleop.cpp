@@ -69,28 +69,25 @@ void Robot::TeleopPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Off);
     }
 
+    //limelight
+    if (m_operatorStick->GetRightBumper()) {
+        m_limelight->SetVisionCamera();
+    } else {
+        m_limelight->SetCameraDriver();
+    }
+
     // turret
     m_turret->UpdateValues(m_gyro->GetAngle());
 
     if (m_operatorStick->GetRightBumper() && m_limelight->isTargetValid()) {
         m_limelight->SetVisionCamera();
-        if (m_turret->GetWrappedState()) {
-            m_limelight->SetLightMode(Limelight::LightMode::off);
-        } else {
-            m_limelight->SetLightMode(Limelight::LightMode::on);
-        }
-
-        m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+        m_turret->SetTurretState(TurretState::Tracking);
+        m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
-        if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
-            m_limelight->SetCameraDriver();
-            m_turret->Turn(
-                m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-                0.0);
-        } else {
-            m_turret->Turn(
-                m_turret->CalcJoystickAngleInDegrees(1, 0), 0.0);
-        }
+        m_limelight->SetCameraDriver();
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(
+            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
     }
 
     // intake
