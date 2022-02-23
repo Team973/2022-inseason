@@ -54,8 +54,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 13000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 13000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 13000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 13000),
-        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 13000),
+        // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 13000),
+        // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 13000),
     }),
 }))
 
@@ -81,6 +81,19 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 5, 2 Ball >*/
 , m_p5_2Ball(AutoMode({
+    new DeployIntakeCommand(m_intake),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -34.048, 45.683, 0.5, 2000), // turn then drive
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new RunIntakeCommand(m_intake, 0.8, 2000),
+        // sets turret angle
+        // sets flywheel rpm
+    }),
+    new ConcurrentCommand({
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        // sets flywheel rpm
+    })
 }))
 
 /*< Position 2, 3 Ball >*/
@@ -98,8 +111,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 5000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 5000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 5000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
-        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
+       // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
+      //  new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
     }),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -77.458, 69.971, 0.5, 2000),
@@ -114,8 +127,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 5000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 5000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 5000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
-        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
+        // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
+        // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
     }),
 }))
 
@@ -134,8 +147,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
-        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 2000),
+        // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
+        // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 2000),
     }),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -222.535, 136.428, 0.5, 3000),
@@ -158,8 +171,8 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 5000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 5000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 5000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
-        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
+        // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
+        // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
     }),
 }))
 
