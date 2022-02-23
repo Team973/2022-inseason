@@ -13,23 +13,23 @@ constexpr int RIGHT_DRIVE_FX_A_ID = 15; /**< CAN ID for the first right drive fa
 constexpr int RIGHT_DRIVE_FX_B_ID = 14; /**< CAN ID for the second right drive falcon. */
 constexpr int RIGHT_DRIVE_FX_C_ID = 13; /**< CAN ID for the third right drive falcon. */
 // Physical Dimensions
-constexpr double DRIVE_GEAR_RATIO = (12.0 / 72.0) * (34.0 / 36.0); /** The gear ratio of the drive train. */
-constexpr double DRIVE_WIDTH = 23.75;                              /** Drive base width in inches. */
-constexpr double DRIVE_WHEEL_DIAMETER = 4.0;                       /** Diameter of the drive train wheels in inches. */
+constexpr double DRIVE_GEAR_RATIO = (11.0 / 72.0) * (34.0 / 36.0); /** The gear ratio of the drive train. */
+constexpr double DRIVE_WIDTH = 23.75 * 0.0254;                     /** Drive base width in meters. */
+constexpr double DRIVE_WHEEL_DIAMETER = 4.06;                       /** Diameter of the drive train wheels in inches. */
 // Movement
 constexpr double DRIVE_INCHES_PER_TICK = (Constants::PI * DRIVE_WHEEL_DIAMETER) * DRIVE_GEAR_RATIO /
                                          Constants::TALON_FX_TICKS_PER_REV; /** Inches per encoder tick. */
 constexpr double DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK =
     (DRIVE_INCHES_PER_TICK / Constants::TALON_FX_VELOCITY_UNIT_MS) *
-    Constants::MSEC_PER_SEC;               /** Inches per second per encoder tick. */
-constexpr double MAX_FT_PER_SECOND = 14.4; /** Max speed of the robot in feet per second. 18,000 ticks/100ms. */
+    Constants::MSEC_PER_SEC;                 /** Inches per second per encoder tick. */
+constexpr double MAX_FT_PER_SECOND = 14.873; /** Max speed of the robot in feet per second. 20,158 ticks/100ms. */
 constexpr double MAX_INCHES_PER_SECOND = MAX_FT_PER_SECOND * 12.0; /** Max speed of the robot in feet per second. */
 constexpr double MAX_METERS_PER_SECOND =
     MAX_FT_PER_SECOND / Constants::FEET_PER_METER; /** Max speed of the robot in meters per second. */
 constexpr double MAX_TICKS_PER_100_MS =
     MAX_INCHES_PER_SECOND /
     DRIVE_VELOCITY_INCHES_PER_SEC_PER_TICK;    /** Max robot speed in encoder ticks per 100 milliseconds. */
-constexpr double MAX_DEGREES_PER_SECOND = 360; /** Max robot angular speed in degrees per second. */
+constexpr double MAX_DEGREES_PER_SECOND = 600; /** Max robot angular speed in degrees per second. */
 constexpr double MAX_RADIANS_PER_SECOND =
     MAX_DEGREES_PER_SECOND * Constants::PI / 180; /** Max robot angular speed in radians per second. */
 constexpr double DRIVE_TELEOP_LIMIT = 1.0;        /** The max speed we want to run constantly in teleop. */
@@ -88,7 +88,13 @@ constexpr double CLIMB_INCHES_PER_TICK =
 /**
  * Gyro
  */
-constexpr int GYRO_SRX_ID = 4; /**< CAN ID for the SRX that the gyro is plugged in to. */
+/**< CAN id same as climb tower B */
+constexpr double P1_ANGLE = -156.0; /**< The angle to set when robot is in position 1. */
+constexpr double P2_ANGLE = -178.5; /**< The angle to set when robot is in position 2. */
+constexpr double P3_ANGLE = 114.0;  /**< The angle to set when robot is in position 3. */
+constexpr double P4_ANGLE = 114.0;  /**< The angle to set when robot is in position 4. */
+constexpr double P5_ANGLE = 46.5;   /**< The angle to set when robot is in position 5. */
+constexpr double P6_ANGLE = 24.0;   /**< The angle to set when robot is in position 6. */
 
 /**
  * Lights
@@ -106,5 +112,13 @@ constexpr int PNEU_HUB_CAN_ID = 1; /**< CAN ID for the pneumatics hub. */
 constexpr int DRIVER_STICK = 0;   /** Driver stick usb slot. */
 constexpr int OPERATOR_STICK = 1; /** Operator stick usb slot. */
 constexpr int TEST_STICK = 2;     /** Test stick usb slot. */
+
+/**
+ * Tolerances In in - TODO: update
+ */
+static constexpr double DIST_TOLERANCE = 2.0;
+static constexpr double DIST_RATE_TOLERANCE = 10.0;
+static constexpr double ANGLE_TOLERANCE = 8.0;
+static constexpr double ANGLE_RATE_TOLERANCE = 20.0;
 
 }  // namespace frc973

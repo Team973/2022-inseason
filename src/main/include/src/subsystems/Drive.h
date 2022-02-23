@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <ctre/Phoenix.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
@@ -37,6 +38,14 @@ public:
     };
 
     /**
+     * Enum used for position drive
+     */
+    enum Target {
+        angle = 0,
+        dist = 1,
+    };
+
+    /**
      * Updates this subsystem.
      */
     void Update() override;
@@ -65,6 +74,17 @@ public:
      * Set Left/Right motor outputs using Position Drive.
      */
     void PositionCalcOutput();
+
+    /**
+     * Set Left/Right motor outputs using Kinematics of drive.
+     */
+    void KinematicCalcOutput();
+
+    /**
+     * Set the drive mode
+     * @param mode the drive mode
+     */ 
+    void SetDriveMode(DriveMode mode);
 
     /**
      * Sets current angle of drive
@@ -97,6 +117,53 @@ public:
      */
     double GetVelocity();
 
+    /**
+     * Clamps the speed of the motors
+     * @param minSpeed the minimum speed
+     * @param maxSpeed the maximum speed
+     */
+    void ClampSpeed(double minSpeed, double maxSpeed);
+
+    /**
+     * Zeros the drive motors
+     */ 
+    void Zero();
+
+    /**
+     * Zeros the current drive positions
+     */
+    void ZeroPosition();
+
+    /**
+     * Set Drive to chosen mode (coast or break)
+     * @param mode the chosen mode
+     */
+    void SetNeutralMode(NeutralMode mode);
+
+    /**
+     * Sets the target position
+     * @param dist target distance
+     * @param angle target angle
+     */
+    void SetPositionTarget(double dist, double angle);
+
+    /**
+     * Checks if the drive is on target
+     * @return true if the drive is on target
+     */
+    std::array<bool, 2> &PositionOnTarget();
+
+    /**
+     * Checks if the drive in on target
+     * @param dist the target distance tolerance
+     * @param distRate the velocity tolerance
+     * @param angle the target angle tolerance
+     * @param angleRate the anglular rate tolerance
+     * @return if the drive is on target within tolerance
+     */
+    std::array<bool, 2> &PositionOnTargetWithTolerance(const double dist, const double distRate, const double angle,
+                                                       const double angleRate);
+
 private:
     WPI_TalonFX *m_leftDriveTalonA;
     WPI_TalonFX *m_leftDriveTalonB;
@@ -111,6 +178,9 @@ private:
 
     double m_throttle;
     double m_turn;
+
+    double m_minSpeed;
+    double m_maxSpeed;
 
     double m_gyroAngle;
 
@@ -139,5 +209,13 @@ private:
     double m_targetAngle;
     double m_currentPos;
     double m_currentAngle;
+
+    double m_leftPosZero;
+    double m_rightPosZero;
+
+    double m_angularRate;
+    double m_rate;
+
+    std::array<bool, 2> m_onTarget;
 };
 }  // namespace frc973

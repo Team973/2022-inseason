@@ -2,13 +2,13 @@
 
 namespace frc973 {
 
-ShooterCommand::ShooterCommand(Shooter *shooter, u_int32_t targetTime)
-        : m_shooter(shooter), m_targetTime(targetTime), m_endRun(false) {
+ShooterCommand::ShooterCommand(Shooter *shooter, Shooter::ShooterState shooterState, u_int32_t targetTime) 
+    : m_shooter(shooter), m_shooterState(shooterState), m_targetTime(targetTime) {
 }
 
 void ShooterCommand::Init() {
     SetTargetMSec(m_targetTime);
-    m_shooter->EnableShooter();
+    m_shooter->SetShooterState(m_shooterState);
 }
 
 void ShooterCommand::Run() {
@@ -21,4 +21,4 @@ bool ShooterCommand::IsCompleted() {
 void ShooterCommand::PostExecute() {
     m_shooter->DisableShooter();
 }
-}
+}  // namespace frc973

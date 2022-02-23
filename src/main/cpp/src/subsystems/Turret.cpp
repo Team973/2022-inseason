@@ -7,7 +7,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limelightPID(0.04, 0.0, 0.0, 0)
+        , m_limelightPID(0.08, 0.0, 0.0, 0)
         , m_limelightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         , m_checkStatus(0)
@@ -246,6 +246,18 @@ bool Turret::GetWrappedState() {
     }
 }
 
+bool Turret::GetRightSensor() {
+    return m_turretMotor->IsRevLimitSwitchClosed();
+}
+
+bool Turret::GetLeftSensor() {
+    return m_turretMotor->IsFwdLimitSwitchClosed();
+}
+
+bool Turret::GetMiddleSensor() {
+    return !m_turretSensor->Get();
+}
+
 void Turret::Update() {
     m_currentAngleInDegrees = m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE;
 
@@ -260,27 +272,19 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("CurrAngle", m_currentAngleInDegrees);
-    frc::SmartDashboard::PutNumber("ticksPosition", m_tickPosition);
-    frc::SmartDashboard::PutNumber("ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
-    frc::SmartDashboard::PutNumber("turretStatorCurrent", m_turretMotor->GetStatorCurrent());
-    frc::SmartDashboard::PutNumber("turretOuputCurrent", m_turretMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
-    frc::SmartDashboard::PutNumber("Left Sensor", m_leftSideTurnSensor);
-    frc::SmartDashboard::PutNumber("Right Sensor", m_rightSideTurnSensor);
+    frc::SmartDashboard::PutNumber("T CurrAngle", m_currentAngleInDegrees);
+    frc::SmartDashboard::PutNumber("T ticksPosition", m_tickPosition);
+    frc::SmartDashboard::PutNumber("T ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
+    frc::SmartDashboard::PutNumber("T turretStatorCurrent", m_turretMotor->GetStatorCurrent());
+    frc::SmartDashboard::PutNumber("T turretSupplyCurrent", m_turretMotor->GetSupplyCurrent());
 
-    SmartDashboard::PutBoolean("turret digital input", m_turretSensor->Get());
+    SmartDashboard::PutBoolean("T digital input", m_turretSensor->Get());
     // right side limit switch
-    SmartDashboard::PutBoolean("turret fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
+    SmartDashboard::PutBoolean("T fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
     // left side limit switch
-    SmartDashboard::PutBoolean("turret rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
+    SmartDashboard::PutBoolean("T rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 
-    SmartDashboard::PutNumber("checkstatus", m_checkStatus);
-    SmartDashboard::PutNumber("recieved angle", m_gyroAngle);
-    SmartDashboard::PutNumber("angle difference", std::abs(m_gyroAngle - m_gyroSnapshotWrapping));
-    SmartDashboard::PutNumber("gyro snapshot", m_gyroSnapshotWrapping);
-    SmartDashboard::PutBoolean("Turn to left", m_wrappingToLeftSensor);
-    SmartDashboard::PutBoolean("Turn to right", m_wrappingToRightSensor);
+    SmartDashboard::PutNumber("T checkstatus", m_checkStatus);
 }
 
 }  // namespace frc973

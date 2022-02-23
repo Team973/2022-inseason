@@ -5,6 +5,7 @@
 namespace frc973 {
 
 void Robot::DisabledInit() {
+    m_drive->SetNeutralMode(NeutralMode::Coast);
     m_turret->SetNeutralMode(NeutralMode::Coast);
     // m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     // m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
@@ -14,18 +15,16 @@ void Robot::DisabledInit() {
 }
 
 void Robot::DisabledPeriodic() {
-    // turret calibration + CANdle switching
-    switch (m_turret->SensorCalibrate()) {
-    case 0:
-        m_lights->SetLightsState(Lights::LightsState::Middle);
-        break;
-    case 1:
-        m_lights->SetLightsState(Lights::LightsState::Initialization);
-        break;
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->TurretCalibration();
 
-    default:
-        m_lights->SetLightsState(Lights::LightsState::Off);
-        break;
+    if (m_operatorStick->GetRawButtonPressed(Stick::BtnX)) {
+        m_autoManager->IndexAutoMode(true);
+    }
+
+    if (m_operatorStick->GetRawButtonPressed(Stick::BtnB)) {
+        m_autoManager->IndexAutoMode(false);
     }
 }
 }  // namespace frc973

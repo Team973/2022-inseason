@@ -19,6 +19,7 @@ void Robot::RobotInit() {
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
+    m_drive->Zero();
 
     /**
      * Intake
@@ -57,22 +58,20 @@ void Robot::RobotInit() {
     /**
      * Climb
      */
-    // m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
-    // m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
-    // m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
-    // m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
-    // m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
-    // m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
+    m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
+    m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
+    m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
+    m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
+    m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
+    m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
 
-    // m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
-    //                     m_topRightSensor);
+    m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
+                        m_topRightSensor);
 
     /**
      * Gyro
      */
-    m_gyroTalon = new TalonSRX(GYRO_SRX_ID);
-
-    m_gyro = new Gyro(m_gyroTalon);
+    m_gyro = new Gyro(m_conveyorTowerMotorB);
     m_gyro->Zero();
 
     /**
@@ -93,34 +92,45 @@ void Robot::RobotInit() {
     m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
 
     /**
+     * Subsystem Manager
+     */
+    m_subsystemManager = new SubsystemManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_climb,
+                                              m_gyro, m_lights);
+
+    /**
      * Joysticks
      */
     m_driverStick = new StickController(DRIVER_STICK);
     m_operatorStick = new StickController(OPERATOR_STICK);
     m_testStick = new StickController(TEST_STICK);
+
+    /**
+     * Automanager
+     */
+    m_autoManager = new AutoManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_gyro);
 }
 
 void Robot::RobotPeriodic() {
-    m_drive->Update();
-    m_intake->Update();
-    m_conveyor->Update();
-    m_turret->Update();
-    m_shooter->Update();
-    // m_climb->Update();
-    m_gyro->Update();
-    m_lights->Update();
-
-    // m_drive->DashboardUpdate();
-    // m_intake->DashboardUpdate();
-    // m_conveyor->DashboardUpdate();
+    m_drive->DashboardUpdate();
+    m_intake->DashboardUpdate();
+    m_conveyor->DashboardUpdate();
     m_turret->DashboardUpdate();
-    // m_shooter->DashboardUpdate();
-    // m_climb->DashboardUpdate();
-    // m_gyro->DashboardUpdate();
-    // m_lights->DashboardUpdate();
+    m_shooter->DashboardUpdate();
+    m_climb->DashboardUpdate();
+    m_gyro->DashboardUpdate();
+    m_lights->DashboardUpdate();
+    m_autoManager->DashboardUpdate();
 
     m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
-    // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+    frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+
+    // limelight
+    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
+    frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
+    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
 }  // namespace frc973

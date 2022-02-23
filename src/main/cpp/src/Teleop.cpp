@@ -5,6 +5,10 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
+    m_drive->Zero();
+    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
+
     m_turret->SetNeutralMode(NeutralMode::Brake);
     // m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     // m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
@@ -13,26 +17,56 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+    m_drive->Update();
+    m_drive->SetAngle(m_gyro->GetWrappedAngle());
+    m_intake->Update();
+    m_conveyor->Update();
+    m_turret->Update();
+    m_shooter->Update();
+    // m_climb->Update();
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->Update();
+
+    /**
+     * Driver
+     */
     // shoot btn
-    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
-        // m_shooter->SetFlywheelRPM(2800);
-        // m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
+    if (m_driverStick->GetRawButton(Stick::RightTrigger) && m_subsystemManager->ReadyToShoot()) {  // Right Trigger
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     } else {
-        // m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
     }
 
+    // drive
+    if (m_driverStick->GetLeftBumper()) {
+        m_drive->SetQuickTurn(true);
+    } else {
+        m_drive->SetQuickTurn(false);
+    }
+
+    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
+                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
+
+    // gyro
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
+
+    /**
+     * Co-driver
+     */
     // shooter
-    if (m_operatorStick->RightTriggerAxis()) {
-        m_shooter->SetFlywheelRPM(2500);
+    if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
+        m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
+        m_lights->SetLightsState(Lights::LightsState::Off);
     }
 
     // turret
@@ -59,41 +93,6 @@ void Robot::TeleopPeriodic() {
         }
     }
 
-    //_____________________________________________
-
-    // if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
-    //     m_limelight->SetCameraDriver();
-    //     m_turret->Turn(
-    //         m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)),
-    //         0.0);
-    // } else {
-    //     if (m_operatorStick->GetLeftBumper()) {
-    //         m_limelight->SetVisionCamera();
-    //         if (m_turret->GetWrappedState()) {
-    //             m_limelight->SetLightMode(Limelight::LightMode::off);
-    //         } else {
-    //             m_limelight->SetLightMode(Limelight::LightMode::on);
-    //         }
-
-    //         // if(m_limelight->isTargetValid()){
-    //         // m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(),
-    //         // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
-    //         m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
-    //         // } else {
-    //         //     m_turret->CalcOutput(0.0, m_gyro->GetAngularRate(), 0.0);
-    //         // }
-    //     } else {
-    //         m_limelight->SetCameraDriver();
-    //     }
-    // }
-
-    // limelight
-    // if (m_operatorStick->GetLeftBumper()) {
-    //     m_limelight->SetVisionCamera();
-    // } else {
-    //     m_limelight->SetCameraDriver();
-    // }
-
     // intake
     m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
 
@@ -105,10 +104,6 @@ void Robot::TeleopPeriodic() {
 
     m_intake->SetPercentOutput(
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
-
-    // drive
-    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
-                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
 
     // conveyor
     m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *

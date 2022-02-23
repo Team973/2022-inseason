@@ -47,7 +47,7 @@ void Intake::Update() {
 
     switch (m_intakeMotorState) {
         case IntakeMotorState::Off:
-            m_intakeStatus = "off";
+            m_intakeStatus = "Off";
             m_intakeSpeed = 0.0;
             break;
         case IntakeMotorState::FeedIn:
@@ -63,13 +63,13 @@ void Intake::Update() {
             break;
     }
 
-    m_intakeSpeed = std::clamp(m_intakeSpeed, -0.6, 0.6);
+    m_intakeSpeed = std::clamp(m_intakeSpeed, -0.75, 0.75);
 
     m_intakeTalon->Set(m_intakeSpeed);
 }
 
 void Intake::DashboardUpdate() {
-    frc::SmartDashboard::PutString("intake status", m_intakeStatus);
+    frc::SmartDashboard::PutString("I status", m_intakeStatus);
 }
 
 }  // namespace frc973

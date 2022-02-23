@@ -3,7 +3,7 @@
 namespace frc973 {
 
 ConveyorFloorCommand::ConveyorFloorCommand(Conveyor *conveyor, Conveyor::FloorState floorState, uint32_t targetTime)
-        : m_conveyorFloorState(floorState), m_targetTime(targetTime) {
+        : m_conveyor(conveyor), m_conveyorFloorState(floorState), m_targetTime(targetTime) {
 }
 
 void ConveyorFloorCommand::Init() {

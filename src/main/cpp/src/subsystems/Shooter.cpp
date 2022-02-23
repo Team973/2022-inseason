@@ -47,10 +47,10 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelA->ConfigVoltageCompSaturation(12.0);
 
     // Velocity PID Parameters
-    m_flywheelA->Config_kP(0, 0.06, 30);
+    m_flywheelA->Config_kP(0, 0.2, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
-    m_flywheelA->Config_kF(0, 0.091, 30);
+    m_flywheelA->Config_kF(0, 0.0444, 30);
 }
 
 void Shooter::Update() {
@@ -81,13 +81,14 @@ void Shooter::Update() {
 }
 
 void Shooter::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("Flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
-    SmartDashboard::PutNumber("flywheel speed", m_flywheelSpeed);
-    SmartDashboard::PutString("flywheel state", m_shooterStatus);
-    SmartDashboard::PutNumber("stator current", m_flywheelA->GetStatorCurrent());
-    SmartDashboard::PutNumber("supply current", m_flywheelA->GetSupplyCurrent());
-    // frc::SmartDashboard::PutNumber("FlywheelA temp",m_flywheelA->GetTemperature());
-    // frc::SmartDashboard::PutNumber("FlywheelB temp",m_flywheelB->GetTemperature());
+    SmartDashboard::PutNumber("S flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
+    SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelRPMSetpoint);
+    SmartDashboard::PutNumber("S flywheel speed", m_flywheelSpeed);
+    SmartDashboard::PutString("S flywheel state", m_shooterStatus);
+    SmartDashboard::PutNumber("S stator current", m_flywheelA->GetStatorCurrent());
+    SmartDashboard::PutNumber("S supply current", m_flywheelA->GetSupplyCurrent());
+    frc::SmartDashboard::PutNumber("S FlywheelA temp",m_flywheelA->GetTemperature());
+    frc::SmartDashboard::PutNumber("S FlywheelB temp",m_flywheelB->GetTemperature());
 }
 
 void Shooter::SetShooterState(ShooterState state) {

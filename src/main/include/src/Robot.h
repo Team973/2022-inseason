@@ -23,6 +23,7 @@
 #include "lib/util/Util.h"
 #include "lib/helpers/StickController.h"
 
+#include "src/subsystems/AutoManager.h"
 #include "src/subsystems/Drive.h"
 #include "src/subsystems/Intake.h"
 #include "src/subsystems/Conveyor.h"
@@ -31,6 +32,8 @@
 #include "src/subsystems/Climb.h"
 #include "src/subsystems/Gyro.h"
 #include "src/subsystems/Lights.h"
+
+#include "SubsystemManager.h"
 
 using namespace frc;
 namespace frc973 {
@@ -48,6 +51,10 @@ public:
     void TestPeriodic() override;
 
 private:
+    /**
+     * Automanager
+     */
+    AutoManager *m_autoManager;
 
     /**
      * Drive
@@ -92,13 +99,13 @@ private:
     /**
      * Climb
      */
-    // WPI_TalonFX *m_climbTalonA;
-    // WPI_TalonFX *m_climbTalonB;
-    // DigitalInput *m_bottomLeftSensor;
-    // DigitalInput *m_bottomRightSensor;
-    // DigitalInput *m_topLeftSensor;
-    // DigitalInput *m_topRightSensor;
-    // Climb *m_climb;
+    WPI_TalonFX *m_climbTalonA;
+    WPI_TalonFX *m_climbTalonB;
+    DigitalInput *m_bottomLeftSensor;
+    DigitalInput *m_bottomRightSensor;
+    DigitalInput *m_topLeftSensor;
+    DigitalInput *m_topRightSensor;
+    Climb *m_climb;
 
     /**
      * Gyro
@@ -121,6 +128,11 @@ private:
      * Pneumatics
      */
     frc::PneumaticHub *m_pneumaticsHub;
+
+    /**
+     * Subsystem Manager
+     */
+    SubsystemManager *m_subsystemManager; 
 
     /**
      * Joysticks

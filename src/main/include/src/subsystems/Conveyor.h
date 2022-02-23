@@ -77,6 +77,16 @@ public:
     Conveyor::FloorState GetFloorState();
 
     /**
+     * Gets the current velocity of the floor
+     */
+    double GetFloorVelocity();
+
+    /**
+     * Gets the current velocity of the tower
+     */
+    double GetTowerVelocity();
+
+    /**
      * Where the state of the tower is set to
      * either off, feed in, feed out, or manual.
      * @param state new tower state
@@ -115,5 +125,7 @@ private:
     bool m_hasStartedReindexing;
     double m_manualTowerSpeed;
     double m_manualFloorSpeed;
+    std::string m_currentTowerState;
+    std::string m_currentFloorState;
 };
 }  // namespace frc973
