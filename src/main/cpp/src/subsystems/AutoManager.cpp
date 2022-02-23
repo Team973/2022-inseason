@@ -17,7 +17,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Test >*/
 , m_test(AutoMode({
-    // new SetGyroAngleCommand(m_gyro, 100.0, 500), // n
     // new PositionDriveCommand(m_drive, -24.0, 30.0, 0.2, 2000),
 
     // new SetFlywheelRPMCommand(m_shooter, 2000.0, 2000),
@@ -31,7 +30,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 2, 2 Ball >*/
 , m_p2_2Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
         new DeployIntakeCommand(m_intake),
@@ -52,7 +50,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 3, 2 Ball >*/
 , m_p3_2Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P3_ANGLE, 500),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, 30.914, 119.353, 0.5, 2000),
         new DeployIntakeCommand(m_intake),
@@ -73,11 +70,23 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 5, 2 Ball >*/
 , m_p5_2Ball(AutoMode({
+    new DeployIntakeCommand(m_intake),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -34.048, 45.683, 0.5, 2000), // turn then drive
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new RunIntakeCommand(m_intake, 0.8, 2000),
+        // sets turret angle
+        // sets flywheel rpm
+    }),
+    new ConcurrentCommand({
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        // sets flywheel rpm
+    })
 }))
 
 /*< Position 2, 3 Ball >*/
 , m_p2_3Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P2_ANGLE, 500),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
         new DeployIntakeCommand(m_intake),
@@ -114,7 +123,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 5, 4 Ball >*/
 , m_p5_4Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P5_ANGLE, 500),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -34.048, 45.683, 0.5, 2000),
         new DeployIntakeCommand(m_intake),
