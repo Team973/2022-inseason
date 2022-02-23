@@ -52,7 +52,23 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 3, 2 Ball >*/
 , m_p3_2Ball(AutoMode({
-    new SetGyroAngleCommand(m_gyro, P3_ANGLE, 500)
+    new SetGyroAngleCommand(m_gyro, P3_ANGLE, 500),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, 30.914, 119.353, 0.5, 2000),
+        new DeployIntakeCommand(m_intake),
+        new RunIntakeCommand(m_intake, 1.0, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new SetTurretAngleCommand(m_turret, 7.691, 2000),
+        new SetFlywheelRPMCommand(m_shooter, 1000.0, 2000),
+    }),
+    new ConcurrentCommand({
+        new DeployIntakeCommand(m_intake),
+        new RunIntakeCommand(m_intake, 1.0, 13000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 13000),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 13000),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 13000),
+        new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 13000),
+    }),
 }))
 
 /*< Position 5, 2 Ball >*/
