@@ -253,10 +253,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 9;  // amount of autos we have +1 
+        m_autoIndex = 6;  // amount of autos we have -1 
     }
 
-    if (m_autoIndex == 8) {  // amount of autos we have +1 -1 
+    if (m_autoIndex == 7) {  // amount of autos we have +1 -1 
         m_autoIndex = 0;
     }
 
