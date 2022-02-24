@@ -17,17 +17,6 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-    m_drive->Update();
-    m_drive->SetAngle(m_gyro->GetWrappedAngle());
-    m_intake->Update();
-    m_conveyor->Update();
-    m_turret->Update();
-    m_shooter->Update();
-    // m_climb->Update();
-    m_gyro->Update();
-    m_lights->Update();
-    m_subsystemManager->Update();
-
     /**
      * Driver
      */
@@ -49,8 +38,8 @@ void Robot::TeleopPeriodic() {
         m_drive->SetQuickTurn(false);
     }
 
-    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.05),
-                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.05));
+    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.1),
+                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // gyro
     if (m_driverStick->GetRawButton(Stick::RightBumper)) {
@@ -94,11 +83,36 @@ void Robot::TeleopPeriodic() {
     m_intake->SetPercentOutput(
         m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
 
-    // conveyor
-    m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                    1.0);  // left stick y-axis for co-driver
-    m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-                                    1.0);  // left stick x-axis for co-driver
+    // climb state
+    double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
+    if (m_climb->GetClimbStatus()) {
+        m_climb->SetClimbSpeed(manualClimb);
+    } else {
+        m_climb->SetClimbSpeed(0.0);
+    }
+
+    if (m_operatorStick->GetRawButton(Stick::Back)) {  // Back btn
+        m_climb->SetClimbState(Climb::ClimbState::Manual);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+    } else {
+        // conveyor
+        m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+                                        1.0);  // left stick y-axis for co-driver
+        m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+                                        1.0);  // left stick x-axis for co-driver
+    }
+
+    m_drive->Update();
+    m_drive->SetAngle(m_gyro->GetWrappedAngle());
+    m_intake->Update();
+    m_conveyor->Update();
+    m_turret->Update();
+    m_shooter->Update();
+    m_climb->Update();
+    m_gyro->Update();
+    m_lights->Update();
+    m_subsystemManager->Update();
 }
 
 }  // namespace frc973
