@@ -8,6 +8,7 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
+        // , m_currentLimit(Current(true, 30, 60, 0.05))  
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0)
         , m_currentTowerState("Off")
@@ -21,7 +22,11 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
 
     m_floorMotor->SetInverted(true);
     m_towerMotorA->SetInverted(true);
-    m_towerMotorB->SetInverted(true);
+    m_towerMotorB->SetInverted(false);
+
+    // m_floorMotor->ConfigSupplyCurrentLimit(m_currentLimit);
+    // m_towerMotorA->ConfigSupplyCurrentLimit(m_currentLimit);
+    // m_towerMotorB->ConfigSupplyCurrentLimit(m_currentLimit);
 
     m_towerMotorB->Follow(*m_towerMotorA);
 }

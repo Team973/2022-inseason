@@ -119,6 +119,8 @@ private:
     TowerState m_towerState;
     FloorState m_floorState;
 
+    // Current m_currentLimit;
+
     uint32_t m_reindexingStartTime;
     uint32_t m_elapsedTime;
     bool m_lastB;

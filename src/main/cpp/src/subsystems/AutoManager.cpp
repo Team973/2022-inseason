@@ -21,7 +21,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new WaitCommand(500),
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, 1.0, 5000),
-        new PositionDriveCommand(m_drive, -40.91, 5.323, 0.5, 2000), //-40.91 , 5.323
+        new PositionDriveCommand(m_drive, -40.91, 5.353, 0.5, 5000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new SetTurretAngleCommand(m_turret, 7.69, 2000),
         new SetFlywheelRPMCommand(m_shooter, 3600.0, 2000),
@@ -41,9 +41,10 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 2, 2 Ball >*/
 , m_p2_2Ball(AutoMode({
+    new DeployIntakeCommand(m_intake),
+    new WaitCommand(500), 
+    new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -34.048, -177.683, 0.5, 2000),
-        new DeployIntakeCommand(m_intake),
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new SetTurretAngleCommand(m_turret, -15.7, 2000),
@@ -61,10 +62,11 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 3, 2 Ball >*/
 , m_p3_2Ball(AutoMode({
+    new DeployIntakeCommand(m_intake),
+    new WaitCommand(500),
     new ConcurrentCommand({
+        new RunIntakeCommand(m_intake, 1.0, 5000),
         new PositionDriveCommand(m_drive, -40.91, 5.353, 0.5, 2000),
-        new DeployIntakeCommand(m_intake),
-        new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new SetTurretAngleCommand(m_turret, 7.69, 2000),
         new SetFlywheelRPMCommand(m_shooter, 3600.0, 2000),
@@ -253,10 +255,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 6;  // amount of autos we have -1 
+        m_autoIndex = 6;  // amount of autos we have -1
     }
 
-    if (m_autoIndex == 7) {  // amount of autos we have +1 -1 
+    if (m_autoIndex == 7) {  // amount of autos we have +1 -1
         m_autoIndex = 0;
     }
 

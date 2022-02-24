@@ -57,9 +57,9 @@ double SubsystemManager::CalcFlywheelRPM() {
 
 bool SubsystemManager::ReadyToShoot() {
     if (m_shooter->IsAtSpeed()) {
-        if (m_limelight->GetXOffset() == 0.0) {
+        // if (m_limelight->GetXOffset() == 0.0) {
             return true;
-        }
+        // }
     }
     return false;
 }
