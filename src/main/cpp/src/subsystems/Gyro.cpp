@@ -2,6 +2,7 @@
 
 namespace frc973 {
 Gyro::Gyro(TalonSRX* gyroTalon) : m_gyro(PigeonIMU(gyroTalon)) {
+    m_gyro.ConfigFactoryDefault();
 }
 
 double Gyro::GetWrappedAngle() {

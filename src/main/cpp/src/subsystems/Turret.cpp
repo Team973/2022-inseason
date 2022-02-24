@@ -7,7 +7,7 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limelightPID(0.08, 0.0, 0.0, 0)
+        , m_limelightPID(0.04, 0.0, 0.0, 0)
         , m_limelightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         , m_checkStatus(0)
@@ -86,8 +86,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     m_limelightPID.SetTarget(0);
     double output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    // output +=
-        // (-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+    output += (-angularVelocity * Constants::GYRO_CONSTANT);// + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
     m_limelightToMotorPower = output;
 

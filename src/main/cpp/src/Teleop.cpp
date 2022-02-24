@@ -42,9 +42,9 @@ void Robot::TeleopPeriodic() {
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // gyro
-    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-        m_gyro->Zero();
-    }
+    // if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+    //     m_gyro->Zero();
+    // }
 
     /**
      * Co-driver
@@ -59,14 +59,14 @@ void Robot::TeleopPeriodic() {
     }
 
     // limelight
-    if (m_operatorStick->GetRightBumper()) {
+    if (m_driverStick->GetRightBumper()) {
         m_limelight->SetVisionCamera();
     } else {
         m_limelight->SetCameraDriver();
     }
 
     // turret
-    if (!m_operatorStick->GetRightBumper()) {
+    if (!m_driverStick->GetRightBumper()) {
         m_turret->Turn(
             m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), 0);
     }
