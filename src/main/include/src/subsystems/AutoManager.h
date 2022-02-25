@@ -37,13 +37,16 @@ namespace frc973 {
  * Define the names of the Autos.
  */
 enum AutoName {
-    Test,      /**< Test auto with every command in it*/
-    DoNothing, /**< Does nothing.*/
-    P2_2Ball,  /**< Position 2, 2 Ball*/
-    P3_2Ball,  /**< Position 3, 2 Ball*/
-    P5_2Ball,  /**< Position 5, 2 Ball*/
-    P2_3Ball,  /**< Position 2, 3 Ball*/
-    P5_4Ball,  /**< Position 5, 4 Ball*/
+    Test,        /**< Test auto with every command in it*/
+    DoNothing,   /**< Does nothing.*/
+    P2_2Ball,    /**< Position 2, 2 Ball*/
+    P3_2Ball,    /**< Position 3, 2 Ball*/
+    P5_2Ball,    /**< Position 5, 2 Ball*/
+    P2_3Ball,    /**< Position 2, 3 Ball*/
+    P5_4Ball,    /**< Position 5, 4 Ball*/
+    P2_5Ball,    /**< Position 2, 5 Ball*/
+    P1_2BallSt1, /**< Position 1, 2 Ball, Steal 1*/
+    P6_2BallSt1, /**< Position 6, 2 Ball, Steal 1*/
 };
 
 /**
@@ -112,6 +115,9 @@ private:
     AutoMode m_p5_2Ball;
     AutoMode m_p2_3Ball;
     AutoMode m_p5_4Ball;
+    AutoMode m_p2_5Ball;
+    AutoMode m_p1_2BallSt1;
+    AutoMode m_p6_2BallSt1;
     AutoMode m_currentMode;
 
     double m_autoIndex;
