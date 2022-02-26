@@ -45,24 +45,24 @@ void Robot::TeleopPeriodic() {
     if (m_driverStick->GetRawButton(Stick::RightBumper)) {
         m_gyro->Zero();
     }
+
+    // limelight
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
+    }
    
     /**
      * Co-driver
      */
     // shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(3000);
+        m_shooter->SetFlywheelRPM(2900);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_lights->SetLightsState(Lights::LightsState::Off);
-    }
-
-    // limelight
-    if (m_driverStick->GetRightBumper()) {
-        m_limelight->SetVisionCamera();
-    } else {
-        m_limelight->SetCameraDriver();
     }
 
     // turret
@@ -85,21 +85,21 @@ void Robot::TeleopPeriodic() {
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
-    if (m_operatorStick->GetRawButton(Stick::Back)) {
+    if (m_operatorStick->GetBackButton()) {
         m_climb->SetClimbState(Climb::ClimbState::Manual);
-        m_climb->SetClimbSpeed(manualClimb);
     }
 
-    if (m_operatorStick->GetRawButton(Stick::Start)) {
+    if (m_operatorStick->GetStartButton()) {
         m_climb->SetClimbState(Climb::ClimbState::Off);
-        m_climb->SetClimbSpeed(manualClimb);
     }
 
     if (m_climb->GetClimbStatus()) {
-        m_climb->SetClimbState(Climb::ClimbState::Manual);
+        m_climb->SetClimbSpeed(manualClimb);
+        m_intake->SetIntakeState(Intake::IntakeState::Deploy);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
     } else {
+        m_climb->SetClimbSpeed(0.0);
         // conveyor
         m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
                                         1.0);  // left stick y-axis for co-driver
