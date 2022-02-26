@@ -79,7 +79,7 @@ void Robot::TeleopPeriodic() {
     // turret
     m_turret->UpdateValues(m_gyro->GetAngle());
 
-    if (m_operatorStick->GetRightBumper() && m_limelight->isTargetValid()) {
+    if (m_operatorStick->GetRightBumper()) {
         m_turret->SetTurretState(TurretState::Tracking);
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
