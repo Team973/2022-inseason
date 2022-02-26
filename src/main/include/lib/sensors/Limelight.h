@@ -116,10 +116,10 @@ private:
     double m_previousLatency;
 
     static constexpr double TARGET_HEIGHT =
-        96.0; /**< Target's height in inches from ground*/
-    static constexpr double CAMERA_HEIGHT = 34.8; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
+        103.0; /**< Target's height in inches from ground*/
+    static constexpr double CAMERA_HEIGHT = 33.5; /**< Camera's Height in inches from ground TODO: UPDATE VALUE*/
     static constexpr double CAMERA_ANGLE =
-        35.0; /**< Camera Angle in degrees wrt ground*/
+        42.76; /**< Camera Angle in degrees wrt ground*/
               // ### for comp; ### for pbot
     static constexpr double CAMERA_BUMPER_OFFSET =
         1; /**< The offset in inches between the camera and the bumper edge TODO: UPDATE VALUE - current cf*/

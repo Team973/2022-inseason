@@ -10,8 +10,8 @@ Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *b
         , m_bottomRightSensor(bottomRightSensor)
         , m_topLeftSensor(topLeftSensor)
         , m_topRightSensor(topRightSensor)
-        , m_currentLimit(SupplyCurrentLimitConfiguration(true, 0, 0, 0.0))  // TODO: update values
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 0, 0, 0.0))   // TODO: update values
+        , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))   // TODO: update values - 2021: 80, 100, 0.05
         , m_currentState(ClimbState::Off)
         , m_inClimbState(false)
         , m_climbSpeed(0.0)
@@ -20,8 +20,8 @@ Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *b
     m_climbTalonA->ConfigFactoryDefault();
     m_climbTalonB->ConfigFactoryDefault();
 
-    m_climbTalonA->SetInverted(false);
-    m_climbTalonB->SetInverted(false);
+    m_climbTalonA->SetInverted(TalonFXInvertType::CounterClockwise);
+    m_climbTalonB->SetInverted(TalonFXInvertType::Clockwise);
 
     m_climbTalonA->Config_kP(0, 0.0, 0);
     m_climbTalonA->Config_kI(0, 0.0, 0);
@@ -124,11 +124,11 @@ void Climb::Update() {
     }
 
     if (GetTopHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, -0.2, 0.0);  // TODO: update min
+        climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);  // TODO: update min
     }
 
     if (GetBottomHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.2);  // TODO:update max
+        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);  // TODO:update max
     }
 
     if (m_currentState == ClimbState::Deploy) {

@@ -50,7 +50,7 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelA->Config_kP(0, 0.2, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
-    m_flywheelA->Config_kF(0, 0.0444, 30);
+    m_flywheelA->Config_kF(0, 0.053, 30);
 }
 
 void Shooter::Update() {
@@ -104,7 +104,7 @@ void Shooter::SetFlywheelSpeed(double speed) {
 }
 
 bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 50);
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 80);
 }
 
 void Shooter::EnableShooter() {
