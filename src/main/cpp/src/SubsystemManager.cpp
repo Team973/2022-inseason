@@ -69,7 +69,12 @@ void SubsystemManager::Update() {
      * Turret calculation values
      */
     m_turret->UpdateValues(m_gyro->GetAngle());
-    m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+
+    if (m_limelight->isTargetValid()) {
+        m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+    } else {
+        m_turret->SetTrackingValues(m_limelight->GetXOffset(), 0.0, 0.0);
+    }
 
     /**
      * Ready to shoot lights

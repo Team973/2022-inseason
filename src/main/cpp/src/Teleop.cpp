@@ -10,8 +10,8 @@ void Robot::TeleopInit() {
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 
     m_turret->SetNeutralMode(NeutralMode::Brake);
-    // m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
-    // m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
+    m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
 }
