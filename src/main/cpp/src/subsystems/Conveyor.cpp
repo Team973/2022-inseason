@@ -27,6 +27,10 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
     m_towerMotorA->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_towerMotorB->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_floorMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
+
+    // Voltage Compensation
+    m_towerMotorA->ConfigVoltageCompSaturation(12.0);
+    m_floorMotor->ConfigVoltageCompSaturation(12.0);
 }
 
 void Conveyor::Update() {
@@ -45,7 +49,7 @@ void Conveyor::Update() {
             break;
         case TowerState::FeedIn:
             m_currentTowerState = "FeedIn";
-            m_towerMotorA->Set(ControlMode::PercentOutput, 1.0);
+            m_towerMotorA->Set(ControlMode::PercentOutput, 0.5);
             break;
         case TowerState::FeedOut:
             m_currentTowerState = "FeedOut";
@@ -65,7 +69,7 @@ void Conveyor::Update() {
             break;
         case FloorState::FeedIn:
             m_currentFloorState = "FeedIn";
-            m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
             break;
         case FloorState::FeedOut:
             m_currentFloorState = "FeedOut";
