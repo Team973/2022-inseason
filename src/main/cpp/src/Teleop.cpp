@@ -21,7 +21,7 @@ void Robot::TeleopPeriodic() {
      * Driver
      */
     // shoot btn
-    if (m_driverStick->GetRawButton(Stick::RightTrigger) && m_subsystemManager->ReadyToShoot()) {  // Right Trigger
+    if (m_driverStick->GetRawButton(Stick::RightTrigger)) { //&& m_subsystemManager->ReadyToShoot()) {  // Right Trigger
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
@@ -42,16 +42,16 @@ void Robot::TeleopPeriodic() {
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // gyro
-    // if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-    //     m_gyro->Zero();
-    // }
-
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
+   
     /**
      * Co-driver
      */
     // shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(2800);
+        m_shooter->SetFlywheelRPM(3000);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -85,13 +85,17 @@ void Robot::TeleopPeriodic() {
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
-    if (m_climb->GetClimbStatus()) {
+    if (m_operatorStick->GetRawButton(Stick::Back)) {
+        m_climb->SetClimbState(Climb::ClimbState::Manual);
         m_climb->SetClimbSpeed(manualClimb);
-    } else {
-        m_climb->SetClimbSpeed(0.0);
     }
 
-    if (m_operatorStick->GetRawButton(Stick::Back)) {  // Back btn
+    if (m_operatorStick->GetRawButton(Stick::Start)) {
+        m_climb->SetClimbState(Climb::ClimbState::Off);
+        m_climb->SetClimbSpeed(manualClimb);
+    }
+
+    if (m_climb->GetClimbStatus()) {
         m_climb->SetClimbState(Climb::ClimbState::Manual);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
