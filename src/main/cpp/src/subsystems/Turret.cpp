@@ -8,14 +8,21 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_limelightPID(0.04, 0.0, 0.0, 0)
-        , m_limelightToMotorPower(0.0)
         , m_turretState(TurretState::Manual)
         , m_checkStatus(0)
         , m_leftSensorChecked(false)
         , m_rightSensorChecked(false)
         , m_centerSensorChecked(false)
-        , m_leftSideTurnSensor(-TURRET_SOFT_SENSOR)
-        , m_rightSideTurnSensor(TURRET_SOFT_SENSOR) {
+        , m_leftSideTurnSensor(-TURRET_SENSOR_SOFT)
+        , m_rightSideTurnSensor(TURRET_SENSOR_SOFT)
+        , m_wrappingToLeftSensor(false)
+        , m_wrappingToRightSensor(false)
+        , m_wrappingInProgress(false)
+        , m_gyroSnapshotWrapping(0.0)
+        , m_angleInDegrees(0.0)
+        , m_limelightXOffset(0.0) 
+        , m_angularRate(0.0)
+        , m_translationalValue(0.0){
     m_turretMotor->ConfigFactoryDefault();
 
     m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
@@ -44,13 +51,21 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
     m_limelightPID.SetTarget(0.0);
 }
 
-void Turret::Turn(double angleInDegrees, double gyroOffset) {
+void Turret::SetTurretState(TurretState state) {
+    m_turretState = state;
+}
+
+void Turret::SetTurnValue(double angle) {
+    m_angleInDegrees = angle;
+}
+
+void Turret::Turn(double angleInDegrees) {
     // 2048 ticks per rotation and gear ratio of 1:TURRET_GEAR_RATIO
     m_tickPosition = angleInDegrees * TURRET_TICKS_PER_DEGREE;
 
     switch (PassedSuperSoft()) {
         case 0:
-            m_turretMotor->Set(ControlMode::Position, (angleInDegrees - gyroOffset) * TURRET_TICKS_PER_DEGREE);
+            m_turretMotor->Set(ControlMode::Position, angleInDegrees * TURRET_TICKS_PER_DEGREE);
             break;
         case 1:
             m_turretMotor->Set(ControlMode::Position, m_rightSideTurnSensor);
@@ -81,16 +96,67 @@ double Turret::CalcJoystickAngleInDegrees(double x, double y) {
     return angleInDegrees;
 }
 
+void Turret::SetTrackingValues(double xOffset, double angularRate, double translationalValue) {
+    m_limelightXOffset = xOffset;
+    m_angularRate = angularRate;
+    m_translationalValue = translationalValue;
+}
+
 void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double translationalAngularRate) {
+    m_tickPosition = m_turretMotor->GetSelectedSensorPosition();
+
     // double output;
     m_limelightPID.SetTarget(0);
-    double output = m_limelightPID.CalcOutput(limelightXOffset);
+    double output; 
+    std::clamp(output, -1.0, 1.0);
+    output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output += (-angularVelocity * Constants::GYRO_CONSTANT);// + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
+    output += (-angularVelocity *
+               Constants::GYRO_CONSTANT);  // + (translationalAngularRate * Constants::TRANSLATION_CONSTANT);
 
-    m_limelightToMotorPower = output;
-
-    m_turretMotor->Set(ControlMode::PercentOutput, output);
+    if (m_wrappingToRightSensor == true) {
+        if (PassedSuperSoft() == 1) {
+            m_wrappingToRightSensor = false;
+            m_gyroSnapshotWrapping = m_gyroAngle;
+            m_wrappingInProgress = false;
+        } else {
+            m_turretMotor->Set(ControlMode::Position, m_rightSideTurnSensor);
+        }
+    } else if (m_wrappingToLeftSensor == true) {
+        if (PassedSuperSoft() == 2) {
+            m_wrappingToLeftSensor = false;
+            m_gyroSnapshotWrapping = m_gyroAngle;
+            m_wrappingInProgress = false;
+        } else {
+            m_turretMotor->Set(ControlMode::Position, m_leftSideTurnSensor);
+        }
+    } else {
+        if (PassedSuperSoft() == 2) {
+            output = std::clamp(output, 0.0, 1.0);
+            if (m_wrappingInProgress == false) {
+                m_gyroSnapshotWrapping = m_gyroAngle;
+                m_wrappingInProgress = true;
+            } else {
+                if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
+                    m_wrappingToRightSensor = true;
+                }
+            }
+        } else if (PassedSuperSoft() == 1) {
+            output = std::clamp(output, -1.0, 0.0);
+            if (m_wrappingInProgress == false) {
+                m_gyroSnapshotWrapping = m_gyroAngle;
+                m_wrappingInProgress = true;
+            } else {
+                if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
+                    m_wrappingToLeftSensor = true;
+                }
+            }
+        } else {
+            m_wrappingInProgress = false;
+            m_gyroSnapshotWrapping = m_gyroAngle;
+        }
+        m_turretMotor->Set(ControlMode::PercentOutput, output);
+    }
 }
 
 double Turret::GetTurretAngle() {
@@ -138,6 +204,10 @@ void Turret::CheckedSensorsToFalse() {
     m_rightSensorChecked = false;
     m_centerSensorChecked = false;
     m_checkStatus = 0;
+
+    m_wrappingInProgress = false;
+    m_wrappingToLeftSensor = false;
+    m_wrappingToRightSensor = false;
 }
 
 int Turret::SensorCalibrate() {
@@ -147,7 +217,7 @@ int Turret::SensorCalibrate() {
 
         // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
         if (m_checkStatus == 0) {
-            m_turretMotor->SetNeutralMode(NeutralMode::Brake);
+            SetNeutralMode(NeutralMode::Brake);
             m_checkStatus = 1;
             SetHomeOffset();
             return m_checkStatus;
@@ -166,6 +236,28 @@ int Turret::PassedSuperSoft() {
         return 2;  // left limit passed
     } else {
         return 0;  // no limits passed
+    }
+}
+
+bool Turret::StickMoved(double x, double y) {
+    double distance = 0;
+    distance = sqrt(pow(x, 2.0) + pow(y, 2.0));
+    if (distance < 0.5) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+void Turret::UpdateValues(double gyroAngle) {
+    m_gyroAngle = gyroAngle;
+}
+
+bool Turret::GetWrappedState() {
+    if (m_wrappingToLeftSensor || m_wrappingToRightSensor) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -188,8 +280,10 @@ void Turret::Update() {
         case TurretState::Off:
             break;
         case TurretState::Manual:
+            Turn(m_angleInDegrees);
             break;
-        case TurretState::AutoAim:
+        case TurretState::Tracking:
+            CalcOutput(m_limelightXOffset, m_angularRate, m_translationalValue);
             break;
     }
 }

@@ -19,7 +19,7 @@ namespace frc973 {
 enum class TurretState {
     Off,    /**< Disables turret. */
     Manual, /**< Manual turret control. */
-    AutoAim /**< Limelight targeting mode. */
+    Tracking /**< Limelight targeting mode. */
 };
 
 class Turret : public Subsystem {
@@ -27,9 +27,19 @@ public:
     Turret(WPI_TalonFX *turretMotor, DigitalInput *talonSensor);
 
     /**
+     * Sets turret state
+     */
+    void SetTurretState(TurretState state);
+
+    /**
+     * Sets the manual turn amount
+     */
+    void SetTurnValue(double angle); 
+
+    /**
      * @param angleInDegrees angle its going to turn to
      */
-    void Turn(double angleInDegrees, double gyroOffset);
+    void Turn(double angleInDegrees);
 
     /**
      * @param x x-value of operator stick
@@ -38,9 +48,17 @@ public:
     double CalcJoystickAngleInDegrees(double x, double y);
 
     /**
-     * Calculates output to feed into a percent output loops
+     * Sets Tracking values
      */
-    void CalcOutput(double lightlightTarget, double angularVelocity, double translationalAngularRate);
+    void SetTrackingValues(double xOffset, double angularRate, double translationalValue);
+
+    /**
+     * Calculates output to feed into a percent output loops
+     * @param limelightTarget xoffset of the target
+     * @param angularVelocity how fast the robot is turning compensation
+     * @param translationalAngularRate how fast the robot is moving compensation
+     */
+    void CalcOutput(double limelightTarget, double angularVelocity, double translationalAngularRate);
 
     /**
      * Returns current turret angle
@@ -63,6 +81,7 @@ public:
 
     /**
      * Sets the current angle of the turret
+     * @param angle the desired angle to set the turret too
      */
     void SetTurretAngle(double angle);
 
@@ -86,6 +105,34 @@ public:
      * Check if passed the super soft stop, 0 is for normal, 1 means passed the right limit, 2 for passed left limit
      */
     int PassedSuperSoft();
+
+    /**
+     * checks if the joysticks are trying to be moved, true if moved, false if radial distance is zero
+     * @param x x-value of operator stick
+     * @param y y-value of operator stick
+     */
+    bool StickMoved(double x, double y);
+
+    /**
+     * updates values the turret needs to know from other subsystems
+     * @param gyroAngle current wrapped gyro angle
+     */
+    void UpdateValues(double gyroAngle);
+    
+    /**
+     * if the turret is in the middle of wrapping around the hardstop, true if wrapping, false if not
+     */
+    bool GetWrappedState();
+
+    /**
+     * Wrap to left sensor
+     */
+    void WrapToLeft();
+
+    /**
+     * Wrap to right sensor
+     */
+    void WrapToRight();
 
     /**
      * Checks the left sensor
@@ -119,13 +166,13 @@ private:
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
+    //update values
+    double m_gyroAngle;
+
     double m_currentAngleInDegrees;
     double m_tickPosition;
 
     PID m_limelightPID;
-
-    double m_limelightToMotorPower;
-    double m_translationalAngularRate;
 
     TurretState m_turretState;
 
@@ -135,6 +182,19 @@ private:
     double m_centerSensorChecked;
     double m_leftSideTurnSensor;
     double m_rightSideTurnSensor;
+
+    bool m_wrappingToLeftSensor;
+    bool m_wrappingToRightSensor;
+    bool m_wrappingInProgress;
+    double m_gyroSnapshotWrapping;
+
+    //turn value
+    double m_angleInDegrees;
+
+    //tracking values
+    double m_limelightXOffset;
+    double m_angularRate;
+    double m_translationalValue;
 };
 
 }  // namespace frc973

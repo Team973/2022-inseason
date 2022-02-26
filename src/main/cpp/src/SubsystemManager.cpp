@@ -66,14 +66,14 @@ bool SubsystemManager::ReadyToShoot() {
 
 void SubsystemManager::Update() {
     /**
-     * Turret calculations
+     * Turret calculation values
      */
+    m_turret->UpdateValues(m_gyro->GetAngle());
+
     if (m_limelight->isTargetValid()) {
-        m_turret->CalcOutput(
-            m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
-            // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
-        // will make turret not do anything -> leo
+        m_turret->SetTrackingValues(m_limelight->GetXOffset(), 0.0, 0.0);
     }
 
     /**

@@ -65,10 +65,20 @@ void Robot::TeleopPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Off);
     }
 
+    //limelight
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
+    }
+
     // turret
-    if (!m_driverStick->GetRightBumper()) {
-        m_turret->Turn(
-            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)), 0);
+    if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(
+            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
+    } else {
+        m_turret->SetTurretState(TurretState::Tracking);
     }
 
     // intake
