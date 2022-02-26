@@ -80,11 +80,9 @@ void Robot::TeleopPeriodic() {
     m_turret->UpdateValues(m_gyro->GetAngle());
 
     if (m_operatorStick->GetRightBumper() && m_limelight->isTargetValid()) {
-        m_limelight->SetVisionCamera();
         m_turret->SetTurretState(TurretState::Tracking);
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
-        m_limelight->SetCameraDriver();
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(
             m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));

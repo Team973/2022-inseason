@@ -68,13 +68,13 @@ void SubsystemManager::Update() {
     /**
      * Turret calculations
      */
-    if (m_limelight->isTargetValid()) {
-        m_turret->CalcOutput(
-            m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
-            // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
-    } else {
-        // will make turret not do anything -> leo
-    }
+    // if (m_limelight->isTargetValid()) {
+    //     m_turret->CalcOutput(
+    //         m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+    //         // m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    // } else {
+    //     // will make turret not do anything -> leo
+    // }
 
     /**
      * Ready to shoot lights
