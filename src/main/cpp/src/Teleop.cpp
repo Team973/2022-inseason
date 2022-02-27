@@ -58,7 +58,7 @@ void Robot::TeleopPeriodic() {
      */
     // shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(2900);
+        m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -108,6 +108,7 @@ void Robot::TeleopPeriodic() {
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_turret->SetTurretState(TurretState::Off);
     } else {
         m_climb->SetClimbSpeed(0.0);
         // conveyor

@@ -31,6 +31,8 @@ void Robot::AutonomousPeriodic() {
     m_shooter->Update();
     m_lights->Update();
     m_drive->Update();
+    m_drive->SetAngle(m_gyro->GetAngle());
+    m_gyro->Update();
     /* End post periodic*/
 }
 } // namespace frc973

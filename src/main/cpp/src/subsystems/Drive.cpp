@@ -32,7 +32,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.04, 0.0, 0.0)  // 0.04, 0.0, 0.0
-        , m_turnPID(0.0, 0.0, 0.0)
+        , m_turnPID(0.04, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
         , m_currentPos(0.0)
@@ -171,6 +171,7 @@ void Drive::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
 
     SmartDashboard::PutNumber("D target pos", m_targetPos);
+    SmartDashboard::PutNumber("D target angle", m_targetAngle);
     SmartDashboard::PutNumber("D curr pos", m_currentPos);
  
     SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
@@ -233,13 +234,11 @@ void Drive::PositionCalcOutput() {
                     (m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK)) /
                    2.0;
     m_onTarget = PositionOnTarget();
-    // if (m_onTarget[Target::angle]) {
-    //     SetThrottleTurn(0.0, -m_turnPID.CalcOutput(m_currentAngle));
-    // } else {
-    //     // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), -m_turnPID.CalcOutput(m_currentAngle));
-    //     SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
-    // }
-    SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    if (m_onTarget[Target::angle]) {
+        SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
+    } else {
+        SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
+    }
     KinematicCalcOutput();
 }
 
@@ -293,7 +292,6 @@ void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
 
 void Drive::Zero() {
     m_currentPos = 0.0;
-    m_currentAngle = 0.0;
     m_leftDriveTalonA->SetSelectedSensorPosition(0.0);
     m_rightDriveTalonA->SetSelectedSensorPosition(0.0);
 }
@@ -309,6 +307,8 @@ void Drive::SetNeutralMode(NeutralMode mode) {
 }
 
 void Drive::SetPositionTarget(double dist, double angle) {
+    m_onTarget[Target::dist] = false;
+    m_onTarget[Target::angle] = false;
     m_targetPos = dist;
     m_targetAngle = angle;
 }
