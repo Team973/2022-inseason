@@ -27,7 +27,7 @@ void PositionDriveCommand::Run() {
 }
 
 bool PositionDriveCommand::IsCompleted() {
-    return m_endRun;
+    return m_endRun || HasElapsed();
 }
 
 void PositionDriveCommand::PostExecute() {

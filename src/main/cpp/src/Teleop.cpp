@@ -21,7 +21,8 @@ void Robot::TeleopPeriodic() {
      * Driver
      */
     // shoot btn
-    if (m_driverStick->GetRawButton(Stick::RightTrigger)) { //&& m_subsystemManager->ReadyToShoot()) {  // Right Trigger
+    if (m_driverStick->GetRawButton(
+            Stick::RightTrigger)) {  //&& m_subsystemManager->ReadyToShoot()) {  // Right Trigger
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
@@ -52,7 +53,7 @@ void Robot::TeleopPeriodic() {
     } else {
         m_limelight->SetVisionCamera();
     }
-   
+
     /**
      * Co-driver
      */
@@ -65,7 +66,7 @@ void Robot::TeleopPeriodic() {
         m_lights->SetLightsState(Lights::LightsState::Off);
     }
 
-    //limelight
+    // limelight
     if (m_driverStick->GetRightBumper()) {
         m_limelight->SetCameraDriver();
     } else {
@@ -108,7 +109,13 @@ void Robot::TeleopPeriodic() {
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        m_turret->SetTurretState(TurretState::Off);
+        // m_turret->SetTurretAngle(0.0);
+        m_turret->SetTurnValue(0.0);
+        m_limelight->SetCameraDriver();
+        if (m_turret->GetTurretAngle() == 0.0) {
+            m_turret->SetTurretState(TurretState::Off);
+        }
+
     } else {
         m_climb->SetClimbSpeed(0.0);
         // conveyor

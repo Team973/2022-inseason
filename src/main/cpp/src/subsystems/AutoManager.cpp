@@ -17,7 +17,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Test >*/
 , m_test(AutoMode({
-    new PositionDriveCommand(m_drive, 0.0, 90.0, 0.5, 5000),
 }))
 
 /*< DoNothing >*/
@@ -115,17 +114,17 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2500),
        // new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
        // new ShooterCommand(m_shooter, Shooter::ShooterState::Tracking, 5000),
     }),
-    new PositionDriveCommand(m_drive, -77.458, -108.529, 0.5, 2000), // 108.529
     new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -77.458, 108.529, 0.5, 5000), 
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new SequentialCommand({
             new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
             new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
+            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         }),
         new SetTurretAngleCommand(m_turret, 67.79, 2000),
         new SetFlywheelRPMCommand(m_shooter, 3000.0, 2000),
