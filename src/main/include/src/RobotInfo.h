@@ -119,7 +119,7 @@ constexpr int TEST_STICK = 2;     /** Test stick usb slot. */
 static constexpr double DIST_TOLERANCE = 2.0;
 static constexpr double DIST_RATE_TOLERANCE = 10.0;
 static constexpr double ANGLE_TOLERANCE = 1.0;
-static constexpr double ANGLE_RATE_TOLERANCE = 10.0;
+static constexpr double ANGLE_RATE_TOLERANCE = 1.0;
 static constexpr double LIMELIGHT_ANGLE_TOLERANCE = 2.0;
 
 }  // namespace frc973
