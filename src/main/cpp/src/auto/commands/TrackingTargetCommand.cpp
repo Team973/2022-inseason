@@ -8,11 +8,12 @@ TrackingTargetCommand::TrackingTargetCommand(Drive *drive, Limelight *limelight,
 
 void TrackingTargetCommand::Init() {
     SetTargetMSec(m_targetTime);
-    m_turret->CalcOutput(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+    m_limelight->SetVisionCamera();
+    m_turret->SetTurretState(TurretState::Tracking);
 }
 
 void TrackingTargetCommand::Run() {
-    if (m_limelight->GetXOffset() == 0.0 || HasElapsed()) {
+    if (std::abs(m_limelight->GetXOffset()) < LIMELIGHT_ANGLE_TOLERANCE) {
         m_endRun = true;
     } else {
         m_endRun = false;
@@ -20,7 +21,7 @@ void TrackingTargetCommand::Run() {
 }
 
 bool TrackingTargetCommand::IsCompleted() {
-    return m_endRun;
+    return m_endRun || HasElapsed();
 }
 
 void TrackingTargetCommand::PostExecute() {
