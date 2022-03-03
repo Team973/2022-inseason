@@ -2,10 +2,11 @@
 
 namespace frc973 {
 
-Intake::Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid)
+Intake::Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid, frc::Solenoid *intakeSoftSolenoid)
         : m_intakeSpeed(0.0)
         , m_intakeTalon(intakeTalon)
         , m_intakeSolenoid(intakeSolenoid)
+        , m_intakeSoftSolenoid(intakeSoftSolenoid)
         , m_intakeState(IntakeState::Retract)
         , m_intakeMotorState(IntakeMotorState::Off)
         , m_intakeStatus("off") {
@@ -38,10 +39,18 @@ void Intake::SetPercentOutput(double speed) {
 void Intake::Update() {
     switch (m_intakeState) {
         case IntakeState::Deploy:
-            m_intakeSolenoid->Set(true);
+            if ((Util::GetMsecTime() - m_timer) > INTAKE_SOLENOID_DELAY) {
+                m_intakeSoftSolenoid->Set(true);
+                m_intakeSolenoid->Set(false);
+            } else {
+                m_intakeSoftSolenoid->Set(false);
+                m_intakeSolenoid->Set(true);
+            }
             break;
         case IntakeState::Retract:
+            m_timer = Util::GetMsecTime();
             m_intakeSolenoid->Set(false);
+            m_intakeSoftSolenoid->Set(false);
             break;
     }
 

@@ -72,6 +72,7 @@ private:
      */
     PWMTalonFX *m_intakeTalon;
     Solenoid *m_intakeSolenoid;
+    Solenoid *m_intakeSoftSolenoid;
     Intake *m_intake;
 
     /**

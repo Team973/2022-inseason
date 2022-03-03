@@ -8,6 +8,7 @@
 #include <string>
 
 #include "lib/bases/Subsystem.h"
+#include "lib/util/Util.h"
 #include "src/RobotInfo.h"
 
 namespace frc973 {
@@ -17,7 +18,7 @@ public:
     /**
      * Constructs the intake subsystem
      */
-    Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid);
+    Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid, frc::Solenoid *intakeSoftSolenoid);
 
     enum class IntakeState {
         Deploy, /* Deploys the Intake */
@@ -73,13 +74,17 @@ public:
 
 private:
     double m_intakeSpeed;
+    double m_timer;
 
     frc::PWMTalonFX *m_intakeTalon;
     frc::Solenoid *m_intakeSolenoid;
+    frc::Solenoid *m_intakeSoftSolenoid;
     IntakeState m_intakeState;
     IntakeMotorState m_intakeMotorState;
-    
+
     std::string m_intakeStatus;
+
+    const double INTAKE_SOLENOID_DELAY = 500.0; //delay in msec
 };
 
 }  // namespace frc973

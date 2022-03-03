@@ -26,8 +26,9 @@ void Robot::RobotInit() {
      */
     m_intakeTalon = new PWMTalonFX(INTAKE_FX_PWM_ID);
     m_intakeSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
+    m_intakeSoftSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOFT_SOLENOID_ID);
 
-    m_intake = new Intake(m_intakeTalon, m_intakeSolenoid);
+    m_intake = new Intake(m_intakeTalon, m_intakeSolenoid, m_intakeSoftSolenoid);
 
     /**
      * Conveyor
