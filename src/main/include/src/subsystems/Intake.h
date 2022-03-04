@@ -84,7 +84,7 @@ private:
 
     std::string m_intakeStatus;
 
-    const double INTAKE_SOLENOID_DELAY = 500.0; //delay in msec
+    const double INTAKE_SOLENOID_DELAY = 1000.0; //delay in msec
 };
 
 }  // namespace frc973
