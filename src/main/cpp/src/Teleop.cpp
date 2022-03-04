@@ -57,9 +57,16 @@ void Robot::TeleopPeriodic() {
     /**
      * Co-driver
      */
+    // tmp
+    if (m_operatorStick->GetAButton()) {
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(0.0);
+    } else {
+        m_turret->SetTurretState(TurretState::Tracking);
+    }
     // shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(1800);
+        // m_shooter->SetFlywheelRPM(1800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
