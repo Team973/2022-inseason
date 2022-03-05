@@ -116,9 +116,8 @@ void Robot::TeleopPeriodic() {
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        // m_turret->SetTurretAngle(0.0);
         m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(0.0);
+        m_turret->SetTurnValue(-10.0);
         m_limelight->SetCameraDriver();
 
     } else {
