@@ -34,6 +34,7 @@ void Robot::AutonomousPeriodic() {
     m_lights->Update();
     m_drive->Update();
     m_drive->SetAngle(m_gyro->GetAngle());
+    m_drive->SetAngularRate(m_gyro->GetAngularRate());
     m_gyro->Update();
     m_subsystemManager->Update();
     /* End post periodic*/

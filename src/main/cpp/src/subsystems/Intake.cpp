@@ -9,6 +9,7 @@ Intake::Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid, frc:
         , m_intakeSoftSolenoid(intakeSoftSolenoid)
         , m_intakeState(IntakeState::Retract)
         , m_intakeMotorState(IntakeMotorState::Off)
+        , m_timer(0.0)
         , m_intakeStatus("off") {
 }
 

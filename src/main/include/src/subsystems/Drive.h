@@ -92,6 +92,11 @@ public:
     void SetAngle(double angle);
 
     /**
+     * Sets current angular rate of drive
+     */
+    void SetAngularRate(double rate);
+
+    /**
      * Sets current position of drive
      */
     void SetPosition(double position);

@@ -32,7 +32,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
         , m_positionPID(0.04, 0.0, 0.0)  // 0.04, 0.0, 0.0
-        , m_turnPID(0.01, 0.0, 0.0)
+        , m_turnPID(0.012, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
         , m_currentPos(0.0)
@@ -263,6 +263,10 @@ void Drive::SetThrottleTurn(double throttle, double turn) {
 
 void Drive::SetAngle(double angle) {
     m_currentAngle = angle;
+}
+
+void Drive::SetAngularRate(double rate) {
+    m_angularRate = rate;
 }
 
 void Drive::SetPosition(double position) {

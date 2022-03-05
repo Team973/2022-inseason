@@ -132,6 +132,7 @@ void Robot::TeleopPeriodic() {
 
     m_drive->Update();
     m_drive->SetAngle(m_gyro->GetWrappedAngle());
+    m_drive->SetAngularRate(m_gyro->GetAngularRate());
     m_intake->Update();
     m_conveyor->Update();
     m_turret->Update();
