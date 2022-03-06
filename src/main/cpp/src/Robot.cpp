@@ -65,9 +65,10 @@ void Robot::RobotInit() {
     m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
     m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
     m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
+    m_climbSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, CLIMB_SOLENOID_ID);
 
     m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
-                        m_topRightSensor);
+                        m_topRightSensor, m_climbSolenoid);
 
     /**
      * Gyro

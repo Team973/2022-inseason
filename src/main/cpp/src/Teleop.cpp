@@ -111,6 +111,10 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbState(Climb::ClimbState::Off);
     }
 
+    if(m_operatorStick->GetYButton()) {
+        m_climb->SetClimbState(Climb::ClimbState::Level_3);
+    }
+
     if (m_climb->GetClimbStatus()) {
         m_climb->SetClimbSpeed(manualClimb);
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);

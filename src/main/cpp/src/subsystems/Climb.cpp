@@ -3,20 +3,25 @@
 namespace frc973 {
 
 Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
-             DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor)
+             DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor,
+             Solenoid *climbSolenoid)
         : m_climbTalonA(climbTalonA)
         , m_climbTalonB(climbTalonB)
         , m_bottomLeftSensor(bottomLeftSensor)
         , m_bottomRightSensor(bottomRightSensor)
         , m_topLeftSensor(topLeftSensor)
         , m_topRightSensor(topRightSensor)
-        , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
-        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))   // TODO: update values - 2021: 80, 100, 0.05
+        , m_climbSolenoid(climbSolenoid)
+        , m_currentLimit(
+              SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
+        , m_statorLimit(
+              StatorCurrentLimitConfiguration(true, 80, 100, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
         , m_currentState(ClimbState::Off)
         , m_inClimbState(false)
         , m_climbSpeed(0.0)
         , m_climbTarget(0.0)
-        , m_climbState("Off") {
+        , m_timer(0.0)
+        , m_lv3Climb(false) {
     m_climbTalonA->ConfigFactoryDefault();
     m_climbTalonB->ConfigFactoryDefault();
 
@@ -67,6 +72,11 @@ void Climb::SetClimbTarget(double target) {
     m_climbTarget = target;
 }
 
+void Climb::SetNeutralMode(NeutralMode mode) {
+    m_climbTalonA->SetNeutralMode(mode);
+    m_climbTalonB->SetNeutralMode(mode);
+}
+
 bool Climb::GetClimbStatus() {
     return m_inClimbState;
 }
@@ -114,6 +124,19 @@ void Climb::Update() {
         case ClimbState::Manual:
             m_climbState = "Manual";
             m_inClimbState = true;
+            climbMotorOutput = m_climbSpeed;
+            break;
+        case ClimbState::Level_3:
+            m_climbState = "Level 3";
+            m_inClimbState = true;
+
+            m_climbSolenoid->Set(true);
+            if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
+                SetNeutralMode(Coast);
+            } else {
+                SetNeutralMode(Brake);
+            }
+            
             climbMotorOutput = m_climbSpeed;
             break;
         default:

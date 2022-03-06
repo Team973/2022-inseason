@@ -106,6 +106,7 @@ private:
     DigitalInput *m_bottomRightSensor;
     DigitalInput *m_topLeftSensor;
     DigitalInput *m_topRightSensor;
+    Solenoid *m_climbSolenoid;
     Climb *m_climb;
 
     /**

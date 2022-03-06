@@ -7,6 +7,7 @@
 
 #include "lib/bases/Subsystem.h"
 #include "src/RobotInfo.h"
+#include "lib/util/Util.h"
 
 using namespace frc;
 
@@ -24,7 +25,8 @@ public:
      * @param topRightSensor the top right sensor
      */
     Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
-          DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor);
+          DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor,
+          Solenoid *climbSolenoid);
 
     /**
      * Sets the climb to run automatically, manually through joystick, or lock and stop moving.
@@ -32,7 +34,8 @@ public:
     enum class ClimbState {
         Deploy, /**< Runs the climb up automatically. */
         Manual, /**< Sets the climb motors to manual control. */
-        Off     /**< Locks the climb and sets motors to 0. */
+        Level_3,
+        Off /**< Locks the climb and sets motors to 0. */
     };
 
     /**
@@ -62,6 +65,12 @@ public:
      * @param target the target in inches
      */
     void SetClimbTarget(double target);
+    
+    /**
+     * Set Drive to chosen mode (coast or break)
+     * @param mode the chosen mode
+     */
+    void SetNeutralMode(NeutralMode mode);
 
     /**
      * Gets the climbs current status.
@@ -100,6 +109,8 @@ private:
     DigitalInput *m_topLeftSensor;
     DigitalInput *m_topRightSensor;
 
+    Solenoid *m_climbSolenoid;
+
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
@@ -107,8 +118,12 @@ private:
     bool m_inClimbState;
     double m_climbSpeed;
     double m_climbTarget;
+    double m_timer;
+    bool m_lv3Climb;
 
     std::string m_climbState;
+
+    const double CLIMB_COAST_DELAY = 500.0;  // Delay in msec.
 };
 
 }  // namespace frc973
