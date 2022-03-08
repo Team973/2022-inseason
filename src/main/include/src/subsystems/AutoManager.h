@@ -2,20 +2,11 @@
 
 #include <vector>
 
-#include "lib/bases/Subsystem.h"
 #include "lib/bases/Command.h"
-
-#include "src/auto/AutoMode.h"
-
-#include "src/subsystems/AutoManager.h"
-#include "src/subsystems/Conveyor.h"
-#include "src/subsystems/Gyro.h"
-#include "src/subsystems/Intake.h"
-#include "src/subsystems/Shooter.h"
-#include "src/subsystems/Drive.h"
-#include "src/subsystems/Turret.h"
+#include "lib/bases/Subsystem.h"
 #include "lib/sensors/Limelight.h"
-
+#include "lib/util/Util.h"
+#include "src/auto/AutoMode.h"
 #include "src/auto/commands/ConcurrentCommand.h"
 #include "src/auto/commands/ConveyorFloorCommand.h"
 #include "src/auto/commands/ConveyorTowerCommand.h"
@@ -24,13 +15,20 @@
 #include "src/auto/commands/RetractIntakeCommand.h"
 #include "src/auto/commands/RunIntakeCommand.h"
 #include "src/auto/commands/SequentialCommand.h"
+#include "src/auto/commands/SetFlywheelRPMCommand.h"
 #include "src/auto/commands/SetGyroAngleCommand.h"
 #include "src/auto/commands/SetTurretAngleCommand.h"
-#include "src/auto/commands/SetFlywheelRPMCommand.h"
 #include "src/auto/commands/ShooterCommand.h"
 #include "src/auto/commands/TrackingTargetCommand.h"
 #include "src/auto/commands/WaitCommand.h"
 #include "src/auto/commands/WaitForFlywheelCommand.h"
+#include "src/subsystems/AutoManager.h"
+#include "src/subsystems/Conveyor.h"
+#include "src/subsystems/Drive.h"
+#include "src/subsystems/Gyro.h"
+#include "src/subsystems/Intake.h"
+#include "src/subsystems/Shooter.h"
+#include "src/subsystems/Turret.h"
 
 namespace frc973 {
 
@@ -117,4 +115,5 @@ private:
 
     double m_autoIndex;
 };
+
 }  // namespace frc973
