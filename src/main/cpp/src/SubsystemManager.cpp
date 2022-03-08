@@ -52,7 +52,16 @@ double SubsystemManager::CalcPose() {
 
 double SubsystemManager::CalcFlywheelRPM() {
     double dist = m_limelight->GetHorizontalDist();
-    return dist;  // todo: update
+    double flywheelRPM = 0.0;
+
+    if (dist >= FLY_DIST_CLOSE) {
+        flywheelRPM = (FLY_RPM_FAR-FLY_RPM_CLOSE)/(FLY_DIST_FAR-FLY_DIST_CLOSE) * (dist - FLY_DIST_CLOSE) +
+        FLY_RPM_CLOSE;
+    } else {
+        flywheelRPM = FLY_RPM_CLOSE;
+    }
+
+    return flywheelRPM;
 }
 
 bool SubsystemManager::ReadyToShoot() {
