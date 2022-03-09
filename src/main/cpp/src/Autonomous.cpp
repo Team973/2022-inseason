@@ -22,7 +22,6 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
     /* Pre periodic */
-    // m_limelight->SetVisionCamera();
     /* End pre periodic */
 
     /* Post periodic, drive should update here last */

@@ -5,15 +5,15 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
-    m_drive->SetDriveMode(Drive::DriveMode::arcade);
-    m_drive->Zero();
-    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
-
     m_turret->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
+
+    m_drive->SetDriveMode(Drive::DriveMode::arcade);
+    m_drive->Zero();
+    m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 }
 
 void Robot::TeleopPeriodic() {
@@ -21,8 +21,7 @@ void Robot::TeleopPeriodic() {
      * Driver
      */
     // shoot btn
-    if (m_driverStick->GetRawButton(
-            Stick::RightTrigger)) {  //&& m_subsystemManager->ReadyToShoot()) {  // Right Trigger
+    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
@@ -57,16 +56,16 @@ void Robot::TeleopPeriodic() {
     /**
      * Co-driver
      */
-    // tmp
+    // shooter
     if (m_operatorStick->GetAButton()) {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(0.0);
     } else {
         m_turret->SetTurretState(TurretState::Tracking);
     }
-    // shooter
+
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        // m_shooter->SetFlywheelRPM(1800);
+        m_shooter->SetFlywheelRPM(1800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -99,7 +98,7 @@ void Robot::TeleopPeriodic() {
     }
 
     m_intake->SetPercentOutput(
-        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis for co-driver
+        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
@@ -111,7 +110,7 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbState(Climb::ClimbState::Off);
     }
 
-    if(m_operatorStick->GetYButton()) {
+    if (m_operatorStick->GetYButton()) {
         m_climb->SetClimbState(Climb::ClimbState::Level_3);
     }
 
@@ -128,9 +127,9 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbSpeed(0.0);
         // conveyor
         m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                        1.0);  // left stick y-axis for co-driver
+                                        1.0);  // left stick y-axis
         m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-                                        1.0);  // left stick x-axis for co-driver
+                                        1.0);  // left stick x-axis
     }
 
     m_drive->Update();
