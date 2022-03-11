@@ -1,7 +1,9 @@
 #include "src/subsystems/ColorSensor.h"
-
+#include <frc/DriverStation.h>
 
 namespace frc973 {
+
+
 
 ColorSensor::ColorSensor()
         : m_colorSensor{Constants::i2cPort} 
@@ -36,6 +38,24 @@ void ColorSensor::DashboardUpdate() {
     frc::SmartDashboard::PutString("Detected Color", m_colorString);
 }
 
+void ColorSensor::GetColor(){
+  std::string gameData;
+  gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+  if(gameData.length() > 0)
+
+    switch (gameData[0])
+    {
+      case 'B' :
+      //Blue case code
+        break;
+      case 'R' :
+      //Red case code
+        break;
+    default:
+      //This is corrupt data
+      break;
+    }
+}
 };
 
 

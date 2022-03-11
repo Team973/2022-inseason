@@ -20,7 +20,7 @@ namespace frc973 {
         
             void DashboardUpdate() override;
 
-
+            void GetColor();
 
 
         private:
