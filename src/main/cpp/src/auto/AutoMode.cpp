@@ -1,8 +1,7 @@
 #include "src/auto/AutoMode.h"
 
-
 namespace frc973 {
-AutoMode::AutoMode(std::vector<Command*> cmdList) : m_cmdList(cmdList), m_currIndex(0), m_needsInit(true) {
+AutoMode::AutoMode(std::vector<Command *> cmdList) : m_cmdList(cmdList), m_currIndex(0), m_needsInit(true) {
 }
 
 void AutoMode::Run() {
@@ -27,4 +26,4 @@ void AutoMode::Run() {
 bool AutoMode::IsCompleted() {
     return m_currIndex == static_cast<unsigned int>(m_cmdList.size());
 }
-}
+}  // namespace frc973
