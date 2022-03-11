@@ -4,12 +4,12 @@ namespace frc973 {
 
 Intake::Intake(frc::PWMTalonFX *intakeTalon, frc::Solenoid *intakeSolenoid, frc::Solenoid *intakeSoftSolenoid)
         : m_intakeSpeed(0.0)
+        , m_timer(0.0) 
         , m_intakeTalon(intakeTalon)
         , m_intakeSolenoid(intakeSolenoid)
         , m_intakeSoftSolenoid(intakeSoftSolenoid)
         , m_intakeState(IntakeState::Retract)
-        , m_intakeMotorState(IntakeMotorState::Off)
-        , m_timer(0.0)
+        , m_intakeMotorState(IntakeMotorState::Off) 
         , m_intakeStatus("off") {
 }
 

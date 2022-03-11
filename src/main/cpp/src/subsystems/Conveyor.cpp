@@ -11,7 +11,8 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0)
         , m_currentTowerState("Off")
-        , m_currentFloorState("Off") {
+        , m_currentFloorState("Off")
+        , m_readyToShoot (false) {
     m_towerMotorA->ConfigFactoryDefault();
     m_towerMotorB->ConfigFactoryDefault();
 
@@ -130,6 +131,13 @@ void Conveyor::SetManualTowerSpeed(double speed) {
 
 void Conveyor::SetManualFloorSpeed(double speed) {
     m_manualFloorSpeed = speed;
+}
+
+bool Conveyor::ReadyToShoot(){
+    if(m_readyToShoot){
+        return true;
+    } 
+    return false;
 }
 
 }  // namespace frc973

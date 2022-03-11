@@ -70,7 +70,7 @@ void SubsystemManager::Update() {
      */
     m_turret->UpdateValues(m_gyro->GetAngle());
 
-    if (m_limelight->isTargetValid()) {
+    if (m_limelight->IsTargetValid()) {
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), 0.0, 0.0);

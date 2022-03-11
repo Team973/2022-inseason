@@ -78,7 +78,7 @@ double Limelight::GetTargetLatency() {
     return m_limelightSensor->GetNumber("tl", 0.0) + min;
 }
 
-bool Limelight::isTargetValid() {
+bool Limelight::IsTargetValid() {
     return m_limelightSensor->GetNumber("tv", 0.0);
 }
 
@@ -99,6 +99,15 @@ double Limelight::GetHorizontalDist() {
     double x_calc = y_calc / (std::tan(angle_calc));
 
     return x_calc;
+}
+
+bool Limelight::OnTarget() {
+    if (IsTargetValid()) {
+        if (std::abs(GetXOffset()) < 5.0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 }  // namespace frc973

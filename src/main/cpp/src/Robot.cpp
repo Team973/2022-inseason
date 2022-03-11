@@ -127,7 +127,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight
-    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->IsTargetValid());
     frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
     frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());

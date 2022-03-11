@@ -112,6 +112,12 @@ public:
      */
     void SetManualFloorSpeed(double speed);
 
+    /**
+     * States wheather the shooter is ready to shoot
+     * @return if were ready to shoot
+     */
+    bool ReadyToShoot();
+
 private:
     TalonSRX *m_towerMotorA;
     TalonSRX *m_towerMotorB;
@@ -127,5 +133,7 @@ private:
     double m_manualFloorSpeed;
     std::string m_currentTowerState;
     std::string m_currentFloorState;
+
+    bool m_readyToShoot;
 };
 }  // namespace frc973

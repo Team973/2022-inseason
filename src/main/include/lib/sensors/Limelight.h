@@ -94,7 +94,7 @@ public:
      * Checks if limelight sees a target.
      * @return if on target.
      */
-    bool isTargetValid();
+    bool IsTargetValid();
 
     /**
      * Checks if the limelight is dead or not
@@ -106,6 +106,12 @@ public:
      * Gets the distance from the limelight to the target in the horizontal direction
      */
     double GetHorizontalDist();
+
+    /**
+     * Checks if the limelight is on target
+     * @return if the limelight is on target
+     */
+    bool OnTarget();
 
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
