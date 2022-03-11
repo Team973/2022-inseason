@@ -135,11 +135,11 @@ void Drive::Update() {
             break;
     }
 
+    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
+    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
+
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
-
-    // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
-    // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 }
 
 void Drive::DashboardUpdate() {
@@ -182,8 +182,6 @@ void Drive::DashboardUpdate() {
 }
 
 void Drive::ArcadeCalcOutput() {
-    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
-    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
     if (!m_isQuickTurn) {
         m_turn *= std::abs(m_throttle);
     }
