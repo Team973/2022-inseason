@@ -40,7 +40,7 @@ void Robot::RobotInit() {
      */
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
     m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_SRX_ID);
-    m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_SRX_ID);
+    m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_CEILING_SRX);
 
     m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
 
@@ -128,7 +128,7 @@ void Robot::RobotPeriodic() {
     m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{100}, units::pounds_per_square_inch_t{120});
+    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{100}, units::pounds_per_square_inch_t{60});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight
