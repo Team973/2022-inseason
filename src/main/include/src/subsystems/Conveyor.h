@@ -114,7 +114,7 @@ public:
 
 private:
     TalonSRX *m_towerMotorA;
-    TalonSRX *m_towerMotorB;
+    TalonSRX *m_chickenPluckerMotor;
     TalonSRX *m_floorMotor;
     TowerState m_towerState;
     FloorState m_floorState;

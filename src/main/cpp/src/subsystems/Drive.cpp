@@ -31,7 +31,7 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
         , m_driveChassisSpeeds()
         , m_driveWheelSpeeds()
         , m_driveOdometry(m_rotation2D, m_drivePose)
-        , m_positionPID(0.04, 0.0, 0.0)  // 0.04, 0.0, 0.0
+        , m_positionPID(0.04, 0.0, 0.0)
         , m_turnPID(0.012, 0.0, 0.0)
         , m_targetPos(0.0)
         , m_targetAngle(0.0)
@@ -135,11 +135,11 @@ void Drive::Update() {
             break;
     }
 
+    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
+    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
+
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
-
-    // m_leftDriveTalonA->Set(ControlMode::PercentOutput, (m_leftOutput));
-    // m_rightDriveTalonA->Set(ControlMode::PercentOutput, (m_rightOutput));
 }
 
 void Drive::DashboardUpdate() {
@@ -174,7 +174,7 @@ void Drive::DashboardUpdate() {
     SmartDashboard::PutNumber("D target angle", m_targetAngle);
     SmartDashboard::PutNumber("D curr pos", m_currentPos);
     SmartDashboard::PutNumber("D curr angle", m_currentAngle);
- 
+
     SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
     SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
 
@@ -182,8 +182,6 @@ void Drive::DashboardUpdate() {
 }
 
 void Drive::ArcadeCalcOutput() {
-    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
-    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
     if (!m_isQuickTurn) {
         m_turn *= std::abs(m_throttle);
     }

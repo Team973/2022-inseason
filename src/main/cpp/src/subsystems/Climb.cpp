@@ -13,9 +13,9 @@ Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *b
         , m_topRightSensor(topRightSensor)
         , m_climbSolenoid(climbSolenoid)
         , m_currentLimit(
-              SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
+              SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))
         , m_statorLimit(
-              StatorCurrentLimitConfiguration(true, 80, 100, 0.05))  // TODO: update values - 2021: 80, 100, 0.05
+              StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_currentState(ClimbState::Off)
         , m_inClimbState(false)
         , m_climbSpeed(0.0)
@@ -111,6 +111,8 @@ void Climb::Update() {
             m_climbState = "Off";
             m_inClimbState = false;
             climbMotorOutput = 0.0;
+            m_timer = Util::GetMsecTime();
+            SetNeutralMode(Brake);
             break;
         case ClimbState::Deploy:
             m_climbState = "Deploy";
@@ -120,11 +122,16 @@ void Climb::Update() {
             if (m_climbSpeed != 0.0) {
                 m_currentState = ClimbState::Manual;
             }
+
+            m_timer = Util::GetMsecTime();
+            SetNeutralMode(Brake);
             break;
         case ClimbState::Manual:
             m_climbState = "Manual";
             m_inClimbState = true;
             climbMotorOutput = m_climbSpeed;
+            m_timer = Util::GetMsecTime();
+            SetNeutralMode(Brake);
             break;
         case ClimbState::Level_3:
             m_climbState = "Level 3";
@@ -143,15 +150,17 @@ void Climb::Update() {
             m_climbState = "Off";
             m_inClimbState = false;
             climbMotorOutput = 0.0;
+            m_timer = Util::GetMsecTime();
+            SetNeutralMode(Brake);
             break;
     }
 
     if (GetTopHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);  // TODO: update min
+        climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);
     }
 
     if (GetBottomHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);  // TODO:update max
+        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7); 
     }
 
     if (m_currentState == ClimbState::Deploy) {

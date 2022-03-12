@@ -8,6 +8,11 @@ namespace frc973 {
 
 void Robot::RobotInit() {
     /**
+     * USB Camera- http://10.9.73.2:1181/stream.mjpg
+     */
+    frc::CameraServer::StartAutomaticCapture();
+    
+    /**
      * Drive
      */
     m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_FX_A_ID);
@@ -123,7 +128,7 @@ void Robot::RobotPeriodic() {
     m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
+    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{100}, units::pounds_per_square_inch_t{120});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight

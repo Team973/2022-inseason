@@ -16,9 +16,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         // clang-format off
 
 /*< Test >*/
-, m_test(AutoMode({
-    new PositionDriveCommand(m_drive, 36.0, 90.0, 0.1, 2000)
-}))
+, m_test(AutoMode({}))
 
 /*< DoNothing >*/
 , m_doNothing(AutoMode({}))
@@ -276,10 +274,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 6;  // amount of autos we have +1
+        m_autoIndex = 6;  // amount of autos we have -1
     }
 
-    if (m_autoIndex == 7) {  // amount of autos we have +2
+    if (m_autoIndex == 7) {  // amount of autos we have +1 -1
         m_autoIndex = 0;
     }
 

@@ -80,7 +80,7 @@ constexpr int CLIMB_FX_B_ID = 12; /**< CAN ID for a climb Falcon.*/
 constexpr int CLIMB_BOTTOM_LEFT_SENSOR = 4;  /** DIO channel for the bottom left climb hall sensor. */
 constexpr int CLIMB_BOTTOM_RIGHT_SENSOR = 1; /** DIO channel for the bottom right climb hall sensor. */
 constexpr int CLIMB_TOP_LEFT_SENSOR = 3;     /** DIO channel for the top left climb hall sensor. */
-constexpr int CLIMB_TOP_RIGHT_SENSOR = 2;    /** DIO channel for the top right climb hall sensor. */
+constexpr int CLIMB_TOP_RIGHT_SENSOR = 2;    /** DIO channel for the top right climb hall sensor. */\
 constexpr int CLIMB_SOLENOID_ID = 13;       /**< Channel for the climb Solenoid. */
 
 constexpr double CLIMB_PINION = 8.0;          /** Tooth count of the pinion gear on climb. */
