@@ -17,7 +17,7 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
 
     // Motor Directions
     m_flywheelA->SetInverted(TalonFXInvertType::Clockwise);
-    m_flywheelB->SetInverted(TalonFXInvertType::Clockwise);
+    m_flywheelB->SetInverted(TalonFXInvertType::CounterClockwise);
 
     // Neutral Mode
     m_flywheelA->SetNeutralMode(NeutralMode::Coast);
