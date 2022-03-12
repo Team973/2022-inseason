@@ -70,6 +70,8 @@ static constexpr double FLY_RPM_CLOSE = 2800.0; /** Flywheel RPM to shoot from t
 static constexpr double FLY_RPM_FAR = 4200; /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
 static constexpr double FLY_DIST_FAR = 201;    /** Distance from target to far. */
+static constexpr double TOO_FAR_LOCKOUT = 10000;    /** Distance from target in inches is too far, doesn't allow shooting. */
+
 
 /**
  * Climb Subsystem.
