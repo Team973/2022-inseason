@@ -15,6 +15,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/XboxController.h>
+#include <cameraserver/CameraServer.h>
 
 #include <ctre/Phoenix.h>
 
