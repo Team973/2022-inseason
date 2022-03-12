@@ -4,7 +4,7 @@ namespace frc973 {
 
 Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floorMotor)
         : m_towerMotorA(towerMotorA)
-        , m_towerMotorB(towerMotorB)
+        , m_chickenPluckerMotor(towerMotorB)
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
@@ -13,20 +13,20 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_currentTowerState("Off")
         , m_currentFloorState("Off") {
     m_towerMotorA->ConfigFactoryDefault();
-    m_towerMotorB->ConfigFactoryDefault();
+    m_chickenPluckerMotor->ConfigFactoryDefault();
 
     m_towerMotorA->SetNeutralMode(Coast);
-    m_towerMotorB->SetNeutralMode(Coast);
+    m_chickenPluckerMotor->SetNeutralMode(Coast);
 
     m_floorMotor->SetInverted(true);
     m_towerMotorA->SetInverted(true);
-    m_towerMotorB->SetInverted(true);
-
-    m_towerMotorB->Follow(*m_towerMotorA);
+    m_chickenPluckerMotor->SetInverted(true);
 
     m_towerMotorA->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
-    m_towerMotorB->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
+    m_chickenPluckerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_floorMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
+
+    m_chickenPluckerMotor->Follow(*m_floorMotor);
 
     // Voltage Compensation
     m_towerMotorA->ConfigVoltageCompSaturation(12.0);
@@ -58,7 +58,7 @@ void Conveyor::Update() {
         case TowerState::Manual:
             m_currentTowerState = "Manual";
             m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
-            // m_towerMotorB->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
+            // m_chickenPluckerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
@@ -84,10 +84,10 @@ void Conveyor::Update() {
 
 void Conveyor::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("CO Tower A Current", m_towerMotorA->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Tower B Current", m_towerMotorB->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("CO Tower B Current", m_chickenPluckerMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("CO Tower A Percent", m_towerMotorA->GetMotorOutputPercent());
-    frc::SmartDashboard::PutNumber("CO Tower B Percent", m_towerMotorB->GetMotorOutputPercent());
+    frc::SmartDashboard::PutNumber("CO Tower B Percent", m_chickenPluckerMotor->GetMotorOutputPercent());
     frc::SmartDashboard::PutNumber("CO Floor Motor Percent", m_floorMotor->GetMotorOutputPercent());
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
