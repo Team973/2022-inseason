@@ -54,7 +54,7 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
     m_flywheelA->Config_kP(0, 0.3, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
-    m_flywheelA->Config_kF(0, 0.056, 30);
+    m_flywheelA->Config_kF(0, 0.05, 30);
 }
 
 void Shooter::Update() {

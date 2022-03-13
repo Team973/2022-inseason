@@ -65,7 +65,7 @@ constexpr int FLYWHEEL_FX_B_ID = 9;                   /**< CAN ID for the right 
 constexpr double FLYWHEEL_GEAR_RATIO = (12.0 / 18.0); /** The gear ratio of the turret. */
 constexpr double FLYWHEEL_VELOCITY_RPM =
     Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;    /** Convert RPM to ticks per 100msec. */
-static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2600.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
+static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
 
 /**
  * Climb Subsystem.

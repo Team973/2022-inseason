@@ -128,7 +128,7 @@ void Robot::RobotPeriodic() {
     m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{100}, units::pounds_per_square_inch_t{120});
+    m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60}, units::pressure::pounds_per_square_inch_t{120});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight

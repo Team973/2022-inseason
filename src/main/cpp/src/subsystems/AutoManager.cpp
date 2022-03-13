@@ -26,7 +26,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new RetractIntakeCommand(m_intake),
     new WaitCommand(200),
     new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 2000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 2000),
     new WaitCommand(100),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -40.91, 0.0, 0.1, 2000),
@@ -52,7 +52,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new RetractIntakeCommand(m_intake),
     new WaitCommand(200),
     new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 2000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 2000),
     new WaitCommand(100),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -42.91, 5.353, 0.1, 2000),
@@ -78,7 +78,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new RetractIntakeCommand(m_intake),
     new WaitCommand(200),
     new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 2000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 2000),
     new WaitCommand(100),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -40.91, 0.0, 0.1, 2000),
@@ -104,7 +104,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new RetractIntakeCommand(m_intake),
     new WaitCommand(150),
     new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 1000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
     new WaitCommand(150),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -35.5, 0.0, 0.1, 1500),
@@ -123,7 +123,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
         new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 1800),
     }),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 1000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -79.458, -109.0, 0.1, 2500), 
         new RunIntakeCommand(m_intake, 1.0, 2000),
@@ -149,7 +149,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new RetractIntakeCommand(m_intake),
     new WaitCommand(150),                                   
     new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, 1800.0, 1000),
+    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
     new WaitCommand(100),
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -40.91, 0.0, 0.1, 2000),
@@ -186,7 +186,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 3000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 3000),
         new SetTurretAngleCommand(m_turret, -90.0, 3000),
-        new SetFlywheelRPMCommand(m_shooter, 1800.0, 3000),
+        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 3000),
         new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
     }),
     new WaitForFlywheelCommand(m_shooter, 1500),

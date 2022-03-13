@@ -65,7 +65,7 @@ void Robot::TeleopPeriodic() {
     }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(1800);
+        m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
