@@ -137,8 +137,8 @@ void Drive::Update() {
             break;
     }
 
-    m_throttle = std::clamp(m_leftOutput, m_minSpeed, m_maxSpeed);
-    m_turn = std::clamp(m_rightOutput, m_minSpeed, m_maxSpeed);
+    // m_leftOutput = std::clamp(m_leftOutput, m_minSpeed, m_maxSpeed);
+    // m_rightOutput = std::clamp(m_rightOutput, m_minSpeed, m_maxSpeed);
 
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
@@ -179,8 +179,6 @@ void Drive::DashboardUpdate() {
 
     SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
     SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
-
-    // SmartDashboard::PutString("D mode", std::to_string);
 }
 
 void Drive::ArcadeCalcOutput() {
@@ -235,12 +233,16 @@ void Drive::PositionCalcOutput() {
                     (m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK)) /
                    2.0;
     m_onTarget = PositionOnTarget();
+
     if (m_onTarget[Target::angle]) {
-        // SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), 0.0);
         SetThrottleTurn(m_positionPID.CalcOutput(m_currentPos), m_turnPID.CalcOutput(m_currentAngle));
     } else {
         SetThrottleTurn(0.0, m_turnPID.CalcOutput(m_currentAngle));
     }
+
+    m_throttle = std::clamp(m_throttle, m_minSpeed, m_maxSpeed);
+    m_turn = std::clamp(m_turn, m_minSpeed, m_maxSpeed);
+
     KinematicCalcOutput();
 }
 
