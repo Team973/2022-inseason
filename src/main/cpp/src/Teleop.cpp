@@ -14,6 +14,8 @@ void Robot::TeleopInit() {
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
     m_drive->Zero();
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
+
+    m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
 }
 
 void Robot::TeleopPeriodic() {
@@ -58,14 +60,12 @@ void Robot::TeleopPeriodic() {
      */
     // shooter
     if (m_operatorStick->GetAButton()) {
-        m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(0.0);
+        m_shooter->SetFlywheelRPM(800);
     } else {
-        m_turret->SetTurretState(TurretState::Tracking);
+        m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
     }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
-        m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -80,6 +80,13 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
+    // if (m_operatorStick->GetAButton()) {
+    //     m_turret->SetTurretState(TurretState::Manual);
+    //     m_turret->SetTurnValue(0.0);
+    // } else {
+    //     // m_turret->SetTurretState(TurretState::Tracking);
+    // }
+
     if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(
@@ -97,8 +104,7 @@ void Robot::TeleopPeriodic() {
         m_intake->Retract();
     }
 
-    m_intake->SetPercentOutput(
-        m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis
+    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
