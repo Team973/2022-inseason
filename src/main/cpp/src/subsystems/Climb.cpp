@@ -28,6 +28,11 @@ Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *b
     m_climbTalonA->SetInverted(TalonFXInvertType::CounterClockwise);
     m_climbTalonB->SetInverted(TalonFXInvertType::Clockwise);
 
+    m_climbTalonA->ConfigVoltageCompSaturation(12.0);
+    m_climbTalonA->EnableVoltageCompensation(true);
+    m_climbTalonB->ConfigVoltageCompSaturation(12.0);
+    m_climbTalonB->EnableVoltageCompensation(true);
+
     m_climbTalonA->Config_kP(0, 0.0, 0);
     m_climbTalonA->Config_kI(0, 0.0, 0);
     m_climbTalonA->Config_kD(0, 0.0, 0);
