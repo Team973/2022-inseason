@@ -30,7 +30,9 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
 
     // Voltage Compensation
     m_towerMotorA->ConfigVoltageCompSaturation(12.0);
+    m_towerMotorA->EnableVoltageCompensation(true);
     m_floorMotor->ConfigVoltageCompSaturation(12.0);
+    m_floorMotor->EnableVoltageCompensation(true);
 }
 
 void Conveyor::Update() {

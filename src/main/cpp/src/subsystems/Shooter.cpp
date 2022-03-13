@@ -45,16 +45,13 @@ Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
 
     // Voltage Compensation
     m_flywheelA->ConfigVoltageCompSaturation(12.0);
+    m_flywheelA->EnableVoltageCompensation(true);
 
     // Velocity PID Parameters
-    // m_flywheelA->Config_kP(0, 0.4, 30);
-    // m_flywheelA->Config_kI(0, 0.0, 30);
-    // m_flywheelA->Config_kD(0, 0.0, 30);
-    // m_flywheelA->Config_kF(0, 0.053, 30);
-    m_flywheelA->Config_kP(0, 0.3, 30);
+    m_flywheelA->Config_kP(0, 0.03, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.0, 30);
-    m_flywheelA->Config_kF(0, 0.05, 30);
+    m_flywheelA->Config_kF(0, 0.048, 30);
 }
 
 void Shooter::Update() {
