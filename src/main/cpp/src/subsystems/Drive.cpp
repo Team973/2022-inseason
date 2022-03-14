@@ -111,12 +111,12 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_leftDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
     m_rightDriveTalonA->ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 30);
 
-    m_leftDriveTalonA->Config_kP(0, 0.2, 30);
+    m_leftDriveTalonA->Config_kP(0, 0.15, 30);
     m_leftDriveTalonA->Config_kI(0, 0.0, 30);
     m_leftDriveTalonA->Config_kD(0, 0.0, 30);
     m_leftDriveTalonA->Config_kF(0, 0.033, 30);
 
-    m_rightDriveTalonA->Config_kP(0, 0.2, 30);
+    m_rightDriveTalonA->Config_kP(0, 0.15, 30);
     m_rightDriveTalonA->Config_kI(0, 0.0, 30);
     m_rightDriveTalonA->Config_kD(0, 0.0, 30);
     m_rightDriveTalonA->Config_kF(0, 0.033, 30);
