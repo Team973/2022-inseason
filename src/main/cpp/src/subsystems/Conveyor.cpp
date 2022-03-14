@@ -85,6 +85,7 @@ void Conveyor::Update() {
 }
 
 void Conveyor::DashboardUpdate() {
+    /*
     frc::SmartDashboard::PutNumber("CO Tower A Current", m_towerMotorA->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("CO Tower B Current", m_chickenPluckerMotor->GetOutputCurrent());
     frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
@@ -93,6 +94,7 @@ void Conveyor::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("CO Floor Motor Percent", m_floorMotor->GetMotorOutputPercent());
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    */
 }
 
 void Conveyor::SetTowerSpeed(double speed) {

@@ -20,9 +20,9 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_wrappingInProgress(false)
         , m_gyroSnapshotWrapping(0.0)
         , m_angleInDegrees(0.0)
-        , m_limelightXOffset(0.0) 
+        , m_limelightXOffset(0.0)
         , m_angularRate(0.0)
-        , m_translationalValue(0.0){
+        , m_translationalValue(0.0) {
     m_turretMotor->ConfigFactoryDefault();
 
     m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
@@ -110,7 +110,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
 
     // double output;
     m_limelightPID.SetTarget(0);
-    double output; 
+    double output;
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
@@ -292,6 +292,7 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
+    /*
     frc::SmartDashboard::PutNumber("T CurrAngle", m_currentAngleInDegrees);
     frc::SmartDashboard::PutNumber("T ticksPosition", m_tickPosition);
     frc::SmartDashboard::PutNumber("T ActualTickPosition", m_turretMotor->GetSelectedSensorPosition());
@@ -305,6 +306,7 @@ void Turret::DashboardUpdate() {
     SmartDashboard::PutBoolean("T rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
 
     SmartDashboard::PutNumber("T checkstatus", m_checkStatus);
+    */
 }
 
 }  // namespace frc973

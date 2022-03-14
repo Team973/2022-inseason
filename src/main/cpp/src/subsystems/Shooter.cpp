@@ -82,6 +82,7 @@ void Shooter::Update() {
 }
 
 void Shooter::DashboardUpdate() {
+    /*
     SmartDashboard::PutNumber("S flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
     SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelRPMSetpoint);
     SmartDashboard::PutNumber("S flywheel speed", m_flywheelSpeed);
@@ -90,6 +91,7 @@ void Shooter::DashboardUpdate() {
     SmartDashboard::PutNumber("S supply current", m_flywheelA->GetSupplyCurrent());
     frc::SmartDashboard::PutNumber("S FlywheelA temp",m_flywheelA->GetTemperature());
     frc::SmartDashboard::PutNumber("S FlywheelB temp",m_flywheelB->GetTemperature());
+    */
 }
 
 void Shooter::SetShooterState(ShooterState state) {

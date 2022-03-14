@@ -44,8 +44,8 @@ void Intake::Update() {
             //     m_intakeSoftSolenoid->Set(true);
             //     m_intakeSolenoid->Set(false);
             // } else {
-                m_intakeSoftSolenoid->Set(false);
-                m_intakeSolenoid->Set(true);
+            m_intakeSoftSolenoid->Set(false);
+            m_intakeSolenoid->Set(true);
             // }
             break;
         case IntakeState::Retract:
@@ -79,7 +79,7 @@ void Intake::Update() {
 }
 
 void Intake::DashboardUpdate() {
-    frc::SmartDashboard::PutString("I status", m_intakeStatus);
+    // frc::SmartDashboard::PutString("I status", m_intakeStatus);
 }
 
 }  // namespace frc973

@@ -145,6 +145,7 @@ void Drive::Update() {
 }
 
 void Drive::DashboardUpdate() {
+    /*
     frc::SmartDashboard::PutNumber("D turn", m_turn);
     frc::SmartDashboard::PutNumber("D throttle", m_throttle);
     frc::SmartDashboard::PutNumber("D leftOutput", m_leftOutput);
@@ -179,6 +180,7 @@ void Drive::DashboardUpdate() {
 
     SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
     SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
+    */
 }
 
 void Drive::ArcadeCalcOutput() {

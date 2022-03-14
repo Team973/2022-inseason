@@ -252,9 +252,11 @@ void AutoManager::DashboardUpdate() {
             break;
     }
 
-    frc::SmartDashboard::PutString(
-        "Auto Info", "Mode: " + m_autoName + " Index: " + std::to_string(m_currentMode.GetCurrentCommandIndex()));
-    frc::SmartDashboard::PutString("DB/String 0", "Mode: " + m_autoName);
+    /*
+        frc::SmartDashboard::PutString(
+            "Auto Info", "Mode: " + m_autoName + " Index: " + std::to_string(m_currentMode.GetCurrentCommandIndex()));
+         frc::SmartDashboard::PutString("DB/String 0", "Mode: " + m_autoName);
+         */
 }
 
 void AutoManager::UpdateAutoMode() {

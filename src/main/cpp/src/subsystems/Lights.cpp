@@ -88,7 +88,7 @@ void Lights::DashboardUpdate() {
             break;
     }
 
-    frc::SmartDashboard::PutString("L State: ", m_currentLightsStateName);
+    // frc::SmartDashboard::PutString("L State: ", m_currentLightsStateName);
 }
 
 }  // namespace frc973
