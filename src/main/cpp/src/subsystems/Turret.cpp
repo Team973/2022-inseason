@@ -38,9 +38,12 @@ Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
     m_turretMotor->ConfigPeakOutputForward(1.0, 30);
     m_turretMotor->ConfigPeakOutputReverse(-1.0, 30);
 
-    m_turretMotor->Config_kP(0, 0.0975, 30);
+    m_turretMotor->ConfigVoltageCompSaturation(12.0);
+    m_turretMotor->EnableVoltageCompensation(true);
+
+    m_turretMotor->Config_kP(0, 0.09, 30);
     m_turretMotor->Config_kI(0, 0.0, 30);
-    m_turretMotor->Config_kD(0, 0.0, 30);
+    m_turretMotor->Config_kD(0, 0.001, 30);
     m_turretMotor->Config_kF(0, 0.0, 30);
 
     m_turretMotor->SetSelectedSensorPosition(0, 0, 0);

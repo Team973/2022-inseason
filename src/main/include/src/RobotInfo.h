@@ -124,7 +124,7 @@ constexpr int TEST_STICK = 2;     /** Test stick usb slot. */
 /**
  * Tolerances In in - TODO: update
  */
-static constexpr double DIST_TOLERANCE = 2.0;
+static constexpr double DIST_TOLERANCE = 3.0;
 static constexpr double DIST_RATE_TOLERANCE = 1.0;
 static constexpr double ANGLE_TOLERANCE = 2.0;
 static constexpr double ANGLE_RATE_TOLERANCE = 1.0;
