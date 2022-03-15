@@ -60,7 +60,6 @@ void Conveyor::Update() {
         case TowerState::Manual:
             m_currentTowerState = "Manual";
             m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
-            // m_chickenPluckerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
