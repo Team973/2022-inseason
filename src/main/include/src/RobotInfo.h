@@ -66,8 +66,8 @@ constexpr double FLYWHEEL_GEAR_RATIO = (12.0 / 18.0); /** The gear ratio of the 
 constexpr double FLYWHEEL_VELOCITY_RPM =
     Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;    /** Convert RPM to ticks per 100msec. */
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2600.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_CLOSE = 2800.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_FAR = 4200; /** Flywheel RPM to shoot from touching the centermost launchpad. */
+static constexpr double FLY_RPM_CLOSE = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
+static constexpr double FLY_RPM_FAR = 2750; /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
 static constexpr double FLY_DIST_FAR = 201;    /** Distance from target to far. */
 static constexpr double TOO_FAR_LOCKOUT = 10000;    /** Distance from target in inches is too far, doesn't allow shooting. */

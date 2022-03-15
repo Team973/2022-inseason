@@ -85,6 +85,8 @@ void SubsystemManager::Update() {
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), 0.0, 0.0);
     }
 
+    m_shooter->SetFlywheelRPM(CalcFlywheelRPM());
+
     /**
      * Ready to shoot lights
      */

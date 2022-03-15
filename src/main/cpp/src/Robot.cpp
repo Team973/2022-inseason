@@ -118,26 +118,26 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    m_drive->DashboardUpdate();
-    m_intake->DashboardUpdate();
-    m_conveyor->DashboardUpdate();
-    m_turret->DashboardUpdate();
+    // m_drive->DashboardUpdate();
+    // m_intake->DashboardUpdate();
+    // m_conveyor->DashboardUpdate();
+    // m_turret->DashboardUpdate();
     m_shooter->DashboardUpdate();
-    m_climb->DashboardUpdate();
-    m_gyro->DashboardUpdate();
-    m_lights->DashboardUpdate();
+    // m_climb->DashboardUpdate();
+    // m_gyro->DashboardUpdate();
+    // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
     m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{100}, units::pounds_per_square_inch_t{120});
-    frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
+    // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight
-    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
-    frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
-    frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
-    frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
+    // frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    // frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
+    // frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
     frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
-    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
 }  // namespace frc973
