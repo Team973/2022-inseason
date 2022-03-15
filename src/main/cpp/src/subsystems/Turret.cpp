@@ -182,11 +182,11 @@ double Turret::CalcTransitionalCompensations(double driveVelocity, double distan
     futureAngle = 180.0 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) /
                                   (2.0 * futureDistance * futurePosition)))) *
                            180.0 / Constants::PI);
-    SmartDashboard::PutNumber("Future Angle", futureAngle);
+    // SmartDashboard::PutNumber("Future Angle", futureAngle);
 
     // result is the rate of turning due to transitional change from per100ms to per1sec
-    SmartDashboard::PutNumber("Future Distance", futureDistance);
-    SmartDashboard::PutNumber("Future Position", futurePosition);
+    // SmartDashboard::PutNumber("Future Distance", futureDistance);
+    // SmartDashboard::PutNumber("Future Position", futurePosition);
     return (futureAngle - m_currentAngleInDegrees) / 0.1;
 }
 

@@ -62,7 +62,6 @@ void Robot::TeleopPeriodic() {
     if (m_operatorStick->GetAButton()) {
         m_shooter->SetFlywheelRPM(800);
     } else {
-        m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
     }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
@@ -80,13 +79,6 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    // if (m_operatorStick->GetAButton()) {
-    //     m_turret->SetTurretState(TurretState::Manual);
-    //     m_turret->SetTurnValue(0.0);
-    // } else {
-    //     // m_turret->SetTurretState(TurretState::Tracking);
-    // }
-
     if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(
@@ -132,10 +124,12 @@ void Robot::TeleopPeriodic() {
     } else {
         m_climb->SetClimbSpeed(0.0);
         // conveyor
-        m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                        1.0);  // left stick y-axis
-        m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-                                        1.0);  // left stick x-axis
+        if (!m_driverStick->GetRawButton(Stick::RightTrigger)) {
+            m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+                                            1.0);  // left stick y-axis
+            m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+                                            1.0);  // left stick x-axis
+        }
     }
 
     m_drive->Update();
