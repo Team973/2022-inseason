@@ -74,7 +74,6 @@ public:
 
 private:
     double m_intakeSpeed;
-    double m_timer;
 
     frc::PWMTalonFX *m_intakeTalon;
     frc::Solenoid *m_intakeSolenoid;
@@ -82,6 +81,8 @@ private:
     IntakeState m_intakeState;
     IntakeMotorState m_intakeMotorState;
 
+    double m_timer;
+    
     std::string m_intakeStatus;
 
     const double INTAKE_SOLENOID_DELAY = 1000.0; //delay in msec
