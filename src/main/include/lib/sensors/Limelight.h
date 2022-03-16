@@ -107,6 +107,13 @@ public:
      */
     double GetHorizontalDist();
 
+    /**
+     * Gets the horizontal distance with pitch compensation
+     * @param pitch is the pitch the robot is at 
+     * @param turretAngle is the turret angle 
+     */
+    double GetHorizontalDistWithComp(double pitch, double turretAngle);
+
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
 
@@ -115,7 +122,7 @@ private:
 
     double m_previousLatency;
 
-    static constexpr double TARGET_HEIGHT =
+    static constexpr double TARGET_HEIGHT = 
         103.0; /**< Target's height in inches from ground*/
     static constexpr double CAMERA_HEIGHT = 36.0; /**< Camera's Height in inches from ground*/
     static constexpr double CAMERA_ANGLE =

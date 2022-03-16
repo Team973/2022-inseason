@@ -20,6 +20,10 @@ public:
 
     void Zero();
 
+    double GetPitchAngle();
+
+    double GetRollAngle();
+
     void Update() override;
 
     void DashboardUpdate() override;

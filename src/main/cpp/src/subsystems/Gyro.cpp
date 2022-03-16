@@ -26,6 +26,14 @@ double Gyro::GetAngularRate() {
     return rates[2];
 }
 
+double Gyro::GetPitchAngle(){
+    return m_gyro.GetPitch();
+}
+
+double Gyro::GetRollAngle(){
+    return m_gyro.GetRoll();
+}
+
 void Gyro::Update() {
     m_currentAngle = GetAngle();
     m_wrappedAngle = GetWrappedAngle();
