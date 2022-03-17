@@ -7,6 +7,8 @@
 namespace frc973 {
 
 void Robot::RobotInit() {
+    m_pneumaticHub = new frc::PneumaticHub(0);
+    m_pneumaticHub->EnableCompressorAnalog(units::pounds_per_square_inch_t(100), units::pounds_per_square_inch_t(120));
 }
 
 void Robot::RobotPeriodic() {

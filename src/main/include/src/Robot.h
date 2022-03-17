@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <frc/PneumaticHub.h>
 #include <frc/TimedRobot.h>
 
 using namespace frc;
@@ -22,6 +23,7 @@ public:
     void TestPeriodic() override;
 
 private:
+    frc::PneumaticHub *m_pneumaticHub;
 };
 
 }  // namespace frc973
