@@ -5,6 +5,7 @@
 namespace frc973 {
 
 void Robot::TeleopInit() {
+    /*
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
     m_drive->Zero();
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
@@ -14,9 +15,11 @@ void Robot::TeleopInit() {
     // m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
     m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
+    */
 }
 
 void Robot::TeleopPeriodic() {
+    /*
     m_drive->Update();
     m_drive->SetAngle(m_gyro->GetWrappedAngle());
     m_intake->Update();
@@ -27,11 +30,13 @@ void Robot::TeleopPeriodic() {
     m_gyro->Update();
     m_lights->Update();
     m_subsystemManager->Update();
+    */
 
     /**
      * Driver
      */
     // shoot btn
+    /*
     if (m_driverStick->GetRawButton(Stick::RightTrigger) && m_subsystemManager->ReadyToShoot()) {  // Right Trigger
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
@@ -56,11 +61,13 @@ void Robot::TeleopPeriodic() {
     if (m_driverStick->GetRawButton(Stick::RightBumper)) {
         m_gyro->Zero();
     }
+    */
 
     /**
      * Co-driver
      */
     // shooter
+    /*
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
         m_shooter->SetFlywheelRPM(2800);
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
@@ -107,6 +114,7 @@ void Robot::TeleopPeriodic() {
                                     1.0);  // left stick y-axis for co-driver
     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
                                     1.0);  // left stick x-axis for co-driver
+                                    */
 }
 
 }  // namespace frc973

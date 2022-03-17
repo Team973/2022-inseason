@@ -90,6 +90,7 @@ void Robot::RobotInit() {
      * Pneumatics
      */
     m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
+    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
 
     /**
      * Subsystem Manager
@@ -111,6 +112,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
+    /*
     m_drive->DashboardUpdate();
     m_intake->DashboardUpdate();
     m_conveyor->DashboardUpdate();
@@ -121,7 +123,6 @@ void Robot::RobotPeriodic() {
     m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pounds_per_square_inch_t{60}, units::pounds_per_square_inch_t{120});
     frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // limelight
@@ -131,6 +132,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
     frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
     frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    */
 }
 
 }  // namespace frc973
