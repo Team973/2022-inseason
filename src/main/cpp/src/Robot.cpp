@@ -124,7 +124,7 @@ void Robot::RobotPeriodic() {
     // m_turret->DashboardUpdate();
     // m_shooter->DashboardUpdate();
     // m_climb->DashboardUpdate();
-    // m_gyro->DashboardUpdate();
+    m_gyro->DashboardUpdate();
     // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 

@@ -43,6 +43,8 @@ void Gyro::DashboardUpdate() {
     frc::SmartDashboard::PutNumber("G Angle", m_currentAngle);
     frc::SmartDashboard::PutNumber("G WrappedAngle", m_wrappedAngle);
     frc::SmartDashboard::PutNumber("G AngularRate", GetAngularRate());
+    frc::SmartDashboard::PutNumber("G Pitch", GetPitchAngle());
+    frc::SmartDashboard::PutNumber("G Roll", GetRollAngle());
 }
 
 void Gyro::SetAngle(double degrees) {
