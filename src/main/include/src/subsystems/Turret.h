@@ -17,14 +17,14 @@ namespace frc973 {
  * The set of intake states; deployed or retracted.
  */
 enum class TurretState {
-    Off,    /**< Disables turret. */
-    Manual, /**< Manual turret control. */
+    Off,     /**< Disables turret. */
+    Manual,  /**< Manual turret control. */
     Tracking /**< Limelight targeting mode. */
 };
 
 class Turret : public Subsystem {
 public:
-    Turret(WPI_TalonFX *turretMotor, DigitalInput *talonSensor);
+    Turret(TalonFX *turretMotor, DigitalInput *talonSensor);
 
     /**
      * Sets turret state
@@ -34,7 +34,7 @@ public:
     /**
      * Sets the manual turn amount
      */
-    void SetTurnValue(double angle); 
+    void SetTurnValue(double angle);
 
     /**
      * @param angleInDegrees angle its going to turn to
@@ -118,7 +118,7 @@ public:
      * @param gyroAngle current wrapped gyro angle
      */
     void UpdateValues(double gyroAngle);
-    
+
     /**
      * if the turret is in the middle of wrapping around the hardstop, true if wrapping, false if not
      */
@@ -147,26 +147,26 @@ public:
     /**
      * Checks the middle sensor
      */
-    bool GetMiddleSensor();   
+    bool GetMiddleSensor();
 
-    /** 
+    /**
      * Updates the turret subsystem
-     */ 
+     */
     void Update() override;
 
     /**
      * Updates the dashboard
-     */ 
+     */
     void DashboardUpdate() override;
 
 private:
-    WPI_TalonFX *m_turretMotor;
+    TalonFX *m_turretMotor;
     DigitalInput *m_turretSensor;
 
     SupplyCurrentLimitConfiguration m_currentLimit;
     StatorCurrentLimitConfiguration m_statorLimit;
 
-    //update values
+    // update values
     double m_gyroAngle;
 
     double m_currentAngleInDegrees;
@@ -188,10 +188,10 @@ private:
     bool m_wrappingInProgress;
     double m_gyroSnapshotWrapping;
 
-    //turn value
+    // turn value
     double m_angleInDegrees;
 
-    //tracking values
+    // tracking values
     double m_limelightXOffset;
     double m_angularRate;
     double m_translationalValue;

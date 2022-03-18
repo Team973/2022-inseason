@@ -2,8 +2,8 @@
 
 namespace frc973 {
 
-Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC,
-             WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC)
+Drive::Drive(TalonFX *leftDriveTalonA, TalonFX *leftDriveTalonB, TalonFX *leftDriveTalonC,
+             TalonFX *rightDriveTalonA, TalonFX *rightDriveTalonB, TalonFX *rightDriveTalonC)
         : m_leftDriveTalonA(leftDriveTalonA)
         , m_leftDriveTalonB(leftDriveTalonB)
         , m_leftDriveTalonC(leftDriveTalonC)

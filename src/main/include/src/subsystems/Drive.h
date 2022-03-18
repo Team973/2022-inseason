@@ -25,8 +25,8 @@ public:
      * @param rightDriveTalonB The second right drive TalonFX/Falcon.
      * @param rightDriveTalonC The third right drive TalonFX/Falcon.
      * */
-    Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC,
-          WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC);
+    Drive(TalonFX *leftDriveTalonA, TalonFX *leftDriveTalonB, TalonFX *leftDriveTalonC, TalonFX *rightDriveTalonA,
+          TalonFX *rightDriveTalonB, TalonFX *rightDriveTalonC);
 
     /**
      * The drive subsystem mode.
@@ -83,7 +83,7 @@ public:
     /**
      * Set the drive mode
      * @param mode the drive mode
-     */ 
+     */
     void SetDriveMode(DriveMode mode);
 
     /**
@@ -131,7 +131,7 @@ public:
 
     /**
      * Zeros the drive motors
-     */ 
+     */
     void Zero();
 
     /**
@@ -170,13 +170,13 @@ public:
                                                        const double angleRate);
 
 private:
-    WPI_TalonFX *m_leftDriveTalonA;
-    WPI_TalonFX *m_leftDriveTalonB;
-    WPI_TalonFX *m_leftDriveTalonC;
+    TalonFX *m_leftDriveTalonA;
+    TalonFX *m_leftDriveTalonB;
+    TalonFX *m_leftDriveTalonC;
 
-    WPI_TalonFX *m_rightDriveTalonA;
-    WPI_TalonFX *m_rightDriveTalonB;
-    WPI_TalonFX *m_rightDriveTalonC;
+    TalonFX *m_rightDriveTalonA;
+    TalonFX *m_rightDriveTalonB;
+    TalonFX *m_rightDriveTalonC;
 
     double m_leftOutput;
     double m_rightOutput;
