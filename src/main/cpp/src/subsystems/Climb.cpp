@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-Climb::Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
+Climb::Climb(TalonFX *climbTalonA, TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
              DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor,
              Solenoid *climbSolenoid)
         : m_climbTalonA(climbTalonA)

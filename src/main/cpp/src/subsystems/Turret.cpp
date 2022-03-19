@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-Turret::Turret(WPI_TalonFX *turretMotor, DigitalInput *turretSensor)
+Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         : m_turretMotor(turretMotor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
