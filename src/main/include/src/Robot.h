@@ -5,41 +5,38 @@
 #pragma once
 
 #include <fmt/core.h>
-#include <string>
-
 #include <frc/Joystick.h>
 #include <frc/motorcontrol/PWMTalonFX.h>
+
+#include <string>
 // #include <frc/PneumaticHub.h>
+#include <cameraserver/CameraServer.h>
+#include <ctre/Phoenix.h>
 #include <frc/Compressor.h>
 #include <frc/Solenoid.h>
-#include <frc/TimedRobot.h>
+#include <frc/XboxController.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include <frc/XboxController.h>
-#include <cameraserver/CameraServer.h>
-
-#include <ctre/Phoenix.h>
 
 #include "RobotInfo.h"
+#include "SubsystemManager.h"
+#include "lib/PatchedTimedRobot.h"
+#include "lib/helpers/StickController.h"
 #include "lib/sensors/Limelight.h"
 #include "lib/util/Util.h"
-#include "lib/helpers/StickController.h"
-
 #include "src/subsystems/AutoManager.h"
-#include "src/subsystems/Drive.h"
-#include "src/subsystems/Intake.h"
-#include "src/subsystems/Conveyor.h"
-#include "src/subsystems/Turret.h"
-#include "src/subsystems/Shooter.h"
 #include "src/subsystems/Climb.h"
+#include "src/subsystems/Conveyor.h"
+#include "src/subsystems/Drive.h"
 #include "src/subsystems/Gyro.h"
+#include "src/subsystems/Intake.h"
 #include "src/subsystems/Lights.h"
-
-#include "SubsystemManager.h"
+#include "src/subsystems/Shooter.h"
+#include "src/subsystems/Turret.h"
 
 using namespace frc;
 namespace frc973 {
-class Robot : public TimedRobot {
+class Robot : public PatchedTimedRobot {
 public:
     void RobotInit() override;
     void RobotPeriodic() override;
