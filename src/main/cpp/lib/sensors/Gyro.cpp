@@ -1,9 +1,6 @@
-#include "src/subsystems/Gyro.h"
+#include "lib/sensors/Gyro.h"
 
 namespace frc973 {
-Gyro::Gyro(TalonSRX* gyroTalon) : m_gyro(PigeonIMU(gyroTalon)) {
-    m_gyro.ConfigFactoryDefault();
-}
 
 double Gyro::GetWrappedAngle() {
     double currangle = std::fmod(m_gyro.GetFusedHeading() + 180, 360.0);

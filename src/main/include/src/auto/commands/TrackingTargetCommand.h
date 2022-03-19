@@ -4,7 +4,7 @@
 #include "lib/sensors/Limelight.h"
 #include "src/subsystems/Drive.h"
 #include "src/subsystems/Turret.h"
-#include "src/subsystems/Gyro.h"
+#include "lib/sensors/Gyro.h"
 
 namespace frc973 {
 

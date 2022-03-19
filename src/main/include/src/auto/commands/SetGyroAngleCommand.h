@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lib/bases/Command.h"
-#include "src/subsystems/Gyro.h"
+#include "lib/sensors/Gyro.h"
 
 namespace frc973 {
 

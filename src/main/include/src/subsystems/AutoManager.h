@@ -25,7 +25,7 @@
 #include "src/subsystems/AutoManager.h"
 #include "src/subsystems/Conveyor.h"
 #include "src/subsystems/Drive.h"
-#include "src/subsystems/Gyro.h"
+#include "lib/sensors/Gyro.h"
 #include "src/subsystems/Intake.h"
 #include "src/subsystems/Shooter.h"
 #include "src/subsystems/Turret.h"

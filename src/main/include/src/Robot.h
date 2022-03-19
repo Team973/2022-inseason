@@ -31,7 +31,7 @@
 #include "src/subsystems/Turret.h"
 #include "src/subsystems/Shooter.h"
 #include "src/subsystems/Climb.h"
-#include "src/subsystems/Gyro.h"
+#include "lib/sensors/Gyro.h"
 #include "src/subsystems/Lights.h"
 
 #include "SubsystemManager.h"

@@ -6,9 +6,8 @@
 #include "lib/bases/Subsystem.h"
 
 namespace frc973 {
-class Gyro : public Subsystem {
+class Gyro : public PigeonIMU {
 public:
-    Gyro(TalonSRX *gyroTalon);
 
     double GetWrappedAngle();
 
@@ -20,9 +19,9 @@ public:
 
     void Zero();
 
-    void Update() override;
+    void Update();
 
-    void DashboardUpdate() override;
+    void DashboardUpdate();
 
 private:
     PigeonIMU m_gyro;
