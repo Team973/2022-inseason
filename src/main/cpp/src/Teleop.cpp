@@ -12,7 +12,6 @@ void Robot::TeleopInit() {
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
 
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
-    m_drive->Zero();
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 
     m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);

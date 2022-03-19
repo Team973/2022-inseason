@@ -55,8 +55,8 @@ double SubsystemManager::CalcFlywheelRPM() {
     double flywheelRPM = 0.0;
 
     if (dist >= FLY_DIST_CLOSE) {
-        flywheelRPM = (FLY_RPM_FAR-FLY_RPM_CLOSE)/(FLY_DIST_FAR-FLY_DIST_CLOSE) * (dist - FLY_DIST_CLOSE) +
-        FLY_RPM_CLOSE;
+        flywheelRPM =
+            (FLY_RPM_FAR - FLY_RPM_CLOSE) / (FLY_DIST_FAR - FLY_DIST_CLOSE) * (dist - FLY_DIST_CLOSE) + FLY_RPM_CLOSE;
     } else {
         flywheelRPM = FLY_RPM_CLOSE;
     }
@@ -66,9 +66,7 @@ double SubsystemManager::CalcFlywheelRPM() {
 
 bool SubsystemManager::ReadyToShoot() {
     if (m_shooter->IsAtSpeed()) {
-        // if (m_limelight->GetXOffset() == 0.0) {
-            return true;
-        // }
+        return true;
     }
     return false;
 }
@@ -83,10 +81,9 @@ void SubsystemManager::Update() {
         if (m_turret->GetWrappedState()) {
             m_turret->CheckedSensorsToFalse();
         }
-        
+
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
-        // m_turret->SetTrackingValues(m_limelight->GetXOffset(), 0.0, 0.0);
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     }
 

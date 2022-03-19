@@ -119,23 +119,21 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    // m_drive->DashboardUpdate();
-    // m_intake->DashboardUpdate();
-    // m_conveyor->DashboardUpdate();
-    // m_turret->DashboardUpdate();
-    // m_shooter->DashboardUpdate();
-    // m_climb->DashboardUpdate();
-    // m_gyro->DashboardUpdate();
-    // m_lights->DashboardUpdate();
+    m_drive->DashboardUpdate();
+    m_intake->DashboardUpdate();
+    m_conveyor->DashboardUpdate();
+    m_turret->DashboardUpdate();
+    m_shooter->DashboardUpdate();
+    m_climb->DashboardUpdate();
+    m_gyro->DashboardUpdate();
+    m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    // // limelight
-    // frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
-    // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
-    // frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
-    // frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
-    // frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
-    // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    // limelight
+    frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
 }  // namespace frc973

@@ -79,7 +79,7 @@ void Intake::Update() {
 }
 
 void Intake::DashboardUpdate() {
-    frc::SmartDashboard::PutString("I status", m_intakeStatus);
+    SmartDashboard::PutString("I status", m_intakeStatus);
 }
 
 }  // namespace frc973
