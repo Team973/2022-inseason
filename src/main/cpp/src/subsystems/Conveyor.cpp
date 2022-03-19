@@ -2,9 +2,9 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floorMotor)
-        : m_towerMotorA(towerMotorA)
-        , m_chickenPluckerMotor(towerMotorB)
+Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *ceilingMotor, TalonSRX *floorMotor)
+        : m_towerMotor(towerMotorA)
+        , m_ceilingMotor(ceilingMotor)
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
@@ -12,25 +12,26 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floor
         , m_manualFloorSpeed(0.0)
         , m_currentTowerState("Off")
         , m_currentFloorState("Off") {
-    m_towerMotorA->ConfigFactoryDefault();
-    m_chickenPluckerMotor->ConfigFactoryDefault();
+    m_towerMotor->ConfigFactoryDefault();
+    m_ceilingMotor->ConfigFactoryDefault();
 
-    m_towerMotorA->SetNeutralMode(Coast);
-    m_chickenPluckerMotor->SetNeutralMode(Coast);
+    m_towerMotor->SetNeutralMode(Coast);
+    m_ceilingMotor->SetNeutralMode(Coast);
 
-    m_floorMotor->SetInverted(true);
-    m_towerMotorA->SetInverted(true);
-    m_chickenPluckerMotor->SetInverted(true);
+    // Motor Directions
+    m_floorMotor->SetInverted(false);
+    m_towerMotor->SetInverted(true);
+    m_ceilingMotor->SetInverted(true);
 
-    m_towerMotorA->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
-    m_chickenPluckerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
+    m_towerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
+    m_ceilingMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_floorMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
 
-    m_chickenPluckerMotor->Follow(*m_floorMotor);
+    m_ceilingMotor->Follow(*m_floorMotor);
 
     // Voltage Compensation
-    m_towerMotorA->ConfigVoltageCompSaturation(12.0);
-    m_towerMotorA->EnableVoltageCompensation(true);
+    m_towerMotor->ConfigVoltageCompSaturation(12.0);
+    m_towerMotor->EnableVoltageCompensation(true);
     m_floorMotor->ConfigVoltageCompSaturation(12.0);
     m_floorMotor->EnableVoltageCompensation(true);
 }
@@ -47,19 +48,19 @@ void Conveyor::Update() {
     switch (m_towerState) {
         case TowerState::Off:
             m_currentTowerState = "Off";
-            m_towerMotorA->Set(ControlMode::PercentOutput, 0.0);
+            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
         case TowerState::FeedIn:
             m_currentTowerState = "FeedIn";
-            m_towerMotorA->Set(ControlMode::PercentOutput, 0.5);
+            m_towerMotor->Set(ControlMode::PercentOutput, 0.5);
             break;
         case TowerState::FeedOut:
             m_currentTowerState = "FeedOut";
-            m_towerMotorA->Set(ControlMode::PercentOutput, -0.7);
+            m_towerMotor->Set(ControlMode::PercentOutput, -0.7);
             break;
         case TowerState::Manual:
             m_currentTowerState = "Manual";
-            m_towerMotorA->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
+            m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
     }
 
@@ -84,18 +85,12 @@ void Conveyor::Update() {
 }
 
 void Conveyor::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("CO Tower A Current", m_towerMotorA->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Tower B Current", m_chickenPluckerMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Tower A Percent", m_towerMotorA->GetMotorOutputPercent());
-    frc::SmartDashboard::PutNumber("CO Tower B Percent", m_chickenPluckerMotor->GetMotorOutputPercent());
-    frc::SmartDashboard::PutNumber("CO Floor Motor Percent", m_floorMotor->GetMotorOutputPercent());
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
-    m_towerMotorA->Set(ControlMode::PercentOutput, speed);
+    m_towerMotor->Set(ControlMode::PercentOutput, speed);
 }
 
 void Conveyor::SetFloorSpeed(double speed) {
@@ -114,7 +109,7 @@ double Conveyor::GetFloorVelocity() {
 }
 
 double Conveyor::GetTowerVelocity() {
-    return m_towerMotorA->GetSelectedSensorVelocity();
+    return m_towerMotor->GetSelectedSensorVelocity();
 }
 
 void Conveyor::SetTowerState(TowerState state) {

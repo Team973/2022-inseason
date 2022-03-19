@@ -9,7 +9,8 @@
 
 #include <frc/Joystick.h>
 #include <frc/motorcontrol/PWMTalonFX.h>
-#include <frc/PneumaticHub.h>
+// #include <frc/PneumaticHub.h>
+#include <frc/Compressor.h>
 #include <frc/Solenoid.h>
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
@@ -60,12 +61,12 @@ private:
     /**
      * Drive
      */
-    WPI_TalonFX *m_leftDriveTalonA;
-    WPI_TalonFX *m_leftDriveTalonB;
-    WPI_TalonFX *m_leftDriveTalonC;
-    WPI_TalonFX *m_rightDriveTalonA;
-    WPI_TalonFX *m_rightDriveTalonB;
-    WPI_TalonFX *m_rightDriveTalonC;
+    TalonFX *m_leftDriveTalonA;
+    TalonFX *m_leftDriveTalonB;
+    TalonFX *m_leftDriveTalonC;
+    TalonFX *m_rightDriveTalonA;
+    TalonFX *m_rightDriveTalonB;
+    TalonFX *m_rightDriveTalonC;
     Drive *m_drive;
 
     /**
@@ -78,31 +79,31 @@ private:
 
     /**
      * Conveyor
-     */ 
+     */
     TalonSRX *m_conveyorFloorMotor;
-    TalonSRX *m_conveyorTowerMotorA;
-    TalonSRX *m_conveyorTowerMotorB;
+    TalonSRX *m_conveyorTowerMotor;
+    TalonSRX *m_conveyorCeilingMotor;
     Conveyor *m_conveyor;
 
     /**
      * Turret
      */
-    WPI_TalonFX *m_turretTalon;
+    TalonFX *m_turretTalon;
     DigitalInput *m_turretSensor;
     Turret *m_turret;
 
     /**
      * Shooter
      */
-    WPI_TalonFX *m_shooterFlywheelMotorA;
-    WPI_TalonFX *m_shooterFlywheelMotorB;
+    TalonFX *m_shooterFlywheelMotorA;
+    TalonFX *m_shooterFlywheelMotorB;
     Shooter *m_shooter;
 
     /**
      * Climb
      */
-    WPI_TalonFX *m_climbTalonA;
-    WPI_TalonFX *m_climbTalonB;
+    TalonFX *m_climbTalonA;
+    TalonFX *m_climbTalonB;
     DigitalInput *m_bottomLeftSensor;
     DigitalInput *m_bottomRightSensor;
     DigitalInput *m_topLeftSensor;
@@ -130,12 +131,12 @@ private:
     /**
      * Pneumatics
      */
-    frc::PneumaticHub *m_pneumaticsHub;
+    frc::Compressor *m_compressor;
 
     /**
      * Subsystem Manager
      */
-    SubsystemManager *m_subsystemManager; 
+    SubsystemManager *m_subsystemManager;
 
     /**
      * Joysticks

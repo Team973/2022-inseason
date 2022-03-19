@@ -12,7 +12,6 @@ void Robot::TeleopInit() {
     m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
 
     m_drive->SetDriveMode(Drive::DriveMode::arcade);
-    m_drive->Zero();
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 
     m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
@@ -31,6 +30,10 @@ void Robot::TeleopPeriodic() {
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+        // m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+        //                                     1.0);  // left stick y-axis
+        //     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+        //                                     1.0);  // left stick x-axis
     }
 
     // drive
@@ -55,13 +58,19 @@ void Robot::TeleopPeriodic() {
         m_limelight->SetVisionCamera();
     }
 
+    // limelight
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
+    }
+
     /**
      * Co-driver
      */
     // shooter
     if (m_operatorStick->GetAButton()) {
         m_shooter->SetFlywheelRPM(800);
-    } else {
     }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
@@ -69,13 +78,6 @@ void Robot::TeleopPeriodic() {
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_lights->SetLightsState(Lights::LightsState::Off);
-    }
-
-    // limelight
-    if (m_driverStick->GetRightBumper()) {
-        m_limelight->SetCameraDriver();
-    } else {
-        m_limelight->SetVisionCamera();
     }
 
     // turret
@@ -96,7 +98,7 @@ void Robot::TeleopPeriodic() {
         m_intake->Retract();
     }
 
-    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis
+    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));  // left stick x-axis
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);

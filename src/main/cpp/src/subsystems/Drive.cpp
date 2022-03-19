@@ -2,8 +2,8 @@
 
 namespace frc973 {
 
-Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_TalonFX *leftDriveTalonC,
-             WPI_TalonFX *rightDriveTalonA, WPI_TalonFX *rightDriveTalonB, WPI_TalonFX *rightDriveTalonC)
+Drive::Drive(TalonFX *leftDriveTalonA, TalonFX *leftDriveTalonB, TalonFX *leftDriveTalonC, TalonFX *rightDriveTalonA,
+             TalonFX *rightDriveTalonB, TalonFX *rightDriveTalonC)
         : m_leftDriveTalonA(leftDriveTalonA)
         , m_leftDriveTalonB(leftDriveTalonB)
         , m_leftDriveTalonC(leftDriveTalonC)
@@ -120,6 +120,8 @@ Drive::Drive(WPI_TalonFX *leftDriveTalonA, WPI_TalonFX *leftDriveTalonB, WPI_Tal
     m_rightDriveTalonA->Config_kI(0, 0.0, 30);
     m_rightDriveTalonA->Config_kD(0, 0.0, 30);
     m_rightDriveTalonA->Config_kF(0, 0.033, 30);
+
+    Zero();
 }
 
 void Drive::Update() {
@@ -137,48 +139,21 @@ void Drive::Update() {
             break;
     }
 
-    // m_leftOutput = std::clamp(m_leftOutput, m_minSpeed, m_maxSpeed);
-    // m_rightOutput = std::clamp(m_rightOutput, m_minSpeed, m_maxSpeed);
-
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
 }
 
 void Drive::DashboardUpdate() {
-    frc::SmartDashboard::PutNumber("D turn", m_turn);
-    frc::SmartDashboard::PutNumber("D throttle", m_throttle);
-    frc::SmartDashboard::PutNumber("D leftOutput", m_leftOutput);
-    frc::SmartDashboard::PutNumber("D rightOutput", m_rightOutput);
-    frc::SmartDashboard::PutNumber("D left supply current",
-                                   (m_leftDriveTalonA->GetSupplyCurrent() + m_leftDriveTalonB->GetSupplyCurrent() +
-                                    m_leftDriveTalonC->GetSupplyCurrent()) /
-                                       3.0);
-    frc::SmartDashboard::PutNumber("D Right supply current",
-                                   (m_rightDriveTalonA->GetSupplyCurrent() + m_rightDriveTalonB->GetSupplyCurrent() +
-                                    m_rightDriveTalonC->GetSupplyCurrent()) /
-                                       3.0);
-    frc::SmartDashboard::PutNumber("D left stator current",
-                                   (m_leftDriveTalonA->GetStatorCurrent() + m_leftDriveTalonB->GetStatorCurrent() +
-                                    m_leftDriveTalonC->GetStatorCurrent()) /
-                                       3.0);
-    frc::SmartDashboard::PutNumber("D right stator current",
-                                   (m_rightDriveTalonA->GetStatorCurrent() + m_rightDriveTalonB->GetStatorCurrent() +
-                                    m_rightDriveTalonC->GetStatorCurrent()) /
-                                       3.0);
-    frc::SmartDashboard::PutNumber(
+    SmartDashboard::PutNumber("D turn", m_turn);
+    SmartDashboard::PutNumber("D throttle", m_throttle);
+    SmartDashboard::PutNumber(
         "D velocity",
         (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2.0);
 
-    frc::SmartDashboard::PutNumber("D left pos", m_leftDriveTalonA->GetSelectedSensorPosition());
-    frc::SmartDashboard::PutNumber("D right pos", m_rightDriveTalonA->GetSelectedSensorPosition());
-
-    SmartDashboard::PutNumber("D target pos", m_targetPos);
-    SmartDashboard::PutNumber("D target angle", m_targetAngle);
-    SmartDashboard::PutNumber("D curr pos", m_currentPos);
-    SmartDashboard::PutNumber("D curr angle", m_currentAngle);
-
-    SmartDashboard::PutBoolean("D angle on target", m_onTarget[Target::angle]);
-    SmartDashboard::PutBoolean("D dist on target", m_onTarget[Target::dist]);
+    // SmartDashboard::PutNumber("D target pos", m_targetPos);
+    // SmartDashboard::PutNumber("D target angle", m_targetAngle);
+    // SmartDashboard::PutNumber("D curr pos", m_currentPos);
+    // SmartDashboard::PutNumber("D curr angle", m_currentAngle);
 }
 
 void Drive::ArcadeCalcOutput() {

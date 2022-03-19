@@ -11,16 +11,16 @@ void Robot::RobotInit() {
      * USB Camera- http://10.9.73.2:1181/stream.mjpg
      */
     frc::CameraServer::StartAutomaticCapture();
-    
+
     /**
      * Drive
      */
-    m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_FX_A_ID);
-    m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_FX_B_ID);
-    m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_FX_C_ID);
-    m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_FX_A_ID);
-    m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_FX_B_ID);
-    m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_FX_C_ID);
+    m_leftDriveTalonA = new TalonFX(LEFT_DRIVE_FX_A_ID);
+    m_leftDriveTalonB = new TalonFX(LEFT_DRIVE_FX_B_ID);
+    m_leftDriveTalonC = new TalonFX(LEFT_DRIVE_FX_C_ID);
+    m_rightDriveTalonA = new TalonFX(RIGHT_DRIVE_FX_A_ID);
+    m_rightDriveTalonB = new TalonFX(RIGHT_DRIVE_FX_B_ID);
+    m_rightDriveTalonC = new TalonFX(RIGHT_DRIVE_FX_C_ID);
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
@@ -30,8 +30,8 @@ void Robot::RobotInit() {
      * Intake
      */
     m_intakeTalon = new PWMTalonFX(INTAKE_FX_PWM_ID);
-    m_intakeSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
-    m_intakeSoftSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOFT_SOLENOID_ID);
+    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
+    m_intakeSoftSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOFT_SOLENOID_ID);
 
     m_intake = new Intake(m_intakeTalon, m_intakeSolenoid, m_intakeSoftSolenoid);
 
@@ -39,15 +39,15 @@ void Robot::RobotInit() {
      * Conveyor
      */
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
-    m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_SRX_ID);
-    m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_SRX_ID);
+    m_conveyorTowerMotor = new TalonSRX(CONVEYOR_TOWER_SRX_ID);
+    m_conveyorCeilingMotor = new TalonSRX(CONVEYOR_CEILING_SRX_ID);
 
-    m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
+    m_conveyor = new Conveyor(m_conveyorTowerMotor, m_conveyorCeilingMotor, m_conveyorFloorMotor);
 
     /**
      * Turret
      */
-    m_turretTalon = new WPI_TalonFX(TURRET_FX_ID);
+    m_turretTalon = new TalonFX(TURRET_FX_ID);
     m_turretSensor = new DigitalInput(TURRET_HOME_SENSOR);
 
     m_turret = new Turret(m_turretTalon, m_turretSensor);
@@ -56,21 +56,21 @@ void Robot::RobotInit() {
     /**
      * Shooter
      */
-    m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_FX_A_ID);
-    m_shooterFlywheelMotorB = new WPI_TalonFX(FLYWHEEL_FX_B_ID);
+    m_shooterFlywheelMotorA = new TalonFX(FLYWHEEL_FX_A_ID);
+    m_shooterFlywheelMotorB = new TalonFX(FLYWHEEL_FX_B_ID);
 
     m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB);
 
     /**
      * Climb
      */
-    m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
-    m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
+    m_climbTalonA = new TalonFX(CLIMB_FX_A_ID);
+    m_climbTalonB = new TalonFX(CLIMB_FX_B_ID);
     m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
     m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
     m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
     m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
-    m_climbSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, CLIMB_SOLENOID_ID);
+    m_climbSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, CLIMB_SOLENOID_ID);
 
     m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
                         m_topRightSensor, m_climbSolenoid);
@@ -78,7 +78,7 @@ void Robot::RobotInit() {
     /**
      * Gyro
      */
-    m_gyro = new Gyro(m_conveyorTowerMotorB);
+    m_gyro = new Gyro(m_conveyorCeilingMotor);
     m_gyro->Zero();
 
     /**
@@ -96,7 +96,8 @@ void Robot::RobotInit() {
     /**
      * Pneumatics
      */
-    m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
+    m_compressor = new Compressor(PneumaticsModuleType::CTREPCM);
+    m_compressor->EnableDigital();
 
     /**
      * Subsystem Manager
@@ -128,10 +129,10 @@ void Robot::RobotPeriodic() {
     // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60}, units::pressure::pounds_per_square_inch_t{120});
-    // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
-
-    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    // limelight
+    // frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
+    // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
+    // frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
     // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
