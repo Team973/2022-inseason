@@ -45,8 +45,8 @@ constexpr int INTAKE_SOFT_SOLENOID_ID = 6; /**< Channel for the intake Solenoid.
  * Conveyor Subsystem.
  */
 constexpr int CONVEYOR_FLOOR_SRX_ID = 10;   /**< CAN ID for the floor talon. */
-constexpr int CONVEYOR_TOWER_A_SRX_ID = 11; /**< CAN ID for the first tower talon. */
-constexpr int CONVEYOR_TOWER_B_SRX_ID = 4;  /**< CAN ID for the second tower talon. */
+constexpr int CONVEYOR_TOWER_SRX_ID = 11; /**< CAN ID for the first tower talon. */
+constexpr int CONVEYOR_CEILING_SRX_ID = 4;  /**< CAN ID for the second tower talon. */
 
 /**
  * Turret Subsystem.

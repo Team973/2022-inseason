@@ -39,10 +39,10 @@ void Robot::RobotInit() {
      * Conveyor
      */
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
-    m_conveyorTowerMotorA = new TalonSRX(CONVEYOR_TOWER_A_SRX_ID);
-    m_conveyorTowerMotorB = new TalonSRX(CONVEYOR_TOWER_B_SRX_ID);
+    m_conveyorTowerMotor = new TalonSRX(CONVEYOR_TOWER_SRX_ID);
+    m_conveyorCeilingMotor = new TalonSRX(CONVEYOR_CEILING_SRX_ID);
 
-    m_conveyor = new Conveyor(m_conveyorTowerMotorA, m_conveyorTowerMotorB, m_conveyorFloorMotor);
+    m_conveyor = new Conveyor(m_conveyorTowerMotor, m_conveyorCeilingMotor, m_conveyorFloorMotor);
 
     /**
      * Turret
@@ -78,7 +78,7 @@ void Robot::RobotInit() {
     /**
      * Gyro
      */
-    m_gyro = new Gyro(m_conveyorTowerMotorB);
+    m_gyro = new Gyro(m_conveyorCeilingMotor);
     m_gyro->Zero();
 
     /**

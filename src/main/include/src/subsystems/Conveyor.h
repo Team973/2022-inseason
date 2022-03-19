@@ -113,8 +113,8 @@ public:
     void SetManualFloorSpeed(double speed);
 
 private:
-    TalonSRX *m_towerMotorA;
-    TalonSRX *m_chickenPluckerMotor;
+    TalonSRX *m_towerMotor;
+    TalonSRX *m_ceilingMotor;
     TalonSRX *m_floorMotor;
     TowerState m_towerState;
     FloorState m_floorState;
