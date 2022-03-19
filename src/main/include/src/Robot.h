@@ -9,7 +9,8 @@
 
 #include <frc/Joystick.h>
 #include <frc/motorcontrol/PWMTalonFX.h>
-#include <frc/PneumaticHub.h>
+// #include <frc/PneumaticHub.h>
+#include <frc/Compressor.h>
 #include <frc/Solenoid.h>
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
@@ -130,7 +131,8 @@ private:
     /**
      * Pneumatics
      */
-    frc::PneumaticHub *m_pneumaticsHub;
+    // frc::PneumaticHub *m_pneumaticsHub;
+    frc::Compressor *m_compressor;
 
     /**
      * Subsystem Manager

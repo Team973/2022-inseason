@@ -11,7 +11,7 @@ void Robot::RobotInit() {
      * USB Camera- http://10.9.73.2:1181/stream.mjpg
      */
     frc::CameraServer::StartAutomaticCapture();
-    
+
     /**
      * Drive
      */
@@ -30,8 +30,8 @@ void Robot::RobotInit() {
      * Intake
      */
     m_intakeTalon = new PWMTalonFX(INTAKE_FX_PWM_ID);
-    m_intakeSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOLENOID_ID);
-    m_intakeSoftSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, INTAKE_SOFT_SOLENOID_ID);
+    m_intakeSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOLENOID_ID);
+    m_intakeSoftSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, INTAKE_SOFT_SOLENOID_ID);
 
     m_intake = new Intake(m_intakeTalon, m_intakeSolenoid, m_intakeSoftSolenoid);
 
@@ -70,7 +70,7 @@ void Robot::RobotInit() {
     m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
     m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
     m_topRightSensor = new DigitalInput(CLIMB_TOP_RIGHT_SENSOR);
-    m_climbSolenoid = new Solenoid(PNEU_HUB_CAN_ID, PneumaticsModuleType::REVPH, CLIMB_SOLENOID_ID);
+    m_climbSolenoid = new Solenoid(PCM_ID, PneumaticsModuleType::CTREPCM, CLIMB_SOLENOID_ID);
 
     m_climb = new Climb(m_climbTalonA, m_climbTalonB, m_bottomLeftSensor, m_bottomRightSensor, m_topLeftSensor,
                         m_topRightSensor, m_climbSolenoid);
@@ -96,7 +96,9 @@ void Robot::RobotInit() {
     /**
      * Pneumatics
      */
-    m_pneumaticsHub = new frc::PneumaticHub{PNEU_HUB_CAN_ID};
+    // m_pneumaticsHub = new frc::PneumaticHub{PCM_ID};
+    m_compressor = new Compressor(PneumaticsModuleType::CTREPCM);
+    m_compressor->EnableDigital();
 
     /**
      * Subsystem Manager
@@ -128,7 +130,8 @@ void Robot::RobotPeriodic() {
     // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60}, units::pressure::pounds_per_square_inch_t{120});
+    // m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60},
+    //                                         units::pressure::pounds_per_square_inch_t{120});
     // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // // limelight
