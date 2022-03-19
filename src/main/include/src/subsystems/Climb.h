@@ -24,9 +24,8 @@ public:
      * @param topLeftSensor the top left sensor
      * @param topRightSensor the top right sensor
      */
-    Climb(WPI_TalonFX *climbTalonA, WPI_TalonFX *climbTalonB, DigitalInput *bottomLeftSensor,
-          DigitalInput *bottomRightSensor, DigitalInput *topLeftSensor, DigitalInput *topRightSensor,
-          Solenoid *climbSolenoid);
+    Climb(TalonFX *climbTalonA, TalonFX *climbTalonB, DigitalInput *bottomLeftSensor, DigitalInput *bottomRightSensor,
+          DigitalInput *topLeftSensor, DigitalInput *topRightSensor, Solenoid *climbSolenoid);
 
     /**
      * Sets the climb to run automatically, manually through joystick, or lock and stop moving.
@@ -65,7 +64,7 @@ public:
      * @param target the target in inches
      */
     void SetClimbTarget(double target);
-    
+
     /**
      * Set Drive to chosen mode (coast or break)
      * @param mode the chosen mode
@@ -101,8 +100,8 @@ public:
     void DashboardUpdate() override;
 
 private:
-    WPI_TalonFX *m_climbTalonA;
-    WPI_TalonFX *m_climbTalonB;
+    TalonFX *m_climbTalonA;
+    TalonFX *m_climbTalonB;
 
     DigitalInput *m_bottomLeftSensor;
     DigitalInput *m_bottomRightSensor;

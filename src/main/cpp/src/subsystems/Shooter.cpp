@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-Shooter::Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB)
+Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
         : m_flywheelA(flywheelA)
         , m_flywheelB(flywheelB)
         , m_flywheelRPMSetpoint(TARMAC_FLYWHEEL_RPM_SETPOINT)

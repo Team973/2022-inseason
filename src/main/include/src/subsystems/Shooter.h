@@ -17,7 +17,7 @@ public:
      * @param flywheelA The flywheel A falcon.
      * @param flywheelB The flywheel B falcon.
      */
-    Shooter(WPI_TalonFX *flywheelA, WPI_TalonFX *flywheelB);
+    Shooter(TalonFX *flywheelA, TalonFX *flywheelB);
 
     enum class ShooterState {
         Off,      /* Shooter motors do not run */
@@ -70,8 +70,8 @@ public:
     void DashboardUpdate() override;
 
 private:
-    WPI_TalonFX *m_flywheelA;
-    WPI_TalonFX *m_flywheelB;
+    TalonFX *m_flywheelA;
+    TalonFX *m_flywheelB;
 
     double m_flywheelRPMSetpoint;
     double m_flywheelSpeed;

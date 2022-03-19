@@ -11,16 +11,16 @@ void Robot::RobotInit() {
      * USB Camera- http://10.9.73.2:1181/stream.mjpg
      */
     frc::CameraServer::StartAutomaticCapture();
-    
+
     /**
      * Drive
      */
-    m_leftDriveTalonA = new WPI_TalonFX(LEFT_DRIVE_FX_A_ID);
-    m_leftDriveTalonB = new WPI_TalonFX(LEFT_DRIVE_FX_B_ID);
-    m_leftDriveTalonC = new WPI_TalonFX(LEFT_DRIVE_FX_C_ID);
-    m_rightDriveTalonA = new WPI_TalonFX(RIGHT_DRIVE_FX_A_ID);
-    m_rightDriveTalonB = new WPI_TalonFX(RIGHT_DRIVE_FX_B_ID);
-    m_rightDriveTalonC = new WPI_TalonFX(RIGHT_DRIVE_FX_C_ID);
+    m_leftDriveTalonA = new TalonFX(LEFT_DRIVE_FX_A_ID);
+    m_leftDriveTalonB = new TalonFX(LEFT_DRIVE_FX_B_ID);
+    m_leftDriveTalonC = new TalonFX(LEFT_DRIVE_FX_C_ID);
+    m_rightDriveTalonA = new TalonFX(RIGHT_DRIVE_FX_A_ID);
+    m_rightDriveTalonB = new TalonFX(RIGHT_DRIVE_FX_B_ID);
+    m_rightDriveTalonC = new TalonFX(RIGHT_DRIVE_FX_C_ID);
 
     m_drive = new Drive(m_leftDriveTalonA, m_leftDriveTalonB, m_leftDriveTalonC, m_rightDriveTalonA, m_rightDriveTalonB,
                         m_rightDriveTalonC);
@@ -47,7 +47,7 @@ void Robot::RobotInit() {
     /**
      * Turret
      */
-    m_turretTalon = new WPI_TalonFX(TURRET_FX_ID);
+    m_turretTalon = new TalonFX(TURRET_FX_ID);
     m_turretSensor = new DigitalInput(TURRET_HOME_SENSOR);
 
     m_turret = new Turret(m_turretTalon, m_turretSensor);
@@ -56,16 +56,16 @@ void Robot::RobotInit() {
     /**
      * Shooter
      */
-    m_shooterFlywheelMotorA = new WPI_TalonFX(FLYWHEEL_FX_A_ID);
-    m_shooterFlywheelMotorB = new WPI_TalonFX(FLYWHEEL_FX_B_ID);
+    m_shooterFlywheelMotorA = new TalonFX(FLYWHEEL_FX_A_ID);
+    m_shooterFlywheelMotorB = new TalonFX(FLYWHEEL_FX_B_ID);
 
     m_shooter = new Shooter(m_shooterFlywheelMotorA, m_shooterFlywheelMotorB);
 
     /**
      * Climb
      */
-    m_climbTalonA = new WPI_TalonFX(CLIMB_FX_A_ID);
-    m_climbTalonB = new WPI_TalonFX(CLIMB_FX_B_ID);
+    m_climbTalonA = new TalonFX(CLIMB_FX_A_ID);
+    m_climbTalonB = new TalonFX(CLIMB_FX_B_ID);
     m_bottomLeftSensor = new DigitalInput(CLIMB_BOTTOM_LEFT_SENSOR);
     m_bottomRightSensor = new DigitalInput(CLIMB_BOTTOM_RIGHT_SENSOR);
     m_topLeftSensor = new DigitalInput(CLIMB_TOP_LEFT_SENSOR);
@@ -128,7 +128,8 @@ void Robot::RobotPeriodic() {
     // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();
 
-    m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60}, units::pressure::pounds_per_square_inch_t{120});
+    m_pneumaticsHub->EnableCompressorAnalog(units::pressure::pounds_per_square_inch_t{60},
+                                            units::pressure::pounds_per_square_inch_t{120});
     // frc::SmartDashboard::PutNumber("Pneu PSI", m_pneumaticsHub->GetPressure(0).value());
 
     // // limelight
