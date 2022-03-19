@@ -30,6 +30,10 @@ void Robot::TeleopPeriodic() {
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+        // m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+        //                                     1.0);  // left stick y-axis
+        //     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+        //                                     1.0);  // left stick x-axis
     }
 
     // drive
@@ -94,7 +98,7 @@ void Robot::TeleopPeriodic() {
         m_intake->Retract();
     }
 
-    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.12));  // left stick x-axis
+    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));  // left stick x-axis
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
