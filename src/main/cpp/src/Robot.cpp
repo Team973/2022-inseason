@@ -136,7 +136,7 @@ void Robot::RobotPeriodic() {
     // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     // frc::SmartDashboard::PutNumber("LIM get x offset (deg)", m_limelight->GetXOffset());
     // frc::SmartDashboard::PutNumber("LIM get y offset (deg)", m_limelight->GetYOffset());
-    // frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
+    frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDistWithComp(m_gyro->GetRollAngle(), m_turret->GetTurretAngle()));
     // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
 }
 
