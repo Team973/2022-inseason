@@ -123,7 +123,7 @@ private:
     double m_previousLatency;
 
     static constexpr double TARGET_HEIGHT = 
-        53.0; /**< Target's height in inches from ground*/
+        43.0; /**< Target's height in inches from ground*/
     static constexpr double CAMERA_HEIGHT = 21.0; /**< Camera's Height in inches from ground*/
     static constexpr double CAMERA_ANGLE =
         34.25; /**< Camera Angle in degrees wrt ground*/

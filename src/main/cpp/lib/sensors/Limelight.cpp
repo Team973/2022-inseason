@@ -103,7 +103,7 @@ double Limelight::GetHorizontalDist() {
 
 double Limelight::GetHorizontalDistWithComp(double pitch, double turretAngle) {
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
-    double angle_calc = (CAMERA_ANGLE + GetYOffset() + ((pitch + 3.7) * std::cos(turretAngle * Constants::RAD_PER_DEG))) * Constants::RAD_PER_DEG;
+    double angle_calc = (CAMERA_ANGLE + GetYOffset() - (pitch * std::cos(turretAngle * Constants::RAD_PER_DEG))) * Constants::RAD_PER_DEG;
     double x_calc = y_calc / (std::tan(angle_calc));
 
     return x_calc;
