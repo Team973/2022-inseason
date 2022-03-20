@@ -19,53 +19,6 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
     /**
-     * Driver
-     */
-    // shoot btn
-    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger
-        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
-        m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
-    } else {
-        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
-        // m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-        //                                     1.0);  // left stick y-axis
-        //     m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-        //                                     1.0);  // left stick x-axis
-    }
-
-    // drive
-    if (m_driverStick->GetLeftBumper()) {
-        m_drive->SetQuickTurn(true);
-    } else {
-        m_drive->SetQuickTurn(false);
-    }
-
-    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.1),
-                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
-
-    // gyro
-    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-        m_gyro->Zero();
-    }
-
-    // limelight
-    if (m_driverStick->GetRightBumper()) {
-        m_limelight->SetCameraDriver();
-    } else {
-        m_limelight->SetVisionCamera();
-    }
-
-    // limelight
-    if (m_driverStick->GetRightBumper()) {
-        m_limelight->SetCameraDriver();
-    } else {
-        m_limelight->SetVisionCamera();
-    }
-
-    /**
      * Co-driver
      */
     // shooter
@@ -89,16 +42,43 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurretState(TurretState::Tracking);
     }
 
-    // intake
-    m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
-
+    // Left Trigger - Deploy Intake
     if (m_operatorStick->GetLeftTriggerAxis() >= 0.8) {
         m_intake->Deploy();
     } else {
         m_intake->Retract();
     }
 
-    m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));  // left stick x-axis
+    if (m_operatorStick->GetLeftTriggerAxis() >= 0.8) {  // Left Trigger - Queueing State
+        m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
+        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
+    // } else {
+    }
+
+    if (m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2) ||
+        m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2)) {
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
+
+        m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
+        m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
+                                        1.0);  // left stick y-axis
+        m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
+                                        1.0);  // left stick x-axis
+    } else {
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+    }
+
+    if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger - Shoot Button
+        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
+        m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
+        // } else {
+    }
 
     // climb state
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
@@ -117,21 +97,42 @@ void Robot::TeleopPeriodic() {
     if (m_climb->GetClimbStatus()) {
         m_climb->SetClimbSpeed(manualClimb);
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
         m_conveyor->SetFloorState(Conveyor::FloorState::Off);
         m_conveyor->SetTowerState(Conveyor::TowerState::Off);
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(0.0);
         m_limelight->SetCameraDriver();
-
+        m_compressor->Disable();
     } else {
+        m_compressor->EnableDigital();
         m_climb->SetClimbSpeed(0.0);
-        // conveyor
-        if (!m_driverStick->GetRawButton(Stick::RightTrigger)) {
-            m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                            1.0);  // left stick y-axis
-            m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-                                            1.0);  // left stick x-axis
-        }
+    }
+
+    /**
+     * Driver
+     */
+
+    // drive
+    if (m_driverStick->GetLeftBumper()) {
+        m_drive->SetQuickTurn(true);
+    } else {
+        m_drive->SetQuickTurn(false);
+    }
+
+    m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.1),
+                             m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
+
+    // gyro
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
+
+    // limelight
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
     }
 
     m_drive->Update();

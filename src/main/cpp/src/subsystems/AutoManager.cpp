@@ -86,93 +86,96 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
     }),
-    new PositionDriveCommand(m_drive, 0.0, -90.0, 0.4, 1000),
+    new PositionDriveCommand(m_drive, -10.0, 0.0, 0.4, 1000),
 }))
 
 /*< Position 2, 3 Ball >*/
 , m_p2_3Ball(m_p2_2Ball + AutoMode({
-    new PositionDriveCommand(m_drive, 0.0, -114.0, 0.5, 1500),
+    new PositionDriveCommand(m_drive, 0.0, -114.0, 0.5, 1000),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -79.458, -111.0, 0.8, 2000), 
-        new RunIntakeCommand(m_intake, 1.0, 2000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),   
-        new SetTurretAngleCommand(m_turret, 77.0, 2000),
+        new PositionDriveCommand(m_drive, -79.458, -111.0, 0.8, 1700), 
+        new RunIntakeCommand(m_intake, 1.0, 1700),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),   
+        new SetTurretAngleCommand(m_turret, 77.0, 1700),
+        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 500),
     }),
-    new WaitForFlywheelCommand(m_shooter, 500),
+    new WaitForFlywheelCommand(m_shooter, 200),
     new ConcurrentCommand({
-        new RunIntakeCommand(m_intake, 1.0, 1500),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
-        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 1500),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 1500),
+        new RunIntakeCommand(m_intake, 1.0, 1800),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1800),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 1800),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 1800),
     }),
 }))
 
 /*< Position 5, 4 Ball >*/
-, m_p5_4Ball(AutoMode({
-    new RetractIntakeCommand(m_intake),
-    new WaitCommand(150),                                   
-    new DeployIntakeCommand(m_intake),
-    new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
-    new WaitCommand(100),
-    new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 2000),
-        new RunIntakeCommand(m_intake, 1.0, 2000),
-        new SequentialCommand({
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        }),
-        new SetTurretAngleCommand(m_turret, 15.696, 1000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
-    }),
-    new WaitForFlywheelCommand(m_shooter, 1500),
-    new ConcurrentCommand({
-        new RunIntakeCommand(m_intake, 1.0, 2000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
-    }),
-    new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -222.535, 87.0, 0.5, 3000),
-        new RunIntakeCommand(m_intake, 1.0, 3000),
-        new SequentialCommand({
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
-            new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
-        }),
-    }),
-    new ConcurrentCommand({
-        new WaitCommand(500),
-        new RunIntakeCommand(m_intake, 1.0, 500),
-    }),
-    new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, 209.637, 87.0, 0.5, 3000),
-        new RunIntakeCommand(m_intake, 1.0, 3000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 3000),
-        new SetTurretAngleCommand(m_turret, -90.0, 3000),
-        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 3000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
-    }),
-    new WaitForFlywheelCommand(m_shooter, 1500),
-    new ConcurrentCommand({
-        new RunIntakeCommand(m_intake, 1.0, 5000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 5000),
-        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 5000),
-    }),
+, m_p5_4Ball(m_p5_2Ball + AutoMode({
+    // new RetractIntakeCommand(m_intake),
+    // new WaitCommand(150),                                   
+    // new DeployIntakeCommand(m_intake),
+    // new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
+    // new WaitCommand(100),
+    // new ConcurrentCommand({
+    //     new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 2000),
+    //     new RunIntakeCommand(m_intake, 1.0, 2000),
+    //     new SequentialCommand({
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+    //     }),
+    //     new SetTurretAngleCommand(m_turret, 15.696, 1000),
+    //     new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
+    // }),
+    // new WaitForFlywheelCommand(m_shooter, 1500),
+    // new ConcurrentCommand({
+    //     new RunIntakeCommand(m_intake, 1.0, 2000),
+    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+    //     new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
+    // }),
+
+    // new ConcurrentCommand({
+        // new PositionDriveCommand(m_drive, -222.535, 87.0, 0.5, 3000),
+        new PositionDriveCommand(m_drive, -100.0, 95.0, 0.5, 3000),
+    //     new RunIntakeCommand(m_intake, 1.0, 3000),
+    //     new SequentialCommand({
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
+    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
+    //     }),
+    // }),
+    // new ConcurrentCommand({
+    //     new WaitCommand(500),
+    //     new RunIntakeCommand(m_intake, 1.0, 500),
+    // }),
+    // new ConcurrentCommand({
+    //     new PositionDriveCommand(m_drive, 209.637, 87.0, 0.5, 3000),
+    //     new RunIntakeCommand(m_intake, 1.0, 3000),
+    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 3000),
+    //     new SetTurretAngleCommand(m_turret, -90.0, 3000),
+    //     new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 3000),
+    //     new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 5000),
+    // }),
+    // new WaitForFlywheelCommand(m_shooter, 1500),
+    // new ConcurrentCommand({
+    //     new RunIntakeCommand(m_intake, 1.0, 5000),
+    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 5000),
+    //     new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 5000),
+    // }),
 }))
 
 /*< Citrus, 5 Ball >*/
 , m_citrus_5Ball(m_p2_3Ball + AutoMode({
     new PositionDriveCommand(m_drive, 0.0, -88.0, 0.5, 1500),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -160.0, -88.0, 0.7, 2500),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2500),
-        new RunIntakeCommand(m_intake, 1.0, 2500),
+        new PositionDriveCommand(m_drive, -158.0, -88.0, 0.7, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new RunIntakeCommand(m_intake, 1.0, 2000),
     }),
     new ConcurrentCommand({
-        new RunIntakeCommand(m_intake, 1.0, 2500),
+        new RunIntakeCommand(m_intake, 1.0, 1800),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new PositionDriveCommand(m_drive, 180.0, -88.0, 1.0, 2000),
-        new SetFlywheelRPMCommand(m_shooter, 2000, 2000),
+        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 2000),
     }),
     new WaitForFlywheelCommand(m_shooter, 500),
     new ConcurrentCommand({

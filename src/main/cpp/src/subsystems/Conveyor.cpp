@@ -56,7 +56,7 @@ void Conveyor::Update() {
             break;
         case TowerState::FeedOut:
             m_currentTowerState = "FeedOut";
-            m_towerMotor->Set(ControlMode::PercentOutput, -0.7);
+            m_towerMotor->Set(ControlMode::PercentOutput, -0.5);
             break;
         case TowerState::Manual:
             m_currentTowerState = "Manual";
@@ -85,8 +85,12 @@ void Conveyor::Update() {
 }
 
 void Conveyor::DashboardUpdate() {
-    frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
-    frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    // frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
+    // frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+
+    frc::SmartDashboard::PutNumber("CO Tower Current", m_towerMotor->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("CO Ceiling Current", m_ceilingMotor->GetOutputCurrent());
+    frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {

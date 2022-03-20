@@ -134,6 +134,8 @@ void Robot::RobotPeriodic() {
     // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     // frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
     // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    // SmartDashboard::PutString("pressure", to_string(m_compressor->GetPressure()));
+    // SmartDashboard::PutNumber("pressure", m_compressor->GetPressure().value());
 }
 
 }  // namespace frc973
