@@ -18,12 +18,9 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-    /**
-     * Co-driver
-     */
     // shooter
-    if (m_operatorStick->GetAButton()) {
-        m_shooter->SetFlywheelRPM(800);
+    if (m_operatorStick->GetAButton()) {  // set lowgoal RPM
+        m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
     }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger
@@ -34,69 +31,59 @@ void Robot::TeleopPeriodic() {
     }
 
     // turret
-    if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
+    if (m_operatorStick->GetAButton()) {  // set lowgoal Angle
         m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(
-            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
+        m_turret->SetTurnValue(0.0);
     } else {
-        m_turret->SetTurretState(TurretState::Tracking);
+        if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
+            m_turret->SetTurretState(TurretState::Manual);
+            m_turret->SetTurnValue(
+                m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
+        } else {
+            m_turret->SetTurretState(TurretState::Tracking);
+        }
     }
 
-    // Left Trigger - Deploy Intake
-    if (m_operatorStick->GetLeftTriggerAxis()) {
+    // Intake
+    if (m_operatorStick->GetLeftTriggerAxis()) {  // Left Trigger
         m_intake->Deploy();
     } else {
         m_intake->Retract();
     }
 
-    if (m_operatorStick->GetLeftTriggerAxis()) {  // Left Trigger - Queueing State
-        m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
+    // Conveyors and Intake
+    if (m_operatorStick->GetLeftStickButton()) {  // Left Stick Button - Queueing State
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
-    // } else {
+        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
+        m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
     } else {
-        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
-    }
+        if (!m_driverStick->GetRawButton(Stick::RightTrigger)) { // Not shooting
+            if (m_operatorStick->GetRawAxis(0)) {  // left stick x-axis
+                m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
+                m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
+                m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
+                m_conveyor->SetManualFloorSpeed(
+                    m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));  
+            } else {
+                m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+                m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+            }
 
-    if (m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2) ||
-        m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2)) {
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
-        m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
-        m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
-
-        m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
-        m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15) *
-                                        1.0);  // left stick y-axis
-        m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
-                                        1.0);  // left stick x-axis
+            if (m_operatorStick->GetRawAxis(1)) { // left stick y-axis
+                m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
+                m_conveyor->SetManualTowerSpeed(
+                    m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2));  
+            } else {
+                m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+            }
+        }
     }
 
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger - Shoot Button
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
-        // } else {
     }
-
-    // climb state
-    double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
-    if (m_operatorStick->GetBackButton()) {
-        m_climb->SetClimbState(Climb::ClimbState::Manual);
-    }
-
-    if (m_operatorStick->GetStartButton()) {
-        m_climb->SetClimbState(Climb::ClimbState::Off);
-    }
-
-    if (m_operatorStick->GetYButton()) {
-        m_climb->SetClimbState(Climb::ClimbState::Level_3);
-    }
-
-    /**
-     * Driver
-     */
 
     // drive
     if (m_driverStick->GetLeftBumper()) {
@@ -120,6 +107,20 @@ void Robot::TeleopPeriodic() {
         m_limelight->SetVisionCamera();
     }
 
+    // climb
+    double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
+    if (m_operatorStick->GetBackButton()) {
+        m_climb->SetClimbState(Climb::ClimbState::Manual);
+    }
+
+    if (m_operatorStick->GetStartButton()) {
+        m_climb->SetClimbState(Climb::ClimbState::Off);
+    }
+
+    if (m_operatorStick->GetYButton()) {
+        m_climb->SetClimbState(Climb::ClimbState::Level_3);
+    }
+
     if (m_climb->GetClimbStatus()) {
         m_climb->SetClimbSpeed(manualClimb);
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
@@ -135,9 +136,8 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbSpeed(0.0);
     }
 
+    m_subsystemManager->Update();
     m_drive->Update();
-    m_drive->SetAngle(m_gyro->GetWrappedAngle());
-    m_drive->SetAngularRate(m_gyro->GetAngularRate());
     m_intake->Update();
     m_conveyor->Update();
     m_turret->Update();
@@ -145,7 +145,6 @@ void Robot::TeleopPeriodic() {
     m_climb->Update();
     m_gyro->Update();
     m_lights->Update();
-    m_subsystemManager->Update();
 }
 
 }  // namespace frc973

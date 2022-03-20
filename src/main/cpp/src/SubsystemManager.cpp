@@ -97,6 +97,9 @@ void SubsystemManager::Update() {
     } else {
         m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
     }
+
+    m_drive->SetAngle(m_gyro->GetWrappedAngle());
+    m_drive->SetAngularRate(m_gyro->GetAngularRate());
 }
 
 }  // namespace frc973

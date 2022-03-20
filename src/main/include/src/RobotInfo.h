@@ -37,16 +37,16 @@ constexpr double DRIVE_TELEOP_LIMIT = 1.0;        /** The max speed we want to r
 /**
  * Intake Subsystem.
  */
-constexpr int INTAKE_FX_PWM_ID = 0;         /**< PWM ID for the intake talon. */
+constexpr int INTAKE_FX_PWM_ID = 0;        /**< PWM ID for the intake talon. */
 constexpr int INTAKE_SOLENOID_ID = 7;      /**< Channel for the intake Solenoid. */
 constexpr int INTAKE_SOFT_SOLENOID_ID = 6; /**< Channel for the intake Solenoid. */
 
 /**
  * Conveyor Subsystem.
  */
-constexpr int CONVEYOR_FLOOR_SRX_ID = 10;   /**< CAN ID for the floor talon. */
-constexpr int CONVEYOR_TOWER_SRX_ID = 11; /**< CAN ID for the first tower talon. */
-constexpr int CONVEYOR_CEILING_SRX_ID = 4;  /**< CAN ID for the second tower talon. */
+constexpr int CONVEYOR_FLOOR_SRX_ID = 10;  /**< CAN ID for the floor talon. */
+constexpr int CONVEYOR_TOWER_SRX_ID = 11;  /**< CAN ID for the first tower talon. */
+constexpr int CONVEYOR_CEILING_SRX_ID = 4; /**< CAN ID for the second tower talon. */
 
 /**
  * Turret Subsystem.
@@ -66,12 +66,13 @@ constexpr double FLYWHEEL_GEAR_RATIO = (12.0 / 18.0); /** The gear ratio of the 
 constexpr double FLYWHEEL_VELOCITY_RPM =
     Constants::TALON_FX_VELOCITY_RPM * FLYWHEEL_GEAR_RATIO;    /** Convert RPM to ticks per 100msec. */
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
+static constexpr double LOW_FLYWHEEL_RPM_SETPOINT = 800.0;     /** Flywheel RPM to shoot into the low goal. */
 static constexpr double FLY_RPM_CLOSE = 2000.0;                /** Flywheel RPM to shoot from the edge of the tarmac. */
 static constexpr double FLY_RPM_FAR = 2750;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
 static constexpr double FLY_DIST_FAR = 201;   /** Distance from target to far. */
 static constexpr double TOO_FAR_LOCKOUT =
-    10000; /** Distance from target in inches is too far, doesn't allow shooting. */
+    240.0; /** Distance from target in inches is too far, doesn't allow shooting. */
 
 /**
  * Climb Subsystem.
@@ -83,7 +84,7 @@ constexpr int CLIMB_BOTTOM_LEFT_SENSOR = 4;  /** DIO channel for the bottom left
 constexpr int CLIMB_BOTTOM_RIGHT_SENSOR = 1; /** DIO channel for the bottom right climb hall sensor. */
 constexpr int CLIMB_TOP_LEFT_SENSOR = 3;     /** DIO channel for the top left climb hall sensor. */
 constexpr int CLIMB_TOP_RIGHT_SENSOR = 2;    /** DIO channel for the top right climb hall sensor. */
-constexpr int CLIMB_SOLENOID_ID = 5;        /**< Channel for the climb Solenoid. */
+constexpr int CLIMB_SOLENOID_ID = 5;         /**< Channel for the climb Solenoid. */
 
 constexpr double CLIMB_PINION = 8.0;          /** Tooth count of the pinion gear on climb. */
 constexpr double CLIMB_GEAR = 70.0;           /** Tooth count of the spur gear on climb. */

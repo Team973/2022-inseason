@@ -37,14 +37,6 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *ceilingMotor, TalonSRX *floo
 }
 
 void Conveyor::Update() {
-    if (m_manualTowerSpeed != 0) {
-        m_towerState = TowerState::Manual;
-    }
-
-    if (m_manualFloorSpeed != 0) {
-        m_floorState = FloorState::Manual;
-    }
-
     switch (m_towerState) {
         case TowerState::Off:
             m_currentTowerState = "Off";
@@ -85,12 +77,12 @@ void Conveyor::Update() {
 }
 
 void Conveyor::DashboardUpdate() {
-    // frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
-    // frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
+    frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
 
-    frc::SmartDashboard::PutNumber("CO Tower Current", m_towerMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Ceiling Current", m_ceilingMotor->GetOutputCurrent());
-    frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
+    // frc::SmartDashboard::PutNumber("CO Tower Current", m_towerMotor->GetOutputCurrent());
+    // frc::SmartDashboard::PutNumber("CO Ceiling Current", m_ceilingMotor->GetOutputCurrent());
+    // frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
