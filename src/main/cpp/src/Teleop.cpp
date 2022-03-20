@@ -43,17 +43,21 @@ void Robot::TeleopPeriodic() {
     }
 
     // Left Trigger - Deploy Intake
-    if (m_operatorStick->GetLeftTriggerAxis() >= 0.8) {
+    if (m_operatorStick->GetLeftTriggerAxis()) {
         m_intake->Deploy();
     } else {
         m_intake->Retract();
     }
 
-    if (m_operatorStick->GetLeftTriggerAxis() >= 0.8) {  // Left Trigger - Queueing State
+    if (m_operatorStick->GetLeftTriggerAxis()) {  // Left Trigger - Queueing State
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
     // } else {
+    } else {
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
     }
 
     if (m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2) ||
@@ -67,10 +71,6 @@ void Robot::TeleopPeriodic() {
                                         1.0);  // left stick y-axis
         m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.15) *
                                         1.0);  // left stick x-axis
-    } else {
-        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
     }
 
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger - Shoot Button
@@ -92,21 +92,6 @@ void Robot::TeleopPeriodic() {
 
     if (m_operatorStick->GetYButton()) {
         m_climb->SetClimbState(Climb::ClimbState::Level_3);
-    }
-
-    if (m_climb->GetClimbStatus()) {
-        m_climb->SetClimbSpeed(manualClimb);
-        m_intake->SetIntakeState(Intake::IntakeState::Deploy);
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
-        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-        m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(0.0);
-        m_limelight->SetCameraDriver();
-        m_compressor->Disable();
-    } else {
-        m_compressor->EnableDigital();
-        m_climb->SetClimbSpeed(0.0);
     }
 
     /**
@@ -133,6 +118,21 @@ void Robot::TeleopPeriodic() {
         m_limelight->SetCameraDriver();
     } else {
         m_limelight->SetVisionCamera();
+    }
+
+    if (m_climb->GetClimbStatus()) {
+        m_climb->SetClimbSpeed(manualClimb);
+        m_intake->SetIntakeState(Intake::IntakeState::Deploy);
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Off);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Off);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(0.0);
+        m_limelight->SetCameraDriver();
+        m_compressor->Disable();
+    } else {
+        m_compressor->EnableDigital();
+        m_climb->SetClimbSpeed(0.0);
     }
 
     m_drive->Update();
