@@ -29,8 +29,6 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
     m_ceilingMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_floorMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
 
-    m_ceilingMotor->Follow(*m_floorMotor);
-
     // Voltage Compensation
     m_towerMotor->ConfigVoltageCompSaturation(12.0);
     m_towerMotor->EnableVoltageCompensation(true);
@@ -70,26 +68,32 @@ void Conveyor::Update() {
         case FloorState::Off:
             m_currentFloorState = "Off";
             m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
         case FloorState::FeedIn:
             m_currentFloorState = "FeedIn";
             m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.7);
             break;
         case FloorState::FeedOut:
             m_currentFloorState = "FeedOut";
             m_floorMotor->Set(ControlMode::PercentOutput, -0.7);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, -0.7);
             break;
         case FloorState::Manual:
             m_currentFloorState = "Manual";
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             break;
         case FloorState::Shoot:
             m_currentFloorState = "Shoot";
             if (m_readyToShoot) {
                 m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 1.0);
             }
 
             m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 }
@@ -97,10 +101,6 @@ void Conveyor::Update() {
 void Conveyor::DashboardUpdate() {
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
-
-    // frc::SmartDashboard::PutNumber("CO Tower Current", m_towerMotor->GetOutputCurrent());
-    // frc::SmartDashboard::PutNumber("CO Ceiling Current", m_ceilingMotor->GetOutputCurrent());
-    // frc::SmartDashboard::PutNumber("CO Floor Motor Current", m_floorMotor->GetOutputCurrent());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {
