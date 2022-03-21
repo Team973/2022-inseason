@@ -90,12 +90,14 @@ void SubsystemManager::Update() {
     m_shooter->SetFlywheelRPM(CalcFlywheelRPM());
 
     /**
-     * Ready to shoot lights
+     * Ready to shoot checks
      */
     if (ReadyToShoot()) {
         m_lights->SetLightsState(Lights::LightsState::ReadyToShoot);
+        m_conveyor->SetReadyToShoot(true);
     } else {
         m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
+        m_conveyor->SetReadyToShoot(false);
     }
 
     m_drive->SetAngle(m_gyro->GetWrappedAngle());

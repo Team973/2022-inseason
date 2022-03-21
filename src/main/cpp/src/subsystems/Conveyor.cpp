@@ -2,8 +2,8 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *ceilingMotor, TalonSRX *floorMotor)
-        : m_towerMotor(towerMotorA)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor)
+        : m_towerMotor(towerMotor)
         , m_ceilingMotor(ceilingMotor)
         , m_floorMotor(floorMotor)
         , m_towerState(TowerState::Off)
@@ -11,7 +11,8 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *ceilingMotor, TalonSRX *floo
         , m_manualTowerSpeed(0.0)
         , m_manualFloorSpeed(0.0)
         , m_currentTowerState("Off")
-        , m_currentFloorState("Off") {
+        , m_currentFloorState("Off")
+        , m_readyToShoot(false) {
     m_towerMotor->ConfigFactoryDefault();
     m_ceilingMotor->ConfigFactoryDefault();
 
@@ -19,8 +20,9 @@ Conveyor::Conveyor(TalonSRX *towerMotorA, TalonSRX *ceilingMotor, TalonSRX *floo
     m_ceilingMotor->SetNeutralMode(Coast);
 
     // Motor Directions
+    m_towerMotor->SetInverted(TalonFXInvertType::CounterClockwise);
+
     m_floorMotor->SetInverted(false);
-    m_towerMotor->SetInverted(true);
     m_ceilingMotor->SetInverted(true);
 
     m_towerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
@@ -54,6 +56,14 @@ void Conveyor::Update() {
             m_currentTowerState = "Manual";
             m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
+        case TowerState::Shoot:
+            m_currentTowerState = "Shoot";
+            if (m_readyToShoot) {
+                m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+            }
+
+            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
+            break;
     }
 
     switch (m_floorState) {
@@ -72,6 +82,14 @@ void Conveyor::Update() {
         case FloorState::Manual:
             m_currentFloorState = "Manual";
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
+            break;
+        case FloorState::Shoot:
+            m_currentFloorState = "Shoot";
+            if (m_readyToShoot) {
+                m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
+            }
+
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 }
@@ -122,6 +140,10 @@ void Conveyor::SetManualTowerSpeed(double speed) {
 
 void Conveyor::SetManualFloorSpeed(double speed) {
     m_manualFloorSpeed = speed;
+}
+
+void Conveyor::SetReadyToShoot(bool isReadyToShoot) {
+    m_readyToShoot = isReadyToShoot;
 }
 
 }  // namespace frc973

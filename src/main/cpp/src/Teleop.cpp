@@ -19,11 +19,11 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
     // Shooter
-    if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal RPM
-        m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
-    }
 
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger - Spin Up Flywheel
+        if (m_operatorStick->GetAButton()) {    // Btn A - Set Lowgoal RPM
+            m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
+        }
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
@@ -36,7 +36,8 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurnValue(0.0);
     } else {
         // if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
-        if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) || m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
+        if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||
+            m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
             m_turret->SetTurretState(TurretState::Manual);
             m_turret->SetTurnValue(
                 m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
@@ -53,7 +54,7 @@ void Robot::TeleopPeriodic() {
     }
 
     // Conveyors and Intake
-    if (m_operatorStick->GetLeftStickButton()) {  // Left Stick Button - Queueing State
+    if (m_operatorStick->GetDPadLeftVirtButton()) {  // Dpad Left Button - Queueing State
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
@@ -79,7 +80,7 @@ void Robot::TeleopPeriodic() {
     }
 
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger - Shoot Button
-        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
+        // m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
     }

@@ -19,7 +19,7 @@ public:
      * @param towerMotorB one of the two motors for the tower.
      * @param floorMotor the motor for the floor.
      */
-    Conveyor(TalonSRX *towerMotorA, TalonSRX *towerMotorB, TalonSRX *floorMotor);
+    Conveyor(TalonFX *towerMotor, TalonSRX *towerMotorB, TalonSRX *floorMotor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -28,7 +28,8 @@ public:
         Off,     /**< State for the tower being off. */
         FeedIn,  /**< State when the tower is moving the balls up */
         FeedOut, /**< State to empty the tower back into the floor. */
-        Manual   /**< State for manual control of the tower. */
+        Manual,  /**< State for manual control of the tower. */
+        Shoot    /**< State for the tower to shoot. */
     };
 
     /**
@@ -38,8 +39,8 @@ public:
         Off,     /**< State for the floor being off. */
         FeedIn,  /**< Brings power cells to tower. */
         FeedOut, /**< Brings power cells to Intake. */
-        Manual   /**< Manual control over the speed of the floor. */
-
+        Manual,  /**< Manual control over the speed of the floor. */
+        Shoot    /**< State to shoot. */
     };
 
     /**
@@ -112,8 +113,14 @@ public:
      */
     void SetManualFloorSpeed(double speed);
 
+    /**
+     * Sets the conveyors ready to shoot.
+     * @param isReadyToShoot The boolean that signifies ready to shoot.
+     */
+    void SetReadyToShoot(bool isReadyToShoot);
+
 private:
-    TalonSRX *m_towerMotor;
+    TalonFX *m_towerMotor;
     TalonSRX *m_ceilingMotor;
     TalonSRX *m_floorMotor;
     TowerState m_towerState;
@@ -127,5 +134,6 @@ private:
     double m_manualFloorSpeed;
     std::string m_currentTowerState;
     std::string m_currentFloorState;
+    bool m_readyToShoot;
 };
 }  // namespace frc973
