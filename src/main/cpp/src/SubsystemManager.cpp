@@ -87,6 +87,9 @@ void SubsystemManager::Update() {
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     }
 
+    /**
+     * Shooter flywheel calculation values
+     */
     m_shooter->SetFlywheelRPM(CalcFlywheelRPM());
 
     /**

@@ -19,10 +19,9 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
     // Shooter
-
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger - Spin Up Flywheel
         if (m_operatorStick->GetAButton()) {    // Btn A - Set Lowgoal RPM
-            m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
+            m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
         }
         m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
@@ -35,7 +34,6 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(0.0);
     } else {
-        // if (m_turret->StickMoved(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4))) {
         if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||
             m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
             m_turret->SetTurretState(TurretState::Manual);
