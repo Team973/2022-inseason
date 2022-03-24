@@ -22,8 +22,9 @@ void Robot::TeleopPeriodic() {
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger - Spin Up Flywheel
         if (m_operatorStick->GetAButton()) {    // Btn A - Set Lowgoal RPM
             m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
+        } else {
+            m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         }
-        m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_lights->SetLightsState(Lights::LightsState::Off);
