@@ -28,5 +28,11 @@ void Robot::DisabledPeriodic() {
     if (m_operatorStick->GetRawButtonPressed(Stick::BtnB)) {
         m_autoManager->IndexAutoMode(false);
     }
+
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
+    }
 }
 }  // namespace frc973

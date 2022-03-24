@@ -15,6 +15,8 @@ void Robot::TeleopInit() {
     m_drive->ClampSpeed(-DRIVE_TELEOP_LIMIT, DRIVE_TELEOP_LIMIT);
 
     m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
+
+    m_limelight->SetVisionCamera();
 }
 
 void Robot::TeleopPeriodic() {
