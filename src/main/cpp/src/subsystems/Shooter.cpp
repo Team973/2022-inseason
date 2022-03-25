@@ -48,7 +48,6 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
     m_flywheelA->EnableVoltageCompensation(true);
 
     // Velocity PID Parameters
-    // m_flywheelA->Config_kP(0, 0.0, 30);
     m_flywheelA->Config_kP(0, 0.025, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.000, 30);

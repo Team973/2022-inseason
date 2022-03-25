@@ -287,6 +287,8 @@ void Turret::Update() {
             CalcOutput(m_limelightXOffset, m_angularRate, m_translationalValue);
             break;
     }
+
+    SensorCalibrate();
 }
 
 void Turret::DashboardUpdate() {

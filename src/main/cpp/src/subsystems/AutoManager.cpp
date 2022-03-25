@@ -32,7 +32,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 1500),
         new RunIntakeCommand(m_intake, 1.0, 1500),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
-        new SetTurretAngleCommand(m_turret, -15.7, 1500),
+        new SetTurretAngleCommand(m_turret, -8.7, 1500),
     }),
     new WaitForFlywheelCommand(m_shooter, 2000),
     new ConcurrentCommand({
@@ -97,7 +97,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new RunIntakeCommand(m_intake, 1.0, 1700),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),   
         new SetTurretAngleCommand(m_turret, 77.0, 1700),
-        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 500),
+        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT + 100.0, 500),
     }),
     new WaitForFlywheelCommand(m_shooter, 200),
     new ConcurrentCommand({
