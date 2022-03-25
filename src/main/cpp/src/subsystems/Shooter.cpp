@@ -48,10 +48,12 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
     m_flywheelA->EnableVoltageCompensation(true);
 
     // Velocity PID Parameters
+    // m_flywheelA->Config_kP(0, 0.0, 30);
     m_flywheelA->Config_kP(0, 0.025, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
-    m_flywheelA->Config_kD(0, 0.001, 30);
-    m_flywheelA->Config_kF(0, 0.049, 30);
+    m_flywheelA->Config_kD(0, 0.000, 30);
+    // m_flywheelA->Config_kD(0, 0.001, 30);
+    m_flywheelA->Config_kF(0, 0.048, 30);
 }
 
 void Shooter::Update() {
@@ -88,8 +90,8 @@ void Shooter::Update() {
 void Shooter::DashboardUpdate() {
     SmartDashboard::PutNumber("S flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
     SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelRPMSetpoint);
-    SmartDashboard::PutNumber("S FlywheelA temp",m_flywheelA->GetTemperature());
-    SmartDashboard::PutNumber("S FlywheelB temp",m_flywheelB->GetTemperature());
+    SmartDashboard::PutNumber("S FlywheelA temp", m_flywheelA->GetTemperature());
+    SmartDashboard::PutNumber("S FlywheelB temp", m_flywheelB->GetTemperature());
 }
 
 void Shooter::SetShooterState(ShooterState state) {
