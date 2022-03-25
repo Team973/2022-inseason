@@ -44,7 +44,7 @@ void Conveyor::Update() {
             break;
         case TowerState::FeedIn:
             m_currentTowerState = "FeedIn";
-            m_towerMotor->Set(ControlMode::PercentOutput, 0.5);
+            m_towerMotor->Set(ControlMode::PercentOutput, 0.4);
             break;
         case TowerState::FeedOut:
             m_currentTowerState = "FeedOut";
