@@ -90,7 +90,7 @@ void SubsystemManager::Update() {
     /**
      * Shooter flywheel calculation values
      */
-    // m_shooter->SetFlywheelRPM(CalcFlywheelRPM());
+    m_shooter->SetFlywheelRPM(CalcFlywheelRPM());
 
     /**
      * Ready to shoot checks

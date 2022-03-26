@@ -65,7 +65,7 @@ void Shooter::Update() {
             break;
         case ShooterState::Tarmac:
             m_flywheelA->Set(ControlMode::Velocity, TARMAC_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
-            m_shooterStatus = "fixed";
+            m_shooterStatus = "fixed tarmac";
             break;
         case ShooterState::Fixed:
             m_flywheelA->Set(ControlMode::Velocity, LOW_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
