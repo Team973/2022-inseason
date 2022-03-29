@@ -1,6 +1,9 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
+#include <frc/DriverStation.h>
+
+#include <string>
 
 #include "lib/sensors/Limelight.h"
 
@@ -32,7 +35,7 @@ public:
 
     /**
      * Sets 0 for the turret and sets the CANdle
-     */ 
+     */
     void TurretCalibration();
 
     /**
@@ -51,6 +54,11 @@ public:
     bool ReadyToShoot();
 
     /**
+     * Sets te alliance color
+     */
+    void SetAllianceColor();
+
+    /**
      * Updates the subsystem manager
      */
     void Update();
@@ -65,5 +73,9 @@ private:
     Climb *m_climb;
     Gyro *m_gyro;
     Lights *m_lights;
+
+    // Stores char for current alliance color
+    std::string m_allianceColor;
+    
 };
 }  // namespace frc973

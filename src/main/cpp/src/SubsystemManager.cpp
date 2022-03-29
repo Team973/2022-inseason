@@ -11,7 +11,8 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
         , m_limelight(limelight)
         , m_climb(climb)
         , m_gyro(gyro)
-        , m_lights(lights) {
+        , m_lights(lights)
+        , m_allianceColor("none") {
 }
 
 void SubsystemManager::TurretCalibration() {
@@ -69,6 +70,22 @@ bool SubsystemManager::ReadyToShoot() {
         return true;
     }
     return false;
+}
+
+void SubsystemManager::SetAllianceColor() {
+    switch (frc::DriverStation::GetAlliance()) {
+        case frc::DriverStation::Alliance::kBlue :
+            //Blue case code
+            m_allianceColor = "Blue";
+        break;
+        case frc::DriverStation::Alliance::kRed :
+            //Red case code
+            m_allianceColor = "Red";
+        break;
+        default :
+            //This is corrupt data
+        break;
+    }
 }
 
 void SubsystemManager::Update() {
