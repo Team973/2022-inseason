@@ -20,6 +20,10 @@ public:
 
     void Zero();
 
+    void SetAutoOffset(double angleOffset);
+
+    void SetFieldCentricGyroAngle();
+
     void Update() override;
 
     void DashboardUpdate() override;
@@ -29,5 +33,6 @@ private:
 
     double m_wrappedAngle;
     double m_currentAngle;
+    double m_autoOffset;
 };
 }  // namespace frc973

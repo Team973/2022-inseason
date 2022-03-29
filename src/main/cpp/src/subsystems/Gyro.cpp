@@ -1,7 +1,7 @@
 #include "src/subsystems/Gyro.h"
 
 namespace frc973 {
-Gyro::Gyro(TalonSRX* gyroTalon) : m_gyro(PigeonIMU(gyroTalon)) {
+Gyro::Gyro(TalonSRX* gyroTalon) : m_gyro(PigeonIMU(gyroTalon)), m_wrappedAngle(0.0), m_currentAngle(0.0), m_autoOffset(0.0) {
     m_gyro.ConfigFactoryDefault();
 }
 
@@ -26,6 +26,14 @@ double Gyro::GetAngularRate() {
     return rates[2];
 }
 
+void Gyro::SetAutoOffset(double angleOffset) {
+    m_autoOffset = angleOffset;
+}
+
+void Gyro::SetFieldCentricGyroAngle(){
+    SetAngle(GetAngle()+m_autoOffset);
+}
+
 void Gyro::Update() {
     m_currentAngle = GetAngle();
     m_wrappedAngle = GetWrappedAngle();
@@ -38,7 +46,7 @@ void Gyro::DashboardUpdate() {
 }
 
 void Gyro::SetAngle(double degrees) {
-    m_gyro.SetFusedHeading(degrees, 0);
+    m_gyro.SetFusedHeading(degrees*64, 0);
 }
 
 void Gyro::Zero() {

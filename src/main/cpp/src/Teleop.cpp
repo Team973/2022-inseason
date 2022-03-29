@@ -17,6 +17,8 @@ void Robot::TeleopInit() {
     m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
 
     m_limelight->SetVisionCamera();
+
+    m_gyro->SetFieldCentricGyroAngle();
 }
 
 void Robot::TeleopPeriodic() {
