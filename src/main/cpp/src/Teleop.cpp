@@ -22,11 +22,13 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     // Shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger - Spin Up Flywheel
-    
+
         if (m_operatorStick->GetAButton()) {    // Btn A - Set Lowgoal RPM
             m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
+            m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
         } else if (m_operatorStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper - Set Tarmac RPM
-            m_shooter->SetShooterState(Shooter::ShooterState::Tarmac);
+            m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
+            m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
         } else {
             m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         }

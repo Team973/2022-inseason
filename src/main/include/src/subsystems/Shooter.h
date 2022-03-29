@@ -21,7 +21,7 @@ public:
 
     enum class ShooterState {
         Off,      /* Shooter motors do not run */
-        Tarmac,   /* Shooter motors run CL Velocity on the tarmac setpoint */
+        // Tarmac,   /* Shooter motors run CL Velocity on the tarmac setpoint */
         Fixed,    /* Shooter motors run CL Velocity on the lowgoal setpoint */
         Tracking, /* Shooter motors run CL Velocity on a tracking setpoint */
         Manual    /* Shooter motors run manually */
@@ -32,6 +32,12 @@ public:
      * @param setpoint The velocity setpoint to go to.
      */
     void SetFlywheelRPM(double setpoint);
+
+    /**
+     * Set the flywheel velocity for tracking mode.
+     * @param setpoint The velocity setpoint to go to.
+     */
+    void SetTrackingFlywheelRPM(double setpoint);
 
     /**
      * Set the flywheel speed.
@@ -75,6 +81,7 @@ private:
     TalonFX *m_flywheelB;
 
     double m_flywheelRPMSetpoint;
+    double m_flywheelTrackingRPMSetpoint;
     double m_flywheelSpeed;
 
     ShooterState m_shooterState;

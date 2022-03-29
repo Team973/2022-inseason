@@ -6,6 +6,7 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
         : m_flywheelA(flywheelA)
         , m_flywheelB(flywheelB)
         , m_flywheelRPMSetpoint(TARMAC_FLYWHEEL_RPM_SETPOINT)
+        , m_flywheelTrackingRPMSetpoint(TARMAC_FLYWHEEL_RPM_SETPOINT)
         , m_flywheelSpeed(0.0)
         , m_shooterState(ShooterState::Off)
         , m_shooterStatus("off")
@@ -63,16 +64,16 @@ void Shooter::Update() {
             m_flywheelA->Set(ControlMode::PercentOutput, 0.0);
             m_shooterStatus = "off";
             break;
-        case ShooterState::Tarmac:
-            m_flywheelA->Set(ControlMode::Velocity, TARMAC_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
-            m_shooterStatus = "fixed tarmac";
-            break;
+        // case ShooterState::Tarmac:
+        //     m_flywheelA->Set(ControlMode::Velocity, TARMAC_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
+        //     m_shooterStatus = "fixed tarmac";
+        //     break;
         case ShooterState::Fixed:
-            m_flywheelA->Set(ControlMode::Velocity, LOW_FLYWHEEL_RPM_SETPOINT / FLYWHEEL_VELOCITY_RPM);
+            m_flywheelA->Set(ControlMode::Velocity, m_flywheelRPMSetpoint / FLYWHEEL_VELOCITY_RPM);
             m_shooterStatus = "fixed";
             break;
         case ShooterState::Tracking:
-            m_flywheelA->Set(ControlMode::Velocity, m_flywheelRPMSetpoint / FLYWHEEL_VELOCITY_RPM);
+            m_flywheelA->Set(ControlMode::Velocity, m_flywheelTrackingRPMSetpoint / FLYWHEEL_VELOCITY_RPM);
             m_shooterStatus = "tracking";
             break;
         case ShooterState::Manual:
@@ -88,7 +89,7 @@ void Shooter::Update() {
 
 void Shooter::DashboardUpdate() {
     SmartDashboard::PutNumber("S flywheel rpm", m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM);
-    SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelRPMSetpoint);
+    SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelTrackingRPMSetpoint);
     SmartDashboard::PutNumber("S FlywheelA temp", m_flywheelA->GetTemperature());
     SmartDashboard::PutNumber("S FlywheelB temp", m_flywheelB->GetTemperature());
 }
@@ -101,12 +102,16 @@ void Shooter::SetFlywheelRPM(double setpoint) {
     m_flywheelRPMSetpoint = setpoint;
 }
 
+void Shooter::SetTrackingFlywheelRPM(double setpoint) {
+    m_flywheelTrackingRPMSetpoint = setpoint;
+}
+
 void Shooter::SetFlywheelSpeed(double speed) {
     m_flywheelSpeed = -speed;  // speed inverted
 }
 
 bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 80);
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 80); //todo: figure out at speed for tracking
 }
 
 void Shooter::EnableShooter() {

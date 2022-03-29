@@ -9,7 +9,7 @@ SetFlywheelRPMCommand::SetFlywheelRPMCommand(Shooter *shooter, double setpoint, 
 void SetFlywheelRPMCommand::Init() {
     SetTargetMSec(m_targetTime);
     m_shooter->SetFlywheelRPM(m_setpoint);
-    m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
+    m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
 }
 
 void SetFlywheelRPMCommand::Run() {
