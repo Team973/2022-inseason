@@ -71,22 +71,6 @@ bool SubsystemManager::ReadyToShoot() {
     return false;
 }
 
-void SubsystemManager::ConveyorQueueing() {
-    if (m_conveyor->GetTowerSensor()) {
-        m_conveyor->SetTowerState(Conveyor::TowerState::Off);
-
-        if (m_conveyor->GetFloorSensor()) {
-            m_conveyor->SetFloorState(Conveyor::FloorState::Off);
-        } else {
-            m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
-        }
-
-    } else {
-        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
-        m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-    }
-}
-
 void SubsystemManager::Update() {
     /**
      * Turret calculation values

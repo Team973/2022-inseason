@@ -51,11 +51,6 @@ public:
     bool ReadyToShoot();
 
     /**
-     * Logic for the queueing state
-     */ 
-    void ConveyorQueueing();
-
-    /**
      * Updates the subsystem manager
      */
     void Update();

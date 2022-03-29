@@ -56,6 +56,10 @@ void Conveyor::Update() {
             m_currentTowerState = "Manual";
             m_towerMotor->Set(ControlMode::PercentOutput, m_manualTowerSpeed);
             break;
+        case TowerState::Queueing:
+            m_currentTowerState = "Queueing";
+            m_towerMotor->Set(ControlMode::PercentOutput, -0.5);
+            break;
         case TowerState::Shoot:
             m_currentTowerState = "Shoot";
             if (m_readyToShoot) {
@@ -86,6 +90,11 @@ void Conveyor::Update() {
             m_currentFloorState = "Manual";
             m_floorMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
             m_ceilingMotor->Set(ControlMode::PercentOutput, m_manualFloorSpeed);
+            break;
+        case FloorState::Queueing:
+            m_currentFloorState = "Queueing";
+            m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
+            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.7);
             break;
         case FloorState::Shoot:
             m_currentFloorState = "Shoot";
@@ -154,6 +163,22 @@ bool Conveyor::GetTowerSensor() {
 
 bool Conveyor::GetFloorSensor() {
     return m_floorSensor->Get();
+}
+
+void Conveyor::ConveyorQueueing() {
+    if (GetTowerSensor()) {
+        SetTowerState(Conveyor::TowerState::Off);
+
+        if (GetFloorSensor()) {
+            SetFloorState(Conveyor::FloorState::Off);
+        } else {
+            SetFloorState(Conveyor::FloorState::Queueing);
+        }
+
+    } else {
+        SetFloorState(Conveyor::FloorState::Queueing);
+        SetTowerState(Conveyor::TowerState::Queueing);
+    }
 }
 
 }  // namespace frc973

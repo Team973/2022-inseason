@@ -32,6 +32,7 @@ public:
         FeedIn,  /**< State when the tower is moving the balls up */
         FeedOut, /**< State to empty the tower back into the floor. */
         Manual,  /**< State for manual control of the tower. */
+        Queueing, 
         Shoot    /**< State for the tower to shoot. */
     };
 
@@ -43,6 +44,7 @@ public:
         FeedIn,  /**< Brings power cells to tower. */
         FeedOut, /**< Brings power cells to Intake. */
         Manual,  /**< Manual control over the speed of the floor. */
+        Queueing,
         Shoot    /**< State to shoot. */
     };
 
@@ -131,6 +133,11 @@ public:
      * Gets the state of the floor sensor.
      */
     bool GetFloorSensor();
+
+    /**
+     * Logic for the queueing state
+     */ 
+    void ConveyorQueueing();
 
 private:
     TalonFX *m_towerMotor;
