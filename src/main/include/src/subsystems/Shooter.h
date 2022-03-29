@@ -21,7 +21,6 @@ public:
 
     enum class ShooterState {
         Off,      /* Shooter motors do not run */
-        // Tarmac,   /* Shooter motors run CL Velocity on the tarmac setpoint */
         Fixed,    /* Shooter motors run CL Velocity on the lowgoal setpoint */
         Tracking, /* Shooter motors run CL Velocity on a tracking setpoint */
         Manual    /* Shooter motors run manually */

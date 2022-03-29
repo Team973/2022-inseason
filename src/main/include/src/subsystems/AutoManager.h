@@ -44,6 +44,8 @@ enum AutoName {
     P2_3Ball,     /**< Position 2, 3 Ball*/
     P5_4Ball,     /**< Position 5, 4 Ball*/
     Citrus_5Ball, /**< 5 Ball auto in honor of frc 1678 */
+    P5_Steal1,    /**< Complement to 5 Ball Auto */
+    P6_Steal2,    /**< Position 6, Steal 1 */
 };
 
 /**
@@ -113,6 +115,8 @@ private:
     AutoMode m_p2_3Ball;
     AutoMode m_p5_4Ball;
     AutoMode m_citrus_5Ball;
+    AutoMode m_p5_Steal1;
+    AutoMode m_p6_Steal2;
     AutoMode m_currentMode;
 
     double m_autoIndex;

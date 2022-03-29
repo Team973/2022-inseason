@@ -74,11 +74,11 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 500),
     new WaitCommand(100),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 2000),
-        new RunIntakeCommand(m_intake, 1.0, 2000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        new SetTurretAngleCommand(m_turret, 15.7, 2000),
-        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
+        new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 1500),
+        new RunIntakeCommand(m_intake, 1.0, 1500),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
+        new SetTurretAngleCommand(m_turret, 15.7, 1500),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 1500),
     }),
     new WaitForFlywheelCommand(m_shooter, 2000),
     new ConcurrentCommand({
@@ -86,7 +86,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
     }),
-    new PositionDriveCommand(m_drive, 0.0, 87.0, 0.4, 1000),
+    // new PositionDriveCommand(m_drive, 0.0, 87.0, 0.4, 1000),
 }))
 
 /*< Position 2, 3 Ball >*/
@@ -185,6 +185,63 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     }),
 }))
 
+/*< Position 5, Steal 1 >*/
+, m_p5_Steal1(m_p5_2Ball + AutoMode({
+    new PositionDriveCommand(m_drive, 0.0, -75.0, 0.5, 1500),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -63.0, -75.0, 0.5, 1500),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
+        new RunIntakeCommand(m_intake, 1.0, 1500),
+    }),
+    new PositionDriveCommand(m_drive, 0.0, 46.0, 0.5, 2000),
+    new ConcurrentCommand({
+        new RunIntakeCommand(m_intake, -0.3, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 2000),
+    }),
+}))
+
+/*< Position 6, Steal 2 >*/
+, m_p6_Steal2(AutoMode({
+    new RetractIntakeCommand(m_intake),
+    new WaitCommand(100),
+    new DeployIntakeCommand(m_intake),
+    new PositionDriveCommand(m_drive, 0.0, 60.0, 0.8, 750),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -69.0, 60.0, 0.7, 1700),
+        new RunIntakeCommand(m_intake, 1.0, 1700),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),
+        new SetTurretAngleCommand(m_turret, -30.0, 1700),
+        new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT + 50.0, 500),
+    }),
+    new WaitForFlywheelCommand(m_shooter, 200),
+    new ConcurrentCommand({
+        new RunIntakeCommand(m_intake, 1.0, 1800),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1800),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 1800),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 1800),
+    }),
+    new PositionDriveCommand(m_drive, 0.0, -50.0, 0.8, 1000),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -63.0, -50.0, 0.8, 1500),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
+        new RunIntakeCommand(m_intake, 1.0, 1500),
+    }),
+    new PositionDriveCommand(m_drive, 0.0, -30.0, 0.8, 2500),
+    new PositionDriveCommand(m_drive, 160.0, -30.0, 0.8, 2500),
+    new PositionDriveCommand(m_drive, 0.0, 60.0, 0.7, 2500),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, -60.0, 60.0, 0.8, 1500),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1500),
+        new RunIntakeCommand(m_intake, 1.0, 1500),
+    }),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, 0.0, 20.0, 0.7, 2000),
+        new RunIntakeCommand(m_intake, -0.3, 2000),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 2000),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedOut, 2000),
+    }),
+}))
+
         // clang-format on
         , m_currentMode(m_test)
         , m_autoIndex(0) {
@@ -224,6 +281,12 @@ void AutoManager::DashboardUpdate() {
         case Citrus_5Ball:
             m_autoName = "Citrus 5 Ball";
             break;
+        case P5_Steal1:
+            m_autoName = "Position 5, Steal 1";
+            break;
+        case P6_Steal2:
+            m_autoName = "Position 6, Steal 2";
+            break;
     }
 
     frc::SmartDashboard::PutString(
@@ -257,6 +320,12 @@ void AutoManager::UpdateAutoMode() {
         case Citrus_5Ball:
             m_currentMode = m_citrus_5Ball;
             break;
+        case P5_Steal1:
+            m_currentMode = m_p5_Steal1;
+            break;
+        case P6_Steal2:
+            m_currentMode = m_p6_Steal2;
+            break;
     }
 }
 
@@ -268,10 +337,10 @@ void AutoManager::IndexAutoMode(bool next) {
     }
 
     if (m_autoIndex == -1) {
-        m_autoIndex = 7;  // amount of autos we have -1
+        m_autoIndex = 9;  // amount of autos we have -1
     }
 
-    if (m_autoIndex == 8) {  // amount of autos we have +1 -1
+    if (m_autoIndex == 10) {  // amount of autos we have +1 -1
         m_autoIndex = 0;
     }
 
