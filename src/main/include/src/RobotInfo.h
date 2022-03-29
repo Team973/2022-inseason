@@ -131,4 +131,11 @@ static constexpr double ANGLE_TOLERANCE = 2.0;
 static constexpr double ANGLE_RATE_TOLERANCE = 1.0;
 static constexpr double LIMELIGHT_ANGLE_TOLERANCE = 2.0;
 
+/**
+ * Color sensors
+ */
+
+static constexpr double RED_DIGITAL_INPUT = 7.0;
+static constexpr double BLUE_DIGITAL_INPUT = 8.0;
+
 }  // namespace frc973

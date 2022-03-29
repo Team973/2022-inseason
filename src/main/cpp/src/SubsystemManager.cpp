@@ -2,7 +2,7 @@
 
 namespace frc973 {
 SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
-                                   Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights)
+                                   Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights, DigitalInput *redSensor, DigitalInput *blueSensor)
         : m_drive(drive)
         , m_intake(intake)
         , m_conveyor(conveyor)
@@ -12,7 +12,10 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
         , m_climb(climb)
         , m_gyro(gyro)
         , m_lights(lights)
-        , m_allianceColor("none") {
+        , m_allianceColor("none")
+        , m_opponentColor("none")
+        , m_redSensor(redSensor)
+        , m_blueSensor(blueSensor) {
 }
 
 void SubsystemManager::TurretCalibration() {
@@ -74,17 +77,19 @@ bool SubsystemManager::ReadyToShoot() {
 
 void SubsystemManager::SetAllianceColor() {
     switch (frc::DriverStation::GetAlliance()) {
-        case frc::DriverStation::Alliance::kBlue :
-            //Blue case code
+        case frc::DriverStation::Alliance::kBlue:
+            // Blue case code
             m_allianceColor = "Blue";
-        break;
-        case frc::DriverStation::Alliance::kRed :
-            //Red case code
+            m_opponentColor = "Red";
+            break;
+        case frc::DriverStation::Alliance::kRed:
+            // Red case code
             m_allianceColor = "Red";
-        break;
-        default :
-            //This is corrupt data
-        break;
+            m_opponentColor = "Blue";
+            break;
+        default:
+            // This is corrupt data
+            break;
     }
 }
 

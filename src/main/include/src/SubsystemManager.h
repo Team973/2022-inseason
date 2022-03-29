@@ -31,7 +31,7 @@ public:
      * @param lights light subsystem
      */
     SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
-                     Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights);
+                     Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights, DigitalInput *redSensor, DigitalInput *blueSensor);
 
     /**
      * Sets 0 for the turret and sets the CANdle
@@ -76,6 +76,10 @@ private:
 
     // Stores char for current alliance color
     std::string m_allianceColor;
+    std::string m_opponentColor;
+
+    DigitalInput *m_redSensor;
+    DigitalInput *m_blueSensor;
     
 };
 }  // namespace frc973

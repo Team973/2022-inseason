@@ -130,6 +130,12 @@ private:
     frc::Compressor *m_compressor;
 
     /**
+     * Colorsensing DigiIO's
+     */
+    DigitalInput *m_redSensor;
+    DigitalInput *m_blueSensor;
+
+    /**
      * Subsystem Manager
      */
     SubsystemManager *m_subsystemManager;

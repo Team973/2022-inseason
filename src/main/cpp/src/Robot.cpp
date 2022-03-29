@@ -100,10 +100,16 @@ void Robot::RobotInit() {
     m_compressor->EnableDigital();
 
     /**
+     * Color Sensing DigiIO's
+     */
+    m_redSensor = new DigitalInput(RED_DIGITAL_INPUT);
+    m_blueSensor = new DigitalInput(BLUE_DIGITAL_INPUT);
+
+    /**
      * Subsystem Manager
      */
     m_subsystemManager = new SubsystemManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_climb,
-                                              m_gyro, m_lights);
+                                              m_gyro, m_lights, m_redSensor, m_blueSensor);
 
     /**
      * Joysticks
@@ -115,6 +121,7 @@ void Robot::RobotInit() {
     /**
      * Automanager
      */
+
     m_autoManager = new AutoManager(m_drive, m_intake, m_conveyor, m_turret, m_shooter, m_limelight, m_gyro);
 }
 
