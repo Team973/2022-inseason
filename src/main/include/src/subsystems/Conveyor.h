@@ -15,11 +15,14 @@ class Conveyor : public Subsystem {
 public:
     /**
      * Contructs the conveyor system.
-     * @param towerMotorA one of the two motors for the tower.
-     * @param towerMotorB one of the two motors for the tower.
+     * @param towerMotor the motor for the tower.
+     * @param ceilingMotor the motor for the ceiling.
      * @param floorMotor the motor for the floor.
+     * @param towerSensor the digital input sensor in the tower.
+     * @param floorSensor the digigtal input sensor in the floor.
      */
-    Conveyor(TalonFX *towerMotor, TalonSRX *towerMotorB, TalonSRX *floorMotor);
+    Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor, DigitalInput *towerSensor,
+             DigitalInput *floorSensor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -119,10 +122,22 @@ public:
      */
     void SetReadyToShoot(bool isReadyToShoot);
 
+    /**
+     * Gets the state of the tower sensor.
+     */
+    bool GetTowerSensor();
+
+    /**
+     * Gets the state of the floor sensor.
+     */
+    bool GetFloorSensor();
+
 private:
     TalonFX *m_towerMotor;
     TalonSRX *m_ceilingMotor;
     TalonSRX *m_floorMotor;
+    DigitalInput *m_towerSensor;
+    DigitalInput *m_floorSensor;
     TowerState m_towerState;
     FloorState m_floorState;
 

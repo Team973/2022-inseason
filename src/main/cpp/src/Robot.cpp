@@ -41,8 +41,10 @@ void Robot::RobotInit() {
     m_conveyorFloorMotor = new TalonSRX(CONVEYOR_FLOOR_SRX_ID);
     m_conveyorTowerMotor = new TalonFX(CONVEYOR_TOWER_FX_ID);
     m_conveyorCeilingMotor = new TalonSRX(CONVEYOR_CEILING_SRX_ID);
+    m_conveyorTowerSensor = new DigitalInput(CONVEYOR_TOWER_SENSOR);
+    m_conveyorFloorSensor = new DigitalInput(CONVEYOR_FLOOR_SENSOR);
 
-    m_conveyor = new Conveyor(m_conveyorTowerMotor, m_conveyorCeilingMotor, m_conveyorFloorMotor);
+    m_conveyor = new Conveyor(m_conveyorTowerMotor, m_conveyorCeilingMotor, m_conveyorFloorMotor, m_conveyorTowerSensor, m_conveyorFloorSensor);
 
     /**
      * Turret

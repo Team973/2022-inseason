@@ -79,6 +79,8 @@ private:
     TalonSRX *m_conveyorFloorMotor;
     TalonFX *m_conveyorTowerMotor;
     TalonSRX *m_conveyorCeilingMotor;
+    DigitalInput *m_conveyorTowerSensor;
+    DigitalInput *m_conveyorFloorSensor;
     Conveyor *m_conveyor;
 
     /**

@@ -2,10 +2,12 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor, DigitalInput *towerSensor, DigitalInput *floorSensor)
         : m_towerMotor(towerMotor)
         , m_ceilingMotor(ceilingMotor)
         , m_floorMotor(floorMotor)
+        , m_towerSensor(towerSensor)
+        , m_floorSensor(floorSensor)
         , m_towerState(TowerState::Off)
         , m_floorState(FloorState::Off)
         , m_manualTowerSpeed(0.0)
@@ -144,6 +146,14 @@ void Conveyor::SetManualFloorSpeed(double speed) {
 
 void Conveyor::SetReadyToShoot(bool isReadyToShoot) {
     m_readyToShoot = isReadyToShoot;
+}
+
+bool Conveyor::GetTowerSensor() {
+    return m_towerSensor->Get();
+}
+
+bool Conveyor::GetFloorSensor() {
+    return m_floorSensor->Get();
 }
 
 }  // namespace frc973

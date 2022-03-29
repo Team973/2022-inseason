@@ -45,8 +45,10 @@ constexpr int INTAKE_SOFT_SOLENOID_ID = 6; /**< Channel for the intake Solenoid.
  * Conveyor Subsystem.
  */
 constexpr int CONVEYOR_FLOOR_SRX_ID = 10;  /**< CAN ID for the floor talon. */
-constexpr int CONVEYOR_TOWER_FX_ID = 11;  /**< CAN ID for the first tower talon. */
+constexpr int CONVEYOR_TOWER_FX_ID = 11;   /**< CAN ID for the first tower talon. */
 constexpr int CONVEYOR_CEILING_SRX_ID = 4; /**< CAN ID for the second tower talon. */
+constexpr int CONVEYOR_TOWER_SENSOR = 19;  /** DIO channel for the conveyor tower sensor. */
+constexpr int CONVEYOR_FLOOR_SENSOR = 20;  /** DIO channel for the conveyor floor sensor. */
 
 /**
  * Turret Subsystem.
@@ -68,9 +70,9 @@ constexpr double FLYWHEEL_VELOCITY_RPM =
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
 static constexpr double LOW_FLYWHEEL_RPM_SETPOINT = 800.0;     /** Flywheel RPM to shoot into the low goal. */
 static constexpr double FLY_RPM_CLOSE = 2000.0;                /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_FAR = 2750.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
+static constexpr double FLY_RPM_FAR = 2750.0; /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
-static constexpr double FLY_DIST_FAR = 201;   /** Distance from target to far. */ 
+static constexpr double FLY_DIST_FAR = 201;   /** Distance from target to far. */
 static constexpr double TOO_FAR_LOCKOUT =
     240.0; /** Distance from target in inches is too far, doesn't allow shooting. */
 
