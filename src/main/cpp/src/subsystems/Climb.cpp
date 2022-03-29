@@ -111,6 +111,7 @@ void Climb::Update() {
             m_climbState = "Off";
             m_inClimbState = false;
             climbMotorOutput = 0.0;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
@@ -130,6 +131,7 @@ void Climb::Update() {
             m_climbState = "Manual";
             m_inClimbState = true;
             climbMotorOutput = m_climbSpeed;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
@@ -150,6 +152,7 @@ void Climb::Update() {
             m_climbState = "Off";
             m_inClimbState = false;
             climbMotorOutput = 0.0;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
