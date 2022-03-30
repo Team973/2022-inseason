@@ -2,7 +2,8 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor, DigitalInput *towerSensor, DigitalInput *floorSensor)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor, DigitalInput *towerSensor,
+                   DigitalInput *floorSensor)
         : m_towerMotor(towerMotor)
         , m_ceilingMotor(ceilingMotor)
         , m_floorMotor(floorMotor)
@@ -58,7 +59,13 @@ void Conveyor::Update() {
             break;
         case TowerState::Queueing:
             m_currentTowerState = "Queueing";
-            m_towerMotor->Set(ControlMode::PercentOutput, -0.5);
+
+            if (GetTowerSensor()) {
+                m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
+            } else {
+                m_towerMotor->Set(ControlMode::PercentOutput, -0.5);
+            }
+
             break;
         case TowerState::Shoot:
             m_currentTowerState = "Shoot";
@@ -93,8 +100,20 @@ void Conveyor::Update() {
             break;
         case FloorState::Queueing:
             m_currentFloorState = "Queueing";
-            m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
-            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.7);
+
+            if (GetTowerSensor()) {
+                if (GetFloorSensor()) {
+                    m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+                    m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
+                } else {
+                    m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
+                    m_ceilingMotor->Set(ControlMode::PercentOutput, 0.7);
+                }
+            } else {
+                m_floorMotor->Set(ControlMode::PercentOutput, 0.7);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 0.7);
+            }
+            
             break;
         case FloorState::Shoot:
             m_currentFloorState = "Shoot";
@@ -163,22 +182,6 @@ bool Conveyor::GetTowerSensor() {
 
 bool Conveyor::GetFloorSensor() {
     return m_floorSensor->Get();
-}
-
-void Conveyor::ConveyorQueueing() {
-    if (GetTowerSensor()) {
-        SetTowerState(Conveyor::TowerState::Off);
-
-        if (GetFloorSensor()) {
-            SetFloorState(Conveyor::FloorState::Off);
-        } else {
-            SetFloorState(Conveyor::FloorState::Queueing);
-        }
-
-    } else {
-        SetFloorState(Conveyor::FloorState::Queueing);
-        SetTowerState(Conveyor::TowerState::Queueing);
-    }
 }
 
 }  // namespace frc973

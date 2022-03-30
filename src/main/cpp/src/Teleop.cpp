@@ -62,7 +62,8 @@ void Robot::TeleopPeriodic() {
 
     // Conveyors and Intake
     if (m_operatorStick->GetDPadLeftVirtButton()) {  // Dpad Left Button - Queueing State
-        m_conveyor->ConveyorQueueing();
+        m_conveyor->SetFloorState(Conveyor::FloorState::Queueing);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Queueing);
     } else {
         if (!m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Not shooting
             if (m_operatorStick->GetRawAxis(0)) {                 // left stick x-axis

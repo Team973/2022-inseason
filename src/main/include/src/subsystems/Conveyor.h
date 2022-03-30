@@ -134,11 +134,6 @@ public:
      */
     bool GetFloorSensor();
 
-    /**
-     * Logic for the queueing state
-     */ 
-    void ConveyorQueueing();
-
 private:
     TalonFX *m_towerMotor;
     TalonSRX *m_ceilingMotor;
