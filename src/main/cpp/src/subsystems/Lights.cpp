@@ -6,12 +6,23 @@
 
 namespace frc973 {
 Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
-        : m_candle(CANdle), m_lightsCurrentState(LightsState::Off), m_rainbow{1.0, 1.0, 8}, m_strobe{0, 255, 0,
-                                                                                                     0, 0.2, 8} {
+        : m_candle(CANdle)
+        , m_lightsCurrentState(LightsState::Off)
+        , m_rainbow{1.0, 1.0, 8}
+        , m_strobe{0, 255, 0, 0, 0.2, 8}
+        , m_inStateTransition(false) {
     m_candle->ConfigFactoryDefault();
 }
 
 void Lights::Update() {
+    if (!m_inStateTransition) {
+        return;
+    }
+
+    if (m_lightsCurrentState == m_lightsNextState) {
+        m_inStateTransition = false;
+    }
+
     switch (m_lightsCurrentState) {
         case LightsState::Off:
             m_candle->SetLEDs(0, 0, 0, 0, 0, 8);
@@ -52,6 +63,7 @@ Lights::LightsState Lights::GetLightsState() {
 
 void Lights::SetLightsState(LightsState state) {
     if (m_lightsCurrentState != state) {
+        m_inStateTransition = true;
         m_lightsNextState = state;
         m_lightsCurrentState = LightsState::Off;
     }

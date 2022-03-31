@@ -122,9 +122,9 @@ void Robot::RobotPeriodic() {
     // m_drive->DashboardUpdate();
     // m_intake->DashboardUpdate();
     m_conveyor->DashboardUpdate();
-    // m_turret->DashboardUpdate();
+    m_turret->DashboardUpdate();
     m_shooter->DashboardUpdate();
-    m_climb->DashboardUpdate();
+    // m_climb->DashboardUpdate();+
     m_gyro->DashboardUpdate();
     // m_lights->DashboardUpdate();
     m_autoManager->DashboardUpdate();

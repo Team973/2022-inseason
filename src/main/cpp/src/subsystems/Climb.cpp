@@ -53,6 +53,9 @@ Climb::Climb(TalonFX *climbTalonA, TalonFX *climbTalonB, DigitalInput *bottomLef
     m_climbTalonB->SetNeutralMode(Brake);
 
     m_climbTalonB->Follow(*m_climbTalonA);
+
+    m_climbTalonB->SetStatusFramePeriod(Status_1_General, 255);
+    m_climbTalonB->SetStatusFramePeriod(Status_2_Feedback0, 255);
 }
 
 void Climb::EnableClimb() {

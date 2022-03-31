@@ -34,6 +34,12 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
     m_towerMotor->EnableVoltageCompensation(true);
     m_floorMotor->ConfigVoltageCompSaturation(12.0);
     m_floorMotor->EnableVoltageCompensation(true);
+
+    // Velocity PID Parameters
+    // m_towerMotor->Config_kP(0, 0.0, 30);
+    // m_towerMotor->Config_kI(0, 0.0, 30);
+    // m_towerMotor->Config_kD(0, 0.0, 30);
+    // m_towerMotor->Config_kF(0, 0.0, 30);
 }
 
 void Conveyor::Update() {
@@ -58,9 +64,9 @@ void Conveyor::Update() {
             m_currentTowerState = "Shoot";
             if (m_readyToShoot) {
                 m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+            } else {
+                m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             }
-
-            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 
@@ -90,10 +96,10 @@ void Conveyor::Update() {
             if (m_readyToShoot) {
                 m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
                 m_ceilingMotor->Set(ControlMode::PercentOutput, 1.0);
+            } else {
+                m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             }
-
-            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
-            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 }
@@ -101,6 +107,7 @@ void Conveyor::Update() {
 void Conveyor::DashboardUpdate() {
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    SmartDashboard::PutNumber("CO tower v", m_towerMotor->GetSelectedSensorVelocity());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {

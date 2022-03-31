@@ -25,7 +25,7 @@ void Robot::TeleopPeriodic() {
     // Shooter
     if (m_operatorStick->RightTriggerAxis()) {  // Right Trigger - Spin Up Flywheel
 
-        if (m_operatorStick->GetAButton()) {    // Btn A - Set Lowgoal RPM
+        if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal RPM
             m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
             m_shooter->SetFlywheelRPM(LOW_FLYWHEEL_RPM_SETPOINT);
         } else if (m_operatorStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper - Set Tarmac RPM
@@ -67,6 +67,10 @@ void Robot::TeleopPeriodic() {
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
+    } else if (m_operatorStick->GetDPadDownVirtButton()) {
+        m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedOut);
+        m_conveyor->SetFloorState(Conveyor::FloorState::FeedOut);
+        m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
     } else {
         if (!m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Not shooting
             if (m_operatorStick->GetRawAxis(0)) {                 // left stick x-axis
@@ -89,9 +93,8 @@ void Robot::TeleopPeriodic() {
     }
 
     if (m_driverStick->GetRawButton(Stick::RightTrigger)) {  // Right Trigger - Shoot Button
-        // m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
-        m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
-        m_conveyor->SetTowerState(Conveyor::TowerState::FeedIn);
+        m_conveyor->SetFloorState(Conveyor::FloorState::Shoot);
+        m_conveyor->SetTowerState(Conveyor::TowerState::Shoot);
     }
 
     // Drive
