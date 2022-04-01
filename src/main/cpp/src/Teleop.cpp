@@ -142,7 +142,7 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(0.0);
         m_limelight->SetCameraDriver();
-        m_compressor->Disable();
+        // m_compressor->Disable();
     } else {
         m_compressor->EnableDigital();
         m_climb->SetClimbSpeed(0.0);
