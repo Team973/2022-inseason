@@ -21,8 +21,7 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
 
     // Motor Directions
     m_towerMotor->SetInverted(TalonFXInvertType::CounterClockwise);
-
-    m_floorMotor->SetInverted(false);
+    m_floorMotor->SetInverted(true);
     m_ceilingMotor->SetInverted(true);
 
     m_towerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));

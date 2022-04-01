@@ -66,7 +66,7 @@ void Intake::Update() {
             break;
         case IntakeMotorState::FeedOut:
             m_intakeStatus = "FeedOut";
-            m_intakeSpeed = -0.2;
+            m_intakeSpeed = -0.5;
             break;
         case IntakeMotorState::Manual:
             m_intakeStatus = "Manual";
