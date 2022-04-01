@@ -7,7 +7,8 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limelightPID(0.04, 0.0, 0.0, 0)
+        // , m_limelightPID(0.04, 0.0, 0.0, 0)
+        , m_limelightPID(0.0, 0.0, 0.0, 0)
         , m_turretState(TurretState::Off)
         , m_checkStatus(0)
         , m_leftSensorChecked(false)
@@ -20,9 +21,9 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_wrappingInProgress(false)
         , m_gyroSnapshotWrapping(0.0)
         , m_angleInDegrees(0.0)
-        , m_limelightXOffset(0.0) 
+        , m_limelightXOffset(0.0)
         , m_angularRate(0.0)
-        , m_translationalValue(0.0){
+        , m_translationalValue(0.0) {
     m_turretMotor->ConfigFactoryDefault();
 
     m_turretMotor->SetInverted(TalonFXInvertType::Clockwise);
@@ -41,9 +42,9 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
     m_turretMotor->ConfigVoltageCompSaturation(12.0);
     m_turretMotor->EnableVoltageCompensation(true);
 
-    m_turretMotor->Config_kP(0, 0.08, 30);
+    m_turretMotor->Config_kP(0, 0.07, 30);
     m_turretMotor->Config_kI(0, 0.0, 30);
-    m_turretMotor->Config_kD(0, 0.01, 30);
+    m_turretMotor->Config_kD(0, 0.00, 30);
     m_turretMotor->Config_kF(0, 0.0, 30);
 
     m_turretMotor->SetSelectedSensorPosition(0, 0, 0);
@@ -110,12 +111,11 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
 
     // double output;
     m_limelightPID.SetTarget(0);
-    double output; 
+    double output;
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output += (-angularVelocity *
-               Constants::GYRO_CONSTANT);
+    output += (-angularVelocity * Constants::GYRO_CONSTANT);
 
     if (m_wrappingToRightSensor == true) {
         if (PassedSuperSoft() == 1) {

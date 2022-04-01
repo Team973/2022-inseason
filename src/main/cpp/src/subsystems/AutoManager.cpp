@@ -16,7 +16,19 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         // clang-format off
 
 /*< Test >*/
-, m_test(AutoMode({}))
+, m_test(AutoMode({
+    new SetTurretAngleCommand(m_turret, 15.0, 1500),
+    new PositionDriveCommand(m_drive, -36.0, 0.0, 0.5, 2000),
+    new WaitCommand(1000),
+    new ConcurrentCommand({
+        new PositionDriveCommand(m_drive, 36.0, 0.0, 0.5, 1500),
+        new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
+    }),
+    new WaitCommand(1000),
+    new PositionDriveCommand(m_drive, -36.0, 5.0, 0.5, 2000),
+    new WaitCommand(1000),
+    new PositionDriveCommand(m_drive, 36.0, 5.0, 0.5, 1500),
+}))
 
 /*< DoNothing >*/   
 , m_doNothing((AutoMode({})))
@@ -200,6 +212,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, -0.3, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 2000),
+        new ConveyorTowerCommand(m_conveyor,Conveyor::TowerState::FeedOut, 2000),
     }),
 }))
 
