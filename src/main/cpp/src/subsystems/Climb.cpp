@@ -143,11 +143,11 @@ void Climb::Update() {
             m_inClimbState = true;
 
             m_climbSolenoid->Set(true);
-            if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
+            // if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
                 SetNeutralMode(Coast);
-            } else {
-                SetNeutralMode(Brake);
-            }
+            // } else {
+                // SetNeutralMode(Brake);
+            // }
             
             climbMotorOutput = m_climbSpeed;
             break;

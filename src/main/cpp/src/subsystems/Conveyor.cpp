@@ -94,7 +94,7 @@ void Conveyor::Update() {
             m_currentFloorState = "Shoot";
             if (m_readyToShoot) {
                 m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
-                m_ceilingMotor->Set(ControlMode::PercentOutput, 1.0);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 0.8);
             } else {
                 m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
                 m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
