@@ -96,14 +96,14 @@ void Robot::TeleopPeriodic() {
         if (m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2)) {  // left stick x-axis
             m_intake->SetIntakeMotorState(Intake::IntakeMotorState::Manual);
             m_conveyor->SetFloorState(Conveyor::FloorState::Manual);
-            m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
-            m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
         }
+        m_intake->SetPercentOutput(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
+        m_conveyor->SetManualFloorSpeed(m_operatorStick->GetRawAxisWithDeadband(0, false, 0.2));
 
         if (m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2)) {  // left stick y-axis
             m_conveyor->SetTowerState(Conveyor::TowerState::Manual);
-            m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2));
         }
+        m_conveyor->SetManualTowerSpeed(m_operatorStick->GetRawAxisWithDeadband(1, false, 0.2));
     }
 
     // Drive
