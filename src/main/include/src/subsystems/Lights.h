@@ -71,5 +71,7 @@ private:
     ctre::phoenix::led::StrobeAnimation m_strobe;
 
     std::string m_currentLightsStateName;
+
+    bool m_inStateTransition;
 };
 }  // namespace frc973

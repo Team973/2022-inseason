@@ -23,6 +23,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 2, 2 Ball >*/
 , m_p2_2Ball(AutoMode({
+    new SetGyroAutoAngleCommand(m_gyro,P2_ANGLE),
     new RetractIntakeCommand(m_intake),
     new WaitCommand(100),
     new DeployIntakeCommand(m_intake),
@@ -45,6 +46,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 3, 2 Ball >*/
 , m_p3_2Ball(AutoMode({
+    new SetGyroAutoAngleCommand(m_gyro,P3_ANGLE),
     new RetractIntakeCommand(m_intake),
     new WaitCommand(100),
     new DeployIntakeCommand(m_intake),
@@ -63,11 +65,12 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
         new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
     }),
-    // new PositionDriveCommand(m_drive, 0.0, -90.0, 0.4, 1000),
+    new PositionDriveCommand(m_drive, 0.0, -90.0, 0.4, 1000),
 }))
 
 /*< Position 5, 2 Ball >*/
 , m_p5_2Ball(AutoMode({
+    new SetGyroAutoAngleCommand(m_gyro,P5_ANGLE),
     new RetractIntakeCommand(m_intake),
     new WaitCommand(100),
     new DeployIntakeCommand(m_intake),
@@ -86,7 +89,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
     }),
-    // new PositionDriveCommand(m_drive, 0.0, 87.0, 0.4, 1000),
 }))
 
 /*< Position 2, 3 Ball >*/
@@ -110,29 +112,6 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Position 5, 4 Ball >*/
 , m_p5_4Ball(m_p5_2Ball + AutoMode({
-    // new RetractIntakeCommand(m_intake),
-    // new WaitCommand(150),                                   
-    // new DeployIntakeCommand(m_intake),
-    // new SetFlywheelRPMCommand(m_shooter, TARMAC_FLYWHEEL_RPM_SETPOINT, 1000),
-    // new WaitCommand(100),
-    // new ConcurrentCommand({
-    //     new PositionDriveCommand(m_drive, -40.91, 0.0, 0.5, 2000),
-    //     new RunIntakeCommand(m_intake, 1.0, 2000),
-    //     new SequentialCommand({
-    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1000),
-    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 200),
-    //         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-    //     }),
-    //     new SetTurretAngleCommand(m_turret, 15.696, 1000),
-    //     new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
-    // }),
-    // new WaitForFlywheelCommand(m_shooter, 1500),
-    // new ConcurrentCommand({
-    //     new RunIntakeCommand(m_intake, 1.0, 2000),
-    //     new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-    //     new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedIn, 2000),
-    // }),
-
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -220.0, 87.0, 0.5, 3000),
         new RunIntakeCommand(m_intake, 1.0, 3000),
@@ -197,11 +176,13 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, -0.3, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedOut, 2000),
+        new ConveyorTowerCommand(m_conveyor,Conveyor::TowerState::FeedOut, 2000),
     }),
 }))
 
 /*< Position 6, Steal 2 >*/
 , m_p6_Steal2(AutoMode({
+    new SetGyroAutoAngleCommand(m_gyro,P6_ANGLE),
     new RetractIntakeCommand(m_intake),
     new WaitCommand(100),
     new DeployIntakeCommand(m_intake),
@@ -282,10 +263,10 @@ void AutoManager::DashboardUpdate() {
             m_autoName = "Citrus 5 Ball";
             break;
         case P5_Steal1:
-            m_autoName = "Position 5, Steal 1";
+            m_autoName = "P5, Pooper Scooper 1";
             break;
         case P6_Steal2:
-            m_autoName = "Position 6, Steal 2";
+            m_autoName = "P6, Pooper Scooper 2";
             break;
     }
 

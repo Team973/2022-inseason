@@ -52,8 +52,10 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
     m_flywheelA->Config_kP(0, 0.025, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.000, 30);
-    // m_flywheelA->Config_kD(0, 0.001, 30);
     m_flywheelA->Config_kF(0, 0.048, 30);
+
+    m_flywheelB->SetStatusFramePeriod(Status_1_General, 255);
+    m_flywheelB->SetStatusFramePeriod(Status_2_Feedback0, 255);
 }
 
 void Shooter::Update() {
@@ -107,7 +109,7 @@ void Shooter::SetFlywheelSpeed(double speed) {
 }
 
 bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > (m_flywheelRPMSetpoint - 80); //todo: figure out at speed for tracking
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > std::abs((m_flywheelRPMSetpoint - 80)); //todo: figure out at speed for tracking
 }
 
 void Shooter::EnableShooter() {
