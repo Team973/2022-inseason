@@ -1,6 +1,9 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
+#include <frc/DriverStation.h>
+
+#include <string>
 
 #include "lib/sensors/Limelight.h"
 
@@ -28,11 +31,11 @@ public:
      * @param lights light subsystem
      */
     SubsystemManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turret *turret, Shooter *shooter,
-                     Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights);
+                     Limelight *limelight, Climb *climb, Gyro *gyro, Lights *lights, DigitalInput *redSensor, DigitalInput *blueSensor);
 
     /**
      * Sets 0 for the turret and sets the CANdle
-     */ 
+     */
     void TurretCalibration();
 
     /**
@@ -51,6 +54,11 @@ public:
     bool ReadyToShoot();
 
     /**
+     * Sets te alliance color
+     */
+    void SetAllianceColor();
+
+    /**
      * Updates the subsystem manager
      */
     void Update();
@@ -67,5 +75,13 @@ private:
     Climb *m_climb;
     Gyro *m_gyro;
     Lights *m_lights;
+
+    // Stores char for current alliance color
+    std::string m_allianceColor;
+    std::string m_opponentColor;
+
+    DigitalInput *m_redSensor;
+    DigitalInput *m_blueSensor;
+    
 };
 }  // namespace frc973

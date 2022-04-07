@@ -18,6 +18,7 @@ namespace frc973 {
 void Robot::AutonomousInit() {
     m_gyro->Zero();
     m_drive->Zero();
+    m_subsystemManager->SetAllianceColor();
 }
 
 void Robot::AutonomousPeriodic() {
