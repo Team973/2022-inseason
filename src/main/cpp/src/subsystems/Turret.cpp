@@ -7,7 +7,7 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_turretSensor(turretSensor)
         , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 50, 0.05))
         , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
-        , m_limelightPID(0.04, 0.0, 0.0, 0)
+        , m_limelightPID(0.025, 0.0, 0.0, 0)
         , m_turretState(TurretState::Off)
         , m_checkStatus(0)
         , m_leftSensorChecked(false)
@@ -41,9 +41,9 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
     m_turretMotor->ConfigVoltageCompSaturation(12.0);
     m_turretMotor->EnableVoltageCompensation(true);
 
-    m_turretMotor->Config_kP(0, 0.07, 30);
+    m_turretMotor->Config_kP(0, 0.06, 30);
     m_turretMotor->Config_kI(0, 0.0, 30);
-    m_turretMotor->Config_kD(0, 0.00, 30);
+    m_turretMotor->Config_kD(0, 0.0, 30);
     m_turretMotor->Config_kF(0, 0.0, 30);
 
     m_turretMotor->SetSelectedSensorPosition(0, 0, 0);

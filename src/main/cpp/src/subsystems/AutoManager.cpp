@@ -263,10 +263,10 @@ void AutoManager::DashboardUpdate() {
             m_autoName = "Citrus 5 Ball";
             break;
         case P5_Steal1:
-            m_autoName = "Position 5, Steal 1";
+            m_autoName = "P5, Pooper Scooper 1";
             break;
         case P6_Steal2:
-            m_autoName = "Position 6, Steal 2";
+            m_autoName = "P6, Pooper Scooper 2";
             break;
     }
 
