@@ -38,12 +38,23 @@ public:
     /**
      * Finds the current position on the field
      */
-    double CalcPose();
+    Pose2d CalcPose();
+
+    /**
+     * Finds the current position on the field
+     */
+    void SuspendCalcPose(bool suspend);
 
     /**
      * uses the current dist from target to figure out how fast the flywheel should go
      */
     double CalcFlywheelRPM();
+
+    /**
+     * Calculates turret angle to a target X,Y coord. (meters) from a field relative pose
+     */
+    double CalcTargetTurretAngle(double targetX, double targetY);
+
 
     /**
      * Checks if the flywheel is up to speed to see if the robot is ready to shoot
@@ -67,5 +78,7 @@ private:
     Climb *m_climb;
     Gyro *m_gyro;
     Lights *m_lights;
+    Pose2d m_robotPose;
+    bool m_suspendCalcPose;
 };
 }  // namespace frc973

@@ -244,8 +244,6 @@ int Turret::SensorCalibrate() {
         }
     }
 
-    
-
     return m_checkStatus;
 }
 
@@ -317,6 +315,7 @@ void Turret::DashboardUpdate() {
     SmartDashboard::PutBoolean("T fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
     // left side limit switch
     SmartDashboard::PutBoolean("T rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
+    SmartDashboard::PutNumber("T TargetAngle", m_angleInDegrees);
 }
 
 }  // namespace frc973

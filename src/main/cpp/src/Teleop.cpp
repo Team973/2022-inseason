@@ -42,9 +42,15 @@ void Robot::TeleopPeriodic() {
 
     // Turret
     if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal Angle
+        m_subsystemManager->SuspendCalcPose(true);
         m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(0.0);
+        m_turret->SetTurnValue(m_subsystemManager->CalcTargetTurretAngle(0.0, -8.23));
+    } else if (m_operatorStick->GetBButton()) {  // Btn A - Set Lowgoal Angle
+        m_subsystemManager->SuspendCalcPose(true);
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(m_subsystemManager->CalcTargetTurretAngle(0.0, 0.0));
     } else {
+        m_subsystemManager->SuspendCalcPose(false);
         if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||
             m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
             m_turret->SetTurretState(TurretState::Manual);
@@ -103,6 +109,9 @@ void Robot::TeleopPeriodic() {
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // Gyro
+    if (m_driverStick->GetRawButton(Stick::LeftBumper)) {
+        m_gyro->Zero();
+    }
 
     // Limelight
     // if (m_driverStick->GetRightBumper()) {

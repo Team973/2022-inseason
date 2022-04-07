@@ -11,7 +11,9 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
         , m_limelight(limelight)
         , m_climb(climb)
         , m_gyro(gyro)
-        , m_lights(lights) {
+        , m_lights(lights)
+        , m_robotPose(units::meter_t(0.0), units::meter_t(0.0), units::radian_t(0.0))
+        , m_suspendCalcPose(false) {
 }
 
 void SubsystemManager::TurretCalibration() {
@@ -28,10 +30,11 @@ void SubsystemManager::TurretCalibration() {
     }
 }
 
-double SubsystemManager::CalcPose() {
+Pose2d SubsystemManager::CalcPose() {
     double dist = m_limelight->GetHorizontalDist();
 
-    double tfAngle = std::fmod(m_gyro->GetWrappedAngle() + m_turret->GetTurretAngle() + 180.0, 360.0);
+    double tfAngle =
+        std::fmod(m_gyro->GetWrappedAngle() + m_turret->GetTurretAngle() - m_limelight->GetXOffset() + 180.0, 360.0);
     if (tfAngle < 0.0) {
         tfAngle += 360.0;
     }
@@ -43,11 +46,16 @@ double SubsystemManager::CalcPose() {
     }
     fieldAngle -= 180.0;
 
-    double x = dist * std::cos(Constants::RAD_PER_DEG * fieldAngle);
-    double y = dist * std::sin(Constants::RAD_PER_DEG * fieldAngle);
+    double x = Constants::METERS_PER_INCH * dist * std::cos(Constants::RAD_PER_DEG * fieldAngle);
+    double y = Constants::METERS_PER_INCH * dist * std::sin(Constants::RAD_PER_DEG * fieldAngle);
 
-    // Pose2d pose{x, y, m_gyro->GetWrappedAngle()};
-    return 0.0;  // todo: update
+    Pose2d pose{units::meter_t(x), units::meter_t(y),
+                units::radian_t(Constants::RAD_PER_DEG * m_gyro->GetWrappedAngle())};
+    return pose;
+}
+
+void SubsystemManager::SuspendCalcPose(bool suspend) {
+    m_suspendCalcPose = suspend;
 }
 
 double SubsystemManager::CalcFlywheelRPM() {
@@ -62,6 +70,20 @@ double SubsystemManager::CalcFlywheelRPM() {
     }
 
     return flywheelRPM;
+}
+
+double SubsystemManager::CalcTargetTurretAngle(double targetX, double targetY) {
+    double turretAngle = 0.0;
+    double poseX = m_robotPose.X().value();
+    double poseY = m_robotPose.Y().value();
+    double poseHeading = m_robotPose.Rotation().Degrees().value();
+    double heading = Constants::DEG_PER_RAD * atan2((targetY - poseY), (targetX - poseX));
+    turretAngle = std::fmod(heading - poseHeading + 180, 360.0);
+    if (turretAngle < 0) {
+        turretAngle += 360;
+    }
+    turretAngle -= 180;
+    return turretAngle;
 }
 
 bool SubsystemManager::ReadyToShoot() {
@@ -105,6 +127,11 @@ void SubsystemManager::Update() {
 
     m_drive->SetAngle(m_gyro->GetWrappedAngle());
     m_drive->SetAngularRate(m_gyro->GetAngularRate());
+    if (m_limelight->isTargetValid() && !m_suspendCalcPose) {
+        m_robotPose = CalcPose();
+    }
+    frc::SmartDashboard::PutNumber("X", m_robotPose.X().value() * Constants::INCHES_PER_METER);
+    frc::SmartDashboard::PutNumber("Y", m_robotPose.Y().value() * Constants::INCHES_PER_METER);
 }
 
 }  // namespace frc973

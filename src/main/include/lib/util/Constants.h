@@ -8,10 +8,12 @@ namespace Constants {
 
 constexpr uint32_t PID_SPEED_CTRL = 0x00000001; /**< Integrate the output of helpers/PID */
 
-constexpr double PI = 3.141592653589793;                 /**< Pi.*/
-constexpr double FEET_PER_METER = 3.280839895;           /**< ft/m.*/
-constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER; /**< m/ft.*/
-constexpr double GRAVITY_CONSTANT = 9.80665;             /**< Gravity constant meter/sq(sec).*/
+constexpr double PI = 3.141592653589793;                   /**< Pi.*/
+constexpr double FEET_PER_METER = 3.280839895;             /**< ft/m.*/
+constexpr double INCHES_PER_METER = FEET_PER_METER * 12;   /**< in/m.*/
+constexpr double METERS_PER_FOOT = 1.0 / FEET_PER_METER;   /**< m/ft.*/
+constexpr double METERS_PER_INCH = 1.0 / INCHES_PER_METER; /**< m/in.*/
+constexpr double GRAVITY_CONSTANT = 9.80665;               /**< Gravity constant meter/sq(sec).*/
 constexpr double GRAVITY_CONSTANT_INCHES =
     GRAVITY_CONSTANT * FEET_PER_METER * 12.0;                 /**< Gravity constant in/sq(sec). */
 constexpr double USEC_PER_MSEC = 1000.0;                      /**< Microseconds/millisecond.*/
@@ -33,7 +35,7 @@ constexpr double TALON_FX_VELOCITY_RPM =
     (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS); /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
 
 // for limelight tracking
-constexpr double GYRO_CONSTANT = 0.0021; //0.003
+constexpr double GYRO_CONSTANT = 0.0021;  // 0.003
 constexpr double TRANSLATION_CONSTANT = 0.01;
 
 // turret home angle
