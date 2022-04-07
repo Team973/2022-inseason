@@ -212,19 +212,39 @@ void Turret::CheckedSensorsToFalse() {
 
 int Turret::SensorCalibrate() {
     // looks for center sensor first
-    if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
-        m_centerSensorChecked = true;
+    // if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
+    //     m_centerSensorChecked = true;
 
-        // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
-        if (m_checkStatus == 0) {
-            SetNeutralMode(NeutralMode::Brake);
+    //     // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
+    //     if (m_checkStatus == 0) {
+    //         SetNeutralMode(NeutralMode::Brake);
+    //         m_checkStatus = 1;
+    //         SetHomeOffset();
+    //         return m_checkStatus;
+    //     } else {
+    //         return m_checkStatus;
+    //     }
+    // }
+    //____________________________________________
+
+    if (m_checkStatus == 0) {
+        if (m_turretMotor->IsFwdLimitSwitchClosed()) {
+            SetTurretAngle(117);
             m_checkStatus = 1;
-            SetHomeOffset();
-            return m_checkStatus;
-        } else {
+
+        } else if (m_turretMotor->IsRevLimitSwitchClosed()) {
+            SetTurretAngle(-117);
+            m_checkStatus = 1;
+        }
+    } else {
+        if (!m_turretSensor->Get()) {
+            SetNeutralMode(NeutralMode::Brake);
+            m_checkStatus = 2;
             return m_checkStatus;
         }
     }
+
+    
 
     return m_checkStatus;
 }
@@ -291,7 +311,7 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
-    SmartDashboard::PutNumber("T CurrAngle", m_currentAngleInDegrees);
+    SmartDashboard::PutNumber("T CurrAngle", m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE);
     SmartDashboard::PutBoolean("T digital input", m_turretSensor->Get());
     // right side limit switch
     SmartDashboard::PutBoolean("T fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
