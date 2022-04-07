@@ -40,13 +40,8 @@ void Intake::SetPercentOutput(double speed) {
 void Intake::Update() {
     switch (m_intakeState) {
         case IntakeState::Deploy:
-            // if ((Util::GetMsecTime() - m_timer) > INTAKE_SOLENOID_DELAY) {
-            //     m_intakeSoftSolenoid->Set(true);
-            //     m_intakeSolenoid->Set(false);
-            // } else {
                 m_intakeSoftSolenoid->Set(false);
                 m_intakeSolenoid->Set(true);
-            // }
             break;
         case IntakeState::Retract:
             m_timer = Util::GetMsecTime();

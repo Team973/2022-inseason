@@ -52,7 +52,6 @@ Shooter::Shooter(TalonFX *flywheelA, TalonFX *flywheelB)
     m_flywheelA->Config_kP(0, 0.025, 30);
     m_flywheelA->Config_kI(0, 0.0, 30);
     m_flywheelA->Config_kD(0, 0.000, 30);
-    // m_flywheelA->Config_kD(0, 0.001, 30);
     m_flywheelA->Config_kF(0, 0.048, 30);
 
     m_flywheelB->SetStatusFramePeriod(Status_1_General, 255);

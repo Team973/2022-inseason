@@ -101,7 +101,6 @@ void Climb::DashboardUpdate() {
     // SmartDashboard::PutBoolean("CL Bottom left sensor", m_bottomLeftSensor->Get());
     // SmartDashboard::PutBoolean("CL Bottom right sensor", m_bottomRightSensor->Get());
     SmartDashboard::PutString("CL State", m_climbState);
-    SmartDashboard::PutBoolean("inClimbState", m_inClimbState);
 }
 
 void Climb::Update() {

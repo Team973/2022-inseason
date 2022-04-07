@@ -55,21 +55,7 @@ void Robot::TeleopPeriodic() {
         }
     }
 
-    // Intake
-    // } else {
-    //     m_intake->Retract();
-    // }
-
     // Conveyors and Intake
-    // if (m_operatorStick->GetDPadLeftVirtButton()) {  // Dpad Left Button - Queueing State
-    //     // m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
-    //     // m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
-    //     // m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-    // } else if (m_operatorStick->GetDPadDownVirtButton()) {
-    //     // m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedOut);
-    //     // m_conveyor->SetFloorState(Conveyor::FloorState::FeedOut);
-    //     // m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-    // } else {
     if (m_driverStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper -
         m_intake->Deploy();
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
@@ -117,16 +103,13 @@ void Robot::TeleopPeriodic() {
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // Gyro
-    // if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-    //     m_gyro->Zero();
-    // }
 
     // Limelight
-    // if (m_driverStick->GetRightBumper()) {
-    //     m_limelight->SetCameraDriver();
-    // } else {
-    //     m_limelight->SetVisionCamera();
-    // }
+    if (m_driverStick->GetRightBumper()) {
+        m_limelight->SetCameraDriver();
+    } else {
+        m_limelight->SetVisionCamera();
+    }
 
     // Climb
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);
@@ -151,7 +134,6 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurretState(TurretState::Manual);
         m_turret->SetTurnValue(0.0);
         m_limelight->SetCameraDriver();
-        // m_compressor->Disable();
     } else {
         m_compressor->EnableDigital();
         m_climb->SetClimbSpeed(0.0);

@@ -33,12 +33,6 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
     m_towerMotor->EnableVoltageCompensation(true);
     m_floorMotor->ConfigVoltageCompSaturation(12.0);
     m_floorMotor->EnableVoltageCompensation(true);
-
-    // Velocity PID Parameters
-    // m_towerMotor->Config_kP(0, 0.0, 30);
-    // m_towerMotor->Config_kI(0, 0.0, 30);
-    // m_towerMotor->Config_kD(0, 0.0, 30);
-    // m_towerMotor->Config_kF(0, 0.0, 30);
 }
 
 void Conveyor::Update() {
