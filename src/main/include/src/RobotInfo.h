@@ -53,7 +53,7 @@ constexpr int CONVEYOR_CEILING_SRX_ID = 4; /**< CAN ID for the second tower talo
  */
 constexpr int TURRET_FX_ID = 8;                                      /**< CAN ID for the turret falcon. */
 constexpr int TURRET_HOME_SENSOR = 0;                                /** DIO channel for homing hall sensor. */
-constexpr double TURRET_GEAR_RATIO = ((7.0 / 1.0) * (128.0 / 10.0)); /** The gear ratio of the turret. */
+constexpr double TURRET_GEAR_RATIO = ((5.0 / 1.0) * (128.0 / 10.0)); /** The gear ratio of the turret. */
 constexpr double TURRET_TICKS_PER_DEGREE =
     1.0 / 360.0 * 2048.0 * TURRET_GEAR_RATIO; /** Ticks per degree of the turret*/
 constexpr double TURRET_SENSOR_SOFT = 111 * TURRET_TICKS_PER_DEGREE;
@@ -68,7 +68,7 @@ constexpr double FLYWHEEL_VELOCITY_RPM =
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
 static constexpr double LOW_FLYWHEEL_RPM_SETPOINT = 800.0;     /** Flywheel RPM to shoot into the low goal. */
 static constexpr double FLY_RPM_CLOSE = 2000.0;                /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_FAR = 2750.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
+static constexpr double FLY_RPM_FAR = 2900.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
 static constexpr double FLY_DIST_FAR = 201;   /** Distance from target to far. */ 
 static constexpr double TOO_FAR_LOCKOUT =

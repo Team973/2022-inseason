@@ -121,6 +121,16 @@ Drive::Drive(TalonFX *leftDriveTalonA, TalonFX *leftDriveTalonB, TalonFX *leftDr
     m_rightDriveTalonA->Config_kD(0, 0.0, 30);
     m_rightDriveTalonA->Config_kF(0, 0.033, 30);
 
+    m_leftDriveTalonB->SetStatusFramePeriod(Status_1_General, 255);
+    m_leftDriveTalonC->SetStatusFramePeriod(Status_1_General, 255);
+    m_leftDriveTalonB->SetStatusFramePeriod(Status_2_Feedback0, 255);
+    m_leftDriveTalonC->SetStatusFramePeriod(Status_2_Feedback0, 255);
+
+    m_rightDriveTalonB->SetStatusFramePeriod(Status_1_General, 255);
+    m_rightDriveTalonC->SetStatusFramePeriod(Status_1_General, 255);
+    m_rightDriveTalonB->SetStatusFramePeriod(Status_2_Feedback0, 255);
+    m_rightDriveTalonC->SetStatusFramePeriod(Status_2_Feedback0, 255);
+
     Zero();
 }
 

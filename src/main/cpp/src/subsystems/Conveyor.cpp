@@ -21,8 +21,7 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
 
     // Motor Directions
     m_towerMotor->SetInverted(TalonFXInvertType::CounterClockwise);
-
-    m_floorMotor->SetInverted(false);
+    m_floorMotor->SetInverted(true);
     m_ceilingMotor->SetInverted(true);
 
     m_towerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
@@ -58,9 +57,9 @@ void Conveyor::Update() {
             m_currentTowerState = "Shoot";
             if (m_readyToShoot) {
                 m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+            } else {
+                m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             }
-
-            m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 
@@ -89,11 +88,11 @@ void Conveyor::Update() {
             m_currentFloorState = "Shoot";
             if (m_readyToShoot) {
                 m_floorMotor->Set(ControlMode::PercentOutput, 1.0);
-                m_ceilingMotor->Set(ControlMode::PercentOutput, 1.0);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 0.8);
+            } else {
+                m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
+                m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             }
-
-            m_floorMotor->Set(ControlMode::PercentOutput, 0.0);
-            m_ceilingMotor->Set(ControlMode::PercentOutput, 0.0);
             break;
     }
 }
@@ -101,6 +100,7 @@ void Conveyor::Update() {
 void Conveyor::DashboardUpdate() {
     frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
     frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    SmartDashboard::PutNumber("CO tower v", m_towerMotor->GetSelectedSensorVelocity());
 }
 
 void Conveyor::SetTowerSpeed(double speed) {

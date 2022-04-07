@@ -33,7 +33,7 @@ public:
     enum class ClimbState {
         Deploy, /**< Runs the climb up automatically. */
         Manual, /**< Sets the climb motors to manual control. */
-        Level_3,
+        Level_3,/**< Deploys the level 3 climb hooks. */
         Off /**< Locks the climb and sets motors to 0. */
     };
 

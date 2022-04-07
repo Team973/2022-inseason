@@ -12,10 +12,8 @@ Climb::Climb(TalonFX *climbTalonA, TalonFX *climbTalonB, DigitalInput *bottomLef
         , m_topLeftSensor(topLeftSensor)
         , m_topRightSensor(topRightSensor)
         , m_climbSolenoid(climbSolenoid)
-        , m_currentLimit(
-              SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))
-        , m_statorLimit(
-              StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
+        , m_currentLimit(SupplyCurrentLimitConfiguration(true, 40, 80, 0.05))
+        , m_statorLimit(StatorCurrentLimitConfiguration(true, 80, 100, 0.05))
         , m_currentState(ClimbState::Off)
         , m_inClimbState(false)
         , m_climbSpeed(0.0)
@@ -53,6 +51,9 @@ Climb::Climb(TalonFX *climbTalonA, TalonFX *climbTalonB, DigitalInput *bottomLef
     m_climbTalonB->SetNeutralMode(Brake);
 
     m_climbTalonB->Follow(*m_climbTalonA);
+
+    m_climbTalonB->SetStatusFramePeriod(Status_1_General, 255);
+    m_climbTalonB->SetStatusFramePeriod(Status_2_Feedback0, 255);
 }
 
 void Climb::EnableClimb() {
@@ -100,8 +101,7 @@ void Climb::DashboardUpdate() {
     // SmartDashboard::PutBoolean("CL Bottom left sensor", m_bottomLeftSensor->Get());
     // SmartDashboard::PutBoolean("CL Bottom right sensor", m_bottomRightSensor->Get());
     SmartDashboard::PutString("CL State", m_climbState);
-    SmartDashboard::PutBoolean("inClimbState",m_inClimbState);
-    }
+}
 
 void Climb::Update() {
     double climbMotorOutput = 0.0;
@@ -110,7 +110,8 @@ void Climb::Update() {
         case ClimbState::Off:
             m_climbState = "Off";
             m_inClimbState = false;
-            climbMotorOutput = 0.0;
+            climbMotorOutput = -0.1;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
@@ -130,6 +131,7 @@ void Climb::Update() {
             m_climbState = "Manual";
             m_inClimbState = true;
             climbMotorOutput = m_climbSpeed;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
@@ -138,18 +140,19 @@ void Climb::Update() {
             m_inClimbState = true;
 
             m_climbSolenoid->Set(true);
-            if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
-                SetNeutralMode(Coast);
-            } else {
-                SetNeutralMode(Brake);
-            }
-            
+            // if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
+            SetNeutralMode(Coast);
+            // } else {
+            // SetNeutralMode(Brake);
+            // }
+
             climbMotorOutput = m_climbSpeed;
             break;
         default:
             m_climbState = "Off";
             m_inClimbState = false;
             climbMotorOutput = 0.0;
+            m_climbSolenoid->Set(false);
             m_timer = Util::GetMsecTime();
             SetNeutralMode(Brake);
             break;
@@ -160,7 +163,7 @@ void Climb::Update() {
     }
 
     if (GetBottomHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7); 
+        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);
     }
 
     if (m_currentState == ClimbState::Deploy) {
