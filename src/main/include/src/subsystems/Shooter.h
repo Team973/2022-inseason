@@ -48,7 +48,13 @@ public:
      * Checks to see if the flywheel is at speed or not.
      * @return true or false on if its at speed.
      */
-    bool IsAtSpeed();
+    bool IsAtSpeedFixed();
+
+    /**
+     * Checks to see if the flywheel is at speed or not.
+     * @return true or false on if its at speed.
+     */
+    bool IsAtSpeedTracking();
 
     /**
      * Change state of Shooter

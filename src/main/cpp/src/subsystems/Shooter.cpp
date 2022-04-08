@@ -108,8 +108,13 @@ void Shooter::SetFlywheelSpeed(double speed) {
     m_flywheelSpeed = -speed;  // speed inverted
 }
 
-bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > std::abs((m_flywheelRPMSetpoint - 80)); //todo: figure out at speed for tracking
+bool Shooter::IsAtSpeedFixed() {
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) > std::abs((m_flywheelRPMSetpoint - 80));
+}
+
+bool Shooter::IsAtSpeedTracking() {
+    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
+           std::abs((m_flywheelTrackingRPMSetpoint - 80));
 }
 
 void Shooter::EnableShooter() {

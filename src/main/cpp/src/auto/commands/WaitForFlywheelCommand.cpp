@@ -13,7 +13,7 @@ void WaitForFlywheelCommand::Run() {
 }
 
 bool WaitForFlywheelCommand::IsCompleted() {
-    return m_shooter->IsAtSpeed();
+    return m_shooter->IsAtSpeedFixed() || m_shooter->IsAtSpeedTracking();
 }
 
 void WaitForFlywheelCommand::PostExecute() {

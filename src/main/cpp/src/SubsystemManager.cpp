@@ -65,7 +65,7 @@ double SubsystemManager::CalcFlywheelRPM() {
 }
 
 bool SubsystemManager::ReadyToShoot() {
-    if (m_shooter->IsAtSpeed()) {
+    if (m_shooter->IsAtSpeedFixed()||m_shooter->IsAtSpeedTracking() ) {
         return true;
     }
     return false;
