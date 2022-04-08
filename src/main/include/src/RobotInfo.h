@@ -46,7 +46,7 @@ constexpr int INTAKE_SOFT_SOLENOID_ID = 6; /**< Channel for the intake Solenoid.
  */
 constexpr int CONVEYOR_FLOOR_SRX_ID = 10;  /**< CAN ID for the floor talon. */
 constexpr int CONVEYOR_TOWER_FX_ID = 11;  /**< CAN ID for the first tower talon. */
-constexpr int CONVEYOR_CEILING_SRX_ID = 4; /**< CAN ID for the second tower talon. */
+constexpr int CONVEYOR_CEILING_FX_ID = 4; /**< CAN ID for the second tower talon. */
 
 /**
  * Turret Subsystem.
@@ -98,6 +98,7 @@ constexpr double CLIMB_INCHES_PER_TICK =
  * Gyro
  */
 /**< CAN id same as climb tower B */
+constexpr int GYRO_SRX_ID = 4; /**< To do: Update CAN ID */
 constexpr double P1_ANGLE = -156.0; /**< The angle to set when robot is in position 1. */
 constexpr double P2_ANGLE = -178.5; /**< The angle to set when robot is in position 2. */
 constexpr double P3_ANGLE = 114.0;  /**< The angle to set when robot is in position 3. */

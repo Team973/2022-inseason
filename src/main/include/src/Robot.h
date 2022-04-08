@@ -78,7 +78,7 @@ private:
      */
     TalonSRX *m_conveyorFloorMotor;
     TalonFX *m_conveyorTowerMotor;
-    TalonSRX *m_conveyorCeilingMotor;
+    TalonFX *m_conveyorCeilingMotor;
     Conveyor *m_conveyor;
 
     /**
@@ -110,7 +110,7 @@ private:
     /**
      * Gyro
      */
-    TalonSRX *m_gyroTalon;
+    TalonSRX *m_gyroSRX;
     Gyro *m_gyro;
 
     /**

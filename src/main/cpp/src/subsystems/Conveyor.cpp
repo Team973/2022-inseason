@@ -2,7 +2,7 @@
 
 namespace frc973 {
 
-Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorMotor)
+Conveyor::Conveyor(TalonFX *towerMotor, TalonFX *ceilingMotor, TalonSRX *floorMotor)
         : m_towerMotor(towerMotor)
         , m_ceilingMotor(ceilingMotor)
         , m_floorMotor(floorMotor)
@@ -22,7 +22,7 @@ Conveyor::Conveyor(TalonFX *towerMotor, TalonSRX *ceilingMotor, TalonSRX *floorM
     // Motor Directions
     m_towerMotor->SetInverted(TalonFXInvertType::CounterClockwise);
     m_floorMotor->SetInverted(true);
-    m_ceilingMotor->SetInverted(true);
+    m_ceilingMotor->SetInverted(TalonFXInvertType::Clockwise);
 
     m_towerMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));
     m_ceilingMotor->ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, 30, 60, 0.1));

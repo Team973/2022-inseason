@@ -19,7 +19,7 @@ public:
      * @param towerMotorB one of the two motors for the tower.
      * @param floorMotor the motor for the floor.
      */
-    Conveyor(TalonFX *towerMotor, TalonSRX *towerMotorB, TalonSRX *floorMotor);
+    Conveyor(TalonFX *towerMotor, TalonFX *towerMotorB, TalonSRX *floorMotor);
 
     /**
      * Sets the tower state to either off, feed in, feed out, or manual.
@@ -121,7 +121,7 @@ public:
 
 private:
     TalonFX *m_towerMotor;
-    TalonSRX *m_ceilingMotor;
+    TalonFX *m_ceilingMotor;
     TalonSRX *m_floorMotor;
     TowerState m_towerState;
     FloorState m_floorState;
