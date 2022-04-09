@@ -167,7 +167,7 @@ double Turret::GetTurretAngle() {
 
 double Turret::CalcTransitionalCompensations(double driveVelocity, double distanceFromTarget) {
     // The position 100ms into the future calculated by current drive velocity converted into inches into the future
-    double futurePosition = driveVelocity;
+    double futurePosition = driveVelocity * DRIVE_INCHES_PER_TICK;
 
     double futureDistance = 0.0;
     double futureAngle = 0.0;
