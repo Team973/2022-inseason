@@ -123,6 +123,11 @@ public:
     double GetVelocity();
 
     /**
+     * Gets current pose of drive
+     */
+    Pose2d GetPose();
+
+    /**
      * Clamps the speed of the motors
      * @param minSpeed the minimum speed
      * @param maxSpeed the maximum speed

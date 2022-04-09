@@ -43,12 +43,14 @@ void Robot::TeleopPeriodic() {
     // Turret
     if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal Angle
         m_subsystemManager->SuspendCalcPose(true);
-        m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(m_subsystemManager->CalcTargetTurretAngle(0.0, -8.23));
-    } else if (m_operatorStick->GetBButton()) {  // Btn A - Set Lowgoal Angle
+        m_subsystemManager->SetDumpZone(CLOSE_STATION);
+        m_turret->SetTurretState(TurretState::Shoop);
+        m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
+    } else if (m_operatorStick->GetBButton()) {  // Btn B - Set Lowgoal Angle
         m_subsystemManager->SuspendCalcPose(true);
-        m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(m_subsystemManager->CalcTargetTurretAngle(0.0, 0.0));
+        m_subsystemManager->SetDumpZone(HUB);
+        m_turret->SetTurretState(TurretState::Shoop);
+        m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
     } else {
         m_subsystemManager->SuspendCalcPose(false);
         if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||

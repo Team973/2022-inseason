@@ -20,6 +20,7 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_wrappingInProgress(false)
         , m_gyroSnapshotWrapping(0.0)
         , m_angleInDegrees(0.0)
+        , m_shoopAngle(0.0)
         , m_limelightXOffset(0.0)
         , m_angularRate(0.0)
         , m_translationalValue(0.0) {
@@ -60,6 +61,10 @@ void Turret::SetTurretState(TurretState state) {
 
 void Turret::SetTurnValue(double angle) {
     m_angleInDegrees = angle;
+}
+
+void Turret::SetShoopAngle(double angle) {
+    m_shoopAngle = angle;
 }
 
 void Turret::Turn(double angleInDegrees) {
@@ -162,6 +167,27 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
 }
 
 double Turret::GetTurretAngle() {
+    return m_currentAngleInDegrees;
+}
+
+bool Turret::IsAtAngle() {
+    switch (m_turretState) {
+        case TurretState::Off:
+            return true;
+            break;
+        case TurretState::Manual:
+            return (std::abs(m_currentAngleInDegrees - m_angleInDegrees) < TURRET_ANGLE_TOLERANCE);
+            break;
+        case TurretState::Shoop:
+            return (std::abs(m_currentAngleInDegrees - m_shoopAngle) < TURRET_ANGLE_TOLERANCE);
+            break;
+        case TurretState::Tracking:
+            return true;
+            break;
+        default:
+            return true;
+            break;
+    }
     return m_currentAngleInDegrees;
 }
 
@@ -299,6 +325,9 @@ void Turret::Update() {
             break;
         case TurretState::Manual:
             Turn(m_angleInDegrees);
+            break;
+        case TurretState::Shoop:
+            Turn(m_shoopAngle);
             break;
         case TurretState::Tracking:
             CalcOutput(m_limelightXOffset, m_angularRate, m_translationalValue);

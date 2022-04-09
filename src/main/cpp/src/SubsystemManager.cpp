@@ -13,6 +13,8 @@ SubsystemManager::SubsystemManager(Drive *drive, Intake *intake, Conveyor *conve
         , m_gyro(gyro)
         , m_lights(lights)
         , m_robotPose(units::meter_t(0.0), units::meter_t(0.0), units::radian_t(0.0))
+        , m_dumpZone(units::meter_t(0.0 * Constants::METERS_PER_INCH),
+                     units::meter_t(-300.0 * Constants::METERS_PER_INCH))
         , m_suspendCalcPose(false) {
 }
 
@@ -72,12 +74,28 @@ double SubsystemManager::CalcFlywheelRPM() {
     return flywheelRPM;
 }
 
-double SubsystemManager::CalcTargetTurretAngle(double targetX, double targetY) {
+double SubsystemManager::CalcShoopRPM() {
+    double dist = m_dumpZone.Distance(m_robotPose.Translation()).value();
+    double shoopRPM = 0.0;
+    shoopRPM = (SHOOP_RPM_FAR - SHOOP_RPM_CLOSE) / (SHOOP_DIST_FAR - SHOOP_DIST_CLOSE) * (dist - SHOOP_DIST_CLOSE) +
+               SHOOP_RPM_CLOSE;
+    if (shoopRPM > SHOOP_RPM_FAR) {
+        shoopRPM = SHOOP_RPM_FAR;
+    }
+    if (shoopRPM < SHOOP_RPM_CLOSE) {
+        shoopRPM = SHOOP_RPM_CLOSE;
+    }
+    return shoopRPM;
+}
+
+double SubsystemManager::CalcTargetTurretAngle() {
     double turretAngle = 0.0;
     double poseX = m_robotPose.X().value();
     double poseY = m_robotPose.Y().value();
     double poseHeading = m_robotPose.Rotation().Degrees().value();
-    double heading = Constants::DEG_PER_RAD * atan2((targetY - poseY), (targetX - poseX));
+    double dumpX = m_dumpZone.X().value();
+    double dumpY = m_dumpZone.Y().value();
+    double heading = Constants::DEG_PER_RAD * atan2((dumpY - poseY), (dumpX - poseX));
     turretAngle = std::fmod(heading - poseHeading + 180, 360.0);
     if (turretAngle < 0) {
         turretAngle += 360;
@@ -86,33 +104,46 @@ double SubsystemManager::CalcTargetTurretAngle(double targetX, double targetY) {
     return turretAngle;
 }
 
+void SubsystemManager::SetDumpZone(Translation2d dumpZone) {
+    m_dumpZone = dumpZone;
+}
+
 bool SubsystemManager::ReadyToShoot() {
-    if (m_shooter->IsAtSpeed()) {
+    if (m_shooter->IsAtSpeed() && m_turret->IsAtAngle()) {
         return true;
     }
     return false;
 }
 
 void SubsystemManager::Update() {
-    /**
-     * Turret calculation values
-     */
-    m_turret->UpdateValues(m_gyro->GetAngle());
+    // Update Pose Calculation
+    if (m_limelight->isTargetValid() && !m_suspendCalcPose) {
+        m_robotPose = CalcPose();
+        m_drive->SetPose(m_robotPose);
+    }
+    m_robotPose = m_drive->GetPose();
+    frc::SmartDashboard::PutNumber("POSE X", m_robotPose.X().value() * Constants::INCHES_PER_METER);
+    frc::SmartDashboard::PutNumber("POSE Y", m_robotPose.Y().value() * Constants::INCHES_PER_METER);
+    frc::SmartDashboard::PutNumber("POSE Theta", m_robotPose.Rotation().Degrees().value());
 
+    // Update Drive Values
+    m_drive->SetAngle(m_gyro->GetWrappedAngle());
+    m_drive->SetAngularRate(m_gyro->GetAngularRate());
+
+    // Calculate Turret values
+    m_turret->UpdateValues(m_gyro->GetAngle());
     if (m_limelight->isTargetValid()) {
         if (m_turret->GetWrappedState()) {
             m_turret->CheckedSensorsToFalse();
         }
-
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     } else {
         m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
     }
 
-    /**
-     * Shooter flywheel calculation values
-     */
+    // Shooter flywheel calculation values
     m_shooter->SetTrackingFlywheelRPM(CalcFlywheelRPM());
+    m_shooter->SetShoopFlywheelRPM(CalcShoopRPM());
 
     /**
      * Ready to shoot checks
@@ -124,14 +155,6 @@ void SubsystemManager::Update() {
         m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
         m_conveyor->SetReadyToShoot(false);
     }
-
-    m_drive->SetAngle(m_gyro->GetWrappedAngle());
-    m_drive->SetAngularRate(m_gyro->GetAngularRate());
-    if (m_limelight->isTargetValid() && !m_suspendCalcPose) {
-        m_robotPose = CalcPose();
-    }
-    frc::SmartDashboard::PutNumber("X", m_robotPose.X().value() * Constants::INCHES_PER_METER);
-    frc::SmartDashboard::PutNumber("Y", m_robotPose.Y().value() * Constants::INCHES_PER_METER);
 }
 
 }  // namespace frc973

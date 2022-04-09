@@ -140,6 +140,15 @@ private:
     StickController *m_operatorStick;
     StickController *m_driverStick;
     StickController *m_testStick;
+
+    /**
+     * Field locations
+     */
+    Translation2d CLOSE_STATION{units::inch_t(0.0), units::inch_t(-300.0)};
+    Translation2d FAR_STATION{units::inch_t(0.0), units::inch_t(300.0)};
+    Translation2d CLOSE_HANGAR{units::inch_t(-105.0), units::inch_t(-260.0)};
+    Translation2d FAR_HANGAR{units::inch_t(105.0), units::inch_t(260.0)};
+    Translation2d HUB{units::inch_t(0.0), units::inch_t(0.0)};
 };
 
 }  // namespace frc973

@@ -32,7 +32,7 @@ public:
 
     /**
      * Sets 0 for the turret and sets the CANdle
-     */ 
+     */
     void TurretCalibration();
 
     /**
@@ -51,10 +51,19 @@ public:
     double CalcFlywheelRPM();
 
     /**
-     * Calculates turret angle to a target X,Y coord. (meters) from a field relative pose
+     * uses the current dist from dump zone to figure out how fast the flywheel should go
      */
-    double CalcTargetTurretAngle(double targetX, double targetY);
+    double CalcShoopRPM();
 
+    /**
+     * Calculates turret angle to a target dump zone (translation2d in meters) from a field relative pose
+     */
+    double CalcTargetTurretAngle();
+
+    /**
+     * Sets the location to Shoop balls to.
+     */
+    void SetDumpZone(Translation2d dumpZone);
 
     /**
      * Checks if the flywheel is up to speed to see if the robot is ready to shoot
@@ -65,8 +74,6 @@ public:
      * Updates the subsystem manager
      */
     void Update();
-
-
 
 private:
     Drive *m_drive;
@@ -79,6 +86,7 @@ private:
     Gyro *m_gyro;
     Lights *m_lights;
     Pose2d m_robotPose;
+    Translation2d m_dumpZone;
     bool m_suspendCalcPose;
 };
 }  // namespace frc973
