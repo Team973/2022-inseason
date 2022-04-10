@@ -98,7 +98,7 @@ double Limelight::GetHorizontalDist() {
 
     double x_calc = y_calc / (std::tan(angle_calc));
 
-    return x_calc;
+    return x_calc + 26.6875; //radius of the goal
 }
 
 }  // namespace frc973

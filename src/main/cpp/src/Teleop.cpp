@@ -105,11 +105,11 @@ void Robot::TeleopPeriodic() {
     // Gyro
 
     // Limelight
-    if (m_driverStick->GetRightBumper()) {
-        m_limelight->SetCameraDriver();
-    } else {
-        m_limelight->SetVisionCamera();
-    }
+    // if (m_driverStick->GetRightBumper()) {
+    //     m_limelight->SetCameraDriver();
+    // } else {
+    //     m_limelight->SetVisionCamera();
+    // }
 
     // Climb
     double manualClimb = m_operatorStick->GetRawAxisWithDeadband(1, false, 0.15);

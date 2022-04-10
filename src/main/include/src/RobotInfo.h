@@ -68,9 +68,9 @@ constexpr double FLYWHEEL_VELOCITY_RPM =
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
 static constexpr double LOW_FLYWHEEL_RPM_SETPOINT = 800.0;     /** Flywheel RPM to shoot into the low goal. */
 static constexpr double FLY_RPM_CLOSE = 2000.0;                /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_FAR = 2800.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
-static constexpr double FLY_DIST_CLOSE = 101; /** Distance from target to close. */
-static constexpr double FLY_DIST_FAR = 201;   /** Distance from target to far. */ 
+static constexpr double FLY_RPM_FAR = 2840.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
+static constexpr double FLY_DIST_CLOSE = 103 + 26.6875; /** Distance from target to close add radius of goal. */
+static constexpr double FLY_DIST_FAR = 201 + 26.6875;   /** Distance from target to far add radius of goal. */ 
 static constexpr double TOO_FAR_LOCKOUT =
     240.0; /** Distance from target in inches is too far, doesn't allow shooting. */
 

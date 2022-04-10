@@ -131,7 +131,7 @@ void Robot::RobotPeriodic() {
 
     // limelight
     frc::SmartDashboard::PutBoolean("LIM valid target?", m_limelight->isTargetValid());
-    // frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
+    frc::SmartDashboard::PutBoolean("LIM dead?", m_limelight->IsLimelightDead());
     // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
 }
