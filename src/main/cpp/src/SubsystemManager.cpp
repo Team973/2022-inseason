@@ -82,9 +82,13 @@ void SubsystemManager::Update() {
             m_turret->CheckedSensorsToFalse();
         }
 
-        m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+        //m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        m_turret->SetTrackingValues(0.0 , 0.0, m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+        
     } else {
-        m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+        //m_turret->SetTrackingValues(m_limelight->GetXOffset(), m_gyro->GetAngularRate(), 0.0);
+        m_turret->SetTrackingValues(0.0 , 0.0, m_turret->CalcTransitionalCompensations(m_drive->GetVelocity(), m_limelight->GetHorizontalDist()));
+
     }
 
     /**

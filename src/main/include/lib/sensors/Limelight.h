@@ -116,8 +116,8 @@ private:
     double m_previousLatency;
 
     static constexpr double TARGET_HEIGHT =
-        103.25; /**< Target's height in inches from ground*/
-    static constexpr double CAMERA_HEIGHT = 37.0; /**< Camera's Height in inches from ground*/
+        32.0; /**< Target's height in inches from ground*/
+    static constexpr double CAMERA_HEIGHT = 21.0; /**< Camera's Height in inches from ground*/
     static constexpr double CAMERA_ANGLE =
         39.94; /**< Camera Angle in degrees wrt ground*/
               // ### for comp; ### for pbot

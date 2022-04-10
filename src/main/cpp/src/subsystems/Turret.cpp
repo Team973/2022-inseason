@@ -114,7 +114,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output += (-angularVelocity * Constants::GYRO_CONSTANT);
+    output += ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
 
     if (m_wrappingToRightSensor == true) {
         if (PassedSuperSoft() == 1) {
