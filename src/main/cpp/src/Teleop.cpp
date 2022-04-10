@@ -137,6 +137,7 @@ void Robot::TeleopPeriodic() {
     } else {
         m_compressor->EnableDigital();
         m_climb->SetClimbSpeed(0.0);
+        m_limelight->SetVisionCamera();
     }
 
     /** Post Periodic */
