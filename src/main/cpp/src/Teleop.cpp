@@ -31,10 +31,11 @@ void Robot::TeleopPeriodic() {
         } else if (m_operatorStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper - Set Tarmac RPM
             m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
             m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
+        } else if (m_operatorStick->GetXButton() || m_operatorStick->GetXButton()) {  // Btn X or B - Shoop
+            m_shooter->SetShooterState(Shooter::ShooterState::Shoop);
         } else {
             m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
         }
-
     } else {
         m_shooter->SetShooterState(Shooter::ShooterState::Off);
         m_lights->SetLightsState(Lights::LightsState::Off);
@@ -42,12 +43,19 @@ void Robot::TeleopPeriodic() {
 
     // Turret
     if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal Angle
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(0.0);
+    } else if (m_operatorStick->GetXButton()) {  // Btn X - Shoop Close Station
         m_subsystemManager->SuspendCalcPose(true);
         m_subsystemManager->SetDumpZone(FieldLocations::CLOSE_STATION);
         m_turret->SetTurretState(TurretState::Shoop);
         m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
-    } else if (m_operatorStick->GetBButton()) {  // Btn B - Set Lowgoal Angle
+    } else if (m_operatorStick->GetBButton()) {  // Btn B - Shoop Far Station
         m_subsystemManager->SuspendCalcPose(true);
+        m_subsystemManager->SetDumpZone(FieldLocations::FAR_STATION);
+        m_turret->SetTurretState(TurretState::Shoop);
+        m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
+    } else if (m_operatorStick->GetRightStickButton()) {  // Find Hub with best guess
         m_subsystemManager->SetDumpZone(FieldLocations::HUB);
         m_turret->SetTurretState(TurretState::Shoop);
         m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
@@ -64,12 +72,12 @@ void Robot::TeleopPeriodic() {
     }
 
     // Conveyors and Intake
-    if (m_driverStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper -
+    if (m_driverStick->GetRawButton(Stick::LeftTrigger)) {  // Right Bumper -
         m_intake->Deploy();
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-    } else if (m_driverStick->GetRawButton(Stick::LeftTrigger)) {  // Left Trigger -
+    } else if (m_driverStick->GetRawButton(Stick::LeftBumper)) {  // Left Trigger -
         m_intake->Deploy();
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedOut);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedOut);
@@ -101,7 +109,7 @@ void Robot::TeleopPeriodic() {
     }
 
     // Drive
-    if (m_driverStick->GetLeftBumper()) {
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
         m_drive->SetQuickTurn(true);
     } else {
         m_drive->SetQuickTurn(false);
@@ -111,7 +119,7 @@ void Robot::TeleopPeriodic() {
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // Gyro
-    if (m_driverStick->GetRawButton(Stick::LeftBumper)) {
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
         m_gyro->Zero();
     }
 

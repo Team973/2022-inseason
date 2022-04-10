@@ -269,7 +269,8 @@ void Drive::SetQuickTurn(bool QT) {
 }
 
 void Drive::SetPose(Pose2d Pose) {
-    m_drivePose = Pose;
+    m_driveOdometry.ResetPosition(Pose, Pose.Rotation());
+    Zero();
 }
 
 double Drive::GetRightOuput() {

@@ -88,5 +88,6 @@ private:
     Pose2d m_robotPose;
     Translation2d m_dumpZone;
     bool m_suspendCalcPose;
+    bool m_targetLossedFlag;
 };
 }  // namespace frc973
