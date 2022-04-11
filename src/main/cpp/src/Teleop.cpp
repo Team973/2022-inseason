@@ -56,19 +56,18 @@ void Robot::TeleopPeriodic() {
         m_turret->SetTurretState(TurretState::Shoop);
         m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
     } else if (m_operatorStick->GetRightStickButton()) {  // Find Hub with best guess
+        m_subsystemManager->SuspendCalcPose(false);
         m_subsystemManager->SetDumpZone(FieldLocations::HUB);
         m_turret->SetTurretState(TurretState::Shoop);
         m_turret->SetShoopAngle(m_subsystemManager->CalcTargetTurretAngle());
-    } else {
+    } else if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||
+               m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
         m_subsystemManager->SuspendCalcPose(false);
-        if (m_operatorStick->GetRawAxisWithDeadband(5, false, 0.5) ||
-            m_operatorStick->GetRawAxisWithDeadband(4, false, 0.5)) {
-            m_turret->SetTurretState(TurretState::Manual);
-            m_turret->SetTurnValue(
-                m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
-        } else {
-            m_turret->SetTurretState(TurretState::Tracking);
-        }
+        m_turret->SetTurretState(TurretState::Manual);
+        m_turret->SetTurnValue(
+            m_turret->CalcJoystickAngleInDegrees(-m_operatorStick->GetRawAxis(5), -m_operatorStick->GetRawAxis(4)));
+    } else {
+        m_turret->SetTurretState(TurretState::Tracking);
     }
 
     // Conveyors and Intake
@@ -156,6 +155,7 @@ void Robot::TeleopPeriodic() {
     } else {
         m_compressor->EnableDigital();
         m_climb->SetClimbSpeed(0.0);
+        m_limelight->SetVisionCamera();
     }
 
     /** Post Periodic */

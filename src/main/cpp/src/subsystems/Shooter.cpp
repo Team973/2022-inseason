@@ -101,6 +101,10 @@ void Shooter::SetShooterState(ShooterState state) {
     m_shooterState = state;
 }
 
+Shooter::ShooterState Shooter::GetShooterState() {
+    return m_shooterState;
+}
+
 void Shooter::SetFlywheelRPM(double setpoint) {
     m_flywheelRPMSetpoint = setpoint;
 }
@@ -118,8 +122,29 @@ void Shooter::SetFlywheelSpeed(double speed) {
 }
 
 bool Shooter::IsAtSpeed() {
-    return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
-           std::abs((m_flywheelRPMSetpoint - 80));  // todo: figure out at speed for tracking
+    switch (m_shooterState) {
+        case ShooterState::Off:
+            return true;
+            break;
+        case ShooterState::Fixed:
+            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
+                   std::abs((m_flywheelRPMSetpoint - 80));  // todo: figure out at speed for tracking
+            break;
+        case ShooterState::Tracking:
+            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
+                   std::abs((m_flywheelTrackingRPMSetpoint - 80));  // todo: figure out at speed for tracking
+            break;
+        case ShooterState::Shoop:
+            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
+                   std::abs((m_flywheelShoopRPMSetpoint - 80));  // todo: figure out at speed for shooping
+            break;
+        case ShooterState::Manual:
+            return true;
+            break;
+        default:
+            return true;
+            break;
+    }
 }
 
 void Shooter::EnableShooter() {

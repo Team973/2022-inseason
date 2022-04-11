@@ -63,6 +63,11 @@ public:
     void SetShooterState(ShooterState state);
 
     /**
+     * State state of Shooter
+     */
+    Shooter::ShooterState GetShooterState();
+
+    /**
      * Enables the shooter
      */
     void EnableShooter();

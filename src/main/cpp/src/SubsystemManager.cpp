@@ -110,10 +110,16 @@ void SubsystemManager::SetDumpZone(Translation2d dumpZone) {
 }
 
 bool SubsystemManager::ReadyToShoot() {
+    double distance = m_limelight->GetHorizontalDist2();
     if (m_shooter->IsAtSpeed() && m_turret->IsAtAngle()) {
-        return true;
+        if (m_shooter->GetShooterState() == Shooter::ShooterState::Tracking) {
+            return ((distance > TOO_CLOSE_LOCKOUT) && (distance < TOO_FAR_LOCKOUT));
+        } else {
+            return true;
+        }
+    } else {
+        return false;
     }
-    return false;
 }
 
 void SubsystemManager::Update() {
