@@ -162,18 +162,19 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new SetGyroAutoAngleCommand(m_gyro, P4_ANGLE),
     new DeployIntakeCommand(m_intake),
     new SetFlywheelTrackingCommand(m_shooter, 500),
+    new PositionDriveCommand(m_drive, -45.0, 0.0, 0.8, 1800),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -41.0, 0.0, 0.8, 2000),
         new RunIntakeCommand(m_intake, 1.0, 2000),
         new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::Shoot, 2000),
         new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 2000),
     }),
-    new SetFlywheelRPMCommand(m_shooter, LOW_FLYWHEEL_RPM_SETPOINT, 500),
     new ConcurrentCommand({
-        new RunIntakeCommand(m_intake, 1.0, 2000),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::Shoot, 2000),
-        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::Shoot, 2000),
-    })
+        new SetFlywheelRPMCommand(m_shooter, LOW_FLYWHEEL_RPM_SETPOINT - 200.0, 500),
+        new RunIntakeCommand(m_intake, 1.0, 1500),
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::Shoot, 1500),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::Shoot, 1500),
+    }),
+    new PositionDriveCommand(m_drive, -24.0, 0.0, 0.5, 2000),
 }))
 
 /*< Position 5, Steal 1 >*/
