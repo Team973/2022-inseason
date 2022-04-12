@@ -34,7 +34,7 @@ constexpr double TALON_FX_VELOCITY_RPM =
 
 // for limelight tracking
 constexpr double GYRO_CONSTANT = 0.0021; //0.003
-constexpr double TRANSLATION_CONSTANT = 0.01;
+constexpr double TRANSLATION_CONSTANT = 0.0025;
 
 // turret home angle
 constexpr double TURRET_HOME_OFFSET = -1.0;

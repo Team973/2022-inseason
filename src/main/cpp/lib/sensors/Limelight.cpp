@@ -94,11 +94,14 @@ bool Limelight::IsLimelightDead() {
 
 double Limelight::GetHorizontalDist() {
     double y_calc = TARGET_HEIGHT - CAMERA_HEIGHT;
-    double angle_calc = (CAMERA_ANGLE + GetYOffset()) * Constants::PI / 180;
+
+    double angle_calc = atan(
+        sin((CAMERA_ANGLE + GetYOffset()) * Constants::RAD_PER_DEG) /
+        (cos((CAMERA_ANGLE + GetYOffset()) * Constants::RAD_PER_DEG) / cos(GetXOffset() * Constants::RAD_PER_DEG)));
 
     double x_calc = y_calc / (std::tan(angle_calc));
 
-    return x_calc + 26.6875; //radius of the goal
+    return x_calc + 26.6875;  // radius of the goal
 }
 
 }  // namespace frc973

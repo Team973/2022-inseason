@@ -16,7 +16,14 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         // clang-format off
 
 /*< Test >*/
-, m_test(AutoMode({}))
+, m_test(AutoMode({
+    new SetTurretAngleCommand(m_turret, 47.466, 500),
+    new TrackingTargetCommand(m_drive, m_limelight, m_turret, m_gyro, 500),
+    new WaitCommand(3000),
+    new PositionDriveCommand(m_drive, 150.0, 0.0, 0.3, 30000),
+    new WaitCommand(1000),
+    new PositionDriveCommand(m_drive, -140.0, 0.0, 0.3, 30000)
+}))
 
 /*< DoNothing >*/   
 , m_doNothing((AutoMode({})))

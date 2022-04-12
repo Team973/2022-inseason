@@ -119,7 +119,7 @@ void Robot::RobotInit() {
 }
 
 void Robot::RobotPeriodic() {
-    // m_drive->DashboardUpdate();
+    m_drive->DashboardUpdate();
     // m_intake->DashboardUpdate();
     m_conveyor->DashboardUpdate();
     m_turret->DashboardUpdate();
@@ -135,6 +135,8 @@ void Robot::RobotPeriodic() {
     // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
     frc::SmartDashboard::PutNumber("LIM Y offset", m_limelight->GetYOffset());
+    frc::SmartDashboard::PutNumber("LIM X offset", m_limelight->GetXOffset());
+
 }
 
 }  // namespace frc973
