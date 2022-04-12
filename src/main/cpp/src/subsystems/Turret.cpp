@@ -114,9 +114,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    // output += (-angularVelocity * Constants::GYRO_CONSTANT);
-
-    output += translationalAngularRate * Constants::TRANSLATION_CONSTANT;
+    output += ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
 
     if (m_wrappingToRightSensor == true) {
         if (PassedSuperSoft() == 1) {
@@ -175,9 +173,6 @@ double Turret::CalcTransitionalCompensations(double driveVelocity, double distan
         return 0.0;
     }
 
-    //testing
-    // distanceFromTarget = 130;
-
     double futureDistance = 0.0;
     double futureAngle = 0.0;
     double turretAngle = m_currentAngleInDegrees; 
@@ -201,11 +196,8 @@ double Turret::CalcTransitionalCompensations(double driveVelocity, double distan
     if(negativeAngle == true) {
         futureAngle = -futureAngle;
     }
-    SmartDashboard::PutNumber("Future Angle change", futureAngle - turretAngle);
 
     // result is the rate of turning due to transitional change from per100ms to per1sec
-    SmartDashboard::PutNumber("Future Distance change", futureDistance - distanceFromTarget);
-    SmartDashboard::PutNumber("Future Position", futurePosition);
     return (futureAngle - turretAngle) / 0.1;
 }
 
