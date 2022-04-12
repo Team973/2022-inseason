@@ -113,11 +113,6 @@ public:
      */
     double GetHorizontalDist2();
 
-    /**
-     * Gets the distance from the limelight to the target in the horizontal direction compensating for x offset
-     * projection
-     */
-    double GetHorizontalDist3();
 
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;

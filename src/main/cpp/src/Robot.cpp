@@ -135,7 +135,6 @@ void Robot::RobotPeriodic() {
     // frc::SmartDashboard::PutNumber("LIM pipeline", m_limelight->GetPipeline());
     frc::SmartDashboard::PutNumber("LIM dist to target (in)", m_limelight->GetHorizontalDist());
     frc::SmartDashboard::PutNumber("LIM dist to target2! (in)", m_limelight->GetHorizontalDist2());
-    frc::SmartDashboard::PutNumber("LIM dist to target3! (in)", m_limelight->GetHorizontalDist3());
 }
 
 }  // namespace frc973

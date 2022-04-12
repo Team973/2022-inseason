@@ -75,11 +75,11 @@ static constexpr double TOO_CLOSE_LOCKOUT =
     120.0; /** Distance from target in inches is too close, doesn't allow shooting. */
 static constexpr double TOO_FAR_LOCKOUT =
     240.0; /** Distance from target in inches is too far, doesn't allow shooting. */
-static constexpr double SHOOP_RPM_CLOSE = 600.0; /** Flywheel RPM to shoot close distance to dump. */
+static constexpr double SHOOP_RPM_CLOSE = 1000.0; /** Flywheel RPM to shoot close distance to dump. */
 static constexpr double SHOOP_RPM_FAR = 3000.0;  /** Flywheel RPM to shoot far distance to dump. */
-static constexpr double SHOOP_DIST_CLOSE = 24.0; /** Distance from dump to close. */
-static constexpr double SHOOP_DIST_FAR = 500.0;  /** Distance from dump to far. */
-
+static constexpr double SHOOP_DIST_CLOSE = 72.0; /** Distance from dump to close. */
+static constexpr double SHOOP_DIST_FAR = 288.0;  /** Distance from dump to far. */
+ 
 /**
  * Climb Subsystem.
  */
