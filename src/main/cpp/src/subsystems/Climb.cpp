@@ -171,7 +171,7 @@ void Climb::Update() {
     }
 
     if (GetBottomHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, -0.039, 0.7);
+        climbMotorOutput = std::clamp(climbMotorOutput, -0.03, 0.7);
     }
 
     if (m_currentState == ClimbState::Deploy) {
