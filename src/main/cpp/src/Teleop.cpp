@@ -108,16 +108,19 @@ void Robot::TeleopPeriodic() {
     }
 
     // Drive
-    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-        m_drive->SetQuickTurn(true);
-    } else {
-        m_drive->SetQuickTurn(false);
-    }
+    // if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+    //     m_drive->SetQuickTurn(true);
+    // } else {
+    //     m_drive->SetQuickTurn(false);
+    // }
 
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.1),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
 
     // Gyro
+    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+        m_gyro->Zero();
+    }
 
     // Limelight
     // if (m_driverStick->GetRightBumper()) {
