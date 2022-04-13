@@ -19,6 +19,7 @@ namespace frc973 {
 enum class TurretState {
     Off,     /**< Disables turret. */
     Manual,  /**< Manual turret control. */
+    Shoop,   /**< Shoop angle turret tracking. */
     Tracking /**< Limelight targeting mode. */
 };
 
@@ -35,6 +36,11 @@ public:
      * Sets the manual turn amount
      */
     void SetTurnValue(double angle);
+
+    /**
+     * Sets the manual turn amount
+     */
+    void SetShoopAngle(double angle);
 
     /**
      * @param angleInDegrees angle its going to turn to
@@ -64,6 +70,11 @@ public:
      * Returns current turret angle
      */
     double GetTurretAngle();
+
+    /**
+     * Returns if turret is at the correct angle
+     */
+    bool IsAtAngle();
 
     /**
      * Computes the translational variables of rate of transitional angle
@@ -190,11 +201,14 @@ private:
 
     // turn value
     double m_angleInDegrees;
+    double m_shoopAngle;
 
     // tracking values
     double m_limelightXOffset;
     double m_angularRate;
     double m_translationalValue;
+
+    double TURRET_ANGLE_TOLERANCE = 5.0;  // degrees
 };
 
 }  // namespace frc973

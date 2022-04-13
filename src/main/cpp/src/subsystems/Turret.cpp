@@ -20,6 +20,7 @@ Turret::Turret(TalonFX *turretMotor, DigitalInput *turretSensor)
         , m_wrappingInProgress(false)
         , m_gyroSnapshotWrapping(0.0)
         , m_angleInDegrees(0.0)
+        , m_shoopAngle(0.0)
         , m_limelightXOffset(0.0)
         , m_angularRate(0.0)
         , m_translationalValue(0.0) {
@@ -60,6 +61,10 @@ void Turret::SetTurretState(TurretState state) {
 
 void Turret::SetTurnValue(double angle) {
     m_angleInDegrees = angle;
+}
+
+void Turret::SetShoopAngle(double angle) {
+    m_shoopAngle = angle;
 }
 
 void Turret::Turn(double angleInDegrees) {
@@ -116,6 +121,14 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
 
     output += ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
 
+    if(m_currentAngleInDegrees > 115.0) {
+        m_turretMotor->Set(ControlMode::Position, 112.5 * TURRET_TICKS_PER_DEGREE);
+    } else
+
+    if(m_currentAngleInDegrees < -115) {
+        m_turretMotor->Set(ControlMode::Position, -112.5 * TURRET_TICKS_PER_DEGREE);
+    } else {
+
     if (m_wrappingToRightSensor == true) {
         if (PassedSuperSoft() == 1) {
             m_wrappingToRightSensor = false;
@@ -159,9 +172,31 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
         }
         m_turretMotor->Set(ControlMode::PercentOutput, output);
     }
+    }
 }
 
 double Turret::GetTurretAngle() {
+    return m_currentAngleInDegrees;
+}
+
+bool Turret::IsAtAngle() {
+    switch (m_turretState) {
+        case TurretState::Off:
+            return true;
+            break;
+        case TurretState::Manual:
+            return (std::abs(m_currentAngleInDegrees - m_angleInDegrees) < TURRET_ANGLE_TOLERANCE);
+            break;
+        case TurretState::Shoop:
+            return (std::abs(m_currentAngleInDegrees - m_shoopAngle) < TURRET_ANGLE_TOLERANCE);
+            break;
+        case TurretState::Tracking:
+            return true;
+            break;
+        default:
+            return true;
+            break;
+    }
     return m_currentAngleInDegrees;
 }
 
@@ -226,16 +261,34 @@ void Turret::CheckedSensorsToFalse() {
 
 int Turret::SensorCalibrate() {
     // looks for center sensor first
-    if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
-        m_centerSensorChecked = true;
+    // if (!m_turretSensor->Get() || (m_centerSensorChecked == true)) {
+    //     m_centerSensorChecked = true;
 
-        // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
-        if (m_checkStatus == 0) {
-            SetNeutralMode(NeutralMode::Brake);
+    //     // center sensor is triggered, but makes sure that it only sets home angle if it is the first time seeing it
+    //     if (m_checkStatus == 0) {
+    //         SetNeutralMode(NeutralMode::Brake);
+    //         m_checkStatus = 1;
+    //         SetHomeOffset();
+    //         return m_checkStatus;
+    //     } else {
+    //         return m_checkStatus;
+    //     }
+    // }
+    //____________________________________________
+
+    if (m_checkStatus == 0) {
+        if (m_turretMotor->IsFwdLimitSwitchClosed()) {
+            SetTurretAngle(117);
             m_checkStatus = 1;
-            SetHomeOffset();
-            return m_checkStatus;
-        } else {
+
+        } else if (m_turretMotor->IsRevLimitSwitchClosed()) {
+            SetTurretAngle(-117);
+            m_checkStatus = 1;
+        }
+    } else {
+        if (!m_turretSensor->Get()) {
+            SetNeutralMode(NeutralMode::Brake);
+            m_checkStatus = 2;
             return m_checkStatus;
         }
     }
@@ -296,6 +349,9 @@ void Turret::Update() {
         case TurretState::Manual:
             Turn(m_angleInDegrees);
             break;
+        case TurretState::Shoop:
+            Turn(m_shoopAngle);
+            break;
         case TurretState::Tracking:
             CalcOutput(m_limelightXOffset, m_angularRate, m_translationalValue);
             break;
@@ -305,12 +361,13 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
-    SmartDashboard::PutNumber("T CurrAngle", m_currentAngleInDegrees);
+    SmartDashboard::PutNumber("T CurrAngle", m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE);
     SmartDashboard::PutBoolean("T digital input", m_turretSensor->Get());
     // right side limit switch
     SmartDashboard::PutBoolean("T fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
     // left side limit switch
     SmartDashboard::PutBoolean("T rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
+    SmartDashboard::PutNumber("T TargetAngle", m_angleInDegrees);
 }
 
 }  // namespace frc973

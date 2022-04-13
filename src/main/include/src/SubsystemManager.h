@@ -32,18 +32,38 @@ public:
 
     /**
      * Sets 0 for the turret and sets the CANdle
-     */ 
+     */
     void TurretCalibration();
 
     /**
      * Finds the current position on the field
      */
-    double CalcPose();
+    Pose2d CalcPose();
+
+    /**
+     * Finds the current position on the field
+     */
+    void SuspendCalcPose(bool suspend);
 
     /**
      * uses the current dist from target to figure out how fast the flywheel should go
      */
     double CalcFlywheelRPM();
+
+    /**
+     * uses the current dist from dump zone to figure out how fast the flywheel should go
+     */
+    double CalcShoopRPM();
+
+    /**
+     * Calculates turret angle to a target dump zone (translation2d in meters) from a field relative pose
+     */
+    double CalcTargetTurretAngle();
+
+    /**
+     * Sets the location to Shoop balls to.
+     */
+    void SetDumpZone(Translation2d dumpZone);
 
     /**
      * Checks if the flywheel is up to speed to see if the robot is ready to shoot
@@ -55,8 +75,6 @@ public:
      */
     void Update();
 
-
-
 private:
     Drive *m_drive;
     Intake *m_intake;
@@ -67,5 +85,9 @@ private:
     Climb *m_climb;
     Gyro *m_gyro;
     Lights *m_lights;
+    Pose2d m_robotPose;
+    Translation2d m_dumpZone;
+    bool m_suspendCalcPose;
+    bool m_targetLossedFlag;
 };
 }  // namespace frc973

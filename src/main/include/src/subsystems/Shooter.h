@@ -23,6 +23,7 @@ public:
         Off,      /* Shooter motors do not run */
         Fixed,    /* Shooter motors run CL Velocity on the lowgoal setpoint */
         Tracking, /* Shooter motors run CL Velocity on a tracking setpoint */
+        Shoop,    /* Shooter motors run CL Velocity on a shoop setpoint */
         Manual    /* Shooter motors run manually */
     };
 
@@ -37,6 +38,12 @@ public:
      * @param setpoint The velocity setpoint to go to.
      */
     void SetTrackingFlywheelRPM(double setpoint);
+
+    /**
+     * Set the flywheel velocity for shoop mode.
+     * @param setpoint The velocity setpoint to go to.
+     */
+    void SetShoopFlywheelRPM(double setpoint);
 
     /**
      * Set the flywheel speed.
@@ -54,6 +61,11 @@ public:
      * Change state of Shooter
      */
     void SetShooterState(ShooterState state);
+
+    /**
+     * State state of Shooter
+     */
+    Shooter::ShooterState GetShooterState();
 
     /**
      * Enables the shooter
@@ -81,6 +93,7 @@ private:
 
     double m_flywheelRPMSetpoint;
     double m_flywheelTrackingRPMSetpoint;
+    double m_flywheelShoopRPMSetpoint;
     double m_flywheelSpeed;
 
     ShooterState m_shooterState;

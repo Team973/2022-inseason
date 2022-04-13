@@ -45,7 +45,7 @@ constexpr int INTAKE_SOFT_SOLENOID_ID = 6; /**< Channel for the intake Solenoid.
  * Conveyor Subsystem.
  */
 constexpr int CONVEYOR_FLOOR_SRX_ID = 10;  /**< CAN ID for the floor talon. */
-constexpr int CONVEYOR_TOWER_FX_ID = 11;  /**< CAN ID for the first tower talon. */
+constexpr int CONVEYOR_TOWER_FX_ID = 11;   /**< CAN ID for the first tower talon. */
 constexpr int CONVEYOR_CEILING_SRX_ID = 4; /**< CAN ID for the second tower talon. */
 
 /**
@@ -68,12 +68,18 @@ constexpr double FLYWHEEL_VELOCITY_RPM =
 static constexpr double TARMAC_FLYWHEEL_RPM_SETPOINT = 2000.0; /** Flywheel RPM to shoot from the edge of the tarmac. */
 static constexpr double LOW_FLYWHEEL_RPM_SETPOINT = 800.0;     /** Flywheel RPM to shoot into the low goal. */
 static constexpr double FLY_RPM_CLOSE = 2000.0;                /** Flywheel RPM to shoot from the edge of the tarmac. */
-static constexpr double FLY_RPM_FAR = 2840.0;   /** Flywheel RPM to shoot from touching the centermost launchpad. */
+static constexpr double FLY_RPM_FAR = 2820.0; /** Flywheel RPM to shoot from touching the centermost launchpad. */
 static constexpr double FLY_DIST_CLOSE = 103 + 26.6875; /** Distance from target to close add radius of goal. */
-static constexpr double FLY_DIST_FAR = 201 + 26.6875;   /** Distance from target to far add radius of goal. */ 
+static constexpr double FLY_DIST_FAR = 201 + 26.6875;   /** Distance from target to far add radius of goal. */
+static constexpr double TOO_CLOSE_LOCKOUT =
+    120.0; /** Distance from target in inches is too close, doesn't allow shooting. */
 static constexpr double TOO_FAR_LOCKOUT =
     240.0; /** Distance from target in inches is too far, doesn't allow shooting. */
-
+static constexpr double SHOOP_RPM_CLOSE = 1000.0; /** Flywheel RPM to shoot close distance to dump. */
+static constexpr double SHOOP_RPM_FAR = 3000.0;  /** Flywheel RPM to shoot far distance to dump. */
+static constexpr double SHOOP_DIST_CLOSE = 72.0; /** Distance from dump to close. */
+static constexpr double SHOOP_DIST_FAR = 288.0;  /** Distance from dump to far. */
+ 
 /**
  * Climb Subsystem.
  */

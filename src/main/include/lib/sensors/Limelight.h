@@ -107,6 +107,13 @@ public:
      */
     double GetHorizontalDist();
 
+    /**
+     * Gets the distance from the limelight to the target in the horizontal direction compensating for x offset
+     * projection
+     */
+    double GetHorizontalDist2();
+
+
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
 
@@ -115,12 +122,10 @@ private:
 
     double m_previousLatency;
 
-    static constexpr double TARGET_HEIGHT =
-        103.25; /**< Target's height in inches from ground*/    
-    static constexpr double CAMERA_HEIGHT = 37.0; /**< Camera's Height in inches from ground*/
-    static constexpr double CAMERA_ANGLE =
-        39.94; /**< Camera Angle in degrees wrt ground*/
-              // ### for comp; ### for pbot
+    static constexpr double TARGET_HEIGHT = 103.25; /**< Target's height in inches from ground*/
+    static constexpr double CAMERA_HEIGHT = 37.0;   /**< Camera's Height in inches from ground*/
+    static constexpr double CAMERA_ANGLE = 39.94;   /**< Camera Angle in degrees wrt ground*/
+                                                    // ### for comp; ### for pbot
     static constexpr double CAMERA_BUMPER_OFFSET =
         1; /**< The offset in inches between the camera and the bumper edge TODO: UPDATE VALUE - current cf*/
 };

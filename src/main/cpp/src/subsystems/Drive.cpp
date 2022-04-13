@@ -151,6 +151,10 @@ void Drive::Update() {
 
     m_leftDriveTalonA->Set(ControlMode::Velocity, (m_leftOutput * MAX_TICKS_PER_100_MS));
     m_rightDriveTalonA->Set(ControlMode::Velocity, (m_rightOutput * MAX_TICKS_PER_100_MS));
+    m_drivePose =
+        m_driveOdometry.Update(units::degree_t(m_currentAngle),
+                               units::inch_t(m_leftDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK),
+                               units::inch_t(m_rightDriveTalonA->GetSelectedSensorPosition() * DRIVE_INCHES_PER_TICK));
 }
 
 void Drive::DashboardUpdate() {
@@ -264,6 +268,11 @@ void Drive::SetQuickTurn(bool QT) {
     m_isQuickTurn = QT;
 }
 
+void Drive::SetPose(Pose2d Pose) {
+    m_driveOdometry.ResetPosition(Pose, Pose.Rotation());
+    Zero();
+}
+
 double Drive::GetRightOuput() {
     return m_rightOutput;
 }
@@ -276,6 +285,10 @@ double Drive::GetVelocity() {
     double speed;
     speed = (m_leftDriveTalonA->GetSelectedSensorVelocity() + m_rightDriveTalonA->GetSelectedSensorVelocity()) / 2;
     return speed;
+}
+
+Pose2d Drive::GetPose() {
+    return m_drivePose;
 }
 
 void Drive::ClampSpeed(double minSpeed, double maxSpeed) {
