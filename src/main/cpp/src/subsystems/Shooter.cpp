@@ -127,16 +127,16 @@ bool Shooter::IsAtSpeed() {
             return true;
             break;
         case ShooterState::Fixed:
-            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
-                   std::abs((m_flywheelRPMSetpoint - 80));  // todo: figure out at speed for tracking
+            return std::abs((m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) -
+                            (m_flywheelRPMSetpoint)) < 80;
             break;
         case ShooterState::Tracking:
-            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
-                   std::abs((m_flywheelTrackingRPMSetpoint - 80));  // todo: figure out at speed for tracking
+            return std::abs((m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) -
+                            (m_flywheelTrackingRPMSetpoint)) < 80;
             break;
         case ShooterState::Shoop:
-            return (m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) >
-                   std::abs((m_flywheelShoopRPMSetpoint - 80));  // todo: figure out at speed for shooping
+            return std::abs((m_flywheelA->GetSelectedSensorVelocity() * FLYWHEEL_VELOCITY_RPM) -
+                            (m_flywheelShoopRPMSetpoint)) < 80;
             break;
         case ShooterState::Manual:
             return true;

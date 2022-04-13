@@ -71,12 +71,12 @@ void Robot::TeleopPeriodic() {
     }
 
     // Conveyors and Intake
-    if (m_driverStick->GetRawButton(Stick::LeftTrigger)) {  // Right Bumper -
+    if (m_driverStick->GetRawButton(Stick::LeftTrigger)) {  // Right Bumper - Queueing Button
         m_intake->Deploy();
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedIn);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedIn);
         m_conveyor->SetTowerState(Conveyor::TowerState::FeedOut);
-    } else if (m_driverStick->GetRawButton(Stick::LeftBumper)) {  // Left Trigger -
+    } else if (m_driverStick->GetRawButton(Stick::LeftBumper)) {  // Left Trigger - Outtake Button
         m_intake->Deploy();
         m_intake->SetIntakeMotorState(Intake::IntakeMotorState::FeedOut);
         m_conveyor->SetFloorState(Conveyor::FloorState::FeedOut);
@@ -108,11 +108,11 @@ void Robot::TeleopPeriodic() {
     }
 
     // Drive
-    if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-        m_drive->SetQuickTurn(true);
-    } else {
-        m_drive->SetQuickTurn(false);
-    }
+    // if (m_driverStick->GetRawButton(Stick::RightBumper)) {
+    //     m_drive->SetQuickTurn(true);
+    // } else {
+    //     m_drive->SetQuickTurn(false);
+    // }
 
     m_drive->SetThrottleTurn(m_driverStick->GetRawAxisWithDeadband(1, false, 0.1),
                              m_driverStick->GetRawAxisWithDeadband(2, false, 0.1));
