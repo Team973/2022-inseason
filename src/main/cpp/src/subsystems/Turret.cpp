@@ -121,6 +121,14 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
 
     output += (-angularVelocity * Constants::GYRO_CONSTANT);
 
+    if(m_currentAngleInDegrees > 115.0) {
+        m_turretMotor->Set(ControlMode::Position, 112.5 * TURRET_TICKS_PER_DEGREE);
+    } else
+
+    if(m_currentAngleInDegrees < -115) {
+        m_turretMotor->Set(ControlMode::Position, -112.5 * TURRET_TICKS_PER_DEGREE);
+    } else {
+
     if (m_wrappingToRightSensor == true) {
         if (PassedSuperSoft() == 1) {
             m_wrappingToRightSensor = false;
@@ -163,6 +171,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
             m_gyroSnapshotWrapping = m_gyroAngle;
         }
         m_turretMotor->Set(ControlMode::PercentOutput, output);
+    }
     }
 }
 
