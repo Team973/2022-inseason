@@ -160,6 +160,7 @@ void Robot::TeleopPeriodic() {
 
     /** Post Periodic */
     m_subsystemManager->Update();
+    m_subsystemManager->PoseUpdate();
     m_drive->Update();
     m_intake->Update();
     m_conveyor->Update();

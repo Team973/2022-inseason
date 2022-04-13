@@ -71,6 +71,11 @@ public:
     bool ReadyToShoot();
 
     /**
+     * Updates the pose calculations
+     */
+    void PoseUpdate();
+
+    /**
      * Updates the subsystem manager
      */
     void Update();

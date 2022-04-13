@@ -122,7 +122,7 @@ bool SubsystemManager::ReadyToShoot() {
     }
 }
 
-void SubsystemManager::Update() {
+void SubsystemManager::PoseUpdate() {
     // Update Pose Calculation
     if (m_limelight->isTargetValid()) {
         m_targetLossedFlag = false;
@@ -139,7 +139,9 @@ void SubsystemManager::Update() {
     frc::SmartDashboard::PutNumber("POSE X", m_robotPose.X().value() * Constants::INCHES_PER_METER);
     frc::SmartDashboard::PutNumber("POSE Y", m_robotPose.Y().value() * Constants::INCHES_PER_METER);
     frc::SmartDashboard::PutNumber("POSE Theta", m_robotPose.Rotation().Degrees().value());
+}
 
+void SubsystemManager::Update() {
     // Update Drive Values
     m_drive->SetAngle(m_gyro->GetWrappedAngle());
     m_drive->SetAngularRate(m_gyro->GetAngularRate());

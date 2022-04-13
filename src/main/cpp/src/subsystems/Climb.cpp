@@ -141,7 +141,7 @@ void Climb::Update() {
 
             m_climbSolenoid->Set(true);
             // if ((Util::GetMsecTime() - m_timer) > CLIMB_COAST_DELAY) {
-            SetNeutralMode(Coast);
+            SetNeutralMode(Brake);
             // } else {
             // SetNeutralMode(Brake);
             // }
@@ -158,12 +158,20 @@ void Climb::Update() {
             break;
     }
 
+    // if (GetTopHalls()) {
+    //     climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);
+    // }
+
+    // if (GetBottomHalls()) {
+    //     climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);
+    // }
+
     if (GetTopHalls()) {
         climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);
     }
 
     if (GetBottomHalls()) {
-        climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);
+        climbMotorOutput = std::clamp(climbMotorOutput, -0.039, 0.7);
     }
 
     if (m_currentState == ClimbState::Deploy) {
