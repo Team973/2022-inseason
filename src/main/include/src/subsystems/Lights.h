@@ -30,6 +30,9 @@ public:
         Left,            /**< State for setting the top left light to green. */
         Middle,          /**< State for setting the two top middle lights to green. */
         Right,           /**< State for setting the top right light to green. */
+        LowNotReady,     /**< State for setting the lights to a special state for when the robot is not ready to shoot low rpm. */
+        LowReady,        /**< State for setting the lights to a special state for when the robot is ready to shoot low rpm. */
+
     };
 
     /**
@@ -69,6 +72,8 @@ private:
 
     ctre::phoenix::led::RainbowAnimation m_rainbow;
     ctre::phoenix::led::StrobeAnimation m_strobe;
+    ctre::phoenix::led::StrobeAnimation m_lowStrobe;
+
 
     std::string m_currentLightsStateName;
 

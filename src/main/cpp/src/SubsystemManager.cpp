@@ -165,11 +165,31 @@ void SubsystemManager::Update() {
      * Ready to shoot checks
      */
     if (ReadyToShoot()) {
-        m_lights->SetLightsState(Lights::LightsState::ReadyToShoot);
-        m_conveyor->SetReadyToShoot(true);
+        switch (m_shooter->GetShooterState()) {
+            case Shooter::ShooterState::Tracking:
+                m_lights->SetLightsState(Lights::LightsState::ReadyToShoot);
+                m_conveyor->SetReadyToShoot(true);
+                break;
+            case Shooter::ShooterState::Fixed:
+                m_lights->SetLightsState(Lights::LightsState::LowReady);
+                m_conveyor->SetReadyToShoot(true);
+                break;
+            default:
+                break;
+        }
     } else {
-        m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
-        m_conveyor->SetReadyToShoot(false);
+        switch (m_shooter->GetShooterState()) {
+            case Shooter::ShooterState::Tracking:
+                m_lights->SetLightsState(Lights::LightsState::NotReadyToShoot);
+                m_conveyor->SetReadyToShoot(false);
+                break;
+            case Shooter::ShooterState::Fixed:
+                m_lights->SetLightsState(Lights::LightsState::LowNotReady);
+                m_conveyor->SetReadyToShoot(false);
+                break;
+            default:
+                break;
+        }
     }
 }
 

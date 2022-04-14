@@ -10,6 +10,7 @@ Lights::Lights(ctre::phoenix::led::CANdle *CANdle)
         , m_lightsCurrentState(LightsState::Off)
         , m_rainbow{1.0, 1.0, 8}
         , m_strobe{0, 255, 0, 0, 0.2, 8}
+        , m_lowStrobe{0, 0, 255, 0, 0.2, 8}
         , m_inStateTransition(false) {
     m_candle->ConfigFactoryDefault();
 }
@@ -51,6 +52,12 @@ void Lights::Update() {
             break;
         case LightsState::Right:
             m_candle->SetLEDs(0, 255, 0, 0, 3, 1);
+            break;
+        case LightsState::LowNotReady:
+            m_candle->Animate(m_lowStrobe);
+            break;
+        case LightsState::LowReady:
+            m_candle->SetLEDs(0, 0, 255, 0, 0, 8);
             break;
         default:
             break;

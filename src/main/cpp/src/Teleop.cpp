@@ -43,8 +43,8 @@ void Robot::TeleopPeriodic() {
 
     // Turret
     if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal Angle
-        m_turret->SetTurretState(TurretState::Manual);
-        m_turret->SetTurnValue(0.0);
+        // m_turret->SetTurretState(TurretState::Manual);
+        // m_turret->SetTurnValue(0.0);
     } else if (m_operatorStick->GetXButton()) {  // Btn X - Shoop Close Station
         m_subsystemManager->SuspendCalcPose(true);
         m_subsystemManager->SetDumpZone(FieldLocations::CLOSE_STATION);
@@ -119,7 +119,7 @@ void Robot::TeleopPeriodic() {
 
     // Gyro
     if (m_driverStick->GetRawButton(Stick::RightBumper)) {
-        m_gyro->Zero();
+        m_gyro->SetAngle(90.0);
     }
 
     // Limelight
