@@ -119,7 +119,7 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output += (-angularVelocity * Constants::GYRO_CONSTANT);
+    output += ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
 
     if(m_currentAngleInDegrees > 115.0) {
         m_turretMotor->Set(ControlMode::Position, 112.5 * TURRET_TICKS_PER_DEGREE);
@@ -204,22 +204,36 @@ double Turret::CalcTransitionalCompensations(double driveVelocity, double distan
     // The position 100ms into the future calculated by current drive velocity converted into inches into the future
     double futurePosition = driveVelocity * DRIVE_INCHES_PER_TICK;
 
+    if(driveVelocity == 0.0 || distanceFromTarget == 0) {
+        return 0.0;
+    }
+
     double futureDistance = 0.0;
     double futureAngle = 0.0;
+    double turretAngle = m_currentAngleInDegrees; 
+    bool negativeAngle = false;
+
+    //turret is an offset unit circle where 0 on the turret is actually 90 on the circle
+    if(m_currentAngleInDegrees < 0.0) {   
+        negativeAngle = true;
+    } else {
+        negativeAngle = false;
+    }
 
     futureDistance =
         sqrt(pow(distanceFromTarget, 2) + pow(futurePosition, 2) -
-             (2.0 * distanceFromTarget * futurePosition * (cos(m_currentAngleInDegrees * Constants::PI / 180.0))));
+             (2.0 * distanceFromTarget * futurePosition * (cos(turretAngle * Constants::PI / 180.0))));
 
     futureAngle = 180.0 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) /
                                   (2.0 * futureDistance * futurePosition)))) *
                            180.0 / Constants::PI);
-    SmartDashboard::PutNumber("Future Angle", futureAngle);
+
+    if(negativeAngle == true) {
+        futureAngle = -futureAngle;
+    }
 
     // result is the rate of turning due to transitional change from per100ms to per1sec
-    SmartDashboard::PutNumber("Future Distance", futureDistance);
-    SmartDashboard::PutNumber("Future Position", futurePosition);
-    return (futureAngle - m_currentAngleInDegrees) / 0.1;
+    return (futureAngle - turretAngle) / 0.1;
 }
 
 void Turret::SetNeutralMode(NeutralMode mode) {

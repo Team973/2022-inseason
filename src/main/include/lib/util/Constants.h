@@ -35,8 +35,8 @@ constexpr double TALON_FX_VELOCITY_RPM =
     (TALON_FX_TICKS_PER_REV * TALON_FX_VELOCITY_UNIT_MS); /**< Standard TalonFX RPM (multiply by Ticks/100ms). */
 
 // for limelight tracking
-constexpr double GYRO_CONSTANT = 0.0021;  // 0.003
-constexpr double TRANSLATION_CONSTANT = 0.01;
+constexpr double GYRO_CONSTANT = 0.0021;
+constexpr double TRANSLATION_CONSTANT = 0.0025;
 
 // turret home angle
 constexpr double TURRET_HOME_OFFSET = -1.0;
