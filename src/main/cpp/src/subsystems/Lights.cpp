@@ -105,6 +105,12 @@ void Lights::DashboardUpdate() {
         case LightsState::Right:
             m_currentLightsStateName = "Right";
             break;
+        case LightsState::LowNotReady:
+            m_currentLightsStateName = "LowNotReady";
+            break;
+        case LightsState::LowReady:
+            m_currentLightsStateName = "LowReady";
+            break;
     }
 
     frc::SmartDashboard::PutString("L State: ", m_currentLightsStateName);
