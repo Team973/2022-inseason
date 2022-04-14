@@ -143,6 +143,17 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbState(Climb::ClimbState::Level_3);
     }
 
+    if (m_climb->GetClimbStatus())
+    {
+        if (m_operatorStick->GetRawButton(Stick::BtnA))
+        {
+            m_climb->SetClimbState(Climb::ClimbState::Manual);
+            m_climb->SetNeutralMode(NeutralMode::Coast);
+        } else {
+            m_climb->SetNeutralMode(NeutralMode::Brake);
+        }
+    }
+
     if (m_climb->GetClimbStatus()) {
         m_climb->SetClimbSpeed(manualClimb);
         m_intake->SetIntakeState(Intake::IntakeState::Deploy);
