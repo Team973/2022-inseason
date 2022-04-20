@@ -56,7 +56,7 @@ void Conveyor::Update() {
         case TowerState::Shoot:
             m_currentTowerState = "Shoot";
             if (m_readyToShoot) {
-                m_towerMotor->Set(ControlMode::PercentOutput, 1.0);
+                m_towerMotor->Set(ControlMode::PercentOutput, 0.8);
             } else {
                 m_towerMotor->Set(ControlMode::PercentOutput, 0.0);
             }
