@@ -139,16 +139,16 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 
 /*< Citrus, 5 Ball >*/
 , m_citrus_5Ball(m_p2_3Ball + AutoMode({
-    new PositionDriveCommand(m_drive, 0.0, -88.0, 0.5, 1500),
+    new PositionDriveCommand(m_drive, 0.0, -85.0, 0.5, 1500),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -156.0, -88.0, 0.7, 2000),
+        new PositionDriveCommand(m_drive, -156.0, -85.0, 0.7, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new RunIntakeCommand(m_intake, 1.0, 2000),
     }),
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, 1.0, 1800),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
-        new PositionDriveCommand(m_drive, 180.0, -88.0, 1.0, 2000),
+        new PositionDriveCommand(m_drive, 180.0, -85.0, 1.0, 2000),
         new SetFlywheelTrackingCommand(m_shooter, 2000),
     }),
     new WaitForFlywheelCommand(m_shooter, 500),
