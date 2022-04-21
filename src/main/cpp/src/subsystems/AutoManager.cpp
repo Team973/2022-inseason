@@ -16,7 +16,9 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
         // clang-format off
 
 /*< Test >*/
-, m_test(AutoMode({}))
+, m_test(AutoMode({
+    new PositionDriveCommand(m_drive, 0.0, 90.0, 0.5, 1500),
+}))
 
 /*< DoNothing >*/   
 , m_doNothing((AutoMode({})))
@@ -89,7 +91,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 , m_p2_3Ball(m_p2_2Ball + AutoMode({
     new PositionDriveCommand(m_drive, 0.0, -114.0, 0.5, 1000),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -79.458, -111.0, 0.8, 1700), 
+        new PositionDriveCommand(m_drive, -81.0, -115.0, 0.8, 1700),
         new RunIntakeCommand(m_intake, 1.0, 1700),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),   
         new SetTurretAngleCommand(m_turret, 77.0, 1700),
@@ -139,7 +141,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 , m_citrus_5Ball(m_p2_3Ball + AutoMode({
     new PositionDriveCommand(m_drive, 0.0, -88.0, 0.5, 1500),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -158.0, -88.0, 0.7, 2000),
+        new PositionDriveCommand(m_drive, -156.0, -88.0, 0.7, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new RunIntakeCommand(m_intake, 1.0, 2000),
     }),
