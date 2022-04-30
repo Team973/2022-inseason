@@ -95,6 +95,9 @@ void Shooter::DashboardUpdate() {
     SmartDashboard::PutNumber("S flywheel rpm setpoint", m_flywheelTrackingRPMSetpoint);
     SmartDashboard::PutNumber("S FlywheelA temp", m_flywheelA->GetTemperature());
     SmartDashboard::PutNumber("S FlywheelB temp", m_flywheelB->GetTemperature());
+
+    SmartDashboard::PutNumber("S stator", m_flywheelA->GetStatorCurrent());
+    SmartDashboard::PutNumber("S supply", m_flywheelA->GetSupplyCurrent());
 }
 
 void Shooter::SetShooterState(ShooterState state) {

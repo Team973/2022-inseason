@@ -168,6 +168,9 @@ void Drive::DashboardUpdate() {
     // SmartDashboard::PutNumber("D target angle", m_targetAngle);
     // SmartDashboard::PutNumber("D curr pos", m_currentPos);
     // SmartDashboard::PutNumber("D curr angle", m_currentAngle);
+
+    SmartDashboard::PutNumber("D stator", m_leftDriveTalonA->GetStatorCurrent());
+    SmartDashboard::PutNumber("D supply", m_leftDriveTalonA->GetSupplyCurrent());
 }
 
 void Drive::ArcadeCalcOutput() {

@@ -241,6 +241,7 @@ void Turret::SetNeutralMode(NeutralMode mode) {
 }
 
 void Turret::SetTurretAngle(double angle) {
+    // m_turretMotor->SetSelectedSensorPosition(angle * TURRET_TICKS_PER_DEGREE, 0, 0);
     m_turretMotor->SetSelectedSensorPosition(angle * TURRET_TICKS_PER_DEGREE);
 }
 
@@ -361,13 +362,16 @@ void Turret::Update() {
 }
 
 void Turret::DashboardUpdate() {
-    SmartDashboard::PutNumber("T CurrAngle", m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE);
+    // SmartDashboard::PutNumber("T CurrAngle", m_turretMotor->GetSelectedSensorPosition() / TURRET_TICKS_PER_DEGREE);
     SmartDashboard::PutBoolean("T digital input", m_turretSensor->Get());
     // right side limit switch
     SmartDashboard::PutBoolean("T fwd sensor", m_turretMotor->IsFwdLimitSwitchClosed());
     // left side limit switch
     SmartDashboard::PutBoolean("T rev sensor", m_turretMotor->IsRevLimitSwitchClosed());
     SmartDashboard::PutNumber("T TargetAngle", m_angleInDegrees);
+
+    SmartDashboard::PutNumber("supply current", m_turretMotor->GetSupplyCurrent());
+    SmartDashboard::PutNumber("stator current", m_turretMotor->GetStatorCurrent());
 }
 
 }  // namespace frc973

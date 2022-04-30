@@ -148,6 +148,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new ConcurrentCommand({
         new RunIntakeCommand(m_intake, 1.0, 1800),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
+        new ConveyorTowerCommand(m_conveyor, Conveyor::TowerState::FeedOut, 2000),
         new PositionDriveCommand(m_drive, 180.0, -85.0, 1.0, 2000),
         new SetFlywheelTrackingCommand(m_shooter, 2000),
     }),

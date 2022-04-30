@@ -10,7 +10,7 @@ void Robot::DisabledInit() {
     m_climbTalonA->SetNeutralMode(NeutralMode::Brake);
     m_climbTalonB->SetNeutralMode(NeutralMode::Brake);
 
-    m_intake->SetIntakeState(Intake::IntakeState::Retract);
+    // m_intake->SetIntakeState(Intake::IntakeState::Retract);
     m_lights->SetLightsState(Lights::LightsState::Off);
 
     m_turret->CheckedSensorsToFalse();

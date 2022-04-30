@@ -98,10 +98,11 @@ void Conveyor::Update() {
 }
 
 void Conveyor::DashboardUpdate() {
-    frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
-    frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
-    SmartDashboard::PutNumber("CO tower v", m_towerMotor->GetSelectedSensorVelocity());
+    // frc::SmartDashboard::PutString("CO Tower State", m_currentTowerState);
+    // frc::SmartDashboard::PutString("CO Floor State", m_currentFloorState);
+    // SmartDashboard::PutNumber("CO tower v", m_towerMotor->GetSelectedSensorVelocity());
     frc::SmartDashboard::PutNumber("CO voltage", m_towerMotor->GetMotorOutputPercent());
+
     frc::SmartDashboard::PutNumber("CO statorcurrent", m_towerMotor->GetStatorCurrent());
     frc::SmartDashboard::PutNumber("CO supplycurrent", m_towerMotor->GetSupplyCurrent());
 }
