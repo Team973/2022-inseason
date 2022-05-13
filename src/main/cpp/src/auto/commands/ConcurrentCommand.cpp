@@ -12,14 +12,11 @@ void ConcurrentCommand::Init() {
 
 void ConcurrentCommand::Run() {
     m_allDone = true;  // assume all will concurrently complete in this periodic.
-
     for (Command* cmd : m_cmdList) {
         cmd->Run();
-
         if (cmd->IsCompleted()) {
             continue;
         }
-
         m_allDone = false;  // need another periodic to complete.
     }
 }

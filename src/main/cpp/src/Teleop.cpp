@@ -31,7 +31,7 @@ void Robot::TeleopPeriodic() {
         } else if (m_operatorStick->GetRawButton(Stick::RightBumper)) {  // Right Bumper - Set Tarmac RPM
             m_shooter->SetShooterState(Shooter::ShooterState::Fixed);
             m_shooter->SetFlywheelRPM(TARMAC_FLYWHEEL_RPM_SETPOINT);
-        } else if (m_operatorStick->GetXButton() || m_operatorStick->GetXButton()) {  // Btn X or B - Shoop
+        } else if (m_operatorStick->GetXButton()) {  // Btn X - Shoop
             m_shooter->SetShooterState(Shooter::ShooterState::Shoop);
         } else {
             m_shooter->SetShooterState(Shooter::ShooterState::Tracking);
@@ -42,10 +42,7 @@ void Robot::TeleopPeriodic() {
     }
 
     // Turret
-    if (m_operatorStick->GetAButton()) {  // Btn A - Set Lowgoal Angle
-        // m_turret->SetTurretState(TurretState::Manual);
-        // m_turret->SetTurnValue(0.0);
-    } else if (m_operatorStick->GetXButton()) {  // Btn X - Shoop Close Station
+    if (m_operatorStick->GetXButton()) {  // Btn X - Shoop Close Station
         m_subsystemManager->SuspendCalcPose(true);
         m_subsystemManager->SetDumpZone(FieldLocations::CLOSE_STATION);
         m_turret->SetTurretState(TurretState::Shoop);
@@ -143,10 +140,8 @@ void Robot::TeleopPeriodic() {
         m_climb->SetClimbState(Climb::ClimbState::Level_3);
     }
 
-    if (m_climb->GetClimbStatus())
-    {
-        if (m_operatorStick->GetRawButton(Stick::BtnA))
-        {
+    if (m_climb->GetClimbStatus()) {
+        if (m_operatorStick->GetRawButton(Stick::BtnA)) {
             m_climb->SetClimbState(Climb::ClimbState::Manual);
             m_climb->SetNeutralMode(NeutralMode::Coast);
         } else {
