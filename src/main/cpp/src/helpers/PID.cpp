@@ -158,4 +158,4 @@ double PID::GetPrevOutput() {
 void PID::SetPrevOutput(double prev) {
     m_lastOutput = std::clamp(prev, m_min, m_max);
 }
-}
+}  // namespace frc973

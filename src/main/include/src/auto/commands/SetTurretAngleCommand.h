@@ -12,7 +12,7 @@ public:
      * @param turret The turret subsystem.
      * @param targetTime the target amount of time to run the gyro.
      */
-    SetTurretAngleCommand(Turret *turret, double setAngle, uint32_t targetTime); 
+    SetTurretAngleCommand(Turret *turret, double setAngle, uint32_t targetTime);
 
     /**
      * Executes when SetTurretAngleCommand starts.
@@ -40,4 +40,4 @@ private:
     double m_setAngle;
     uint32_t m_targetTime;
 };
-}
+}  // namespace frc973

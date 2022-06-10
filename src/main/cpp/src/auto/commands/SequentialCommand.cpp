@@ -33,4 +33,4 @@ bool SequentialCommand::IsCompleted() {
 void SequentialCommand::PostExecute() {
     return;
 }
-}
+}  // namespace frc973

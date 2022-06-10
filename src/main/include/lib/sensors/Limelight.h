@@ -113,7 +113,6 @@ public:
      */
     double GetHorizontalDist2();
 
-
 private:
     std::shared_ptr<nt::NetworkTable> m_limelightSensor;
 

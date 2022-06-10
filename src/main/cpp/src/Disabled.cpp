@@ -35,15 +35,12 @@ void Robot::DisabledPeriodic() {
         m_limelight->SetVisionCamera();
     }
 
-    if (m_climb->GetClimbStatus())
-    {
-        if (m_operatorStick->GetRawButton(Stick::BtnA))
-        {
+    if (m_climb->GetClimbStatus()) {
+        if (m_operatorStick->GetRawButton(Stick::BtnA)) {
             m_climb->SetNeutralMode(NeutralMode::Coast);
         } else {
             m_climb->SetNeutralMode(NeutralMode::Brake);
         }
     }
-    
 }
 }  // namespace frc973

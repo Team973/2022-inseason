@@ -2,15 +2,15 @@
 
 namespace frc973 {
 
-SetGyroAutoAngleCommand::SetGyroAutoAngleCommand(Gyro *gyro, double autoAngle)
-        : m_gyro(gyro), m_autoAngle(autoAngle) {
+SetGyroAutoAngleCommand::SetGyroAutoAngleCommand(Gyro *gyro, double autoAngle) : m_gyro(gyro), m_autoAngle(autoAngle) {
 }
 
 void SetGyroAutoAngleCommand::Init() {
     m_gyro->SetAutoOffset(m_autoAngle);
 }
 
-void SetGyroAutoAngleCommand::Run() {}
+void SetGyroAutoAngleCommand::Run() {
+}
 
 bool SetGyroAutoAngleCommand::IsCompleted() {
     return true;
@@ -18,4 +18,4 @@ bool SetGyroAutoAngleCommand::IsCompleted() {
 
 void SetGyroAutoAngleCommand::PostExecute() {
 }
-}
+}  // namespace frc973

@@ -2,8 +2,14 @@
 
 namespace frc973 {
 
-TrackingTargetCommand::TrackingTargetCommand(Drive *drive, Limelight *limelight, Turret *turret, Gyro *gyro, uint32_t targetTime)
-        : m_drive(drive), m_limelight(limelight), m_turret(turret), m_gyro(gyro), m_targetTime(targetTime), m_endRun(false) {
+TrackingTargetCommand::TrackingTargetCommand(Drive *drive, Limelight *limelight, Turret *turret, Gyro *gyro,
+                                             uint32_t targetTime)
+        : m_drive(drive)
+        , m_limelight(limelight)
+        , m_turret(turret)
+        , m_gyro(gyro)
+        , m_targetTime(targetTime)
+        , m_endRun(false) {
 }
 
 void TrackingTargetCommand::Init() {

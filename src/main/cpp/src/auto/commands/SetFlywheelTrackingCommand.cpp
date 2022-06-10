@@ -2,8 +2,8 @@
 
 namespace frc973 {
 
-SetFlywheelTrackingCommand::SetFlywheelTrackingCommand(Shooter *shooter, u_int32_t targetTime) 
-    : m_shooter(shooter), m_targetTime(targetTime) {
+SetFlywheelTrackingCommand::SetFlywheelTrackingCommand(Shooter *shooter, u_int32_t targetTime)
+        : m_shooter(shooter), m_targetTime(targetTime) {
 }
 
 void SetFlywheelTrackingCommand::Init() {

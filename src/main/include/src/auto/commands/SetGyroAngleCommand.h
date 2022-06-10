@@ -12,7 +12,7 @@ public:
      * @param gyro The gyro subsystem.
      * @param targetTime the target amount of time to run the gyro.
      */
-    SetGyroAngleCommand(Gyro *gyro, double setAngle, uint32_t targetTime); 
+    SetGyroAngleCommand(Gyro *gyro, double setAngle, uint32_t targetTime);
 
     /**
      * Executes when SetGyroAngleCommand starts.
@@ -40,4 +40,4 @@ private:
     double m_setAngle;
     uint32_t m_targetTime;
 };
-}
+}  // namespace frc973

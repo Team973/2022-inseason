@@ -12,7 +12,7 @@ public:
      * @param towerState the conveyors current tower state.
      * @param targetTime the target amount of time to run the conveyor.
      */
-    ConveyorTowerCommand(Conveyor *conveyor, Conveyor::TowerState towerState, uint32_t targetTime); 
+    ConveyorTowerCommand(Conveyor *conveyor, Conveyor::TowerState towerState, uint32_t targetTime);
 
     /**
      * Executes when ConveyorTowerCommand starts.
@@ -40,4 +40,4 @@ private:
     Conveyor::TowerState m_conveyorTowerState;
     uint32_t m_targetTime;
 };
-}
+}  // namespace frc973

@@ -154,4 +154,4 @@ private:
     uint32_t m_flags;
     double m_lastOutput;
 };
-}
+}  // namespace frc973

@@ -38,4 +38,4 @@ void Robot::AutonomousPeriodic() {
     m_subsystemManager->Update();
     /* End post periodic*/
 }
-} // namespace frc973
+}  // namespace frc973

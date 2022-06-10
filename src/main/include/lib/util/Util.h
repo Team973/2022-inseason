@@ -21,8 +21,7 @@ namespace Util {
 inline double deadband(double x, double threshold = 0.05) {
     if (std::fabs(x) > threshold) {
         return x;
-    }
-    else {
+    } else {
         return 0.0;
     }
 }
@@ -59,11 +58,10 @@ inline double GetSecTime() {
 inline double signSquare(double x) {
     if (x < 0.0) {
         return -1.0 * x * x;
-    }
-    else {
+    } else {
         return x * x;
     }
 }
 
-} // namespace Util
-} // namespace frc973
+}  // namespace Util
+}  // namespace frc973

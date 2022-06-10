@@ -12,7 +12,7 @@ public:
      * @param floorState the conveyors current floor state.
      * @param targetTime the target amount of time to run the conveyor.
      */
-    ConveyorFloorCommand(Conveyor *conveyor, Conveyor::FloorState floorState, uint32_t targetTime); 
+    ConveyorFloorCommand(Conveyor *conveyor, Conveyor::FloorState floorState, uint32_t targetTime);
 
     /**
      * Executes when ConveyorFloorCommand starts.
@@ -40,4 +40,4 @@ private:
     Conveyor::FloorState m_conveyorFloorState;
     uint32_t m_targetTime;
 };
-}
+}  // namespace frc973

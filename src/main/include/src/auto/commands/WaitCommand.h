@@ -35,4 +35,4 @@ public:
 private:
     uint32_t m_targetTime;
 };
-}
+}  // namespace frc973

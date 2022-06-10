@@ -23,15 +23,17 @@ public:
     enum class LightsState {
         Off,             /**< State for turning the off the lights. */
         Initialization,  /**< State for setting the lights to a special state for when the robot is initializing. */
-        NotReadyToShoot, /**< State for setting the lights to a special state for when the robot is not ready to shoot.*/
+        NotReadyToShoot, /**< State for setting the lights to a special state for when the robot is not ready to
+                            shoot.*/
         ReadyToShoot,    /**< State for setting the lights to a special state for when the robot is ready to shoot. */
         Fault,           /**< State for setting the lights to a special state for when the robot has an error. */
         Climb,           /**< State for setting the lights to a special state for when the robot is climbing. */
         Left,            /**< State for setting the top left light to green. */
         Middle,          /**< State for setting the two top middle lights to green. */
         Right,           /**< State for setting the top right light to green. */
-        LowNotReady,     /**< State for setting the lights to a special state for when the robot is not ready to shoot low rpm. */
-        LowReady,        /**< State for setting the lights to a special state for when the robot is ready to shoot low rpm. */
+        LowNotReady, /**< State for setting the lights to a special state for when the robot is not ready to shoot low
+                        rpm. */
+        LowReady, /**< State for setting the lights to a special state for when the robot is ready to shoot low rpm. */
 
     };
 
@@ -73,7 +75,6 @@ private:
     ctre::phoenix::led::RainbowAnimation m_rainbow;
     ctre::phoenix::led::StrobeAnimation m_strobe;
     ctre::phoenix::led::StrobeAnimation m_lowStrobe;
-
 
     std::string m_currentLightsStateName;
 

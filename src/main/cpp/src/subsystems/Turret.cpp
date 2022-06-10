@@ -119,59 +119,59 @@ void Turret::CalcOutput(double limelightXOffset, double angularVelocity, double 
     std::clamp(output, -1.0, 1.0);
     output = m_limelightPID.CalcOutput(limelightXOffset);
 
-    output += ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
+    output +=
+        ((-angularVelocity * Constants::GYRO_CONSTANT) + (translationalAngularRate * Constants::TRANSLATION_CONSTANT));
 
-    if(m_currentAngleInDegrees > 115.0) {
+    if (m_currentAngleInDegrees > 115.0) {
         m_turretMotor->Set(ControlMode::Position, 112.5 * TURRET_TICKS_PER_DEGREE);
     } else
 
-    if(m_currentAngleInDegrees < -115) {
+        if (m_currentAngleInDegrees < -115) {
         m_turretMotor->Set(ControlMode::Position, -112.5 * TURRET_TICKS_PER_DEGREE);
     } else {
-
-    if (m_wrappingToRightSensor == true) {
-        if (PassedSuperSoft() == 1) {
-            m_wrappingToRightSensor = false;
-            m_gyroSnapshotWrapping = m_gyroAngle;
-            m_wrappingInProgress = false;
-        } else {
-            m_turretMotor->Set(ControlMode::Position, m_rightSideTurnSensor);
-        }
-    } else if (m_wrappingToLeftSensor == true) {
-        if (PassedSuperSoft() == 2) {
-            m_wrappingToLeftSensor = false;
-            m_gyroSnapshotWrapping = m_gyroAngle;
-            m_wrappingInProgress = false;
-        } else {
-            m_turretMotor->Set(ControlMode::Position, m_leftSideTurnSensor);
-        }
-    } else {
-        if (PassedSuperSoft() == 2) {
-            output = std::clamp(output, 0.0, 1.0);
-            if (m_wrappingInProgress == false) {
+        if (m_wrappingToRightSensor == true) {
+            if (PassedSuperSoft() == 1) {
+                m_wrappingToRightSensor = false;
                 m_gyroSnapshotWrapping = m_gyroAngle;
-                m_wrappingInProgress = true;
+                m_wrappingInProgress = false;
             } else {
-                if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
-                    m_wrappingToRightSensor = true;
-                }
+                m_turretMotor->Set(ControlMode::Position, m_rightSideTurnSensor);
             }
-        } else if (PassedSuperSoft() == 1) {
-            output = std::clamp(output, -1.0, 0.0);
-            if (m_wrappingInProgress == false) {
+        } else if (m_wrappingToLeftSensor == true) {
+            if (PassedSuperSoft() == 2) {
+                m_wrappingToLeftSensor = false;
                 m_gyroSnapshotWrapping = m_gyroAngle;
-                m_wrappingInProgress = true;
+                m_wrappingInProgress = false;
             } else {
-                if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
-                    m_wrappingToLeftSensor = true;
-                }
+                m_turretMotor->Set(ControlMode::Position, m_leftSideTurnSensor);
             }
         } else {
-            m_wrappingInProgress = false;
-            m_gyroSnapshotWrapping = m_gyroAngle;
+            if (PassedSuperSoft() == 2) {
+                output = std::clamp(output, 0.0, 1.0);
+                if (m_wrappingInProgress == false) {
+                    m_gyroSnapshotWrapping = m_gyroAngle;
+                    m_wrappingInProgress = true;
+                } else {
+                    if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
+                        m_wrappingToRightSensor = true;
+                    }
+                }
+            } else if (PassedSuperSoft() == 1) {
+                output = std::clamp(output, -1.0, 0.0);
+                if (m_wrappingInProgress == false) {
+                    m_gyroSnapshotWrapping = m_gyroAngle;
+                    m_wrappingInProgress = true;
+                } else {
+                    if (std::abs(m_gyroAngle - m_gyroSnapshotWrapping) > 70) {
+                        m_wrappingToLeftSensor = true;
+                    }
+                }
+            } else {
+                m_wrappingInProgress = false;
+                m_gyroSnapshotWrapping = m_gyroAngle;
+            }
+            m_turretMotor->Set(ControlMode::PercentOutput, output);
         }
-        m_turretMotor->Set(ControlMode::PercentOutput, output);
-    }
     }
 }
 
@@ -204,31 +204,30 @@ double Turret::CalcTransitionalCompensations(double driveVelocity, double distan
     // The position 100ms into the future calculated by current drive velocity converted into inches into the future
     double futurePosition = driveVelocity * DRIVE_INCHES_PER_TICK;
 
-    if(driveVelocity == 0.0 || distanceFromTarget == 0) {
+    if (driveVelocity == 0.0 || distanceFromTarget == 0) {
         return 0.0;
     }
 
     double futureDistance = 0.0;
     double futureAngle = 0.0;
-    double turretAngle = m_currentAngleInDegrees; 
+    double turretAngle = m_currentAngleInDegrees;
     bool negativeAngle = false;
 
-    //turret is an offset unit circle where 0 on the turret is actually 90 on the circle
-    if(m_currentAngleInDegrees < 0.0) {   
+    // turret is an offset unit circle where 0 on the turret is actually 90 on the circle
+    if (m_currentAngleInDegrees < 0.0) {
         negativeAngle = true;
     } else {
         negativeAngle = false;
     }
 
-    futureDistance =
-        sqrt(pow(distanceFromTarget, 2) + pow(futurePosition, 2) -
-             (2.0 * distanceFromTarget * futurePosition * (cos(turretAngle * Constants::PI / 180.0))));
+    futureDistance = sqrt(pow(distanceFromTarget, 2) + pow(futurePosition, 2) -
+                          (2.0 * distanceFromTarget * futurePosition * (cos(turretAngle * Constants::PI / 180.0))));
 
     futureAngle = 180.0 - ((acos(((pow(futureDistance, 2) + pow(futurePosition, 2) - pow(distanceFromTarget, 2)) /
                                   (2.0 * futureDistance * futurePosition)))) *
                            180.0 / Constants::PI);
 
-    if(negativeAngle == true) {
+    if (negativeAngle == true) {
         futureAngle = -futureAngle;
     }
 
