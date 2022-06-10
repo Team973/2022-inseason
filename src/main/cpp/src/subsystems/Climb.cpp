@@ -161,14 +161,6 @@ void Climb::Update() {
             break;
     }
 
-    // if (GetTopHalls()) {
-    //     climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);
-    // }
-
-    // if (GetBottomHalls()) {
-    //     climbMotorOutput = std::clamp(climbMotorOutput, 0.0, 0.7);
-    // }
-
     if (GetTopHalls()) {
         climbMotorOutput = std::clamp(climbMotorOutput, -0.7, 0.0);
     }
