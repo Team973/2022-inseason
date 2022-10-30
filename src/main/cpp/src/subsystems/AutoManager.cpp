@@ -20,7 +20,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new PositionDriveCommand(m_drive, 0.0, 90.0, 0.5, 1500),
 }))
 
-/*< DoNothing >*/   
+/*< DoNothing >*/
 , m_doNothing((AutoMode({})))
 
 /*< Position 2, 2 Ball >*/
@@ -93,7 +93,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
     new ConcurrentCommand({
         new PositionDriveCommand(m_drive, -81.0, -115.0, 0.8, 1700),
         new RunIntakeCommand(m_intake, 1.0, 1700),
-        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),   
+        new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 1700),
         new SetTurretAngleCommand(m_turret, 77.0, 1700),
         new SetFlywheelTrackingCommand(m_shooter, 500),
     }),
@@ -141,7 +141,7 @@ AutoManager::AutoManager(Drive *drive, Intake *intake, Conveyor *conveyor, Turre
 , m_citrus_5Ball(m_p2_3Ball + AutoMode({
     new PositionDriveCommand(m_drive, 0.0, -85.0, 0.5, 1500),
     new ConcurrentCommand({
-        new PositionDriveCommand(m_drive, -156.0, -85.0, 0.7, 2000),
+        new PositionDriveCommand(m_drive, -165.0, -85.0, 0.7, 2000),
         new ConveyorFloorCommand(m_conveyor, Conveyor::FloorState::FeedIn, 2000),
         new RunIntakeCommand(m_intake, 1.0, 2000),
     }),
